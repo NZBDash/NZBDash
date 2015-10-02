@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess.Repository.Settings
 {
-    public class SabNzbRepository : IRepository<SabNzbRepository>
+    public class SabNzbRepository : IRepository<SabNzbSettings>
     {
         public SabNzbRepository()
         {
@@ -14,62 +15,62 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public NZBDashContext Db { get; set; }
 
-        public SabNzbRepository Find(int id)
+        public SabNzbSettings Find(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<SabNzbRepository> FindAsync(int id)
+        public Task<SabNzbSettings> FindAsync(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<SabNzbRepository> GetAll()
+        public IEnumerable<SabNzbSettings> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<SabNzbRepository>> GetAllAsync()
+        public Task<IEnumerable<SabNzbSettings>> GetAllAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public SabNzbRepository Insert(SabNzbRepository entity)
+        public SabNzbSettings Insert(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<SabNzbRepository> Insert(IEnumerable<SabNzbRepository> entity)
+        public IEnumerable<SabNzbSettings> Insert(IEnumerable<SabNzbSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<SabNzbRepository>> InsertAsync(IEnumerable<SabNzbRepository> entity)
+        public Task<IEnumerable<SabNzbSettings>> InsertAsync(IEnumerable<SabNzbSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<SabNzbRepository> InsertAsync(SabNzbRepository entity)
+        public Task<SabNzbSettings> InsertAsync(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Remove(SabNzbRepository entity)
+        public int Remove(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> RemoveAsync(SabNzbRepository entity)
+        public Task<int> RemoveAsync(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> ModifyAsync(SabNzbRepository entity)
+        public Task<int> ModifyAsync(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Modify(SabNzbRepository entity)
+        public int Modify(SabNzbSettings entity)
         {
             throw new System.NotImplementedException();
         }

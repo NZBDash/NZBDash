@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess.Repository.Settings
 {
-    public class CouchPotatoRepository : IRepository<CouchPotatoRepository>
+    public class CouchPotatoRepository : IRepository<CouchPotatoSettings>
     {
         public CouchPotatoRepository()
         {
@@ -14,62 +15,62 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public NZBDashContext Db { get; set; }
 
-        public CouchPotatoRepository Find(int id)
+        public CouchPotatoSettings Find(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<CouchPotatoRepository> FindAsync(int id)
+        public Task<CouchPotatoSettings> FindAsync(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<CouchPotatoRepository> GetAll()
+        public IEnumerable<CouchPotatoSettings> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<CouchPotatoRepository>> GetAllAsync()
+        public Task<IEnumerable<CouchPotatoSettings>> GetAllAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public CouchPotatoRepository Insert(CouchPotatoRepository entity)
+        public CouchPotatoSettings Insert(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<CouchPotatoRepository> Insert(IEnumerable<CouchPotatoRepository> entity)
+        public IEnumerable<CouchPotatoSettings> Insert(IEnumerable<CouchPotatoSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<CouchPotatoRepository>> InsertAsync(IEnumerable<CouchPotatoRepository> entity)
+        public Task<IEnumerable<CouchPotatoSettings>> InsertAsync(IEnumerable<CouchPotatoSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<CouchPotatoRepository> InsertAsync(CouchPotatoRepository entity)
+        public Task<CouchPotatoSettings> InsertAsync(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Remove(CouchPotatoRepository entity)
+        public int Remove(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> RemoveAsync(CouchPotatoRepository entity)
+        public Task<int> RemoveAsync(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> ModifyAsync(CouchPotatoRepository entity)
+        public Task<int> ModifyAsync(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Modify(CouchPotatoRepository entity)
+        public int Modify(CouchPotatoSettings entity)
         {
             throw new System.NotImplementedException();
         }
