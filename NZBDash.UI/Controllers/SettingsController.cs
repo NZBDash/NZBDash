@@ -55,7 +55,7 @@ namespace NZBDash.UI.Controllers
                 var result = save.SaveNzbGetSettings(dto);
                 if (result)
                 {
-                    return View();
+                    RedirectToAction("GetSettings");
                 }
 
                 return View("Error");

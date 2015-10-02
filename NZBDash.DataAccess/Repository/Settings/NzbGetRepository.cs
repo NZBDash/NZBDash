@@ -20,7 +20,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public NzbGetSettings Find(int id)
         {
-            throw new System.NotImplementedException();
+            return Db.NzbGetSettings.Find(id);
         }
 
         public async Task<NzbGetSettings> FindAsync(int id)
@@ -40,7 +40,9 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public NzbGetSettings Insert(NzbGetSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.NzbGetSettings.Add(entity);
+            var result = Db.SaveChanges();
+            return result == 1 ? entity : new NzbGetSettings();
         }
 
         public IEnumerable<NzbGetSettings> Insert(IEnumerable<NzbGetSettings> entity)
@@ -76,7 +78,7 @@ namespace NZBDash.DataAccess.Repository.Settings
         public int Modify(NzbGetSettings entity)
         {
             Db.NzbGetSettings.Attach(entity);
-
+         
             var entry = Db.Entry(entity);
             entry.State = EntityState.Modified;
 

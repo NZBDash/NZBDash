@@ -34,17 +34,30 @@ namespace NZBDash.Core
 
         public bool SaveNzbGetSettings(NzbGetSettingsDto updatedModel)
         {
-            var entity = new NzbGetSettings
-            {
-                Id = updatedModel.Id,
-                IpAddress = updatedModel.IpAddress,
-                Password = updatedModel.Password,
-                Port = updatedModel.Port,
-                Username = updatedModel.Username,
-                Enabled = updatedModel.Enabled
-            };
-
             var repo = new NzbGetRepository();
+
+            var entity = repo.Find(updatedModel.Id);
+
+            if (entity == null)
+            {
+                var newEntity = new NzbGetSettings
+                {
+                    Port = updatedModel.Port,
+                    Username = updatedModel.Username,
+                    Enabled = updatedModel.Enabled,
+                    IpAddress = updatedModel.IpAddress,
+                    Password = updatedModel.Password
+                };
+
+                var insertResult = repo.Insert(newEntity);
+                return insertResult != null;
+            }
+
+            entity.Enabled = updatedModel.Enabled;
+            entity.IpAddress = updatedModel.IpAddress;
+            entity.Password = updatedModel.Password;
+            entity.Port = updatedModel.Port;
+            entity.Username = updatedModel.Username;
 
             var result = repo.Modify(entity);
 

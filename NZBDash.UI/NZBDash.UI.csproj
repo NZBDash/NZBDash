@@ -319,11 +319,12 @@
     <Content Include="Views\LinksConfiguration\Index.cshtml" />
     <Content Include="Views\LinksConfiguration\_AddLink.cshtml" />
     <Content Include="Views\LinksConfiguration\_Link.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\NzbGetSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
