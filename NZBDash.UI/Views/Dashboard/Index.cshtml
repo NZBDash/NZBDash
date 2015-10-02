@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<br />
+<br />
+<br />
+
+<button id="save" hidden="hidden">Save</button>
+<button id="Edit">Edit Grid</button>
+<div class="gridster" id="griddy">
+    <ul style="list-style: none">
+        <li data-row="1" data-col="1" data-sizex="2" data-sizey="4">
+            <div id="Drives"></div>
+        </li>
+
+        <li data-row="1" data-col="2" data-sizex="auto" data-sizey="1">
+            <div id="Download">
+
+            </div>
+        </li>
+
+        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+            <div id="Links">
+            </div>
+        </li>
+
+        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
+            <div id="Ram">
+            </div>
+        </li>
+
+        <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
+            <div id="Server">
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/gridster")
+    @Styles.Render("~/Content/gridster")
+
+    <script src="~/Scripts/Highcharts.js"></script>
+    <script src="~/Scripts/Dashboard.js"></script>
+    <script src="http://code.highcharts.com/modules/data.js"></script>
+    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+
+    <script>
+        $.ajax("@Url.Action("GetDownloadInformation")").success(function (view) {
+            $('#Download').html(view);
+        });
+
+        $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
+            $('#Drives').html(view);
+        });
+
+        $.ajax("@Url.Action("GetLinks")").success(function (view) {
+            $('#Links').html(view);
+        });
+
+        $.ajax("@Url.Action("GetRam")").success(function (view) {
+            $('#Ram').html(view);
+        });
+
+        $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
+            $('#Server').html(view);
+        });
+    </script>
+}

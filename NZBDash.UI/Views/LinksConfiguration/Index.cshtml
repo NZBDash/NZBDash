@@ -1,0 +1,22 @@
+﻿@using NZBDash.UI.Models
+@model IEnumerable<NZBDash.UI.Models.LinksViewModel>
+@{
+    ViewBag.Title = "Links Configuration";
+}
+
+<h2>@ViewBag.Title</h2>
+@Html.Partial("_AddLink", new LinksViewModel())
+
+<div id="Links">
+    @foreach (var link in Model)
+    {
+        @Html.Partial("_Link", link)
+    }
+</div>
+@section scripts
+{
+    <script src="~/Scripts/LinksConfigurationSignalR .js"></script>
+    <script src="~/Scripts/bootstrap-notify.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

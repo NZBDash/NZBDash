@@ -1,0 +1,37 @@
+﻿@model NZBDash.UI.Models.LinksViewModel
+
+@{
+    var panel = Model.Id + "panel";
+}
+
+<div id="@panel" class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @Model.LinkName<div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("UpdateLink", "LinksConfiguration", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x => Model.Id)
+                        <div>
+                            @Html.DisplayNameFor(x => x.LinkName)
+                            @Html.EditorFor(x => Model.LinkName)
+                            @Html.ValidationMessageFor(x => Model.LinkName)
+                        </div>
+                        <div>
+                            @Html.DisplayNameFor(x => x.LinkEndpoint)
+                            @Html.EditorFor(x => Model.LinkEndpoint)
+                            @Html.ValidationMessageFor(x => Model.LinkEndpoint)
+                        </div>
+                        <br />
+                        <br />
+                        <button type="submit" class="btn btn-success col-md-4">Update</button>
+                        <div class="col-md-4"></div>
+                    }
+
+                    <button class="remove btn btn-danger col-md-4" id="@Model.Id">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

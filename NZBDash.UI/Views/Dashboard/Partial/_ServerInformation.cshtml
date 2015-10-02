@@ -1,0 +1,26 @@
+﻿@model NZBDash.UI.Models.Dashboard.RamViewModel
+    <div class="panel panel-default">
+        <div class="panel-heading">Server Info</div>
+        <div class="panel-body">
+            <span >
+                <span >
+                    OS Name
+                    @Model.OSFullName;
+                </span>
+                <span>
+                    Platform:
+                    @Model.OSPlatform;
+                </span>
+                <span >
+                    OS Version:
+                    @Model.OSVersion;
+                </span>
+                <span id="UpTimeSpan">
+                    @Model.Uptime;
+                </span>
+            </span>
+
+        </div>
+    </div>
+
+

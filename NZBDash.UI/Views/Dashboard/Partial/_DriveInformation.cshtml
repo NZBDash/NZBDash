@@ -1,0 +1,80 @@
+﻿@model IEnumerable<NZBDash.UI.Models.Dashboard.DrivesViewModel>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Drives</div>
+        <div class="panel-body">
+            @foreach (var drive in Model)
+            {
+                <div class="col-md-12">
+                    
+                    <div class="col-md-6">
+
+                        <div class="pieContainer">
+                            <div class="pieBackground"></div>
+                            <div id="@drive.PercentageFilled" style="min-width: 170px; max-width: 400px; height: 200px; margin: 0 auto"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>
+                            @drive.Name
+                        </div>
+                        <div>
+                            Free/Used : @(drive.AvailableFreeSpace / 1073741824)GB / @((drive.TotalSize - drive.TotalFreeSpace) / 1073741824)GB
+                        </div>
+                    </div>
+                </div>
+
+
+                <script>
+
+                    $(function () {
+                        $('#@drive.PercentageFilled').highcharts({
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: false,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                        style: {
+                                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        }
+                                    }
+                                }
+                            },
+                            series: [{
+                                name: "Drives",
+                                colorByPoint: true,
+                                data: [{
+                                    name: "Used",
+                                    y: @(drive.PercentageFilled)
+                                }, {
+                                    name: "Free Space",
+                                    y: @(100 - drive.PercentageFilled),
+                                    sliced: true,
+                                    selected: true
+                                }, ]
+                            }]
+                        });
+                    });
+                </script>
+
+
+            }
+        </div>
+    </div>
+
