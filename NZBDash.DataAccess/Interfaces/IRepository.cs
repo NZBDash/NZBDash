@@ -5,7 +5,7 @@ using NZBDash.DataAccess.Models;
 
 namespace NZBDash.DataAccess.Interfaces
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<T>
     {
         T Find(int id);
         Task<T> FindAsync(int id);
