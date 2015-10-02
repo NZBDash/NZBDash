@@ -1,6 +1,6 @@
-﻿namespace NZBDash.DataAccess.Models.Settings
+﻿namespace NZBDash.Core.Model.Settings
 {
-    public class NzbGetSettings : SettingsEntity
+    public class NzbGetSettingsDto : BaseSettingsDto
     {
         public string IpAddress { get; set; }
         public string Username { get; set; }

@@ -207,6 +207,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

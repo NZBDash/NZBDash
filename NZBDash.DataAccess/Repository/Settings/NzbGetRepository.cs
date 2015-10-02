@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess.Repository.Settings
 {
-    public class NzbGetRepository : IRepository<NzbGetRepository>
+    public class NzbGetRepository : IRepository<NzbGetSettings>
     {
         public NzbGetRepository()
         {
@@ -14,64 +18,69 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public NZBDashContext Db { get; set; }
 
-        public NzbGetRepository Find(int id)
+        public NzbGetSettings Find(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<NzbGetRepository> FindAsync(int id)
+        public async Task<NzbGetSettings> FindAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<NzbGetSettings> GetAll()
+        {
+            return Db.NzbGetSettings.ToList();
+        }
+
+        public async Task<IEnumerable<NzbGetSettings>> GetAllAsync()
+        {
+            return await Db.NzbGetSettings.ToListAsync();
+        }
+
+        public NzbGetSettings Insert(NzbGetSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<NzbGetRepository> GetAll()
+        public IEnumerable<NzbGetSettings> Insert(IEnumerable<NzbGetSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<NzbGetRepository>> GetAllAsync()
+        public Task<IEnumerable<NzbGetSettings>> InsertAsync(IEnumerable<NzbGetSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public NzbGetRepository Insert(NzbGetRepository entity)
+        public Task<NzbGetSettings> InsertAsync(NzbGetSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<NzbGetRepository> Insert(IEnumerable<NzbGetRepository> entity)
+        public int Remove(NzbGetSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<NzbGetRepository>> InsertAsync(IEnumerable<NzbGetRepository> entity)
+        public Task<int> RemoveAsync(NzbGetSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<NzbGetRepository> InsertAsync(NzbGetRepository entity)
+        public Task<int> ModifyAsync(NzbGetSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Remove(NzbGetRepository entity)
+        public int Modify(NzbGetSettings entity)
         {
-            throw new System.NotImplementedException();
-        }
+            Db.NzbGetSettings.Attach(entity);
 
-        public Task<int> RemoveAsync(NzbGetRepository entity)
-        {
-            throw new System.NotImplementedException();
-        }
+            var entry = Db.Entry(entity);
+            entry.State = EntityState.Modified;
 
-        public Task<int> ModifyAsync(NzbGetRepository entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int Modify(NzbGetRepository entity)
-        {
-            throw new System.NotImplementedException();
+            return Db.SaveChanges();
         }
     }
 }

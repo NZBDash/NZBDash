@@ -57,8 +57,8 @@
     <Compile Include="Models\LinksConfiguration.cs" />
     <Compile Include="Models\Settings\SabNzbSettings.cs" />
     <Compile Include="Models\Settings\SonarrSettings.cs" />
-    <Compile Include="Models\Settings\CouchPotatoSettings.cs" />
     <Compile Include="Models\Settings\NzbGetSettings.cs" />
+    <Compile Include="Models\Settings\CouchPotatoSettings.cs" />
     <Compile Include="Models\Settings\SettingsEntity.cs" />
     <Compile Include="Models\SupportedApplications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
