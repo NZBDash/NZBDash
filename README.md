@@ -1,4 +1,4 @@
-<a href="https://ci.appveyor.com/project/tidusjar/NZBDash"><image src="https://ci.appveyor.com/api/projects/status/lsho0rk4etbvdwmd?svg=true" height="18"></a>
+<a href="https://ci.appveyor.com/project/tidusjar/NZBDash"><image src="https://ci.appveyor.com/api/projects/status/github/tidusjar/NZBDash?branch=master&svg=true" height="18"></a>
 
 
 # NZBDash
