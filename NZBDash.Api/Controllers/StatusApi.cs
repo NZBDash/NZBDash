@@ -186,21 +186,14 @@ namespace NZBDash.Api.Controllers
             //obj.MaxWorkingSet = proc.MaxWorkingSet;
             //obj.MinWorkingSet = proc.MinWorkingSet;
            // obj.Modules = proc.Modules;
-            obj.NonpagedSystemMemorySize = proc.NonpagedSystemMemorySize;
             obj.NonpagedSystemMemorySize64 = proc.NonpagedSystemMemorySize64;
-            obj.PagedMemorySize = proc.PagedMemorySize;
             obj.PagedMemorySize64 = proc.PagedMemorySize64;
-            obj.PagedSystemMemorySize = proc.PagedSystemMemorySize;
             obj.PagedSystemMemorySize64 = proc.PagedSystemMemorySize64;
-            obj.PeakPagedMemorySize = proc.PeakPagedMemorySize;
             obj.PeakPagedMemorySize64 = proc.PeakPagedMemorySize64;
-            obj.PeakVirtualMemorySize = proc.PeakVirtualMemorySize;
             obj.PeakVirtualMemorySize64 = proc.PeakVirtualMemorySize64;
 
-            obj.PeakWorkingSet = proc.PeakWorkingSet;
             obj.PeakWorkingSet64 = proc.PeakWorkingSet64;
             //obj.PriorityClass = proc.PriorityClass;
-            obj.PrivateMemorySize = proc.PrivateMemorySize;
             obj.PrivateMemorySize64 = proc.PrivateMemorySize64;
             //obj.PrivilegedProcessorTime = proc.PrivilegedProcessorTime;
             obj.ProcessName = proc.ProcessName;
@@ -218,9 +211,7 @@ namespace NZBDash.Api.Controllers
             //obj.StartTime = proc.StartTime;
             //obj.TotalProcessorTime = proc.TotalProcessorTime;
             //obj.UserProcessorTime = proc.UserProcessorTime;
-            obj.VirtualMemorySize = proc.VirtualMemorySize;
             obj.VirtualMemorySize64 = proc.VirtualMemorySize64;
-            obj.WorkingSet = proc.WorkingSet;
             obj.WorkingSet64 = proc.WorkingSet64;
             return obj;
         }

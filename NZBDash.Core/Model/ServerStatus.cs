@@ -97,19 +97,12 @@ namespace NZBDash.Core.Model
         public string MainWindowTitle { get; set; }
         public IntPtr MaxWorkingSet { get; set; }
         public IntPtr MinWorkingSet { get; set; }
-        public int NonpagedSystemMemorySize { get; set; }
         public long NonpagedSystemMemorySize64 { get; set; }
-        public int PagedMemorySize { get; set; }
         public long PagedMemorySize64 { get; set; }
-        public int PagedSystemMemorySize { get; set; }
         public long PagedSystemMemorySize64 { get; set; }
-        public int PeakPagedMemorySize { get; set; }
         public long PeakPagedMemorySize64 { get; set; }
-        public int PeakVirtualMemorySize { get; set; }
         public long PeakVirtualMemorySize64 { get; set; }
-        public int PeakWorkingSet { get; set; }
         public long PeakWorkingSet64 { get; set; }
-        public int PrivateMemorySize { get; set; }
         public long PrivateMemorySize64 { get; set; }
         public TimeSpan PrivilegedProcessorTime { get; set; }
         public string ProcessName { get; set; }
@@ -122,10 +115,7 @@ namespace NZBDash.Core.Model
         // public ProcessThreadCollection Threads { get; set;}
         public TimeSpan TotalProcessorTime { get; set; }
         public TimeSpan UserProcessorTime { get; set; }
-        public int VirtualMemorySize { get; set; }
         public long VirtualMemorySize64 { get; set; }
-        public int WorkingSet { get; set; }
-
         public long WorkingSet64 { get; set; }
 
     }

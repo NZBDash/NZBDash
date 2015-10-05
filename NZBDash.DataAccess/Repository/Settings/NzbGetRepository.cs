@@ -25,7 +25,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public async Task<NzbGetSettings> FindAsync(int id)
         {
-            throw new NotImplementedException();
+            return await Db.NzbGetSettings.FindAsync(id);
         }
 
         public IEnumerable<NzbGetSettings> GetAll()
