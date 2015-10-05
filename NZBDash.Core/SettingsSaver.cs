@@ -63,5 +63,57 @@ namespace NZBDash.Core
 
             return result == 1;
         }
+
+        public SonarrSettingsViewModelDto GetSonarrSettings()
+        {
+            var repo = new SonarrRepository();
+            var result = repo.GetAll();
+            var setting = result.FirstOrDefault();
+            if (setting == null)
+            {
+                return new SonarrSettingsViewModelDto();
+            }
+
+            return new SonarrSettingsViewModelDto
+            {
+                ApiKey = setting.ApiKey,
+                Enabled = setting.Enabled,
+                Id = setting.Id,
+                IpAddress = setting.IpAddress,
+                Port = setting.Port,
+            };
+        }
+
+        public bool SaveSonarrSettings(SonarrSettingsViewModelDto updatedModel)
+        {
+            var repo = new SonarrRepository();
+
+            var entity = repo.Find(updatedModel.Id);
+
+            if (entity == null)
+            {
+                var newEntity = new SonarrSettings
+                {
+                    Port = updatedModel.Port,
+                    Enabled = updatedModel.Enabled,
+                    IpAddress = updatedModel.IpAddress,
+                    Id = updatedModel.Id,
+                    ApiKey = updatedModel.ApiKey,
+                };
+
+                var insertResult = repo.Insert(newEntity);
+                return insertResult != null;
+            }
+
+            entity.Enabled = updatedModel.Enabled;
+            entity.IpAddress = updatedModel.IpAddress;
+            entity.Port = updatedModel.Port;
+            entity.ApiKey = updatedModel.ApiKey;
+            entity.Id = updatedModel.Id;
+
+            var result = repo.Modify(entity);
+
+            return result == 1;
+        }
     }
 }

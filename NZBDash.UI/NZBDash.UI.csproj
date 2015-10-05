@@ -209,6 +209,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
     <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -321,6 +322,7 @@
     <Content Include="Views\LinksConfiguration\_Link.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\NzbGetSettings.cshtml" />
+    <Content Include="Views\Settings\SonarrSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

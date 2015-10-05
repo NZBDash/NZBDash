@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
@@ -17,7 +18,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public SonarrSettings Find(int id)
         {
-            throw new System.NotImplementedException();
+            return Db.SonarrSettings.Find(id);
         }
 
         public Task<SonarrSettings> FindAsync(int id)
@@ -37,7 +38,9 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public SonarrSettings Insert(SonarrSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.SonarrSettings.Add(entity);
+            var result = Db.SaveChanges();
+            return result == 1 ? entity : new SonarrSettings();
         }
 
         public IEnumerable<SonarrSettings> Insert(IEnumerable<SonarrSettings> entity)
@@ -72,7 +75,12 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public int Modify(SonarrSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.SonarrSettings.Attach(entity);
+
+            var entry = Db.Entry(entity);
+            entry.State = EntityState.Modified;
+
+            return Db.SaveChanges();
         }
     }
 }
