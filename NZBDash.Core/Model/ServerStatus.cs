@@ -7,39 +7,29 @@ using Microsoft.VisualBasic.Devices;
 
 namespace NZBDash.Core.Model
 {
-
     public class RamInfoObj
     {
-
         public RamInfoObj(ComputerInfo info)
         {
-            this.AvailablePhysicalMemory = info.AvailablePhysicalMemory;
-            this.AvailableVirtualMemory = info.AvailableVirtualMemory;
-            this.OSFullName = info.OSFullName;
-            this.OSPlatform = info.OSPlatform;
-            this.OSVersion = info.OSVersion;
-            this.TotalPhysicalMemory = info.TotalPhysicalMemory;
-            this.TotalVirtualMemory = info.TotalVirtualMemory;
-            this.VirtualPercentageFilled = 100 - (int)(info.AvailableVirtualMemory * 100 / info.TotalVirtualMemory);
-            this.PhysicalPercentageFilled = 100 - (int)(info.AvailablePhysicalMemory * 100 / info.TotalPhysicalMemory);
+            AvailablePhysicalMemory = info.AvailablePhysicalMemory;
+            AvailableVirtualMemory = info.AvailableVirtualMemory;
+            OSFullName = info.OSFullName;
+            OSPlatform = info.OSPlatform;
+            OSVersion = info.OSVersion;
+            TotalPhysicalMemory = info.TotalPhysicalMemory;
+            TotalVirtualMemory = info.TotalVirtualMemory;
+            VirtualPercentageFilled = 100 - (int)(info.AvailableVirtualMemory * 100 / info.TotalVirtualMemory);
+            PhysicalPercentageFilled = 100 - (int)(info.AvailablePhysicalMemory * 100 / info.TotalPhysicalMemory);
         }
 
         public int VirtualPercentageFilled { get; set; }
         public int PhysicalPercentageFilled { get; set; }
         public ulong AvailablePhysicalMemory { get; set; }
-
         public ulong AvailableVirtualMemory { get; set; }
-
-        //public CultureInfo InstalledUICulture { get; set;}
-
         public string OSFullName { get; set; }
-
         public string OSPlatform { get; set; }
-
         public string OSVersion { get; set; }
-
         public ulong TotalPhysicalMemory { get; set; }
-
         public ulong TotalVirtualMemory { get; set; }
     }
 
@@ -55,7 +45,7 @@ namespace NZBDash.Core.Model
             TotalSize = info.TotalSize;
             VolumeLabel = info.VolumeLabel;
             var i = info.TotalFreeSpace * 100 / info.TotalSize;
-            PercentageFilled = Int32.Parse((100 - i).ToString());
+            PercentageFilled = int.Parse((100 - i).ToString());
             var s = (info.TotalFreeSpace / 1024 / 1024).ToString();
             s = s.Substring(0, s.Length - 3) + "," + s.Substring(s.Length - 3);
             FreeSpaceString = s;
@@ -97,19 +87,12 @@ namespace NZBDash.Core.Model
         public string MainWindowTitle { get; set; }
         public IntPtr MaxWorkingSet { get; set; }
         public IntPtr MinWorkingSet { get; set; }
-        public int NonpagedSystemMemorySize { get; set; }
         public long NonpagedSystemMemorySize64 { get; set; }
-        public int PagedMemorySize { get; set; }
         public long PagedMemorySize64 { get; set; }
-        public int PagedSystemMemorySize { get; set; }
         public long PagedSystemMemorySize64 { get; set; }
-        public int PeakPagedMemorySize { get; set; }
         public long PeakPagedMemorySize64 { get; set; }
-        public int PeakVirtualMemorySize { get; set; }
         public long PeakVirtualMemorySize64 { get; set; }
-        public int PeakWorkingSet { get; set; }
         public long PeakWorkingSet64 { get; set; }
-        public int PrivateMemorySize { get; set; }
         public long PrivateMemorySize64 { get; set; }
         public TimeSpan PrivilegedProcessorTime { get; set; }
         public string ProcessName { get; set; }
@@ -118,16 +101,10 @@ namespace NZBDash.Core.Model
         public int SessionId { get; set; }
         public ProcessStartInfo StartInfo { get; set; }
         public DateTime StartTime { get; set; }
-        //public ISynchronizeInvoke SynchronizingObject { get; set; }
-        // public ProcessThreadCollection Threads { get; set;}
         public TimeSpan TotalProcessorTime { get; set; }
         public TimeSpan UserProcessorTime { get; set; }
-        public int VirtualMemorySize { get; set; }
         public long VirtualMemorySize64 { get; set; }
-        public int WorkingSet { get; set; }
-
         public long WorkingSet64 { get; set; }
-
     }
 
     public class InfoViewModel
@@ -140,5 +117,4 @@ namespace NZBDash.Core.Model
         public SystemLinks Links { get; set; }
         public SabNzbObject SabNzbObject { get; set; }
     }
-
 }
