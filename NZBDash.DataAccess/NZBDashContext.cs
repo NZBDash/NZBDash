@@ -20,6 +20,7 @@ namespace NZBDash.DataAccess
         public DbSet<EmailConfiguration> EmailConfiguration { get; set; }
         public DbSet<SupportedApplications> SupportedApplications { get; set; }
         public DbSet<DashboardGrid> DashboardGrid { get; set; }
+        public DbSet<Applications> Applications { get; set; }
 
         // Settings Pages
         public DbSet<CouchPotatoSettings> CouchPotatoSettings { get; set; }

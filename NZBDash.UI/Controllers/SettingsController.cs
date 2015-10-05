@@ -21,7 +21,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult NzbGetSettings()
         {
-            var save = new SettingsSaver();
+            var save = new SettingsConfiguration();
             var dto = save.GetNzbGetSettings();
             var model = new NzbGetSettingsViewModel
             {
@@ -41,7 +41,7 @@ namespace NZBDash.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Error");
+                return View(viewModel);
             }
 
             var dto = new NzbGetSettingsDto
@@ -54,11 +54,11 @@ namespace NZBDash.UI.Controllers
                 Id = viewModel.Id
             };
 
-            var save = new SettingsSaver();
+            var save = new SettingsConfiguration();
             var result = save.SaveNzbGetSettings(dto);
             if (result)
             {
-                RedirectToAction("GetSettings");
+                RedirectToAction("NzbGetSettings");
             }
 
             return View("Error");
@@ -73,7 +73,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var save = new SettingsSaver();
+            var save = new SettingsConfiguration();
             var dto = save.GetSonarrSettings();
             var model = new SonarrSettingsViewModel
             {
@@ -92,7 +92,7 @@ namespace NZBDash.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Error");
+                return View(viewModel);
             }
 
             var dto = new SonarrSettingsViewModelDto
@@ -104,7 +104,7 @@ namespace NZBDash.UI.Controllers
                 ApiKey = viewModel.ApiKey
             };
 
-            var save = new SettingsSaver();
+            var save = new SettingsConfiguration();
             var result = save.SaveSonarrSettings(dto);
             if (result)
             {

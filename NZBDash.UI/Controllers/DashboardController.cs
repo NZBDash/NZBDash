@@ -27,6 +27,11 @@ namespace NZBDash.UI.Controllers
             return View();
         }
 
+        //public ActionResult GetEnabledDashlets()
+        //{
+        //    var admin = new 
+        //}
+
         public ActionResult GetDownloadInformation()
         {
             var admin = new AdminConfiguration();

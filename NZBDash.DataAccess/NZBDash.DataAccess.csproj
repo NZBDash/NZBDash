@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\AdminConfiguration.cs" />
     <Compile Include="Models\ApplicationConfiguration.cs" />
+    <Compile Include="Models\Applications.cs" />
     <Compile Include="Models\DashboardGrid.cs" />
     <Compile Include="Models\EmailConfiguration.cs" />
     <Compile Include="Models\Entity.cs" />
@@ -65,7 +66,9 @@
     <Compile Include="Repository\AdminConfigurationRepository.cs" />
     <Compile Include="Repository\ApplicationConfigurationRepository.cs" />
     <Compile Include="Repository\DashboardGridRepository.cs" />
+    <Compile Include="Repository\ApplicationsRepository.cs" />
     <Compile Include="Repository\LinksConfigurationRepository.cs" />
+    <Compile Include="Repository\MockRepository.cs" />
     <Compile Include="Repository\Settings\SabNzbRepository.cs" />
     <Compile Include="Repository\Settings\NzbGetRepository.cs" />
     <Compile Include="Repository\Settings\CouchPotatoRepository.cs" />

@@ -1,13 +1,41 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using NZBDash.Core.Model.Settings;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.DataAccess.Models.Settings;
+using NZBDash.DataAccess.Repository;
 using NZBDash.DataAccess.Repository.Settings;
 
 namespace NZBDash.Core
 {
-    public class SettingsSaver
+    public class SettingsConfiguration
     {
+        public IEnumerable<EnabledDashletsDto> GetEnabledDashlets()
+        {
+            var repo = new ApplicationsRepository();
+
+            var all = repo.GetAll();
+
+            var showOnDash = all.Where(x => x.ShowOnDashboard);
+
+            var dto = new List<EnabledDashletsDto>();
+
+            foreach (var applicationse in showOnDash)
+            {
+                if(applicationse.ShowOnDashboard)
+                    dto.Add(new EnabledDashletsDto
+                    {
+                        Id = applicationse.Id,
+                        Enabled = applicationse.Enabled,
+                        ShowOnDashboard = applicationse.ShowOnDashboard,
+                        ApplicationName = applicationse.ApplicationName
+                    });
+            }
+
+            return dto;
+        }
+
         public NzbGetSettingsDto GetNzbGetSettings()
         {
             var repo = new NzbGetRepository();
