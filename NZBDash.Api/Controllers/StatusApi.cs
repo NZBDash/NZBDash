@@ -24,7 +24,6 @@ namespace NZBDash.Api.Controllers
         public IEnumerable<DriveInfoObj> Get()
         {
             return GetPhysicalDrives();
-            //return new string[] { "value1", "value2" };
         }
 
         [HttpGet]
@@ -32,7 +31,6 @@ namespace NZBDash.Api.Controllers
         public IEnumerable<DriveInfoObj> GetDriveInfo()
         {
             return GetPhysicalDrives();
-            //return new string[] { "value1", "value2" };
         }
 
         [HttpGet]
@@ -48,7 +46,8 @@ namespace NZBDash.Api.Controllers
         {            
             using (var uptime = new PerformanceCounter("System", "System Up Time"))
             {
-                uptime.NextValue();       //Call this an extra time before reading its value
+                // Call this an extra time before reading its value
+                uptime.NextValue();       
                 return TimeSpan.FromSeconds(uptime.NextValue());
             }
         }
@@ -57,31 +56,18 @@ namespace NZBDash.Api.Controllers
         [ActionName("NetworkInfo")]
         public NetworkInfo GetNetworkInfo()
         {
-            return getNetworkingDetails();
+            return GetNetworkingDetails();
         }
 
         [HttpGet]
         [ActionName("Processes")]
         public List<ProcessObj> GetProcesses()
         {
-            return getProcesses();
-        }
-
-
-        private IEnumerable<DriveInfoObj> GetPhysicalDrives()
-        {
-            var list = new List<DriveInfoObj>();
-            foreach (var drive in DriveInfo.GetDrives())
-            {
-                if (drive.IsReady)
-                {
-                    list.Add(new DriveInfoObj(drive));
-                }
-            }
-
+            var list = new List<ProcessObj>();
+            Process.GetProcesses().ToList().ForEach(o => list.Add(MakeProcessObj(o)));
             return list;
         }
-
+        
         [HttpGet]
         [ActionName("GetCouchPotatoMovies")]
         public void GetCouchPotatoMovies(string uri, string api)
@@ -161,106 +147,27 @@ namespace NZBDash.Api.Controllers
         {
             return SerializedJsonData<SabNzbHistory>(url + "api?mode=history&start=0&limit=10&output=json&apikey=" + api).History;
         }
-        
-        private List<ProcessObj> getProcesses()
-        {
-            List<ProcessObj> list = new List<ProcessObj>();
-            Process.GetProcesses().ToList().ForEach(o => list.Add(makeProcessObj(o)));
-            return list;
-        }
-        private ProcessObj makeProcessObj(Process proc)
-        {
-            ProcessObj obj = new ProcessObj();
-            obj.BasePriority = proc.BasePriority;
-            obj.EnableRaisingEvents = proc.EnableRaisingEvents;
-            //obj.ExitCode= proc.ExitCode;
-           // obj.ExitTime = proc.ExitTime;
-            //obj.Handle = proc.Handle;
-            obj.HandleCount = proc.HandleCount;
-            //obj.HasExited = proc.HasExited;
-            obj.Id = proc.Id;
-            obj.MachineName = proc.MachineName;
-            //obj.MainModule = proc.MainModule;
-            obj.MainWindowHandle = proc.MainWindowHandle;
-            obj.MainWindowTitle = proc.MainWindowTitle;
-            //obj.MaxWorkingSet = proc.MaxWorkingSet;
-            //obj.MinWorkingSet = proc.MinWorkingSet;
-           // obj.Modules = proc.Modules;
-            obj.NonpagedSystemMemorySize = proc.NonpagedSystemMemorySize;
-            obj.NonpagedSystemMemorySize64 = proc.NonpagedSystemMemorySize64;
-            obj.PagedMemorySize = proc.PagedMemorySize;
-            obj.PagedMemorySize64 = proc.PagedMemorySize64;
-            obj.PagedSystemMemorySize = proc.PagedSystemMemorySize;
-            obj.PagedSystemMemorySize64 = proc.PagedSystemMemorySize64;
-            obj.PeakPagedMemorySize = proc.PeakPagedMemorySize;
-            obj.PeakPagedMemorySize64 = proc.PeakPagedMemorySize64;
-            obj.PeakVirtualMemorySize = proc.PeakVirtualMemorySize;
-            obj.PeakVirtualMemorySize64 = proc.PeakVirtualMemorySize64;
 
-            obj.PeakWorkingSet = proc.PeakWorkingSet;
-            obj.PeakWorkingSet64 = proc.PeakWorkingSet64;
-            //obj.PriorityClass = proc.PriorityClass;
-            obj.PrivateMemorySize = proc.PrivateMemorySize;
-            obj.PrivateMemorySize64 = proc.PrivateMemorySize64;
-            //obj.PrivilegedProcessorTime = proc.PrivilegedProcessorTime;
-            obj.ProcessName = proc.ProcessName;
-
-
-            //obj.ProcessorAffinity = proc.ProcessorAffinity;
-            obj.Responding = proc.Responding;
-            obj.SessionId = proc.SessionId;
-            //obj.StandardError = proc.StandardError;
-            //obj.StandardInput = proc.StandardInput;
-            //obj.StandardOutput = proc.StandardOutput;
-            obj.StartInfo = proc.StartInfo;
-
-
-            //obj.StartTime = proc.StartTime;
-            //obj.TotalProcessorTime = proc.TotalProcessorTime;
-            //obj.UserProcessorTime = proc.UserProcessorTime;
-            obj.VirtualMemorySize = proc.VirtualMemorySize;
-            obj.VirtualMemorySize64 = proc.VirtualMemorySize64;
-            obj.WorkingSet = proc.WorkingSet;
-            obj.WorkingSet64 = proc.WorkingSet64;
-            return obj;
-        }
-        private NetworkInfo getNetworkingDetails()
-        {
-            NetworkInfo info = new NetworkInfo();
-            PerformanceCounterCategory performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
-            string cn = performanceCounterCategory.GetInstanceNames()[0];
-            var networkBytesSent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", cn);
-            var networkBytesReceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", cn);
-            var networkBytesTotal = new PerformanceCounter("Network Interface", "Bytes Total/sec", cn);
-
-            info.Sent = networkBytesSent.NextValue();
-            info.Recieved = networkBytesReceived.NextValue();
-            info.Total = networkBytesTotal.NextValue();
-            //first counter is empty
-
-            Thread.Sleep(1000);
-            info.Sent = networkBytesSent.NextValue();
-            info.Recieved = networkBytesReceived.NextValue();
-            info.Total = networkBytesTotal.NextValue();
-            return info;
-        }
 
         private static T SerializedJsonData<T>(string url) where T : new()
         {
             using (var w = new WebClient())
             {
-                var json_data = string.Empty;
+                string jsonData;
+
                 // attempt to download JSON data as a string
                 try
                 {
-                    json_data = w.DownloadString(url);
+                    jsonData = w.DownloadString(url);
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(e.Message,e);
+                    throw new Exception(e.Message, e);
                 }
-                // if string with JSON data is not empty, deserialize it to class and return its instance 
-                return !string.IsNullOrEmpty(json_data) ? JsonConvert.DeserializeObject<T>(json_data) : new T();
+
+                // If string with JSON data is not empty,
+                // deserialize it to class and return its instance 
+                return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<T>(jsonData) : new T();
             }
         }
 
@@ -276,28 +183,68 @@ namespace NZBDash.Api.Controllers
             }
         }
 
-
-        // GET api/<controller>/5
-        public string Get(int id)
+        private IEnumerable<DriveInfoObj> GetPhysicalDrives()
         {
-            return "value";
+            var list = new List<DriveInfoObj>();
+            foreach (var drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady)
+                {
+                    list.Add(new DriveInfoObj(drive));
+                }
+            }
+
+            return list;
+        }
+        
+        private ProcessObj MakeProcessObj(Process proc)
+        {
+            ProcessObj obj = new ProcessObj
+            {
+                BasePriority = proc.BasePriority,
+                EnableRaisingEvents = proc.EnableRaisingEvents,
+                HandleCount = proc.HandleCount,
+                Id = proc.Id,
+                MachineName = proc.MachineName,
+                MainWindowHandle = proc.MainWindowHandle,
+                MainWindowTitle = proc.MainWindowTitle,
+                NonpagedSystemMemorySize64 = proc.NonpagedSystemMemorySize64,
+                PagedMemorySize64 = proc.PagedMemorySize64,
+                PagedSystemMemorySize64 = proc.PagedSystemMemorySize64,
+                PeakPagedMemorySize64 = proc.PeakPagedMemorySize64,
+                PeakVirtualMemorySize64 = proc.PeakVirtualMemorySize64,
+                PeakWorkingSet64 = proc.PeakWorkingSet64,
+                PrivateMemorySize64 = proc.PrivateMemorySize64,
+                ProcessName = proc.ProcessName,
+                Responding = proc.Responding,
+                SessionId = proc.SessionId,
+                StartInfo = proc.StartInfo,
+                VirtualMemorySize64 = proc.VirtualMemorySize64,
+                WorkingSet64 = proc.WorkingSet64
+            };
+           
+            return obj;
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        private NetworkInfo GetNetworkingDetails()
         {
-        }
+            NetworkInfo info = new NetworkInfo();
+            PerformanceCounterCategory performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
+            string cn = performanceCounterCategory.GetInstanceNames()[0];
+            var networkBytesSent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", cn);
+            var networkBytesReceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", cn);
+            var networkBytesTotal = new PerformanceCounter("Network Interface", "Bytes Total/sec", cn);
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
+            info.Sent = networkBytesSent.NextValue();
+            info.Recieved = networkBytesReceived.NextValue();
+            info.Total = networkBytesTotal.NextValue();
+            
+            // First counter is empty
+            Thread.Sleep(1000);
+            info.Sent = networkBytesSent.NextValue();
+            info.Recieved = networkBytesReceived.NextValue();
+            info.Total = networkBytesTotal.NextValue();
+            return info;
         }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
-    }
-
-    
+    }   
 }
