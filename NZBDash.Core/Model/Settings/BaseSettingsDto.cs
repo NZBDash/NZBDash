@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public bool Enabled { get; set; }
+        public bool ShowOnDashboard { get; set; }
     }
 }

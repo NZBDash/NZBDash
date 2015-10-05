@@ -2,11 +2,8 @@
 
 namespace NZBDash.UI.Models.Settings
 {
-    public class SonarrSettingsViewModel
+    public class SonarrSettingsViewModel : BaseSettingsViewModel
     {
-        public int Id { get; set; }
-
-        public bool Enabled { get; set; }
         [Required]
         [Display(Name = "IP Address")]
         public string IpAddress { get; set; }

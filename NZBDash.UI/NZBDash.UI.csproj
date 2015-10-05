@@ -323,6 +323,7 @@
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\NzbGetSettings.cshtml" />
     <Content Include="Views\Settings\SonarrSettings.cshtml" />
+    <Content Include="Views\Settings\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

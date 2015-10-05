@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
@@ -28,7 +29,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public IEnumerable<SonarrSettings> GetAll()
         {
-            throw new System.NotImplementedException();
+            return Db.SonarrSettings.ToList();
         }
 
         public Task<IEnumerable<SonarrSettings>> GetAllAsync()

@@ -26,7 +26,8 @@ namespace NZBDash.Core
                 IpAddress = setting.IpAddress,
                 Password = setting.Password,
                 Port = setting.Port,
-                Username = setting.Username
+                Username = setting.Username,
+                ShowOnDashboard = setting.ShowOnDashboard
             };
 
             return model;
@@ -46,7 +47,8 @@ namespace NZBDash.Core
                     Username = updatedModel.Username,
                     Enabled = updatedModel.Enabled,
                     IpAddress = updatedModel.IpAddress,
-                    Password = updatedModel.Password
+                    Password = updatedModel.Password,
+                    ShowOnDashboard = updatedModel.ShowOnDashboard
                 };
 
                 var insertResult = repo.Insert(newEntity);
@@ -58,6 +60,7 @@ namespace NZBDash.Core
             entity.Password = updatedModel.Password;
             entity.Port = updatedModel.Port;
             entity.Username = updatedModel.Username;
+            entity.ShowOnDashboard = updatedModel.ShowOnDashboard;
 
             var result = repo.Modify(entity);
 
@@ -81,6 +84,7 @@ namespace NZBDash.Core
                 Id = setting.Id,
                 IpAddress = setting.IpAddress,
                 Port = setting.Port,
+                ShowOnDashboard = setting.ShowOnDashboard
             };
         }
 
@@ -99,6 +103,7 @@ namespace NZBDash.Core
                     IpAddress = updatedModel.IpAddress,
                     Id = updatedModel.Id,
                     ApiKey = updatedModel.ApiKey,
+                    ShowOnDashboard = updatedModel.ShowOnDashboard
                 };
 
                 var insertResult = repo.Insert(newEntity);
@@ -110,6 +115,7 @@ namespace NZBDash.Core
             entity.Port = updatedModel.Port;
             entity.ApiKey = updatedModel.ApiKey;
             entity.Id = updatedModel.Id;
+            entity.ShowOnDashboard = updatedModel.ShowOnDashboard;
 
             var result = repo.Modify(entity);
 
