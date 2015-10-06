@@ -85,6 +85,7 @@
     <Compile Include="SettingsControllerTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UrlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

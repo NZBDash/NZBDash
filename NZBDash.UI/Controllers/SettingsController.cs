@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using NZBDash.Core;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Settings;
 using NZBDash.UI.Models.Settings;
 
 namespace NZBDash.UI.Controllers
@@ -21,8 +22,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult NzbGetSettings()
         {
-            var save = new SettingsConfiguration();
-            var dto = save.GetNzbGetSettings();
+            var save = new NzbGetSettingsConfiguration();
+            var dto = save.GetSettings();
             var model = new NzbGetSettingsViewModel
             {
                 Password = dto.Password,
@@ -54,8 +55,8 @@ namespace NZBDash.UI.Controllers
                 Id = viewModel.Id
             };
 
-            var save = new SettingsConfiguration();
-            var result = save.SaveNzbGetSettings(dto);
+            var save = new NzbGetSettingsConfiguration();
+            var result = save.SaveSettings(dto);
             if (result)
             {
                 RedirectToAction("NzbGetSettings");
@@ -73,8 +74,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var save = new SettingsConfiguration();
-            var dto = save.GetSonarrSettings();
+            var save = new SonarrSettingsConfiguration();
+            var dto = save.GetSettings();
             var model = new SonarrSettingsViewModel
             {
                 Port = dto.Port,
@@ -104,11 +105,11 @@ namespace NZBDash.UI.Controllers
                 ApiKey = viewModel.ApiKey
             };
 
-            var save = new SettingsConfiguration();
-            var result = save.SaveSonarrSettings(dto);
+            var save = new SonarrSettingsConfiguration();
+            var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("GetSettings");
+                RedirectToAction("SonarrSettings");
             }
 
             return View("Error");
@@ -117,7 +118,18 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult CouchPotatoSettings()
         {
-            return View();
+            var save = new CouchPotatoSettingsConfiguration();
+            var dto = save.GetSettings();
+            var model = new SonarrSettingsViewModel
+            {
+                Port = dto.Port,
+                Enabled = dto.Enabled,
+                Id = dto.Id,
+                IpAddress = dto.IpAddress,
+                ApiKey = dto.ApiKey
+            };
+
+            return View(model);
         }
 
         [HttpGet]

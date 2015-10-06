@@ -6,7 +6,6 @@ using Microsoft.AspNet.SignalR;
 using NZBDash.Common;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Model.DTO;
-using NZBDash.UI.Controllers;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models;
 
@@ -14,69 +13,12 @@ namespace NZBDash.UI.Hubs
 {
     public class ApplicationConfigurationHub : Hub
     {
-        public void DeleteApplication(int id)
+        public void TestNzbGetConnection(string ipAddress, int port, string username, string password)
         {
-            try
-            {
-                var config = new AdminConfiguration();
-                var result = config.DeleteApplication(id);
+            var selectedApp = Applications.NzbGet;
+            var tester = new EndpointTester();
+            var uri = UrlHelper.ReturnUri(ipAddress, port);
 
-                if (result)
-                {
-                    Clients.All.removeSuccess(id, string.Format("Deleted Application!"));
-                }
-                else
-                {
-                    Clients.All.failed("We could not remove the application");
-                }
-
-            }
-            catch (Exception e)
-            {
-                Clients.All.failed(e.Message);
-            }
-
-        }
-
-        public void AddApplication(int application, string apiKey, string ipAddress, string password, string userName)
-        {
-
-            if (!Validate(ipAddress))
-                return;
-
-            var selectedApp = (Applications)application;
-
-            
-            var config = new ApplicationConfigurationViewModel()
-            {
-                ApplicationId = (int)selectedApp,
-                ApplicationName = EnumHelper<Applications>.GetDisplayValue(selectedApp),
-                ApiKey = apiKey,
-                IpAddress = ipAddress,
-                Password = password,
-                Username = userName,
-            };
-            var admin = new AdminConfiguration();
-            var dto = ApplicationConfigurationController.MapToDto(config);
-
-            // We should have one 1 config per application
-            var exists = admin.CheckIfConfigurationExists(dto.ApplicationId);
-            if (exists)
-            {
-                Clients.All.failed(string.Format("You already have configuration settings for {0}.", dto.ApplicationName));
-                return;
-            }
-
-            var result = admin.AddApplication(dto);
-
-            if (result != null)
-            {
-                Clients.All.appMessage(string.Format("Added application {0}!", dto.ApplicationName), result.Id);
-            }
-            else
-            {
-                Clients.All.failed(string.Format("Sorry we failed to add application {0}, Please try again.", dto.ApplicationName));
-            }
 
         }
 
@@ -84,7 +26,7 @@ namespace NZBDash.UI.Hubs
         {
             var selectedApp = (Applications)application;
 
-            var tester = new EndpointTester(); //Need to work out how to identify the tester type
+            var tester = new EndpointTester(); // Need to work out how to identify the tester type
 
             var uri = UrlHelper.ReturnUri(ipAddress);
             if (uri == null)

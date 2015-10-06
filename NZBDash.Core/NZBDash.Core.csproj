@@ -53,6 +53,7 @@
     <Compile Include="Configuration\LinksConfiguration.cs" />
     <Compile Include="DashboardAccess.cs" />
     <Compile Include="Interfaces\IApplicationTester.cs" />
+    <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Model\DTO\AdminConfigurationDto.cs" />
     <Compile Include="Model\DTO\ApplicationConfigurationDto.cs" />
     <Compile Include="Model\DTO\ApplicationsDto.cs" />
@@ -63,12 +64,16 @@
     <Compile Include="Model\SabNzbModels.cs" />
     <Compile Include="Model\ServerStatus.cs" />
     <Compile Include="Model\Settings\BaseSettingsDto.cs" />
+    <Compile Include="Model\Settings\CouchPotatoSettingsDto.cs" />
     <Compile Include="Model\Settings\EnabledDashletsDto.cs" />
     <Compile Include="Model\Settings\NzbGetSettingsDto.cs" />
     <Compile Include="Model\Settings\SonarrSettingsViewModelDto.cs" />
     <Compile Include="Model\XbmcModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsConfiguration.cs" />
+    <Compile Include="Settings\CouchPotatoSettingsConfiguration.cs" />
+    <Compile Include="Settings\NzbGetSettingsConfiguration.cs" />
+    <Compile Include="Settings\DashboardSettingsConfiguration.cs" />
+    <Compile Include="Settings\SonarrSettingsConfiguration.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>
