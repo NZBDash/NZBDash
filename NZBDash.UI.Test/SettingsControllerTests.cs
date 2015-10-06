@@ -57,4 +57,5 @@ namespace NZBDash.UI.Test
             var model = new SonarrSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.SonarrSettings(model)).ShouldRenderDefaultView().WithModel(model);
         }
+    }
 }
