@@ -178,6 +178,36 @@ namespace NZBDash.UI.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult CouchPotatoSettings(CouchPotatoSettingsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var dto = new CouchPotatoSettingsDto
+            {
+                IpAddress = viewModel.IpAddress,
+                Port = viewModel.Port,
+                Enabled = viewModel.Enabled,
+                Id = viewModel.Id,
+                ApiKey = viewModel.ApiKey,
+                ShowOnDashboard = viewModel.ShowOnDashboard,
+                Username = viewModel.Username,
+                Password = viewModel.Password
+            };
+
+            var save = new CouchPotatoSettingsConfiguration();
+            var result = save.SaveSettings(dto);
+            if (result)
+            {
+                RedirectToAction("CouchPotatoSettings");
+            }
+
+            return View("Error");
+        }
+
         [HttpGet]
         public ActionResult PlexSettings()
         {
