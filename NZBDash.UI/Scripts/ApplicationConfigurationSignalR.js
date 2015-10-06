@@ -1,5 +1,5 @@
 ﻿$(function () {
-    $('#testNzbGetConnection').prop("disabled", true);
+    $('.testButton').prop("disabled", true);
     var hub = $.connection.applicationConfigurationHub;
 
     hub.client.failed = function (msg) {
@@ -33,7 +33,7 @@
     };
 
     $.connection.hub.start().done(function () {
-        $('#testNzbGetConnection').prop("disabled",false);
+        $('.testButton').prop("disabled", false);
 
         $('#testNzbGetConnection').click(function () {
             var ip = $('#IpAddress').val();
@@ -42,6 +42,14 @@
             var port = $('#Port').val();
             // string ipAddress, int port, string username, string password
             hub.server.testNzbGetConnection(ip, port, user, pass);
+        });
+
+        $('#testSabNzbConnection').click(function () {
+            var ip = $('#IpAddress').val();
+            var port = $('#Port').val();
+            var api = $('#ApiKey').val();
+
+            hub.server.testSabNzbConnection(ip, port, api);
         });
     });
 });

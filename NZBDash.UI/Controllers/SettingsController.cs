@@ -32,6 +32,7 @@ namespace NZBDash.UI.Controllers
                 Enabled = dto.Enabled,
                 Id = dto.Id,
                 IpAddress = dto.IpAddress,
+                ShowOnDashboard = dto.ShowOnDashboard
             };
 
             return View(model);
@@ -52,7 +53,8 @@ namespace NZBDash.UI.Controllers
                 Port = viewModel.Port,
                 Username = viewModel.Username,
                 Enabled = viewModel.Enabled,
-                Id = viewModel.Id
+                Id = viewModel.Id,
+                ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
             var save = new NzbGetSettingsConfiguration();
@@ -68,7 +70,48 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            return View();
+            var save = new SabNzbSettingsConfiguration();
+            var dto = save.GetSettings();
+            var model = new SabNzbSettingsViewModel
+            {
+                ApiKey = dto.ApiKey,
+                Port = dto.Port,
+                Enabled = dto.Enabled,
+                Id = dto.Id,
+                IpAddress = dto.IpAddress,
+                ShowOnDashboard = dto.ShowOnDashboard
+            };
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult SabNzbSettings(SabNzbSettingsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var dto = new SabNzbSettingsDto
+            {
+                IpAddress = viewModel.IpAddress,
+                Port = viewModel.Port,
+                Enabled = viewModel.Enabled,
+                Id = viewModel.Id,
+                ApiKey = viewModel.ApiKey,
+                ShowOnDashboard = viewModel.ShowOnDashboard
+            };
+
+            var save = new SabNzbSettingsConfiguration();
+            var result = save.SaveSettings(dto);
+            if (result)
+            {
+                RedirectToAction("SabNzbSettings");
+            }
+
+            return View("Error");
         }
 
         [HttpGet]
@@ -82,7 +125,8 @@ namespace NZBDash.UI.Controllers
                 Enabled = dto.Enabled,
                 Id = dto.Id,
                 IpAddress = dto.IpAddress,
-                ApiKey = dto.ApiKey
+                ApiKey = dto.ApiKey,
+                ShowOnDashboard = dto.ShowOnDashboard
             };
 
             return View(model);
@@ -102,7 +146,8 @@ namespace NZBDash.UI.Controllers
                 Port = viewModel.Port,
                 Enabled = viewModel.Enabled,
                 Id = viewModel.Id,
-                ApiKey = viewModel.ApiKey
+                ApiKey = viewModel.ApiKey,
+                ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
             var save = new SonarrSettingsConfiguration();
@@ -126,7 +171,8 @@ namespace NZBDash.UI.Controllers
                 Enabled = dto.Enabled,
                 Id = dto.Id,
                 IpAddress = dto.IpAddress,
-                ApiKey = dto.ApiKey
+                ApiKey = dto.ApiKey,
+                ShowOnDashboard = dto.ShowOnDashboard
             };
 
             return View(model);

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
@@ -17,27 +19,29 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public SabNzbSettings Find(int id)
         {
-            throw new System.NotImplementedException();
+            return Db.SabNzbSettings.Find(id);
         }
 
-        public Task<SabNzbSettings> FindAsync(int id)
+        public async Task<SabNzbSettings> FindAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await Db.SabNzbSettings.FindAsync(id);
         }
 
         public IEnumerable<SabNzbSettings> GetAll()
         {
-            throw new System.NotImplementedException();
+            return Db.SabNzbSettings.ToList();
         }
 
-        public Task<IEnumerable<SabNzbSettings>> GetAllAsync()
+        public async Task<IEnumerable<SabNzbSettings>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await Db.SabNzbSettings.ToListAsync();
         }
 
         public SabNzbSettings Insert(SabNzbSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.SabNzbSettings.Add(entity);
+            var result = Db.SaveChanges();
+            return result == 1 ? entity : new SabNzbSettings();
         }
 
         public IEnumerable<SabNzbSettings> Insert(IEnumerable<SabNzbSettings> entity)

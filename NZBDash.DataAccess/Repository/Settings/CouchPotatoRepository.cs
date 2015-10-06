@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using NZBDash.DataAccess.Interfaces;
@@ -17,7 +18,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public CouchPotatoSettings Find(int id)
         {
-            throw new System.NotImplementedException();
+            return Db.CouchPotatoSettings.Find(id);
         }
 
         public Task<CouchPotatoSettings> FindAsync(int id)
@@ -27,7 +28,7 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public IEnumerable<CouchPotatoSettings> GetAll()
         {
-            throw new System.NotImplementedException();
+            return Db.CouchPotatoSettings.ToList();
         }
 
         public Task<IEnumerable<CouchPotatoSettings>> GetAllAsync()
@@ -37,7 +38,9 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public CouchPotatoSettings Insert(CouchPotatoSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.CouchPotatoSettings.Add(entity);
+            var result = Db.SaveChanges();
+            return result == 1 ? entity : new CouchPotatoSettings();
         }
 
         public IEnumerable<CouchPotatoSettings> Insert(IEnumerable<CouchPotatoSettings> entity)
