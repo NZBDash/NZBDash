@@ -76,7 +76,12 @@ namespace NZBDash.DataAccess.Repository.Settings
 
         public int Modify(SabNzbSettings entity)
         {
-            throw new System.NotImplementedException();
+            Db.SabNzbSettings.Attach(entity);
+
+            var entry = Db.Entry(entity);
+            entry.State = EntityState.Modified;
+
+            return Db.SaveChanges();
         }
     }
 }

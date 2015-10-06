@@ -57,6 +57,7 @@
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\LinksConfiguration.cs" />
     <Compile Include="Models\Settings\SabNzbSettings.cs" />
+    <Compile Include="Models\Settings\PlexSettings.cs" />
     <Compile Include="Models\Settings\SonarrSettings.cs" />
     <Compile Include="Models\Settings\NzbGetSettings.cs" />
     <Compile Include="Models\Settings\CouchPotatoSettings.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Repository\ApplicationsRepository.cs" />
     <Compile Include="Repository\LinksConfigurationRepository.cs" />
     <Compile Include="Repository\MockRepository.cs" />
+    <Compile Include="Repository\Settings\PlexRepository.cs" />
     <Compile Include="Repository\Settings\SabNzbRepository.cs" />
     <Compile Include="Repository\Settings\NzbGetRepository.cs" />
     <Compile Include="Repository\Settings\CouchPotatoRepository.cs" />

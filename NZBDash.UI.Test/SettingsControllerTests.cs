@@ -1,5 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Moq;
 
+using NUnit.Framework;
+
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Settings;
 
@@ -53,6 +57,4 @@ namespace NZBDash.UI.Test
             var model = new SonarrSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.SonarrSettings(model)).ShouldRenderDefaultView().WithModel(model);
         }
-
-    }
 }

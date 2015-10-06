@@ -2,7 +2,7 @@
 
 namespace NZBDash.UI.Models.Settings
 {
-    public class CouchPotatoSettingsViewModel : BaseSettingsViewModel
+    public class PlexSettingsViewModel : BaseSettingsViewModel
     {
         [Required]
         [Display(Name = "Username")]
@@ -11,8 +11,5 @@ namespace NZBDash.UI.Models.Settings
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-        [Required]
-        [Display(Name = "Api Key")]
-        public string ApiKey { get; set; }
     }
 }

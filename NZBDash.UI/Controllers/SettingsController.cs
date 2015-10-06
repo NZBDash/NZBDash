@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-using NZBDash.Core;
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Models.Settings;
@@ -211,7 +207,49 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            return View();
+            var save = new PlexSettingsConfiguration();
+            var dto = save.GetSettings();
+            var model = new PlexSettingsViewModel
+            {
+                Port = dto.Port,
+                Enabled = dto.Enabled,
+                Id = dto.Id,
+                IpAddress = dto.IpAddress,
+                ShowOnDashboard = dto.ShowOnDashboard,
+                Username = dto.Username,
+                Password = dto.Password
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PlexSettings(PlexSettingsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var dto = new PlexSettingsDto
+            {
+                IpAddress = viewModel.IpAddress,
+                Port = viewModel.Port,
+                Enabled = viewModel.Enabled,
+                Id = viewModel.Id,
+                ShowOnDashboard = viewModel.ShowOnDashboard,
+                Username = viewModel.Username,
+                Password = viewModel.Password
+            };
+
+            var save = new PlexSettingsConfiguration();
+            var result = save.SaveSettings(dto);
+            if (result)
+            {
+                RedirectToAction("PlexSettings");
+            }
+
+            return View("Error");
         }
     }
 }

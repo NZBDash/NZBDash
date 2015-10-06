@@ -8,75 +8,75 @@ using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess.Repository.Settings
 {
-    public class CouchPotatoRepository : IRepository<CouchPotatoSettings>
+    public class PlexRepository : IRepository<PlexSettings>
     {
-        public CouchPotatoRepository()
+        public PlexRepository()
         {
             Db = new NZBDashContext();
         }
 
         public NZBDashContext Db { get; set; }
 
-        public CouchPotatoSettings Find(int id)
+        public PlexSettings Find(int id)
         {
-            return Db.CouchPotatoSettings.Find(id);
+            return Db.PlexSettings.Find(id);
         }
 
-        public Task<CouchPotatoSettings> FindAsync(int id)
+        public Task<PlexSettings> FindAsync(int id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<CouchPotatoSettings> GetAll()
+        public IEnumerable<PlexSettings> GetAll()
         {
-            return Db.CouchPotatoSettings.ToList();
+            return Db.PlexSettings.ToList();
         }
 
-        public Task<IEnumerable<CouchPotatoSettings>> GetAllAsync()
+        public Task<IEnumerable<PlexSettings>> GetAllAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public CouchPotatoSettings Insert(CouchPotatoSettings entity)
+        public PlexSettings Insert(PlexSettings entity)
         {
-            Db.CouchPotatoSettings.Add(entity);
+            Db.PlexSettings.Add(entity);
             var result = Db.SaveChanges();
-            return result == 1 ? entity : new CouchPotatoSettings();
+            return result == 1 ? entity : new PlexSettings();
         }
 
-        public IEnumerable<CouchPotatoSettings> Insert(IEnumerable<CouchPotatoSettings> entity)
+        public IEnumerable<PlexSettings> Insert(IEnumerable<PlexSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<IEnumerable<CouchPotatoSettings>> InsertAsync(IEnumerable<CouchPotatoSettings> entity)
+        public Task<IEnumerable<PlexSettings>> InsertAsync(IEnumerable<PlexSettings> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<CouchPotatoSettings> InsertAsync(CouchPotatoSettings entity)
+        public Task<PlexSettings> InsertAsync(PlexSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Remove(CouchPotatoSettings entity)
+        public int Remove(PlexSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> RemoveAsync(CouchPotatoSettings entity)
+        public Task<int> RemoveAsync(PlexSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<int> ModifyAsync(CouchPotatoSettings entity)
+        public Task<int> ModifyAsync(PlexSettings entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public int Modify(CouchPotatoSettings entity)
+        public int Modify(PlexSettings entity)
         {
-            Db.CouchPotatoSettings.Attach(entity);
+            Db.PlexSettings.Attach(entity);
 
             var entry = Db.Entry(entity);
             entry.State = EntityState.Modified;

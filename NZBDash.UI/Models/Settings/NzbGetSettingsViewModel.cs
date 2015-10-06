@@ -7,13 +7,6 @@ namespace NZBDash.UI.Models.Settings
     {
         [Required]
         [DataType(DataType.Text)]
-        [DisplayName("IP Address")]
-        public string IpAddress { get; set; }
-        [Required]
-        [DisplayName("Port")]
-        public int Port { get; set; }
-        [Required]
-        [DataType(DataType.Text)]
         [DisplayName("Username")]
         public string Username { get; set; }
         [Required]

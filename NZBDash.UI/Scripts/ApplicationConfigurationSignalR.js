@@ -51,5 +51,14 @@
 
             hub.server.testSabNzbConnection(ip, port, api);
         });
+
+        $('#testPlexConnection').click(function () {
+            var ip = $('#IpAddress').val();
+            var port = $('#Port').val();
+            var pass = $('#Password').val();
+            var user = $('#Username').val();
+
+            hub.server.testSabNzbConnection(ip, port, user, pass);
+        });
     });
 });

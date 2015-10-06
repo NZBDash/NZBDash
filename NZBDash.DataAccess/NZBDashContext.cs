@@ -27,6 +27,7 @@ namespace NZBDash.DataAccess
         public DbSet<NzbGetSettings> NzbGetSettings { get; set; }
         public DbSet<SabNzbSettings> SabNzbSettings { get; set; }
         public DbSet<SonarrSettings> SonarrSettings { get; set; }
+        public DbSet<PlexSettings> PlexSettings { get; set; }
 
 
 

@@ -210,6 +210,7 @@
     <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
     <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
     <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\PlexSettingsViewModel.cs" />
     <Compile Include="Models\Settings\SabNzbSettingsViewModel.cs" />
     <Compile Include="Models\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
@@ -328,6 +329,7 @@
     <Content Include="Views\Settings\_Sidebar.cshtml" />
     <Content Include="Views\Settings\CouchPotatoSettings.cshtml" />
     <Content Include="Views\Settings\SabNzbSettings.cshtml" />
+    <Content Include="Views\Settings\PlexSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
