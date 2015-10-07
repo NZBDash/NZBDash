@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
 
+using NLog;
+
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
@@ -9,9 +11,17 @@ namespace NZBDash.UI.Controllers
 {
     public class SettingsController : Controller
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         // GET: Settings
         public ActionResult Index()
         {
+            logger.Trace("Sample trace message");
+            logger.Debug("Sample debug message");
+            logger.Info("Sample informational message");
+            logger.Warn("Sample warning message");
+            logger.Error("Sample error message");
+            logger.Fatal("Sample fatal error message");
+
             return View();
         }
 
