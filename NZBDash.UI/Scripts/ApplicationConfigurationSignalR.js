@@ -58,7 +58,7 @@
             var pass = $('#Password').val();
             var user = $('#Username').val();
 
-            hub.server.testSabNzbConnection(ip, port, user, pass);
+            hub.server.testPlexConnection(ip, port, user, pass);
         });
     });
 });
