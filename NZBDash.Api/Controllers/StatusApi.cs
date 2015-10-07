@@ -18,7 +18,7 @@ using NZBDash.Core.Model;
 namespace NZBDash.Api.Controllers
 {
     [RoutePrefix("api/{controller}/{action}")]
-    public class StatusApiController : ApiController
+    public class StatusApiController : ApiController, IStatusApi
     {
         // GET api/<controller>
         public IEnumerable<DriveInfoObj> Get()

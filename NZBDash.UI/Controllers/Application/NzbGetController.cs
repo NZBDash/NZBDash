@@ -5,6 +5,8 @@ using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
@@ -16,18 +18,23 @@ namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : Controller
     {
-        public NzbGetController()
+        public NzbGetController() : this(new NzbGetSettingsConfiguration(), new StatusApiController())
         {
-            Api = new StatusApiController();
         }
 
-        public StatusApiController Api { get; set; }
+        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
+        {
+            Settings = settings;
+            Api = api;
+        }
+
+        private ISettings<NzbGetSettingsDto> Settings { get; set; } 
+        private IStatusApi Api { get; set; }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var admin = new NzbGetSettingsConfiguration();
-            var config = admin.GetSettings();
+            var config = Settings.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try
             {
@@ -50,8 +57,7 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetNzbGetDownloadInformation()
         {
-            var admin = new NzbGetSettingsConfiguration();
-            var config = admin.GetSettings();
+            var config = Settings.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try
             {
