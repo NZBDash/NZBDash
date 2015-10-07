@@ -1,0 +1,28 @@
+﻿@model NZBDash.UI.Models.NzbGet.NzbGetViewModel
+@{
+    ViewBag.Title = "NzbGet";
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@Model.DownloadSpeed</h3>
+<h3>@Model.Status</h3>
+
+<div id="Download"></div>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/gridster")
+    @Styles.Render("~/Content/gridster")
+
+    <script src="~/Scripts/Highcharts.js"></script>
+    <script src="~/Scripts/Dashboard.js"></script>
+    <script src="http://code.highcharts.com/modules/data.js"></script>
+    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+
+    <script>
+        $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
+            $('#Download').html(view);
+        });
+    </script>
+}

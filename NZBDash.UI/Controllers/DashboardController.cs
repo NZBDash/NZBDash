@@ -61,7 +61,7 @@ namespace NZBDash.UI.Controllers
 
                     model.DownloadItem.Add(new DownloadItem
                     {
-                        FontAwesomeIcon = ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
+                        FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
                         DownloadPercentage = Math.Ceiling(percentage).ToString(),
                         DownloadingName = result.NZBName,
                         Status = EnumHelper<DownloadStatus>.Parse(result.Status),
@@ -78,43 +78,7 @@ namespace NZBDash.UI.Controllers
             }
         }
 
-        public static string ChooseIcon(DownloadStatus downloadStatus)
-        {
-            switch (downloadStatus)
-            {
-                case DownloadStatus.QUEUED:
-                    return "fa-clock-o";
-                case DownloadStatus.PAUSED:
-                    return "fa-pause";
-                case DownloadStatus.DOWNLOADING:
-                    return "fa-download";
-                case DownloadStatus.FETCHING:
-                    return "fa-spinner";
-                case DownloadStatus.PP_QUEUED:
-                    break;
-                case DownloadStatus.LOADING_PARS:
-                    return "fa-spinner";
-                case DownloadStatus.VERIFYING_SOURCES:
-                    break;
-                case DownloadStatus.REPAIRING:
-                    break;
-                case DownloadStatus.VERIFYING_REPAIRED:
-                    break;
-                case DownloadStatus.RENAMING:
-                    break;
-                case DownloadStatus.UNPACKING:
-                    break;
-                case DownloadStatus.MOVING:
-                    return "fa-arrow-right";
-                case DownloadStatus.EXECUTING_SCRIPT:
-                    break;
-                case DownloadStatus.PP_FINISHED:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("downloadStatus", downloadStatus, null);
-            }
-            return "fa-question";
-        }
+        
 
         public ActionResult GetDriveInformation()
         {

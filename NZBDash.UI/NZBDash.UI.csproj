@@ -185,12 +185,14 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Application\NzbGetController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EndpointTester.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\DashboardHub.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
     <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
     <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
@@ -228,7 +231,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\ApplicationConfigurationSignalR.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap-notify.min.js" />
@@ -330,6 +332,8 @@
     <Content Include="Views\Settings\CouchPotatoSettings.cshtml" />
     <Content Include="Views\Settings\SabNzbSettings.cshtml" />
     <Content Include="Views\Settings\PlexSettings.cshtml" />
+    <Content Include="Views\NzbGet\Partial\_Download.cshtml" />
+    <Content Include="Views\NzbGet\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
