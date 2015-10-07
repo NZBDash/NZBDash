@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
 using NZBDash.Core.Configuration;
+using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 
@@ -21,7 +23,7 @@ namespace NZBDash.UI.Controllers
         {
             Api = new StatusApiController();
         }
-        // GET: Dashboard
+
         public ActionResult Index()
         {
             return View();
@@ -32,33 +34,29 @@ namespace NZBDash.UI.Controllers
         //    var admin = new 
         //}
 
-        public ActionResult GetDownloadInformation()
+        public ActionResult GetNzbGetDownloadInformation()
         {
-            var admin = new AdminConfiguration();
-            var config = admin.GetApplicationSettings();
-            var downloaderConfig = config.FirstOrDefault(x => x.ApplicationName == "NzbGet");
-            var formattedUri = UrlHelper.ReturnUri(downloaderConfig.IpAddress).ToString();
+            var admin = new NzbGetSettingsConfiguration();
+            var config = admin.GetSettings();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try
             {
-                var statusInfo = Api.GetNzbGetStatus(formattedUri, downloaderConfig.Username, downloaderConfig.Password);
+                var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
 
-                var downloadInfo = Api.GetNzbGetList(formattedUri, downloaderConfig.Username, downloaderConfig.Password);
-
-
-
+                var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
+                
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
                 var model = new DownloaderViewModel
                 {
-                    Application = EnumHelper<Applications>.Parse(downloaderConfig.ApplicationName),
-                    DownloadSpeed = downloadSpeed.ToString(),
+                    Application = Applications.NzbGet,
+                    DownloadSpeed = downloadSpeed.ToString(CultureInfo.CurrentUICulture),
                     DownloadItem = new List<DownloadItem>()
                 };
 
                 var results = downloadInfo.result;
                 foreach (var result in results)
                 {
-
                     var percentage = (result.DownloadedSizeMB / (result.RemainingSizeMB + (double)result.DownloadedSizeMB) * 100);
 
                     model.DownloadItem.Add(new DownloadItem
@@ -69,7 +67,6 @@ namespace NZBDash.UI.Controllers
                         Status = EnumHelper<DownloadStatus>.Parse(result.Status),
                         NzbId = result.NZBID
                     });
-
                 }
 
                 return PartialView("Partial/_Download", model);
