@@ -59,7 +59,7 @@ namespace NZBDash.UI.Hubs
                 {
 
                     var percentage = Math.Ceiling(result.DownloadedSizeMB / (result.RemainingSizeMB + (double)result.DownloadedSizeMB) * 100);
-                    var icon = DashboardController.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status));
+                    var icon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status));
 
                     Clients.All.updateDownloadPercentage(percentage, result.NZBID, icon);
                 }

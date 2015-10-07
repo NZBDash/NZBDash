@@ -1,9 +1,5 @@
-﻿using Moq;
+﻿using NUnit.Framework;
 
-using NUnit.Framework;
-
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Settings;
 

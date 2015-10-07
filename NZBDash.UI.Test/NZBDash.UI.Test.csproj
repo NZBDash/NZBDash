@@ -88,6 +88,7 @@
     <Compile Include="SettingsControllerTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IconHelperTests.cs" />
     <Compile Include="UrlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
