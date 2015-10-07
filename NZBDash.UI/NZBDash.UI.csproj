@@ -185,6 +185,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,6 +207,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\PlexSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\SabNzbSettingsViewModel.cs" />
+    <Compile Include="Models\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -316,6 +323,13 @@
     <Content Include="Views\LinksConfiguration\Index.cshtml" />
     <Content Include="Views\LinksConfiguration\_AddLink.cshtml" />
     <Content Include="Views\LinksConfiguration\_Link.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\NzbGetSettings.cshtml" />
+    <Content Include="Views\Settings\SonarrSettings.cshtml" />
+    <Content Include="Views\Settings\_Sidebar.cshtml" />
+    <Content Include="Views\Settings\CouchPotatoSettings.cshtml" />
+    <Content Include="Views\Settings\SabNzbSettings.cshtml" />
+    <Content Include="Views\Settings\PlexSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
