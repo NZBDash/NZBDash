@@ -43,7 +43,7 @@ namespace NZBDash.UI.Controllers.Application
             }
             catch (Exception e)
             {
-
+                return View("Error");
             }
         }
 
