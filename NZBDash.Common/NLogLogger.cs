@@ -5,11 +5,21 @@ namespace NZBDash.Common
 {
     public class NLogLogger : ILogger
     {
-        private Logger _logger;
+        private readonly Logger _logger;
 
         public NLogLogger()
         {
             _logger = LogManager.GetCurrentClassLogger();
+        }
+
+        public void Trace(string message)
+        {
+            _logger.Trace(message);
+        }
+
+        public void Trace(string message, string area)
+        {
+            _logger.Trace("{0} : {1}", area, message);
         }
 
         public void Info(string message)
