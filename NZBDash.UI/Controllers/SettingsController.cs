@@ -7,10 +7,8 @@ using NZBDash.UI.Models.Settings;
 
 namespace NZBDash.UI.Controllers
 {
-    public class SettingsController : Controller
+    public class SettingsController : BaseController
     {
-        private readonly NLogLogger _logger = new NLogLogger();
-
         // GET: Settings
         public ActionResult Index()
         {
@@ -21,10 +19,10 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbGetSettings()
         {
             var save = new NzbGetSettingsConfiguration();
-            _logger.Trace("Getting settings", "NzbGetSettings");
+            Logger.Trace("Getting settings", "NzbGetSettings");
             var dto = save.GetSettings();
 
-            _logger.Trace("Converting settings into ViewModel", "NzbGetSettings");
+            Logger.Trace("Converting settings into ViewModel", "NzbGetSettings");
             var model = new NzbGetSettingsViewModel
             {
                 Password = dto.Password,
@@ -36,7 +34,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = dto.ShowOnDashboard
             };
 
-            _logger.Trace("returning ViewModel", "NzbGetSettings");
+            Logger.Trace("returning ViewModel", "NzbGetSettings");
             return View(model);
         }
 
