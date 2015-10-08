@@ -7,9 +7,9 @@ namespace NZBDash.Common
     {
         private readonly Logger _logger;
 
-        public NLogLogger()
+        public NLogLogger(Type t)
         {
-            _logger = LogManager.GetCurrentClassLogger();
+            _logger = LogManager.GetLogger(t.Name);
         }
 
         public void Trace(string message)

@@ -12,7 +12,7 @@ namespace NZBDash.Core.Settings
     public class NzbGetSettingsConfiguration : ISettings<NzbGetSettingsDto>
     {
         public NzbGetSettingsConfiguration()
-            : this(new NLogLogger())
+            : this(new NLogLogger(typeof(NzbGetSettingsConfiguration)))
         {
         }
 

@@ -10,8 +10,14 @@ using NZBDash.UI.Models;
 
 namespace NZBDash.UI.Controllers
 {
-    public class LinksConfigurationController : Controller
+    public class LinksConfigurationController : BaseController
     {
+        public LinksConfigurationController()
+            : base(typeof(LinksConfigurationController))
+        {
+            
+        }
+     
         // GET: LinksConfiguration
         public async Task<ActionResult> Index()
         {

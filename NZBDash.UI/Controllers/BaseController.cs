@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using NZBDash.Common;
 
@@ -6,7 +7,12 @@ namespace NZBDash.UI.Controllers
 {
     public class BaseController : Controller
     {
-        public readonly ILogger Logger = new NLogLogger();
+        public ILogger Logger { get; set; }
+
+        public BaseController(Type classType)
+        {
+            Logger = new NLogLogger(classType);
+        }
 
         protected override void OnException(ExceptionContext filterContext)
         {

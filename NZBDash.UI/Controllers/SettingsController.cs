@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
-using NZBDash.Common;
+using NLog;
+
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Models.Settings;
@@ -9,6 +10,11 @@ namespace NZBDash.UI.Controllers
 {
     public class SettingsController : BaseController
     {
+        public SettingsController()
+            : base(typeof(SettingsController))
+        {
+            
+        }
         // GET: Settings
         public ActionResult Index()
         {
