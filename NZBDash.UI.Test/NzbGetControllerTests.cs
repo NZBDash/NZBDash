@@ -52,7 +52,7 @@ namespace NZBDash.UI.Test
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
 
             var mockApi = new Mock<IStatusApi>();
-            mockApi.Setup(x => x.GetNzbGetStatus("http://192.168.0.1/", "test", "1")).Returns(expectedApi);
+            mockApi.Setup(x => x.GetNzbGetStatus("http://192.168.0.1:25/", "test", "1")).Returns(expectedApi);
 
             _controller = new NzbGetController(mockSettings.Object, mockApi.Object);
 
