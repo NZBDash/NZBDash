@@ -200,6 +200,7 @@
     <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
+    <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\DashboardHub.cs" />
     <Compile Include="Hubs\LinksConfigurationHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

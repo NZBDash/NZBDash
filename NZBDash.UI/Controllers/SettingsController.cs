@@ -25,10 +25,10 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbGetSettings()
         {
             var save = new NzbGetSettingsConfiguration();
-            Logger.Trace("Getting settings", "NzbGetSettings");
+            Logger.Trace("Getting settings");
             var dto = save.GetSettings();
 
-            Logger.Trace("Converting settings into ViewModel", "NzbGetSettings");
+            Logger.Trace("Converting settings into ViewModel");
             var model = new NzbGetSettingsViewModel
             {
                 Password = dto.Password,
@@ -40,7 +40,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = dto.ShowOnDashboard
             };
 
-            Logger.Trace("returning ViewModel", "NzbGetSettings");
+            Logger.Trace("returning ViewModel");
             return View(model);
         }
 

@@ -25,20 +25,20 @@ namespace NZBDash.Core.Settings
 
         public NzbGetSettingsDto GetSettings()
         {
-            _logger.Trace("Started NzbGetRepository", "NzbGetSettingsConfiguration.GetSettings");
+            _logger.Trace("Started NzbGetRepository");
             var repo = new NzbGetRepository();
             try
             {
-                _logger.Trace("Getting all items from NzbGetRepository", "NzbGetSettingsConfiguration.GetSettings");
+                _logger.Trace("Getting all items from NzbGetRepository");
                 var result = repo.GetAll();
                 var setting = result.FirstOrDefault();
                 if (setting == null)
                 {
-                    _logger.Trace("There are no items returned from NzbGetRepository. Returning new empty DTO", "NzbGetSettingsConfiguration.GetSettings");
+                    _logger.Trace("There are no items returned from NzbGetRepository. Returning new empty DTO");
                     return new NzbGetSettingsDto();
                 }
 
-                _logger.Trace("Creating dto from the results from NzbGetRepository", "NzbGetSettingsConfiguration.GetSettings");
+                _logger.Trace("Creating dto from the results from NzbGetRepository");
                 var model = new NzbGetSettingsDto
                 {
                     Enabled = setting.Enabled,
@@ -61,15 +61,15 @@ namespace NZBDash.Core.Settings
 
         public bool SaveSettings(NzbGetSettingsDto model)
         {
-            _logger.Trace("Started NzbGetRepository", "NzbGetSettingsConfiguration.SaveSettings");
+            _logger.Trace("Started NzbGetRepository");
             var repo = new NzbGetRepository();
 
-            _logger.Trace(string.Format("Looking for id {0} in the NzbGetRepository", model.Id), "NzbGetSettingsConfiguration.SaveSettings");
+            _logger.Trace(string.Format("Looking for id {0} in the NzbGetRepository", model.Id));
             var entity = repo.Find(model.Id);
 
             if (entity == null)
             {
-                _logger.Trace("Our entity is null so we are going to insert one", "NzbGetSettingsConfiguration.SaveSettings");
+                _logger.Trace("Our entity is null so we are going to insert one");
                 var newEntity = new NzbGetSettings
                 {
                     Port = model.Port,
@@ -79,14 +79,14 @@ namespace NZBDash.Core.Settings
                     Password = model.Password,
                     ShowOnDashboard = model.ShowOnDashboard
                 };
-                _logger.Trace("Inserting now", "NzbGetSettingsConfiguration.SaveSettings");
+                _logger.Trace("Inserting now");
                 var insertResult = repo.Insert(newEntity);
 
-                _logger.Trace(string.Format("Our insert was {0}", insertResult != null), "NzbGetSettingsConfiguration.SaveSettings");
+                _logger.Trace(string.Format("Our insert was {0}", insertResult != null));
                 return insertResult != null;
             }
 
-            _logger.Trace("We found an entity so we are going to modify the existing one", "NzbGetSettingsConfiguration.SaveSettings");
+            _logger.Trace("We found an entity so we are going to modify the existing one");
             entity.Enabled = model.Enabled;
             entity.IpAddress = model.IpAddress;
             entity.Password = model.Password;
@@ -94,10 +94,10 @@ namespace NZBDash.Core.Settings
             entity.Username = model.Username;
             entity.ShowOnDashboard = model.ShowOnDashboard;
 
-            _logger.Trace("Updating modified record", "NzbGetSettingsConfiguration.SaveSettings");
+            _logger.Trace("Updating modified record");
             var result = repo.Modify(entity);
 
-            _logger.Trace(string.Format("Our modify was {0}", result == 1), "NzbGetSettingsConfiguration.SaveSettings");
+            _logger.Trace(string.Format("Our modify was {0}", result == 1));
             return result == 1;
         }
     }

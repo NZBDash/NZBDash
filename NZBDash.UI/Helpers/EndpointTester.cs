@@ -7,15 +7,25 @@ namespace NZBDash.UI.Helpers
 {
     public class EndpointTester
     {
+
         public EndpointTester()
+            : this(new NLogLogger(typeof(EndpointTester)))
         {
             Api = new StatusApiController();
         }
+
+        public EndpointTester(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        private ILogger _logger { get; set; }
 
         public StatusApiController Api { get; set; }
 
         public bool TestApplicationConnectivity(Applications application, string apiKey, string ipAddress, string password, string userName)
         {
+            _logger.Trace(string.Format("Testing application {0}", application));
             switch (application)
             {
                 case Applications.SabNZB:
@@ -42,7 +52,10 @@ namespace NZBDash.UI.Helpers
 
         public bool NzbGetConnection(string ip, string username, string password)
         {
+            _logger.Trace("Calling GetNZBGetStatus");
             var result = Api.GetNzbGetStatus(ip, username, password);
+
+            _logger.Trace(string.Format("Calling GetNZBGetStatus result = {0}", result.version != null));
             return result.version != null;
         }
 

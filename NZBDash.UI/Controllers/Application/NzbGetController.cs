@@ -16,13 +16,13 @@ using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
-    public class NzbGetController : Controller
+    public class NzbGetController : BaseController
     {
         public NzbGetController() : this(new NzbGetSettingsConfiguration(), new StatusApiController())
         {
         }
 
-        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
+        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api) : base(typeof(NzbGetController))
         {
             Settings = settings;
             Api = api;
