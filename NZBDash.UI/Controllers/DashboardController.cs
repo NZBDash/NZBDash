@@ -15,11 +15,12 @@ using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         public StatusApiController Api { get; set; }
 
         public DashboardController()
+            : base(typeof(DashboardController))
         {
             Api = new StatusApiController();
         }
