@@ -35,7 +35,7 @@ namespace NZBDash.UI.Controllers.Application
         public ActionResult Index()
         {
             var config = Settings.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
@@ -58,7 +58,7 @@ namespace NZBDash.UI.Controllers.Application
         public ActionResult GetNzbGetDownloadInformation()
         {
             var config = Settings.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
