@@ -1,14 +1,20 @@
 ﻿using System.Web.Mvc;
-using System.Web.Services.Description;
-using NZBDash.Core.Interfaces;
+
+using NLog;
+
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Models.Settings;
 
 namespace NZBDash.UI.Controllers
 {
-    public class SettingsController : Controller
+    public class SettingsController : BaseController
     {
+        public SettingsController()
+            : base(typeof(SettingsController))
+        {
+            
+        }
         // GET: Settings
         public ActionResult Index()
         {
@@ -19,7 +25,10 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbGetSettings()
         {
             var save = new NzbGetSettingsConfiguration();
+            Logger.Trace("Getting settings", "NzbGetSettings");
             var dto = save.GetSettings();
+
+            Logger.Trace("Converting settings into ViewModel", "NzbGetSettings");
             var model = new NzbGetSettingsViewModel
             {
                 Password = dto.Password,
@@ -31,6 +40,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = dto.ShowOnDashboard
             };
 
+            Logger.Trace("returning ViewModel", "NzbGetSettings");
             return View(model);
         }
 
@@ -104,7 +114,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                return RedirectToAction("SabNzbSettings");
+               return RedirectToAction("SabNzbSettings");
             }
 
             return View("Error");
@@ -169,8 +179,8 @@ namespace NZBDash.UI.Controllers
                 IpAddress = dto.IpAddress,
                 ApiKey = dto.ApiKey,
                 ShowOnDashboard = dto.ShowOnDashboard,
-                Password = dto.Password,
-                Username = dto.Username
+                Username = dto.Username,
+                Password = dto.Password
             };
 
             return View(model);

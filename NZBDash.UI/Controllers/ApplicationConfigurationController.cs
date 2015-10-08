@@ -12,8 +12,13 @@ using NZBDash.UI.Models;
 
 namespace NZBDash.UI.Controllers
 {
-    public class ApplicationConfigurationController : Controller
+    public class ApplicationConfigurationController : BaseController
     {
+        public ApplicationConfigurationController()
+            : base(typeof(ApplicationConfigurationController))
+        {
+            
+        }
         [HttpGet]
         public async Task<ActionResult> Index()
         {
