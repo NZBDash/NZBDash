@@ -67,7 +67,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("NzbGetSettings");
+                return RedirectToAction("NzbGetSettings");
             }
 
             return View("Error");
@@ -114,7 +114,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("SabNzbSettings");
+               return RedirectToAction("SabNzbSettings");
             }
 
             return View("Error");
@@ -160,7 +160,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("SonarrSettings");
+                return RedirectToAction("SonarrSettings");
             }
 
             return View("Error");
@@ -171,14 +171,16 @@ namespace NZBDash.UI.Controllers
         {
             var save = new CouchPotatoSettingsConfiguration();
             var dto = save.GetSettings();
-            var model = new SonarrSettingsViewModel
+            var model = new CouchPotatoSettingsViewModel
             {
                 Port = dto.Port,
                 Enabled = dto.Enabled,
                 Id = dto.Id,
                 IpAddress = dto.IpAddress,
                 ApiKey = dto.ApiKey,
-                ShowOnDashboard = dto.ShowOnDashboard
+                ShowOnDashboard = dto.ShowOnDashboard,
+                Username = dto.Username,
+                Password = dto.Password
             };
 
             return View(model);
@@ -208,7 +210,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("CouchPotatoSettings");
+                return RedirectToAction("CouchPotatoSettings");
             }
 
             return View("Error");
@@ -256,7 +258,7 @@ namespace NZBDash.UI.Controllers
             var result = save.SaveSettings(dto);
             if (result)
             {
-                RedirectToAction("PlexSettings");
+                return RedirectToAction("PlexSettings");
             }
 
             return View("Error");

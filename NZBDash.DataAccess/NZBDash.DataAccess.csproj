@@ -49,6 +49,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AdminConfiguration.cs" />
     <Compile Include="Models\ApplicationConfiguration.cs" />
     <Compile Include="Models\Applications.cs" />
