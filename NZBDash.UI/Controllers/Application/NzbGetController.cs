@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
@@ -97,5 +98,28 @@ namespace NZBDash.UI.Controllers.Application
                 return PartialView("Partial/DashletError");
             }
         }
+
+        [HttpGet]
+        public ActionResult GetNzbGetDownloadHistory()
+        {
+            var config = Settings.GetSettings();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
+
+            var model = history.result.Select(r => new NzbGetHistoryViewModel
+            {
+                Id = r.ID,
+                Name = r.Name,
+                Status = r.Status,
+                Category = r.Category,
+                FileSize = r.FileSizeMB,
+                Health = r.Health,
+                HistoryTime = r.HistoryTime,
+            }).ToList();
+
+            return PartialView("Partial/History", model);
+
+        }
+
     }
 }
