@@ -2,6 +2,8 @@
 
 using NLog;
 
+using NZBDash.UI.Models;
+
 namespace NZBDash.UI.Controllers
 {
     public class LogController : BaseController
@@ -13,12 +15,26 @@ namespace NZBDash.UI.Controllers
         }
 
         // GET: Log
-        public ActionResult Index(string log)
+        public ActionResult Index()
         {
-            return View();
+            var model = new LogViewModel { LogLevel = LoggingLevel.Warn };
+
+            if (Session["LogLevel"] != null)
+            {
+                model.LogLevel = (LoggingLevel)Session["LogLevel"];
+            }
+            return View(model);
         }
 
-        public static void ReconfigureLogLevel(LogLevel level)
+        [HttpPost]
+        public ActionResult Index(LogViewModel model)
+        {
+            Session["LogLevel"] = model.LogLevel;
+            ReconfigureLogLevel(model.LogLevel);
+            return RedirectToAction("Index");
+        }
+
+        public static void ReconfigureLogLevel(LoggingLevel level)
         {
             foreach (var rule in LogManager.Configuration.LoggingRules)
             {
@@ -30,9 +46,9 @@ namespace NZBDash.UI.Controllers
                 rule.DisableLoggingForLevel(LogLevel.Error);
                 rule.DisableLoggingForLevel(LogLevel.Fatal);
 
-                switch (level.Name)
+                switch (level)
                 {
-                    case "Trace":
+                    case LoggingLevel.Trace:
                         rule.EnableLoggingForLevel(LogLevel.Trace);
                         rule.EnableLoggingForLevel(LogLevel.Info);
                         rule.EnableLoggingForLevel(LogLevel.Debug);
@@ -40,29 +56,29 @@ namespace NZBDash.UI.Controllers
                         rule.EnableLoggingForLevel(LogLevel.Error);
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
-                    case "Info":
+                    case LoggingLevel.Info:
                         rule.EnableLoggingForLevel(LogLevel.Info);
                         rule.EnableLoggingForLevel(LogLevel.Debug);
                         rule.EnableLoggingForLevel(LogLevel.Warn);
                         rule.EnableLoggingForLevel(LogLevel.Error);
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
-                    case "Debug":
+                    case LoggingLevel.Debug:
                         rule.EnableLoggingForLevel(LogLevel.Debug);
                         rule.EnableLoggingForLevel(LogLevel.Warn);
                         rule.EnableLoggingForLevel(LogLevel.Error);
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
-                    case "Warn":
+                    case LoggingLevel.Warn:
                         rule.EnableLoggingForLevel(LogLevel.Warn);
                         rule.EnableLoggingForLevel(LogLevel.Error);
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
-                    case "Error":
+                    case LoggingLevel.Error:
                         rule.EnableLoggingForLevel(LogLevel.Error);
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
-                    case "Fatal":
+                    case LoggingLevel.Fatal:
                         rule.EnableLoggingForLevel(LogLevel.Fatal);
                         break;
                 }

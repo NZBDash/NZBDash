@@ -219,6 +219,8 @@
     <Compile Include="Models\Dashboard\RamViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
+    <Compile Include="Models\LoggingLevel.cs" />
+    <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NzbGet\NzbGetHistoryViewModel.cs" />
     <Compile Include="Models\NzbGet\NzbGetViewModel.cs" />
@@ -353,11 +355,11 @@
     <Content Include="Views\NzbGet\Partial\History.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Log\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Log\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

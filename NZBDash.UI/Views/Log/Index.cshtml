@@ -1,0 +1,24 @@
+﻿@model NZBDash.UI.Models.LogViewModel
+@{
+    ViewBag.Title = "Log Levels";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    Please only set Trace for debugging purposes.
+    <br/>
+    Trace contains a LOT of information and could potentially slow down the system.
+</p>
+
+@using (Html.BeginForm())
+{
+    @Html.EnumDropDownListFor(x => x.LogLevel)
+    
+    <br/>
+    <div class="form-group">
+        <div class="">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
