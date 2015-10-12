@@ -7,8 +7,14 @@
 <h3>@Model.DownloadSpeed</h3>
 <h3>@Model.Status</h3>
 
-<div id="Download"></div>
 
+<ul class="nav nav-tabs">
+    <li id="HomeTab" role="presentation" class="active"><a id="Home" href="#">Home</a></li>
+    <li id="HistoryTab" role="presentation"><a id="History" href="#">History</a></li>
+    @*<li role="presentation"><a href="#">Messages</a></li>*@
+</ul>
+
+<div id="ContentArea"></div>
 
 @section scripts
 {
@@ -22,7 +28,23 @@
 
     <script>
         $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
-            $('#Download').html(view);
+            $('#ContentArea').html(view);
+        });
+
+        $('#History').click(function() {
+            $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function(view) {
+                $('#ContentArea').html(view);
+                $('#HomeTab').removeClass("active");
+                $('#HistoryTab').addClass("active");
+            });
+        });
+
+        $('#Home').click(function () {
+            $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
+                $('#ContentArea').html(view);
+                $('#HomeTab').addClass("active");
+                $('#HistoryTab').removeClass("active");
+            });
         });
     </script>
 }

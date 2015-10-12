@@ -11,8 +11,9 @@ namespace NZBDash.UI.Controllers
         {
 
         }
+
         // GET: Log
-        public ActionResult Index()
+        public ActionResult Index(string log)
         {
             return View();
         }

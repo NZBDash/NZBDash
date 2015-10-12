@@ -19,38 +19,46 @@ namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController() : this(new NzbGetSettingsConfiguration(), new StatusApiController())
+        public NzbGetController()
+            : this(new NzbGetSettingsConfiguration(), new StatusApiController())
         {
         }
 
-        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api) : base(typeof(NzbGetController))
+        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
+            : base(typeof(NzbGetController))
         {
             Settings = settings;
             Api = api;
         }
 
-        private ISettings<NzbGetSettingsDto> Settings { get; set; } 
+        private ISettings<NzbGetSettingsDto> Settings { get; set; }
         private IStatusApi Api { get; set; }
 
         [HttpGet]
         public ActionResult Index()
         {
+            Logger.Trace("Getting Config");
             var config = Settings.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
+                Logger.Trace("Getting NzbGetStatus");
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
+                Logger.Trace(string.Format("Converting DL Speed : {0}", statusInfo.Result.DownloadRate));
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
+
                 var nzbModel = new NzbGetViewModel
                 {
                     DownloadSpeed = downloadSpeed.ToString(CultureInfo.CurrentUICulture),
                     Status = statusInfo.Result.ServerPaused ? "Paused" : "Running",
                 };
 
+                Logger.Trace("Returning Model");
                 return View(nzbModel);
             }
             catch (Exception e)
             {
+                Logger.Error(e.Message, e);
                 return View("Error");
             }
         }
@@ -58,12 +66,15 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetNzbGetDownloadInformation()
         {
+            Logger.Trace("Getting Config");
             var config = Settings.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
+                Logger.Trace("Getting NzbGetStatus");
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
 
+                Logger.Trace("Getting Current NZBGetlist");
                 var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
 
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
@@ -76,9 +87,12 @@ namespace NZBDash.UI.Controllers.Application
                 };
 
                 var results = downloadInfo.result;
+                Logger.Trace(string.Format("Results count : {0}", results.Count));
                 foreach (var result in results)
                 {
+                    Logger.Trace(string.Format("Going through result {0}", result.NZBName));
                     var percentage = (result.DownloadedSizeMB / (result.RemainingSizeMB + (double)result.DownloadedSizeMB) * 100);
+                    Logger.Trace(string.Format("Percentage : {0}", percentage));
 
                     model.DownloadItem.Add(new DownloadItem
                     {
@@ -94,6 +108,7 @@ namespace NZBDash.UI.Controllers.Application
             }
             catch (Exception e)
             {
+                Logger.Error(e.Message, e);
                 ViewBag.Error = e.Message;
                 return PartialView("Partial/DashletError");
             }
@@ -102,24 +117,30 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetNzbGetDownloadHistory()
         {
-            var config = Settings.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
-            var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
-
-            var model = history.result.Select(r => new NzbGetHistoryViewModel
+            try
             {
-                Id = r.ID,
-                Name = r.Name,
-                Status = r.Status,
-                Category = r.Category,
-                FileSize = r.FileSizeMB,
-                Health = r.Health,
-                HistoryTime = r.HistoryTime,
-            }).ToList();
+                var config = Settings.GetSettings();
+                var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+                var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
-            return PartialView("Partial/History", model);
+                var model = history.result.Select(r => new NzbGetHistoryViewModel
+                {
+                    Id = r.ID,
+                    Name = r.Name,
+                    Status = r.Status,
+                    Category = r.Category,
+                    FileSize = r.FileSizeMB,
+                    Health = r.Health,
+                    HistoryTime = r.HistoryTime,
+                }).ToList();
 
+                return PartialView("Partial/History", model);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
+                return PartialView("Partial/DashletError");
+            }
         }
-
     }
 }
