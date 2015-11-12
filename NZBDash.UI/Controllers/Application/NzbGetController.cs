@@ -37,6 +37,12 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetNzbGetStatus()
+        {
             Logger.Trace("Getting Config");
             var config = Settings.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
@@ -54,12 +60,12 @@ namespace NZBDash.UI.Controllers.Application
                 };
 
                 Logger.Trace("Returning Model");
-                return View(nzbModel);
+                return Json(nzbModel, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message, e);
-                return View("Error");
+                return Json("Error", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -110,7 +116,7 @@ namespace NZBDash.UI.Controllers.Application
             {
                 Logger.Error(e.Message, e);
                 ViewBag.Error = e.Message;
-                return PartialView("Partial/DashletError");
+                return PartialView("DashletError");
             }
         }
 
@@ -139,7 +145,7 @@ namespace NZBDash.UI.Controllers.Application
             catch (Exception e)
             {
                 Logger.Error(e.Message, e);
-                return PartialView("Partial/DashletError");
+                return PartialView("DashletError");
             }
         }
     }

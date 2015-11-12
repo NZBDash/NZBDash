@@ -1,11 +1,11 @@
-﻿@model NZBDash.UI.Models.NzbGet.NzbGetViewModel
+﻿
 @{
     ViewBag.Title = "NzbGet";
 }
 
 <h2>@ViewBag.Title</h2>
-<h3>@Model.DownloadSpeed</h3>
-<h3>@Model.Status</h3>
+<h3 id="speed"></h3>
+<h3 id="status"></h3>
 
 
 <ul class="nav nav-tabs">
@@ -27,9 +27,15 @@
     <script src="http://code.highcharts.com/modules/drilldown.js"></script>
 
     <script>
+        $(function() {
         $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
             $('#ContentArea').html(view);
         });
+
+            $.ajax("@Url.Action("GetNzbGetStatus")").success(function(data) {
+                $('#speed').html(data.DownloadSpeed);
+                $('#status').html(data.Status);
+            });
 
         $('#History').click(function() {
             $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function(view) {
@@ -45,6 +51,8 @@
                 $('#HomeTab').addClass("active");
                 $('#HistoryTab').removeClass("active");
             });
+        });
+
         });
     </script>
 }

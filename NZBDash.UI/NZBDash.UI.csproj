@@ -203,6 +203,7 @@
     <Compile Include="Helpers\EndpointTester.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\IconHelper.cs" />
+    <Compile Include="Helpers\IPrincipleExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
@@ -326,7 +327,7 @@
     <Content Include="Views\ApplicationConfiguration\_AddApplication.cshtml" />
     <Content Include="Views\ApplicationConfiguration\_Application.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\Partial\DashletError.cshtml" />
+    <Content Include="Views\Shared\DashletError.cshtml" />
     <Content Include="Views\Dashboard\Partial\_Download.cshtml" />
     <Content Include="Views\Dashboard\Partial\_DriveInformation.cshtml" />
     <Content Include="Views\Dashboard\Partial\_Links.cshtml" />

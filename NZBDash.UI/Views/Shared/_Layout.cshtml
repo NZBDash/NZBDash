@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using NZBDash.Common
+@using NZBDash.UI.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -26,6 +28,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+                    @if (User.IsApplicationEnabled(Applications.NzbGet))
+                    {
+                        <li>@Html.ActionLink("NzbGet", "Index", "NzbGet")</li>
+                    }
+                    @if (User.IsApplicationEnabled(Applications.Plex))
+                    {
+                        <li>@Html.ActionLink("NzbGet", "Index", "Plex")</li>
+                    }
                     <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
                 </ul>
             </div>
@@ -40,4 +50,3 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-    

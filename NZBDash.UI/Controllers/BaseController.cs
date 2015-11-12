@@ -18,7 +18,6 @@ namespace NZBDash.UI.Controllers
         {
             var exception = filterContext.Exception;
             Logger.Fatal(exception);
-
             base.OnException(filterContext);
         }
 

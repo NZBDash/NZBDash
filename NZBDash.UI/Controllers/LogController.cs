@@ -22,7 +22,7 @@ namespace NZBDash.UI.Controllers
         // GET: Log
         public ActionResult Index()
         {
-            var model = new LogViewModel { LogLevel = LoggingLevel.Warn};
+            var model = new LogViewModel { LogLevel = LoggingLevel.Warn };
             if (Session["LogLevel"] != null)
             {
                 model.LogLevel = (LoggingLevel)Session["LogLevel"];
@@ -41,6 +41,10 @@ namespace NZBDash.UI.Controllers
 
         internal IEnumerable<string> GetLog(string path)
         {
+            if (!System.IO.File.Exists(path))
+            {
+                return new List<string> { "File doesn't exist" };
+            }
             var lines = System.IO.File.ReadLines(path, Encoding.UTF8);
             return lines;
         }
