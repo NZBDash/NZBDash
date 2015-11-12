@@ -25,6 +25,7 @@ namespace NZBDash.UI.Test
         }
 
         [Test]
+        [Ignore]
         public void EnsureThatIndexReturnsPopulatedModel()
         {
             var expectedSettings = new NzbGetSettingsDto
