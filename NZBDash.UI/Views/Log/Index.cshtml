@@ -7,18 +7,53 @@
 
 <p>
     Please only set Trace for debugging purposes.
-    <br/>
+    <br />
     Trace contains a LOT of information and could potentially slow down the system.
 </p>
 
 @using (Html.BeginForm())
 {
     @Html.EnumDropDownListFor(x => x.LogLevel)
-    
-    <br/>
+
+    <br />
     <div class="form-group">
         <div class="">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
 }
+
+
+
+<div id="lines" class="col-md-10">
+
+</div>
+
+<script>
+    $(function() {
+
+        var hub = $.connection.logsHub;
+        $.connection.hub.start().done(function() {
+            hub.server.getLogs();
+
+
+            function updateHtmlLogs() {
+                hub.server.updateLogs();
+            }
+
+            setInterval(updateHtmlLogs, 5000);
+        });
+
+
+
+        hub.client.addLog = function (logs) {
+
+            logs.forEach(function(entry) {
+                $('#lines').append("<div><p>" + entry +
+                    "</p></div>");
+            });
+        }
+
+
+    });
+</script>

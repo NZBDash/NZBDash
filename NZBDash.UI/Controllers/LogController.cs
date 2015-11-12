@@ -1,4 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Web.Mvc;
 
 using NLog;
 
@@ -17,12 +22,12 @@ namespace NZBDash.UI.Controllers
         // GET: Log
         public ActionResult Index()
         {
-            var model = new LogViewModel { LogLevel = LoggingLevel.Warn };
-
+            var model = new LogViewModel { LogLevel = LoggingLevel.Warn};
             if (Session["LogLevel"] != null)
             {
                 model.LogLevel = (LoggingLevel)Session["LogLevel"];
             }
+
             return View(model);
         }
 
@@ -32,6 +37,19 @@ namespace NZBDash.UI.Controllers
             Session["LogLevel"] = model.LogLevel;
             ReconfigureLogLevel(model.LogLevel);
             return RedirectToAction("Index");
+        }
+
+        internal IEnumerable<string> GetLog(string path)
+        {
+            var lines = System.IO.File.ReadLines(path, Encoding.UTF8);
+            return lines;
+        }
+
+        internal IEnumerable<string> LogFiles()
+        {
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/NZBDash/";
+
+            return Directory.GetFiles(directory).ToList();
         }
 
         public static void ReconfigureLogLevel(LoggingLevel level)
@@ -84,7 +102,7 @@ namespace NZBDash.UI.Controllers
                 }
             }
 
-            //Call to update existing Loggers created with GetLogger() or 
+            //Call to update existing Loggers created with GetLogger() or
             //GetCurrentClassLogger()
             LogManager.ReconfigExistingLoggers();
         }
