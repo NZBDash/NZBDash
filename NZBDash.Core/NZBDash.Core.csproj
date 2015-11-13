@@ -41,6 +41,10 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Microsoft.VisualBasic.Compatibility.Data" />
+    <Reference Include="Omu.ValueInjecter, Version=3.1.1.0, Culture=neutral, PublicKeyToken=c7694541b0ac80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ValueInjecter.3.1.1\lib\net40\Omu.ValueInjecter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -54,6 +58,7 @@
     <Compile Include="Configuration\AdminConfiguration.cs" />
     <Compile Include="Configuration\LinksConfiguration.cs" />
     <Compile Include="DashboardAccess.cs" />
+    <Compile Include="Interfaces\IHardwareService.cs" />
     <Compile Include="Interfaces\IApplicationTester.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Model\DTO\AdminConfigurationDto.cs" />
@@ -74,6 +79,7 @@
     <Compile Include="Model\Settings\SonarrSettingsViewModelDto.cs" />
     <Compile Include="Model\XbmcModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\WindowsHardwareService.cs" />
     <Compile Include="Settings\PlexSettingsConfiguration.cs" />
     <Compile Include="Settings\SabNzbSettingsConfiguration.cs" />
     <Compile Include="Settings\CouchPotatoSettingsConfiguration.cs" />
@@ -83,6 +89,10 @@
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
+      <Project>{521cb3c7-f19c-4b92-8a39-4537bec094b5}</Project>
+      <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>
       <Name>NZBDash.Common</Name>

@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{64ADCA6B-050F-48B1-8039-2D16BC494AF0}</ProjectGuid>
+    <ProjectGuid>{A4EB0077-FFB4-433F-8514-674A5E0DA1CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NZBDash.UI.Test</RootNamespace>
-    <AssemblyName>NZBDash.UI.Test</AssemblyName>
+    <RootNamespace>NZBDash.Common.Tests</RootNamespace>
+    <AssemblyName>NZBDash.Common.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,49 +37,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter, Version=3.1.1.0, Culture=neutral, PublicKeyToken=c7694541b0ac80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\valueinjecter.3.1.1\lib\net40\Omu.ValueInjecter.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="TestStack.FluentMVCTesting">
-      <HintPath>..\packages\TestStack.FluentMVCTesting.3.0.0\lib\NET45\TestStack.FluentMVCTesting.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -90,34 +56,20 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="NzbGetHistoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NzbGetControllerTests.cs" />
-    <Compile Include="SettingsControllerTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IconHelperTests.cs" />
-    <Compile Include="UrlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NZBDash.Api\NZBDash.Api.csproj">
-      <Project>{e54f85fe-269a-4b32-bcbb-239cf1fd63e1}</Project>
-      <Name>NZBDash.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
-      <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
-      <Name>NZBDash.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.UI\NZBDash.UI.csproj">
-      <Project>{30ed7e20-5c5b-4643-b3a6-7d10be172241}</Project>
-      <Name>NZBDash.UI</Name>
+    <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
+      <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>
+      <Name>NZBDash.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

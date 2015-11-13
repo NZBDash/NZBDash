@@ -217,7 +217,6 @@
     <Compile Include="Models\CouchPotatoStatus.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\NzbGetHistory.cs" />
     <Compile Include="Models\NzbGetList.cs" />
     <Compile Include="Models\NzbGetStatus.cs" />
     <Compile Include="Models\PlexServers.cs" />
@@ -271,6 +270,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
+      <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
+      <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>
       <Name>NZBDash.Common</Name>

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
+using NZBDash.Api.Models;
 using NZBDash.Common;
+using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
@@ -13,17 +15,14 @@ using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.NzbGet;
 
+using Omu.ValueInjecter;
+
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController()
-            : this(new NzbGetSettingsConfiguration(), new StatusApiController())
-        {
-        }
-
         public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
             : base(typeof(NzbGetController))
         {
@@ -129,16 +128,14 @@ namespace NZBDash.UI.Controllers.Application
                 var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
                 var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
-                var model = history.result.Select(r => new NzbGetHistoryViewModel
+                var model = new List<NzbGetHistoryViewModel>();
+
+                foreach (var result in history.result)
                 {
-                    Id = r.ID,
-                    Name = r.Name,
-                    Status = r.Status,
-                    Category = r.Category,
-                    FileSize = r.FileSizeMB,
-                    Health = r.Health,
-                    HistoryTime = r.HistoryTime,
-                }).ToList();
+                    var singleItem = new NzbGetHistoryViewModel();
+                    var mappedResult = (NzbGetHistoryViewModel)singleItem.InjectFrom(new NzbGetHistoryMapper(), result);
+                    model.Add(mappedResult);
+                }
 
                 return PartialView("Partial/History", model);
             }

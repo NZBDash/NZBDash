@@ -6,7 +6,10 @@ using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
+using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Services;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
@@ -17,12 +20,14 @@ namespace NZBDash.UI.Controllers
 {
     public class DashboardController : BaseController
     {
-        public StatusApiController Api { get; set; }
+        private IStatusApi Api { get; set; }
+        private IHardwareService Service { get; set; }
 
-        public DashboardController()
+        public DashboardController(IHardwareService service, IStatusApi statusApi)
             : base(typeof(DashboardController))
         {
-            Api = new StatusApiController();
+            Api = statusApi;
+            Service = service;
         }
 
         public ActionResult Index()
@@ -32,7 +37,7 @@ namespace NZBDash.UI.Controllers
 
         //public ActionResult GetEnabledDashlets()
         //{
-        //    var admin = new 
+        //    var admin = new
         //}
 
         public ActionResult GetNzbGetDownloadInformation()
@@ -45,7 +50,7 @@ namespace NZBDash.UI.Controllers
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
 
                 var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
-                
+
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
                 var model = new DownloaderViewModel
@@ -79,26 +84,12 @@ namespace NZBDash.UI.Controllers
             }
         }
 
-        
+
 
         public ActionResult GetDriveInformation()
         {
-            var driveInfo = Api.GetDriveInfo();
-            var model = driveInfo.Select(drive => new DrivesViewModel
-            {
-                AvailableFreeSpace = drive.AvailableFreeSpace,
-                DriveFormat = drive.DriveFormat,
-                FreeSpaceString = drive.FreeSpaceString,
-                IsReady = drive.IsReady,
-                Name = drive.Name,
-                PercentageFilled = drive.PercentageFilled,
-                TotalFreeSpace = drive.TotalFreeSpace,
-                TotalSize = drive.TotalSize,
-                TotalSpaceString = drive.TotalSpaceString,
-                VolumeLabel = drive.VolumeLabel
-            }).ToList();
-
-            return PartialView("Partial/_DriveInformation", model);
+            var drives = Service.GetDrives();
+            return PartialView("Partial/_DriveInformation", drives);
         }
 
         public ActionResult GetLinks()
@@ -113,36 +104,24 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetRam()
         {
-            var ramInfo = Api.GetRamInfo();
-            var model = new RamViewModel
-            {
-                AvailablePhysicalMemory = ramInfo.AvailablePhysicalMemory,
-                AvailableVirtualMemory = ramInfo.AvailableVirtualMemory,
-                OSFullName = ramInfo.OSFullName,
-                OSPlatform = ramInfo.OSPlatform,
-                OSVersion = ramInfo.OSVersion,
-                PhysicalPercentageFilled = ramInfo.PhysicalPercentageFilled,
-                TotalPhysicalMemory = ramInfo.TotalPhysicalMemory,
-                TotalVirtualMemory = ramInfo.TotalVirtualMemory,
-                VirtualPercentageFilled = ramInfo.VirtualPercentageFilled
-            };
+            var ramModel = Service.GetRam();
 
-            return PartialView("Partial/_Ram", model);
+            return PartialView("Partial/_Ram", ramModel);
         }
 
-        public ActionResult GetServerInformation()
-        {
-            var ramInfo = Api.GetRamInfo();
-            var uptime = Api.UpTime();
-            var model = new RamViewModel
-            {
-                OSFullName = ramInfo.OSFullName,
-                OSPlatform = ramInfo.OSPlatform,
-                OSVersion = ramInfo.OSVersion,
-                Uptime = uptime
-            };
+        //public ActionResult GetServerInformation()
+        //{
+        //    var ramInfo = Api.GetRamInfo();
+        //    var uptime = Api.UpTime();
+        //    var model = new RamViewModel
+        //    {
+        //        OSFullName = ramInfo.OSFullName,
+        //        OSPlatform = ramInfo.OSPlatform,
+        //        OSVersion = ramInfo.OSVersion,
+        //        Uptime = uptime
+        //    };
 
-            return PartialView("Partial/_ServerInformation", model);
-        }
+        //    return PartialView("Partial/_ServerInformation", model);
+        //}
     }
 }

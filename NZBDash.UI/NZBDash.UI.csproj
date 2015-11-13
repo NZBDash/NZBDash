@@ -65,8 +65,24 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter, Version=3.1.1.0, Culture=neutral, PublicKeyToken=c7694541b0ac80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\valueinjecter.3.1.1\lib\net40\Omu.ValueInjecter.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -129,6 +145,10 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -186,6 +206,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -216,16 +237,12 @@
     <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
     <Compile Include="Models\Dashboard\DownloaderViewModel.cs" />
     <Compile Include="Models\Dashboard\DownloadStatus.cs" />
-    <Compile Include="Models\Dashboard\DrivesViewModel.cs" />
     <Compile Include="Models\Dashboard\GridsterModel.cs" />
-    <Compile Include="Models\Dashboard\RamViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LinksViewModel.cs" />
     <Compile Include="Models\LoggingLevel.cs" />
     <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\NzbGet\NzbGetHistoryViewModel.cs" />
-    <Compile Include="Models\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
     <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
     <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
@@ -374,6 +391,10 @@
     <ProjectReference Include="..\NZBDash.Api\NZBDash.Api.csproj">
       <Project>{e54f85fe-269a-4b32-bcbb-239cf1fd63e1}</Project>
       <Name>NZBDash.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
+      <Project>{521cb3c7-f19c-4b92-8a39-4537bec094b5}</Project>
+      <Name>NZBDash.Common.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>

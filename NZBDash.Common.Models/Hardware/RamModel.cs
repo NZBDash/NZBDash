@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NZBDash.UI.Models.Dashboard
+namespace NZBDash.Common.Models.Hardware
 {
-    public class RamViewModel
+    public class RamModel
     {
         [Display(Name = "Virtual Percentage Filled")]
         public int VirtualPercentageFilled { get; set; }
