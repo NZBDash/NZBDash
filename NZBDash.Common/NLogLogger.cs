@@ -10,17 +10,11 @@ namespace NZBDash.Common
         public NLogLogger(Type t)
         {
             _logger = LogManager.GetLogger(t.Name);
-            
         }
 
         public void Trace(string message)
         {
             _logger.Trace(message);
-        }
-
-        public void Trace(string message, string area)
-        {
-            _logger.Trace("{0} : {1}", area, message);
         }
 
         public void Info(string message)
