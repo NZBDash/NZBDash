@@ -9,7 +9,6 @@ using NZBDash.Api.Controllers;
 using NZBDash.Core;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Model.DTO;
-using NZBDash.UI.Controllers;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 
@@ -17,11 +16,11 @@ namespace NZBDash.UI.Hubs
 {
     public class DashboardHub : Hub
     {
-        public StatusApiController Api { get; set; }
+        private IStatusApi Api { get; set; }
 
-        public DashboardHub()
+        public DashboardHub(IStatusApi statusApi)
         {
-            Api = new StatusApiController();
+            Api = statusApi;
         }
 
         public void UpdateDownloadSpeed()
@@ -59,7 +58,7 @@ namespace NZBDash.UI.Hubs
                 {
 
                     var percentage = Math.Ceiling(result.DownloadedSizeMB / (result.RemainingSizeMB + (double)result.DownloadedSizeMB) * 100);
-                    var icon = DashboardController.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status));
+                    var icon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status));
 
                     Clients.All.updateDownloadPercentage(percentage, result.NZBID, icon);
                 }
@@ -81,7 +80,7 @@ namespace NZBDash.UI.Hubs
                 var downloadInfo = Api.GetNzbGetList(formattedUri, downloaderConfig.Username, downloaderConfig.Password);
 
                 var results = downloadInfo.result;
-                
+
                 var missingItems = currentItems.Except(results.Select(x => x.NZBID));
                 if (missingItems.Any())
                 {
@@ -101,7 +100,7 @@ namespace NZBDash.UI.Hubs
                     {
                         return;
                     }
-                    
+
                     // We dont have the download so add it
                     if (!currentItems.Contains(result.NZBID))
                     {
@@ -111,7 +110,7 @@ namespace NZBDash.UI.Hubs
 
                 }
 
-                
+
             }
             catch (Exception e)
             {
@@ -119,7 +118,7 @@ namespace NZBDash.UI.Hubs
             }
         }
 
-        
+
         public void GetGrid()
         {
             var access = new DashboardAccess();
@@ -144,7 +143,7 @@ namespace NZBDash.UI.Hubs
                 };
             }
 
-            
+
             Clients.All.updateGrid(model);
         }
 

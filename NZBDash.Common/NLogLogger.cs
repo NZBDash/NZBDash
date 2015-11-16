@@ -17,11 +17,6 @@ namespace NZBDash.Common
             _logger.Trace(message);
         }
 
-        public void Trace(string message, string area)
-        {
-            _logger.Trace("{0} : {1}", area, message);
-        }
-
         public void Info(string message)
         {
             _logger.Info(message);

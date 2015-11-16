@@ -18,8 +18,15 @@ namespace NZBDash.UI.Controllers
         {
             var exception = filterContext.Exception;
             Logger.Fatal(exception);
-
             base.OnException(filterContext);
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var actionName = filterContext.ActionDescriptor.ActionName;
+            var controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+            Logger.Trace(string.Format("Executing action: {0}, Controller: {1}", actionName, controller));
+            base.OnActionExecuting(filterContext);
         }
     }
 }

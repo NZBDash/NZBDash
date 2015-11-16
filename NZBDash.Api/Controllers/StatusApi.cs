@@ -18,7 +18,7 @@ using NZBDash.Core.Model;
 namespace NZBDash.Api.Controllers
 {
     [RoutePrefix("api/{controller}/{action}")]
-    public class StatusApiController : ApiController
+    public class StatusApiController : ApiController, IStatusApi
     {
         // GET api/<controller>
         public IEnumerable<DriveInfoObj> Get()
@@ -43,11 +43,11 @@ namespace NZBDash.Api.Controllers
         [HttpGet]
         [ActionName("UpTime")]
         public TimeSpan UpTime()
-        {            
+        {
             using (var uptime = new PerformanceCounter("System", "System Up Time"))
             {
                 // Call this an extra time before reading its value
-                uptime.NextValue();       
+                uptime.NextValue();
                 return TimeSpan.FromSeconds(uptime.NextValue());
             }
         }
@@ -67,7 +67,7 @@ namespace NZBDash.Api.Controllers
             Process.GetProcesses().ToList().ForEach(o => list.Add(MakeProcessObj(o)));
             return list;
         }
-        
+
         [HttpGet]
         [ActionName("GetCouchPotatoMovies")]
         public void GetCouchPotatoMovies(string uri, string api)
@@ -166,7 +166,7 @@ namespace NZBDash.Api.Controllers
                 }
 
                 // If string with JSON data is not empty,
-                // deserialize it to class and return its instance 
+                // deserialize it to class and return its instance
                 return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<T>(jsonData) : new T();
             }
         }
@@ -196,7 +196,7 @@ namespace NZBDash.Api.Controllers
 
             return list;
         }
-        
+
         private ProcessObj MakeProcessObj(Process proc)
         {
             ProcessObj obj = new ProcessObj
@@ -222,7 +222,7 @@ namespace NZBDash.Api.Controllers
                 VirtualMemorySize64 = proc.VirtualMemorySize64,
                 WorkingSet64 = proc.WorkingSet64
             };
-           
+
             return obj;
         }
 
@@ -238,7 +238,7 @@ namespace NZBDash.Api.Controllers
             info.Sent = networkBytesSent.NextValue();
             info.Recieved = networkBytesReceived.NextValue();
             info.Total = networkBytesTotal.NextValue();
-            
+
             // First counter is empty
             Thread.Sleep(1000);
             info.Sent = networkBytesSent.NextValue();
@@ -246,5 +246,5 @@ namespace NZBDash.Api.Controllers
             info.Total = networkBytesTotal.NextValue();
             return info;
         }
-    }   
+    }
 }

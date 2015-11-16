@@ -1,26 +1,36 @@
-﻿@model NZBDash.UI.Models.Dashboard.RamViewModel
-    <div class="panel panel-default">
-        <div class="panel-heading">Server Info</div>
-        <div class="panel-body">
-            <span >
-                <span >
-                    OS Name
-                    @Model.OSFullName;
-                </span>
-                <span>
-                    Platform:
-                    @Model.OSPlatform;
-                </span>
-                <span >
-                    OS Version:
-                    @Model.OSVersion;
-                </span>
-                <span id="UpTimeSpan">
-                    @Model.Uptime;
-                </span>
+﻿@model NZBDash.Common.Models.Hardware.ServerInformationViewModel
+<div class="panel panel-default">
+    <div class="panel-heading">Server Information</div>
+    <div class="panel-body">
+        <span>
+            <span>
+                @Html.DisplayNameFor(x => x.OsFullName)
+                @Model.OsFullName;
             </span>
+            <span>
+                @Html.DisplayNameFor(x => x.OsPlatform)
+                @Model.OsPlatform;
+            </span>
+            <span>
+                @Html.DisplayNameFor(x => x.OsVersion)
+                @Model.OsVersion;
+            </span>
+            @Html.DisplayNameFor(x => x.Uptime)
+            <span id="UpTimeSpan">
 
-        </div>
+                @Model.Uptime;
+            </span>
+        </span>
+        <span>
+@Html.DisplayNameFor(x => x.CpuPercentage)
+@Html.DisplayFor(x => x.CpuPercentage)%
+</span>
+        <span>
+@Html.DisplayNameFor(x => x.AvailableMemory)
+@Html.DisplayFor(x => x.AvailableMemory) MB
+</span>
+
     </div>
+</div>
 
 

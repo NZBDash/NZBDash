@@ -24,7 +24,7 @@ function resizeWidgets(down, right,wIndex) {
 }
 
 
-         
+
     var hub = $.connection.dashboardHub;
 
     $('#Edit').click(function () {
@@ -36,7 +36,7 @@ function resizeWidgets(down, right,wIndex) {
     //hub.client.updateGrid = function (grid) {
 
     //    gridster.remove_all_widgets();
-               
+
     //    var serialization = Gridster.sort_by_row_and_col_asc(grid);
     //    $.each(serialization, function () {
     //        gridster.add_widget(this.htmlContent, this.size_x, this.size_y, this.col, this.row);
@@ -46,34 +46,6 @@ function resizeWidgets(down, right,wIndex) {
     //hub.client.loadDefaultGrid = function () {
 
     //};
-            
-    hub.client.updateDownloadSpeed = function (speed) {
-        $('#DlSpeed').html(speed);
-    };
-
-    hub.client.removeDownload = function (id) {
-        $('#'+id).html("");
-    };
-
-    hub.client.addDownload = function (id) {
-        $('#' + id).html("");
-    };
-
-    hub.client.updateDownloadPercentage = function (percentage, nzbId, icon) {
-        var id = "#" + nzbId + "progress";
-
-        //Change progress bar
-        $(id).attr("style", "width: "+percentage+"%;");
-        $(id).attr("aria-valuenow", percentage+"%");
-        $(id).html(percentage + "%");
-
-        //Change FontAwesomeIcon
-        var iconId = "#"+nzbId + "icon";
-        var fullIcon = "fa " + icon + " fa-4x";
-        $(iconId).attr("class", fullIcon);
-
-    };
-    
 
     hub.client.error = function (msg) {
         $.notify({
@@ -106,18 +78,5 @@ function resizeWidgets(down, right,wIndex) {
         console.log("connected");
         hub.server.getGrid();
         gridster.disable();
-
-        // SignalR Updates
-        setInterval(function () {
-            var downloadIds = [];
-            $(".nzbCount").each(function () { downloadIds.push($(this).attr("id")) });
-
-            hub.server.updateDownloadSpeed();
-            hub.server.updateDownloadPercentage();
-
-            hub.server.checkForNewDownloadItems(downloadIds);
-
-        }, 5000);
-
 
     });

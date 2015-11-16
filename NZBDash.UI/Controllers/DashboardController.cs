@@ -6,7 +6,9 @@ using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
+using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
@@ -17,23 +19,20 @@ namespace NZBDash.UI.Controllers
 {
     public class DashboardController : BaseController
     {
-        public StatusApiController Api { get; set; }
+        private IStatusApi Api { get; set; }
+        private IHardwareService Service { get; set; }
 
-        public DashboardController()
+        public DashboardController(IHardwareService service, IStatusApi statusApi)
             : base(typeof(DashboardController))
         {
-            Api = new StatusApiController();
+            Api = statusApi;
+            Service = service;
         }
 
         public ActionResult Index()
         {
             return View();
         }
-
-        //public ActionResult GetEnabledDashlets()
-        //{
-        //    var admin = new 
-        //}
 
         public ActionResult GetNzbGetDownloadInformation()
         {
@@ -45,7 +44,7 @@ namespace NZBDash.UI.Controllers
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
 
                 var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
-                
+
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
                 var model = new DownloaderViewModel
@@ -62,8 +61,8 @@ namespace NZBDash.UI.Controllers
 
                     model.DownloadItem.Add(new DownloadItem
                     {
-                        FontAwesomeIcon = ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
-                        DownloadPercentage = Math.Ceiling(percentage).ToString(),
+                        FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
+                        DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.InvariantCulture),
                         DownloadingName = result.NZBName,
                         Status = EnumHelper<DownloadStatus>.Parse(result.Status),
                         NzbId = result.NZBID
@@ -79,62 +78,10 @@ namespace NZBDash.UI.Controllers
             }
         }
 
-        public static string ChooseIcon(DownloadStatus downloadStatus)
-        {
-            switch (downloadStatus)
-            {
-                case DownloadStatus.QUEUED:
-                    return "fa-clock-o";
-                case DownloadStatus.PAUSED:
-                    return "fa-pause";
-                case DownloadStatus.DOWNLOADING:
-                    return "fa-download";
-                case DownloadStatus.FETCHING:
-                    return "fa-spinner";
-                case DownloadStatus.PP_QUEUED:
-                    break;
-                case DownloadStatus.LOADING_PARS:
-                    return "fa-spinner";
-                case DownloadStatus.VERIFYING_SOURCES:
-                    break;
-                case DownloadStatus.REPAIRING:
-                    break;
-                case DownloadStatus.VERIFYING_REPAIRED:
-                    break;
-                case DownloadStatus.RENAMING:
-                    break;
-                case DownloadStatus.UNPACKING:
-                    break;
-                case DownloadStatus.MOVING:
-                    return "fa-arrow-right";
-                case DownloadStatus.EXECUTING_SCRIPT:
-                    break;
-                case DownloadStatus.PP_FINISHED:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("downloadStatus", downloadStatus, null);
-            }
-            return "fa-question";
-        }
-
         public ActionResult GetDriveInformation()
         {
-            var driveInfo = Api.GetDriveInfo();
-            var model = driveInfo.Select(drive => new DrivesViewModel
-            {
-                AvailableFreeSpace = drive.AvailableFreeSpace,
-                DriveFormat = drive.DriveFormat,
-                FreeSpaceString = drive.FreeSpaceString,
-                IsReady = drive.IsReady,
-                Name = drive.Name,
-                PercentageFilled = drive.PercentageFilled,
-                TotalFreeSpace = drive.TotalFreeSpace,
-                TotalSize = drive.TotalSize,
-                TotalSpaceString = drive.TotalSpaceString,
-                VolumeLabel = drive.VolumeLabel
-            }).ToList();
-
-            return PartialView("Partial/_DriveInformation", model);
+            var drives = Service.GetDrives();
+            return PartialView("Partial/_DriveInformation", drives);
         }
 
         public ActionResult GetLinks()
@@ -149,33 +96,22 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetRam()
         {
-            var ramInfo = Api.GetRamInfo();
-            var model = new RamViewModel
-            {
-                AvailablePhysicalMemory = ramInfo.AvailablePhysicalMemory,
-                AvailableVirtualMemory = ramInfo.AvailableVirtualMemory,
-                OSFullName = ramInfo.OSFullName,
-                OSPlatform = ramInfo.OSPlatform,
-                OSVersion = ramInfo.OSVersion,
-                PhysicalPercentageFilled = ramInfo.PhysicalPercentageFilled,
-                TotalPhysicalMemory = ramInfo.TotalPhysicalMemory,
-                TotalVirtualMemory = ramInfo.TotalVirtualMemory,
-                VirtualPercentageFilled = ramInfo.VirtualPercentageFilled
-            };
+            var ramModel = Service.GetRam();
 
-            return PartialView("Partial/_Ram", model);
+            return PartialView("Partial/_Ram", ramModel);
         }
 
         public ActionResult GetServerInformation()
         {
-            var ramInfo = Api.GetRamInfo();
-            var uptime = Api.UpTime();
-            var model = new RamViewModel
+            var ramInfo = Service.GetRam();
+            var model = new ServerInformationViewModel
             {
-                OSFullName = ramInfo.OSFullName,
-                OSPlatform = ramInfo.OSPlatform,
-                OSVersion = ramInfo.OSVersion,
-                Uptime = uptime
+                OsFullName = ramInfo.OSFullName,
+                OsPlatform = ramInfo.OSPlatform,
+                OsVersion = ramInfo.OSVersion,
+                Uptime = Service.GetUpTime(),
+                CpuPercentage = Service.GetCpuPercentage(),
+                AvailableMemory = Service.GetAvailableRam()
             };
 
             return PartialView("Partial/_ServerInformation", model);

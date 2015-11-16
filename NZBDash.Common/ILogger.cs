@@ -5,7 +5,6 @@ namespace NZBDash.Common
     public interface ILogger
     {
         void Trace(string message);
-        void Trace(string message, string area);
         void Info(string message);
         void Warn(string message);
         void Debug(string message);

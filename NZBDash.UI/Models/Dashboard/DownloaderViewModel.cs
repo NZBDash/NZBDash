@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Security.AccessControl;
 using NZBDash.Common;
 
 namespace NZBDash.UI.Models.Dashboard
@@ -19,5 +19,6 @@ namespace NZBDash.UI.Models.Dashboard
         public DownloadStatus Status { get; set; }
         public string FontAwesomeIcon { get; set; }
         public int NzbId { get; set; }
+        public string ProgressBarClass { get; set; }
     }
 }

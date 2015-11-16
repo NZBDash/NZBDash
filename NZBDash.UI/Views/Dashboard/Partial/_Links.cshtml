@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<NZBDash.UI.Models.Dashboard.DashboardLinksViewModel>
 
-    <div class="panel panel-default">
+@if (Model.Any())
+{
+<div class="panel panel-default">
         <div class="panel-heading">Links</div>
         <div class="panel-body">
             @foreach (var link in Model)
@@ -11,6 +13,4 @@
             }
         </div>
     </div>
-
-
-
+}

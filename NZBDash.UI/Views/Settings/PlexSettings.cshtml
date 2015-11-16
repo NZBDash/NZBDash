@@ -1,7 +1,7 @@
 ﻿@model NZBDash.UI.Models.Settings.PlexSettingsViewModel
 
 @{
-    ViewBag.Title = "SabNzb Settings";
+    ViewBag.Title = "Plex Settings";
 }
 <div class="container-fluid">
 
@@ -12,14 +12,14 @@
             @Html.Partial("_Sidebar")
         </div>
         <div class="col-sm-9 col-md-10 main">
-            <h1 class="page-header">NzbGetSettings</h1>
+            <h1 class="page-header">@ViewBag.Title</h1>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>NzbGetSettingsViewModel</h4>
+                    <h4>@ViewBag.Title</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
@@ -67,7 +67,7 @@
                             @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -77,11 +77,11 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="col-md-offset-2 col-md-1">
                             <input type="submit" value="Save" class="btn btn-default" />
                         </div>
 
-                        <div class="col-md-offset-4 col-md-8">
+                        <div class="col-md-1">
                             <input id="testPlexConnection" type="button" value="Test" class="btn btn-default testButton" />
                         </div>
                     </div>

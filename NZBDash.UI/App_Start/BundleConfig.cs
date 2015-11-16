@@ -21,7 +21,11 @@ namespace NZBDash.UI
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/kendo/kendo.all.min.js",
+                      "~/Scripts/kendo/angular.min.js",
+                      "~/Scripts/kendo/jszip.min.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/gridster").Include("~/Scripts/jquery.gridster.js"));
 
@@ -30,7 +34,9 @@ namespace NZBDash.UI
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/font-awesome.css"));
+                      "~/Content/font-awesome.css",
+                      "~/Content/web/kendo.common-bootstrap.core.css",
+                      "~/Content/web/kendo.default.css"));
         }
     }
 }
