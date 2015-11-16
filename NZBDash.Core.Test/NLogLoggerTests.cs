@@ -23,10 +23,6 @@ namespace NZBDash.Core.Test
             Logger.Error("Error", new Exception());
             Logger.Fatal("Fatal");
             Logger.Fatal(new Exception());
-
-            var fileName = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                string.Format("/NZBDash/Site_{0}.log",DateTime.Now.ToString("yyyy-MM-dd"));
-            Assert.That(File.Exists(fileName));
         }
     }
 }
