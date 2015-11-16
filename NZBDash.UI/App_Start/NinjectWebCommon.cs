@@ -67,9 +67,15 @@ namespace NZBDash.UI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+#if WINDOWS
             kernel.Bind<IHardwareService>().To<WindowsHardwareService>();
             kernel.Bind<IStatusApi>().To<StatusApiController>();
+#endif
 
+#if LINUX
+            kernel.Bind<IHardwareService>().To<LinuxHardwareService>();
+            kernel.Bind<IStatusApi>().To<StatusApiController>();
+#endif
             // Applications
             kernel.Bind<ISettings<NzbGetSettingsDto>>().To<NzbGetSettingsConfiguration>();
             kernel.Bind<ISettings<SabNzbSettingsDto>>().To<SabNzbSettingsConfiguration>();
