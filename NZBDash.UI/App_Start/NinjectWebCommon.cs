@@ -72,6 +72,10 @@ namespace NZBDash.UI.App_Start
 
             // Applications
             kernel.Bind<ISettings<NzbGetSettingsDto>>().To<NzbGetSettingsConfiguration>();
+            kernel.Bind<ISettings<SabNzbSettingsDto>>().To<SabNzbSettingsConfiguration>();
+            kernel.Bind<ISettings<SonarrSettingsViewModelDto>>().To<SonarrSettingsConfiguration>();
+            kernel.Bind<ISettings<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsConfiguration>();
+            kernel.Bind<ISettings<PlexSettingsDto>>().To<PlexSettingsConfiguration>();
         }
     }
 }

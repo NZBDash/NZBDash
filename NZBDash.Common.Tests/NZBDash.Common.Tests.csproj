@@ -56,7 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="NzbGetHistoryMapperTest.cs" />
+    <Compile Include="Mapping\MappingHelperTests.cs" />
+    <Compile Include="Mapping\NzbGetHistoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

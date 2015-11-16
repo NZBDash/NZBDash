@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
-using NZBDash.Api.Models;
 using NZBDash.Common;
 using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.NzbGet;

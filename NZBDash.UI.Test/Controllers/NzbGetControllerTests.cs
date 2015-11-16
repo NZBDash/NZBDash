@@ -29,43 +29,14 @@ namespace NZBDash.UI.Test
         }
 
         [Test]
-        [Ignore]
-        public void EnsureThatIndexReturnsPopulatedModel()
+        public void EnsureThatIndexReturnsDefaultView()
         {
-            var expectedSettings = new NzbGetSettingsDto
-            {
-                Username = "test",
-                Id = 2,
-                Password = "1",
-                ShowOnDashboard = true,
-                Enabled = true,
-                IpAddress = "192.168.0.1",
-                Port = 25
-            };
+            _controller = new NzbGetController(new NzbGetSettingsConfiguration(), new StatusApiController());
 
-            var expectedApi = new NzbGetStatus
-            {
-                Result = new NzbGetStatusResult
-                    {
-                        DownloadRate = 20000,
-                        ServerPaused = true,
-                    },
-                version = "1"
-            };
-
-            var mockSettings = new Mock<ISettings<NzbGetSettingsDto>>();
-            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
-
-            var mockApi = new Mock<IStatusApi>();
-            mockApi.Setup(x => x.GetNzbGetStatus("http://192.168.0.1:25/", "test", "1")).Returns(expectedApi);
-
-            _controller = new NzbGetController(mockSettings.Object, mockApi.Object);
-
-            _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView().WithModel<NzbGetViewModel>();
+            _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
 
         [Test]
-        [Ignore]
         public void GetNzbGetDownloadHistory()
         {
             var expectedSettings = new NzbGetSettingsDto
@@ -85,13 +56,12 @@ namespace NZBDash.UI.Test
                 {
                     new NzbGetHistoryResult
                     {
-                        FileSizeMB = 200,
+                       FileSizeMB = 200,
                        ID = 22,
                        Name = "test",
                        Status = "Running",
                        NZBName = "nzb",
                        Category = "cata",
-                       FileSizeHi = 3,
                     }
                 }
             };
@@ -113,8 +83,33 @@ namespace NZBDash.UI.Test
             Assert.That(model[0].Status, Is.EqualTo("Running"));
             Assert.That(model[0].NzbName, Is.EqualTo("nzb"));
             Assert.That(model[0].Category, Is.EqualTo("cata"));
-            Assert.That(model[0].FileSize, Is.EqualTo(3));
+            Assert.That(model[0].FileSize, Is.EqualTo(200));
 
+        }
+
+        [Test]
+        public void GetNzbGetStatusTest()
+        {
+            var expectedSettings = new NzbGetSettingsDto
+            {
+                IpAddress = "192.168.0.1",
+                Port = 25
+            };
+            var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { DownloadRate = 40000, ServerPaused = true } };
+
+            var mockSettings = new Mock<ISettings<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IStatusApi>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+            mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus);
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
+            var result = controller.GetNzbGetStatus();
+            var model = (NzbGetViewModel)result.Data;
+
+
+            Assert.That(model.DownloadSpeed, Is.EqualTo("39"));
+            Assert.That(model.Status,Is.EqualTo("Paused"));
         }
     }
 }

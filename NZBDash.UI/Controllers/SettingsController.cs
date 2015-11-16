@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 
-using NLog;
-
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Models.Settings;
@@ -10,11 +9,23 @@ namespace NZBDash.UI.Controllers
 {
     public class SettingsController : BaseController
     {
-        public SettingsController()
+        private ISettings<NzbGetSettingsDto> NzbGetSettingsSettings { get; set; }
+        private ISettings<SabNzbSettingsDto> SabNzbSettingsSettings { get; set; }
+        private ISettings<SonarrSettingsViewModelDto> SonarrSettingsSettings { get; set; }
+        private ISettings<CouchPotatoSettingsDto> CpSettings { get; set; }
+        private ISettings<PlexSettingsDto> PlexSettingsSettings { get; set; }
+
+        public SettingsController(ISettings<NzbGetSettingsDto> nzbGetSettings, ISettings<SabNzbSettingsDto> sabNzbSettings, ISettings<SonarrSettingsViewModelDto> sonarSettings,
+             ISettings<CouchPotatoSettingsDto> cpSettings, ISettings<PlexSettingsDto> plexSettings)
             : base(typeof(SettingsController))
         {
-            
+            NzbGetSettingsSettings = nzbGetSettings;
+            SabNzbSettingsSettings = sabNzbSettings;
+            SonarrSettingsSettings = sonarSettings;
+            CpSettings = cpSettings;
+            PlexSettingsSettings = plexSettings;
         }
+
         // GET: Settings
         public ActionResult Index()
         {
@@ -24,9 +35,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult NzbGetSettings()
         {
-            var save = new NzbGetSettingsConfiguration();
             Logger.Trace("Getting settings");
-            var dto = save.GetSettings();
+            var dto = NzbGetSettingsSettings.GetSettings();
 
             Logger.Trace("Converting settings into ViewModel");
             var model = new NzbGetSettingsViewModel
@@ -63,8 +73,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var save = new NzbGetSettingsConfiguration();
-            var result = save.SaveSettings(dto);
+            var result = NzbGetSettingsSettings.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("NzbGetSettings");
@@ -110,8 +119,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var save = new SabNzbSettingsConfiguration();
-            var result = save.SaveSettings(dto);
+            var result = SabNzbSettingsSettings.SaveSettings(dto);
             if (result)
             {
                return RedirectToAction("SabNzbSettings");
@@ -123,8 +131,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var save = new SonarrSettingsConfiguration();
-            var dto = save.GetSettings();
+            var dto = SonarrSettingsSettings.GetSettings();
             var model = new SonarrSettingsViewModel
             {
                 Port = dto.Port,
@@ -156,8 +163,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var save = new SonarrSettingsConfiguration();
-            var result = save.SaveSettings(dto);
+            var result = SonarrSettingsSettings.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("SonarrSettings");
@@ -169,8 +175,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult CouchPotatoSettings()
         {
-            var save = new CouchPotatoSettingsConfiguration();
-            var dto = save.GetSettings();
+            var dto = CpSettings.GetSettings();
             var model = new CouchPotatoSettingsViewModel
             {
                 Port = dto.Port,
@@ -206,8 +211,7 @@ namespace NZBDash.UI.Controllers
                 Password = viewModel.Password
             };
 
-            var save = new CouchPotatoSettingsConfiguration();
-            var result = save.SaveSettings(dto);
+            var result = CpSettings.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("CouchPotatoSettings");
@@ -219,8 +223,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            var save = new PlexSettingsConfiguration();
-            var dto = save.GetSettings();
+            var dto = PlexSettingsSettings.GetSettings();
             var model = new PlexSettingsViewModel
             {
                 Port = dto.Port,
@@ -254,8 +257,7 @@ namespace NZBDash.UI.Controllers
                 Password = viewModel.Password
             };
 
-            var save = new PlexSettingsConfiguration();
-            var result = save.SaveSettings(dto);
+            var result = PlexSettingsSettings.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("PlexSettings");
