@@ -74,6 +74,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="MemorySizeConverterTest.cs" />
     <Compile Include="Mapping\MappingHelperTests.cs" />
     <Compile Include="Mapping\NzbGetHistoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -15,7 +15,7 @@ namespace NZBDash.UI.Hubs
 
         public void TestNzbGetConnection(string ipAddress, int port, string username, string password)
         {
-            Logger.Trace(string.Format("Started TestNzbGetConnection with {0},{1},{2},{3}", ipAddress, port, username, password));
+            Logger.Trace(string.Format("Started TestNzbGetConnection with {0}:{1}, {2}", ipAddress, port, username));
             const Applications selectedApp = Applications.NzbGet;
 
             var tester = new EndpointTester();

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
 using NZBDash.Common.Mapping;
+using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Helpers;
@@ -46,12 +47,9 @@ namespace NZBDash.UI.Controllers.Application
             {
                 Logger.Trace("Getting NzbGetStatus");
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
-                Logger.Trace(string.Format("Converting DL Speed : {0}", statusInfo.Result.DownloadRate));
-                var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
                 var nzbModel = new NzbGetViewModel
                 {
-                    DownloadSpeed = downloadSpeed.ToString(CultureInfo.CurrentUICulture),
                     Status = statusInfo.Result.ServerPaused ? "Paused" : "Running",
                 };
 
@@ -84,7 +82,7 @@ namespace NZBDash.UI.Controllers.Application
                 var model = new DownloaderViewModel
                 {
                     Application = Applications.NzbGet,
-                    DownloadSpeed = downloadSpeed.ToString(CultureInfo.CurrentUICulture),
+                    DownloadSpeed = MemorySizeConverter.SizeSuffix(downloadSpeed),
                     DownloadItem = new List<DownloadItem>()
                 };
 
@@ -96,13 +94,26 @@ namespace NZBDash.UI.Controllers.Application
                     var percentage = (result.DownloadedSizeMB / (result.RemainingSizeMB + (double)result.DownloadedSizeMB) * 100);
                     Logger.Trace(string.Format("Percentage : {0}", percentage));
 
+                    var status = EnumHelper<DownloadStatus>.Parse(result.Status);
+                    var progressBar = "progress-bar-danger";
+                    if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
+                    {
+                        progressBar = "progress-bar-warning";
+                    }
+                    if (status == DownloadStatus.DOWNLOADING)
+                    {
+                        progressBar = "progress-bar-success";
+                    }
+                    
+
                     model.DownloadItem.Add(new DownloadItem
                     {
                         FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
                         DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.CurrentUICulture),
                         DownloadingName = result.NZBName,
-                        Status = EnumHelper<DownloadStatus>.Parse(result.Status),
-                        NzbId = result.NZBID
+                        Status = status,
+                        NzbId = result.NZBID,
+                        ProgressBarClass = progressBar
                     });
                 }
 

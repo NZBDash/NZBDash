@@ -7,12 +7,12 @@ using NUnit.Framework;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Api.Models;
+using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.NzbGet;
-
 using TestStack.FluentMVCTesting;
 
 namespace NZBDash.UI.Test
@@ -95,7 +95,7 @@ namespace NZBDash.UI.Test
                 IpAddress = "192.168.0.1",
                 Port = 25
             };
-            var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { DownloadRate = 40000, ServerPaused = true } };
+            var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { ServerPaused = true } };
 
             var mockSettings = new Mock<ISettings<NzbGetSettingsDto>>();
             var mockApi = new Mock<IStatusApi>();
@@ -108,7 +108,6 @@ namespace NZBDash.UI.Test
             var model = (NzbGetViewModel)result.Data;
 
 
-            Assert.That(model.DownloadSpeed, Is.EqualTo("39"));
             Assert.That(model.Status,Is.EqualTo("Paused"));
         }
     }

@@ -2,9 +2,17 @@
 @{
     ViewBag.Title = "NzbGet";
 }
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css">
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.rtl.min.css">
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.default.min.css">
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.mobile.all.min.css">
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/angular.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/jszip.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/kendo.all.min.js"></script>
 
 <h2>@ViewBag.Title</h2>
-<h3 id="speed"></h3>
 <h3 id="status"></h3>
 
 
@@ -14,7 +22,8 @@
     @*<li role="presentation"><a href="#">Messages</a></li>*@
 </ul>
 
-<div id="ContentArea"></div>
+<div id="DownloadArea"></div>
+<div id="HistoryArea"></div>
 
 @section scripts
 {
@@ -27,32 +36,40 @@
     <script src="http://code.highcharts.com/modules/drilldown.js"></script>
 
     <script>
-        $(function() {
-        $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
-            $('#ContentArea').html(view);
-        });
+        $(function () {
+            setInterval(function () {
 
-            $.ajax("@Url.Action("GetNzbGetStatus")").success(function(data) {
-                $('#speed').html(data.DownloadSpeed);
-                $('#status').html(data.Status);
+                $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
+                    $('#DownloadArea').html(view);
+                });
+
+
+                $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
+                    $('#status').html(data.Status);
+                });
+            }, 2000);
+
+            $('#History').click(function () {
+                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function (view) {
+                    $('#HistoryArea').html(view);
+                    $('#HomeTab').removeClass("active");
+                    $('#HistoryTab').addClass("active");
+                    $('#DownloadArea').hide();
+                    $('#HistoryArea').show();
+                });
             });
 
-        $('#History').click(function() {
-            $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function(view) {
-                $('#ContentArea').html(view);
-                $('#HomeTab').removeClass("active");
-                $('#HistoryTab').addClass("active");
+            $('#Home').click(function () {
+                $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
+                    $('#ContentArea').html(view);
+                    $('#HomeTab').addClass("active");
+                    $('#HistoryTab').removeClass("active");
+                    $('#DownloadArea').show();
+                    $('#HistoryArea').hide();
+                });
             });
-        });
-
-        $('#Home').click(function () {
-            $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
-                $('#ContentArea').html(view);
-                $('#HomeTab').addClass("active");
-                $('#HistoryTab').removeClass("active");
-            });
-        });
 
         });
     </script>
 }
+

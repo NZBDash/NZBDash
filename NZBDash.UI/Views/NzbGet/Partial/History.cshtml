@@ -1,45 +1,37 @@
-﻿@using GridMvc.Html
+﻿@using System.Globalization
+@using GridMvc.Html 
 @model IEnumerable<NZBDash.UI.Models.NzbGet.NzbGetHistoryViewModel>
-           
 
 
+<div class="col-md-12">
 
-@Html.Grid(Model).Named("NzbGetHistoryGrid").Columns(columns =>
+
+    @Html.Grid(Model).Named("NzbGetHistoryGrid").Columns(columns =>
 {
+    columns.Add(x => x.Name)
+        .Titled("Name")
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(300);
 
-}).AutoGenerateColumns()
-
-
-
-
-@*@Html.Grid(Model).Named("moviesGrid").Columns(columns =>
-   {
-       columns.Add(x => x.Title)
-           .Titled(Resources.Movie_Title)
-           .Encoded(false)
-           .Sanitized(false)
-           .RenderValueAs(x => @Html.ActionLink(x.Title, "Get", "Movies", new { id = x.TmdbId }, null))
-           .SetWidth(300);
-
-       columns.Add(x => x.ReleaseDate).RenderValueAs(x =>
-       {
-           DateTime date;
-           DateTime.TryParse(x.ReleaseDate, out date);
-           return date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
-       }
-           ).Titled(Resources.Release_Date);
+    //columns.Add(x => x.Status).RenderValueAs(x =>
+    //{
+    //    DateTime date;
+    //    DateTime.TryParse(x.ReleaseDate, out date);
+    //    return date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+    //}
+    //    ).Titled(Resources.Release_Date);
 
 
-       columns.Add(x => x.Genre[0].Name)
-           .Titled(Resources.Genre);
+    columns.Add(x => x.Status)
+        .Titled("Status");
 
 
-       columns.Add(x => x.Tracked)
-           .Titled(Resources.Track)
-           .Encoded(false)
-           .Sanitized(false)
-           .RenderValueAs(x => @Html.CheckBoxFor(c => x.Tracked, new { id = x.TmdbId, @class = "TrackedCheckbox" }));
-       columns.Add(x => x.TmdbId, true);
-       columns.Add(x => x.Popularity, true).SortInitialDirection(GridSortDirection.Descending);
+    columns.Add(x => x.Category)
+        .Titled("Category");
 
-   }).Sortable().Filterable().WithMultipleFilters().WithPaging(15)*@
+    columns.Add(x => x.FileSize);
+
+}).Sortable().Filterable().WithMultipleFilters().WithPaging(15)
+
+</div>
