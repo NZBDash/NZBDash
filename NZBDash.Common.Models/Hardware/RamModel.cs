@@ -31,7 +31,5 @@ namespace NZBDash.Common.Models.Hardware
 
         [Display(Name = "Total Virtual Memory")]
         public ulong TotalVirtualMemory { get; set; }
-
-        public TimeSpan Uptime { get; set; }
     }
 }

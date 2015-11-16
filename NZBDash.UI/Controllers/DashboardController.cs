@@ -9,7 +9,6 @@ using NZBDash.Common;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Services;
 using NZBDash.Core.Settings;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
@@ -34,11 +33,6 @@ namespace NZBDash.UI.Controllers
         {
             return View();
         }
-
-        //public ActionResult GetEnabledDashlets()
-        //{
-        //    var admin = new
-        //}
 
         public ActionResult GetNzbGetDownloadInformation()
         {
@@ -68,7 +62,7 @@ namespace NZBDash.UI.Controllers
                     model.DownloadItem.Add(new DownloadItem
                     {
                         FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
-                        DownloadPercentage = Math.Ceiling(percentage).ToString(),
+                        DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.InvariantCulture),
                         DownloadingName = result.NZBName,
                         Status = EnumHelper<DownloadStatus>.Parse(result.Status),
                         NzbId = result.NZBID
@@ -83,8 +77,6 @@ namespace NZBDash.UI.Controllers
                 return PartialView("Partial/DashletError");
             }
         }
-
-
 
         public ActionResult GetDriveInformation()
         {
@@ -109,19 +101,20 @@ namespace NZBDash.UI.Controllers
             return PartialView("Partial/_Ram", ramModel);
         }
 
-        //public ActionResult GetServerInformation()
-        //{
-        //    var ramInfo = Api.GetRamInfo();
-        //    var uptime = Api.UpTime();
-        //    var model = new RamViewModel
-        //    {
-        //        OSFullName = ramInfo.OSFullName,
-        //        OSPlatform = ramInfo.OSPlatform,
-        //        OSVersion = ramInfo.OSVersion,
-        //        Uptime = uptime
-        //    };
+        public ActionResult GetServerInformation()
+        {
+            var ramInfo = Service.GetRam();
+            var model = new ServerInformationViewModel
+            {
+                OsFullName = ramInfo.OSFullName,
+                OsPlatform = ramInfo.OSPlatform,
+                OsVersion = ramInfo.OSVersion,
+                Uptime = Service.GetUpTime(),
+                CpuPercentage = Service.GetCpuPercentage(),
+                AvailableMemory = Service.GetAvailableRam()
+            };
 
-        //    return PartialView("Partial/_ServerInformation", model);
-        //}
+            return PartialView("Partial/_ServerInformation", model);
+        }
     }
 }

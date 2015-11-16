@@ -90,6 +90,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\DashboardControllerTests.cs" />
     <Compile Include="Controllers\SettingsControllerTests.cs">
       <SubType>Code</SubType>
     </Compile>

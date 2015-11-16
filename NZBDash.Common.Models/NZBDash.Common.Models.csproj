@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Api\NzbGetHistory.cs" />
     <Compile Include="Hardware\DriveModel.cs" />
+    <Compile Include="Hardware\ServerInformationViewModel.cs" />
     <Compile Include="NzbGet\NzbGetHistoryViewModel.cs" />
     <Compile Include="NzbGet\NzbGetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

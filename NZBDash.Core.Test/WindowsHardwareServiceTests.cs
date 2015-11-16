@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Services;
 
 namespace NZBDash.Core.Test
@@ -7,11 +8,18 @@ namespace NZBDash.Core.Test
     [TestFixture]
     public class WindowsHardwareServiceTests
     {
+        private IHardwareService Service { get; set; }
+
+        [SetUp]
+        public void SetUp()
+        {
+            Service = new WindowsHardwareService();
+        }
+
         [Test]
         public void GetDrives()
         {
-            var service = new WindowsHardwareService();
-            var result = service.GetDrives();
+            var result = Service.GetDrives();
 
             Assert.That(result, Is.Not.Null);
         }
@@ -19,10 +27,26 @@ namespace NZBDash.Core.Test
         [Test]
         public void GetRam()
         {
-            var service = new WindowsHardwareService();
-            var result = service.GetRam();
+            var result = Service.GetRam();
 
             Assert.That(result, Is.Not.Null);
+        }
+
+        [Test]
+        public void GetUpTime()
+        {
+            var upTime = Service.GetUpTime();
+
+            Assert.That(upTime,Is.Not.Null);
+        }
+
+        [Test]
+        public void GetAvailableRam()
+        {
+            var process = Service.GetAvailableRam();
+
+            Assert.That(process, Is.Not.Null);
+            Assert.That(process, Is.GreaterThan(0));
         }
     }
 }
