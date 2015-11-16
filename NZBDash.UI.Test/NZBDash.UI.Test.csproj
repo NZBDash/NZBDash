@@ -90,11 +90,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\NzbGetControllerTests.cs" />
     <Compile Include="Controllers\SettingsControllerTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\NzbGetControllerTests.cs" />
     <Compile Include="IconHelperTests.cs" />
     <Compile Include="UrlHelperTests.cs" />
   </ItemGroup>
