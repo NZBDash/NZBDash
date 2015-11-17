@@ -7,7 +7,7 @@ using NZBDash.Common.Interfaces;
 
 namespace NZBDash.Api.Controllers
 {
-    public class ThirdPartyService : ApiController
+    public class ThirdPartyService : ApiController, IThirdPartyService
     {
         private ISerializer Serializer { get; set; }
         public ThirdPartyService(ISerializer serializer)

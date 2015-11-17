@@ -79,6 +79,9 @@ namespace NZBDash.UI.App_Start
             kernel.Bind<IHardwareService>().To<LinuxHardwareService>();
             kernel.Bind<IStatusApi>().To<StatusApiController>();
 #endif
+            // Services
+            kernel.Bind<IThirdPartyService>().To<ThirdPartyService>();
+            
             // Applications
             kernel.Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
             kernel.Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();

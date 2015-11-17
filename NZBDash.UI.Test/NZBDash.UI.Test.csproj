@@ -130,6 +130,10 @@
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
+      <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
+      <Name>NZBDash.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>

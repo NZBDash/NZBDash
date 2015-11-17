@@ -22,7 +22,7 @@ namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IStatusApi api)
+        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IThirdPartyService api)
             : base(typeof(NzbGetController))
         {
             SettingsService = settingsService;
@@ -30,7 +30,7 @@ namespace NZBDash.UI.Controllers.Application
         }
 
         private ISettingsService<NzbGetSettingsDto> SettingsService { get; set; }
-        private IStatusApi Api { get; set; }
+        private IThirdPartyService Api { get; set; }
 
         [HttpGet]
         public ActionResult Index()
