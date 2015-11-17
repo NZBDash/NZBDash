@@ -5,9 +5,9 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Models.Settings;
 using NZBDash.DataAccess.Repository.Settings;
 
-namespace NZBDash.Core.Settings
+namespace NZBDash.Core.SettingsService
 {
-    public class CouchPotatoSettingsConfiguration : ISettings<CouchPotatoSettingsDto>
+    public class CouchPotatoSettingsServiceService : ISettingsService<CouchPotatoSettingsDto>
     {
         public CouchPotatoSettingsDto GetSettings()
         {

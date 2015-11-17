@@ -4,9 +4,9 @@ using System.Linq;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Repository;
 
-namespace NZBDash.Core.Settings
+namespace NZBDash.Core.SettingsService
 {
-    public class DashboardSettingsConfiguration
+    public class DashboardSettingsService
     {
         public IEnumerable<EnabledDashletsDto> GetEnabledDashlets()
         {

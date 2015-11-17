@@ -7,9 +7,9 @@ using NZBDash.DataAccess.Repository;
 
 namespace NZBDash.Core.Configuration
 {
-    public class LinksConfiguration
+    public class LinksConfigurationService
     {
-        public LinksConfiguration()
+        public LinksConfigurationService()
         {
             Repo = new LinksConfigurationRepository();
         }

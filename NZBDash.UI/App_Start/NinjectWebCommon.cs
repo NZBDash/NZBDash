@@ -2,7 +2,7 @@ using NZBDash.Api.Controllers;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Services;
-using NZBDash.Core.Settings;
+using NZBDash.Core.SettingsService;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NZBDash.UI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NZBDash.UI.App_Start.NinjectWebCommon), "Stop")]
@@ -77,11 +77,11 @@ namespace NZBDash.UI.App_Start
             kernel.Bind<IStatusApi>().To<StatusApiController>();
 #endif
             // Applications
-            kernel.Bind<ISettings<NzbGetSettingsDto>>().To<NzbGetSettingsConfiguration>();
-            kernel.Bind<ISettings<SabNzbSettingsDto>>().To<SabNzbSettingsConfiguration>();
-            kernel.Bind<ISettings<SonarrSettingsViewModelDto>>().To<SonarrSettingsConfiguration>();
-            kernel.Bind<ISettings<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsConfiguration>();
-            kernel.Bind<ISettings<PlexSettingsDto>>().To<PlexSettingsConfiguration>();
+            kernel.Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
+            kernel.Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();
+            kernel.Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
+            kernel.Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsServiceService>();
+            kernel.Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
         }
     }
 }

@@ -9,7 +9,7 @@ using NZBDash.Common;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Settings;
+using NZBDash.Core.SettingsService;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 
@@ -36,7 +36,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetNzbGetDownloadInformation()
         {
-            var admin = new NzbGetSettingsConfiguration();
+            var admin = new NzbGetSettingsService();
             var config = admin.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try
@@ -86,7 +86,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetLinks()
         {
-            var config = new LinksConfiguration();
+            var config = new LinksConfigurationService();
             var allLinks = config.GetLinks();
 
             var model = allLinks.Select(link => new DashboardLinksViewModel { LinkEndpoint = link.LinkEndpoint, LinkName = link.LinkName }).ToList();

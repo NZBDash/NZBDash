@@ -73,19 +73,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AdminConfiguration.cs" />
-    <Compile Include="Configuration\LinksConfiguration.cs" />
+    <Compile Include="Configuration\LinksConfigurationService.cs" />
     <Compile Include="DashboardAccess.cs" />
     <Compile Include="Interfaces\IHardwareService.cs" />
     <Compile Include="Interfaces\IApplicationTester.cs" />
-    <Compile Include="Interfaces\ISettings.cs" />
-    <Compile Include="Model\DTO\AdminConfigurationDto.cs" />
-    <Compile Include="Model\DTO\ApplicationConfigurationDto.cs" />
-    <Compile Include="Model\DTO\ApplicationsDto.cs" />
+    <Compile Include="Interfaces\ISettingsService.cs" />
     <Compile Include="Model\DTO\DashboardGridDto.cs" />
-    <Compile Include="Model\DTO\EmailConfigurationDto.cs" />
     <Compile Include="Model\DTO\LinksConfigurationDto.cs" />
-    <Compile Include="Model\DTO\SupportedApplicationsDto.cs" />
     <Compile Include="Model\SabNzbModels.cs" />
     <Compile Include="Model\ServerStatus.cs" />
     <Compile Include="Model\Settings\BaseSettingsDto.cs" />
@@ -99,12 +93,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LinuxHardwareService.cs" />
     <Compile Include="Services\WindowsHardwareService.cs" />
-    <Compile Include="Settings\PlexSettingsConfiguration.cs" />
-    <Compile Include="Settings\SabNzbSettingsConfiguration.cs" />
-    <Compile Include="Settings\CouchPotatoSettingsConfiguration.cs" />
-    <Compile Include="Settings\NzbGetSettingsConfiguration.cs" />
-    <Compile Include="Settings\DashboardSettingsConfiguration.cs" />
-    <Compile Include="Settings\SonarrSettingsConfiguration.cs" />
+    <Compile Include="SettingsService\PlexSettingsService.cs" />
+    <Compile Include="SettingsService\SabNzbSettingsService.cs" />
+    <Compile Include="SettingsService\CouchPotatoSettingsServiceService.cs" />
+    <Compile Include="SettingsService\NzbGetSettingsService.cs" />
+    <Compile Include="SettingsService\DashboardSettingsService.cs" />
+    <Compile Include="SettingsService\SonarrSettingsService.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>

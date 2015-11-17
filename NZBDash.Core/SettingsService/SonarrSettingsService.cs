@@ -5,43 +5,40 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Models.Settings;
 using NZBDash.DataAccess.Repository.Settings;
 
-namespace NZBDash.Core.Settings
+namespace NZBDash.Core.SettingsService
 {
-    public class SabNzbSettingsConfiguration : ISettings<SabNzbSettingsDto>
+    public class SonarrSettingsService : ISettingsService<SonarrSettingsViewModelDto>
     {
-        public SabNzbSettingsDto GetSettings()
+        public SonarrSettingsViewModelDto GetSettings()
         {
-            var repo = new SabNzbRepository();
-
+            var repo = new SonarrRepository();
             var result = repo.GetAll();
             var setting = result.FirstOrDefault();
             if (setting == null)
             {
-                return new SabNzbSettingsDto();
+                return new SonarrSettingsViewModelDto();
             }
 
-            var model = new SabNzbSettingsDto
+            return new SonarrSettingsViewModelDto
             {
+                ApiKey = setting.ApiKey,
                 Enabled = setting.Enabled,
                 Id = setting.Id,
                 IpAddress = setting.IpAddress,
                 Port = setting.Port,
-                ShowOnDashboard = setting.ShowOnDashboard,
-                ApiKey = setting.ApiKey,
+                ShowOnDashboard = setting.ShowOnDashboard
             };
-
-            return model;
         }
 
-        public bool SaveSettings(SabNzbSettingsDto model)
+        public bool SaveSettings(SonarrSettingsViewModelDto model)
         {
-            var repo = new SabNzbRepository();
+            var repo = new SonarrRepository();
 
             var entity = repo.Find(model.Id);
 
             if (entity == null)
             {
-                var newEntity = new SabNzbSettings
+                var newEntity = new SonarrSettings
                 {
                     Port = model.Port,
                     Enabled = model.Enabled,

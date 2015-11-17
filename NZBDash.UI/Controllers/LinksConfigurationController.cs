@@ -21,7 +21,7 @@ namespace NZBDash.UI.Controllers
         // GET: LinksConfiguration
         public async Task<ActionResult> Index()
         {
-            var config = new LinksConfiguration();
+            var config = new LinksConfigurationService();
             var result = await config.GetLinksAsync();
             if (result == null) return View(new List<LinksViewModel>());
 
@@ -43,7 +43,7 @@ namespace NZBDash.UI.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var configuration = new LinksConfiguration();
+            var configuration = new LinksConfigurationService();
             var dto = new LinksConfigurationDto { Id = config.Id, LinkName = config.LinkName, LinkEndpoint = config.LinkEndpoint.ToString() };
 
             var result = await configuration.UpdateLinkAsync(dto);
@@ -57,7 +57,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetLink(int id)
         {
-            var config = new LinksConfiguration();
+            var config = new LinksConfigurationService();
             var links = config.GetLinks();
             var link = links.FirstOrDefault(x => x.Id == id);
             var model = new LinksViewModel { Id = link.Id, LinkName = link.LinkName, LinkEndpoint = new Uri(link.LinkEndpoint) };

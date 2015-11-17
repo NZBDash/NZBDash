@@ -21,14 +21,14 @@ namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
+        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IStatusApi api)
             : base(typeof(NzbGetController))
         {
-            Settings = settings;
+            SettingsService = settingsService;
             Api = api;
         }
 
-        private ISettings<NzbGetSettingsDto> Settings { get; set; }
+        private ISettingsService<NzbGetSettingsDto> SettingsService { get; set; }
         private IStatusApi Api { get; set; }
 
         [HttpGet]
@@ -41,7 +41,7 @@ namespace NZBDash.UI.Controllers.Application
         public JsonResult GetNzbGetStatus()
         {
             Logger.Trace("Getting Config");
-            var config = Settings.GetSettings();
+            var config = SettingsService.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
@@ -67,7 +67,7 @@ namespace NZBDash.UI.Controllers.Application
         public ActionResult GetNzbGetDownloadInformation()
         {
             Logger.Trace("Getting Config");
-            var config = Settings.GetSettings();
+            var config = SettingsService.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
             try
             {
@@ -132,7 +132,7 @@ namespace NZBDash.UI.Controllers.Application
         {
             try
             {
-                var config = Settings.GetSettings();
+                var config = SettingsService.GetSettings();
                 var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
                 var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 

@@ -10,7 +10,7 @@ using NZBDash.Api.Models;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.Core.Settings;
+using NZBDash.Core.SettingsService;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.NzbGet;
 using TestStack.FluentMVCTesting;
@@ -25,13 +25,13 @@ namespace NZBDash.UI.Test
         [SetUp]
         public void Setup()
         {
-            _controller = new NzbGetController(new NzbGetSettingsConfiguration(), new StatusApiController());
+            _controller = new NzbGetController(new NzbGetSettingsService(), new StatusApiController());
         }
 
         [Test]
         public void EnsureThatIndexReturnsDefaultView()
         {
-            _controller = new NzbGetController(new NzbGetSettingsConfiguration(), new StatusApiController());
+            _controller = new NzbGetController(new NzbGetSettingsService(), new StatusApiController());
 
             _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
@@ -66,7 +66,7 @@ namespace NZBDash.UI.Test
                 }
             };
 
-            var mockSettings = new Mock<ISettings<NzbGetSettingsDto>>();
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var mockApi = new Mock<IStatusApi>();
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings).Verifiable();
             mockApi.Setup(x => x.GetNzbGetHistory(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedApi).Verifiable();
@@ -97,7 +97,7 @@ namespace NZBDash.UI.Test
             };
             var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { ServerPaused = true } };
 
-            var mockSettings = new Mock<ISettings<NzbGetSettingsDto>>();
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var mockApi = new Mock<IStatusApi>();
 
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);

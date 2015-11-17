@@ -22,7 +22,7 @@ namespace NZBDash.UI.Hubs
                 return;
             }
 
-            var config = new LinksConfiguration();
+            var config = new LinksConfigurationService();
             var dto = new LinksConfigurationDto { LinkEndpoint = linkEndpoint, LinkName = linkName };
             var result = config.AddLink(dto);
 
@@ -35,7 +35,7 @@ namespace NZBDash.UI.Hubs
 
         public void RemoveLink(int modelId)
         {
-            var config = new LinksConfiguration();
+            var config = new LinksConfigurationService();
             var result = config.RemoveLink(modelId);
 
             if (result)

@@ -70,11 +70,8 @@
     <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AdminConfiguration.cs" />
-    <Compile Include="Models\ApplicationConfiguration.cs" />
     <Compile Include="Models\Applications.cs" />
     <Compile Include="Models\DashboardGrid.cs" />
-    <Compile Include="Models\EmailConfiguration.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\LinksConfiguration.cs" />
     <Compile Include="Models\Settings\SabNzbSettings.cs" />
@@ -83,20 +80,15 @@
     <Compile Include="Models\Settings\NzbGetSettings.cs" />
     <Compile Include="Models\Settings\CouchPotatoSettings.cs" />
     <Compile Include="Models\Settings\SettingsEntity.cs" />
-    <Compile Include="Models\SupportedApplications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\AdminConfigurationRepository.cs" />
-    <Compile Include="Repository\ApplicationConfigurationRepository.cs" />
     <Compile Include="Repository\DashboardGridRepository.cs" />
     <Compile Include="Repository\ApplicationsRepository.cs" />
     <Compile Include="Repository\LinksConfigurationRepository.cs" />
-    <Compile Include="Repository\MockRepository.cs" />
     <Compile Include="Repository\Settings\PlexRepository.cs" />
     <Compile Include="Repository\Settings\SabNzbRepository.cs" />
     <Compile Include="Repository\Settings\NzbGetRepository.cs" />
     <Compile Include="Repository\Settings\CouchPotatoRepository.cs" />
     <Compile Include="Repository\Settings\SonarrRepository.cs" />
-    <Compile Include="Repository\SupportedApplicationsRepository.cs" />
     <Compile Include="NZBDashContext.cs" />
   </ItemGroup>
   <ItemGroup>

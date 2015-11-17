@@ -7,16 +7,16 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Models.Settings;
 using NZBDash.DataAccess.Repository.Settings;
 
-namespace NZBDash.Core.Settings
+namespace NZBDash.Core.SettingsService
 {
-    public class NzbGetSettingsConfiguration : ISettings<NzbGetSettingsDto>
+    public class NzbGetSettingsService : ISettingsService<NzbGetSettingsDto>
     {
-        public NzbGetSettingsConfiguration()
-            : this(new NLogLogger(typeof(NzbGetSettingsConfiguration)))
+        public NzbGetSettingsService()
+            : this(new NLogLogger(typeof(NzbGetSettingsService)))
         {
         }
 
-        public NzbGetSettingsConfiguration(ILogger logger)
+        public NzbGetSettingsService(ILogger logger)
         {
             _logger = logger;
         }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Owin;
 
-using NZBDash.Core;
+using NZBDash.UI;
 
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(NZBDash.UI.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace NZBDash.UI
 {
     public partial class Startup
@@ -13,13 +13,6 @@ namespace NZBDash.UI
         {
             ConfigureAuth(app);
             app.MapSignalR();
-            // If we don't have any configuration, create a blank config.
-            var configCheck = new Setup();
-
-            if (!configCheck.ApplicationConfigurationExist())
-            {
-                configCheck.SetupNow();
-            }
         }
     }
 }

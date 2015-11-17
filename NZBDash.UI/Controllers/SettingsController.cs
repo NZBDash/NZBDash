@@ -2,28 +2,28 @@
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.Core.Settings;
+using NZBDash.Core.SettingsService;
 using NZBDash.UI.Models.Settings;
 
 namespace NZBDash.UI.Controllers
 {
     public class SettingsController : BaseController
     {
-        private ISettings<NzbGetSettingsDto> NzbGetSettingsSettings { get; set; }
-        private ISettings<SabNzbSettingsDto> SabNzbSettingsSettings { get; set; }
-        private ISettings<SonarrSettingsViewModelDto> SonarrSettingsSettings { get; set; }
-        private ISettings<CouchPotatoSettingsDto> CpSettings { get; set; }
-        private ISettings<PlexSettingsDto> PlexSettingsSettings { get; set; }
+        private ISettingsService<NzbGetSettingsDto> NzbGetSettingsServiceSettingsService { get; set; }
+        private ISettingsService<SabNzbSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
+        private ISettingsService<SonarrSettingsViewModelDto> SonarrSettingsServiceSettingsService { get; set; }
+        private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
+        private ISettingsService<PlexSettingsDto> PlexSettingsServiceSettingsService { get; set; }
 
-        public SettingsController(ISettings<NzbGetSettingsDto> nzbGetSettings, ISettings<SabNzbSettingsDto> sabNzbSettings, ISettings<SonarrSettingsViewModelDto> sonarSettings,
-             ISettings<CouchPotatoSettingsDto> cpSettings, ISettings<PlexSettingsDto> plexSettings)
+        public SettingsController(ISettingsService<NzbGetSettingsDto> nzbGetSettingsService, ISettingsService<SabNzbSettingsDto> sabNzbSettingsService, ISettingsService<SonarrSettingsViewModelDto> sonarSettingsService,
+             ISettingsService<CouchPotatoSettingsDto> cpSettingsService, ISettingsService<PlexSettingsDto> plexSettingsService)
             : base(typeof(SettingsController))
         {
-            NzbGetSettingsSettings = nzbGetSettings;
-            SabNzbSettingsSettings = sabNzbSettings;
-            SonarrSettingsSettings = sonarSettings;
-            CpSettings = cpSettings;
-            PlexSettingsSettings = plexSettings;
+            NzbGetSettingsServiceSettingsService = nzbGetSettingsService;
+            SabNzbSettingsServiceSettingsService = sabNzbSettingsService;
+            SonarrSettingsServiceSettingsService = sonarSettingsService;
+            CpSettingsService = cpSettingsService;
+            PlexSettingsServiceSettingsService = plexSettingsService;
         }
 
         // GET: Settings
@@ -36,7 +36,7 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbGetSettings()
         {
             Logger.Trace("Getting settings");
-            var dto = NzbGetSettingsSettings.GetSettings();
+            var dto = NzbGetSettingsServiceSettingsService.GetSettings();
 
             Logger.Trace("Converting settings into ViewModel");
             var model = new NzbGetSettingsViewModel
@@ -73,7 +73,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var result = NzbGetSettingsSettings.SaveSettings(dto);
+            var result = NzbGetSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("NzbGetSettings");
@@ -85,7 +85,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            var save = new SabNzbSettingsConfiguration();
+            var save = new SabNzbSettingsService();
             var dto = save.GetSettings();
             var model = new SabNzbSettingsViewModel
             {
@@ -119,7 +119,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var result = SabNzbSettingsSettings.SaveSettings(dto);
+            var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
                return RedirectToAction("SabNzbSettings");
@@ -131,7 +131,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var dto = SonarrSettingsSettings.GetSettings();
+            var dto = SonarrSettingsServiceSettingsService.GetSettings();
             var model = new SonarrSettingsViewModel
             {
                 Port = dto.Port,
@@ -163,7 +163,7 @@ namespace NZBDash.UI.Controllers
                 ShowOnDashboard = viewModel.ShowOnDashboard
             };
 
-            var result = SonarrSettingsSettings.SaveSettings(dto);
+            var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("SonarrSettings");
@@ -175,7 +175,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult CouchPotatoSettings()
         {
-            var dto = CpSettings.GetSettings();
+            var dto = CpSettingsService.GetSettings();
             var model = new CouchPotatoSettingsViewModel
             {
                 Port = dto.Port,
@@ -211,7 +211,7 @@ namespace NZBDash.UI.Controllers
                 Password = viewModel.Password
             };
 
-            var result = CpSettings.SaveSettings(dto);
+            var result = CpSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("CouchPotatoSettings");
@@ -223,7 +223,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            var dto = PlexSettingsSettings.GetSettings();
+            var dto = PlexSettingsServiceSettingsService.GetSettings();
             var model = new PlexSettingsViewModel
             {
                 Port = dto.Port,
@@ -257,7 +257,7 @@ namespace NZBDash.UI.Controllers
                 Password = viewModel.Password
             };
 
-            var result = PlexSettingsSettings.SaveSettings(dto);
+            var result = PlexSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("PlexSettings");
