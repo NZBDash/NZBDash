@@ -3,16 +3,17 @@
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
 
 namespace NZBDash.UI.Helpers
 {
     public class EndpointTester
     {
 
-        public EndpointTester()
+        public EndpointTester(IThirdPartyService service)
             : this(new NLogLogger(typeof(EndpointTester)))
         {
-            Api = new StatusApiController();
+            Api = service;
         }
 
         public EndpointTester(ILogger logger)
@@ -22,7 +23,7 @@ namespace NZBDash.UI.Helpers
 
         private ILogger _logger { get; set; }
 
-        public StatusApiController Api { get; set; }
+        public IThirdPartyService Api { get; set; }
 
         public bool TestApplicationConnectivity(Applications application, string apiKey, string ipAddress, string password, string userName)
         {
@@ -62,9 +63,10 @@ namespace NZBDash.UI.Helpers
 
         public bool SabNzbConnection(string ip, string apiKey)
         {
+            var api = new StatusApiController();
             try
             {
-                var result = Api.GetSabNzb(ip, apiKey);
+                var result = api.GetSabNzb(ip, apiKey);
 
                 return result.QueueObject.state != null;
             }

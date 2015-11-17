@@ -138,6 +138,10 @@
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
+      <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
+      <Name>NZBDash.ThirdParty.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.UI\NZBDash.UI.csproj">
       <Project>{30ed7e20-5c5b-4643-b3a6-7d10be172241}</Project>
       <Name>NZBDash.UI</Name>

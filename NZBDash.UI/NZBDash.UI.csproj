@@ -1337,6 +1337,10 @@
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
+      <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
+      <Name>NZBDash.ThirdParty.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

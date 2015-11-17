@@ -1,25 +1,29 @@
+using System;
+using System.Web;
+
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+
+using Ninject;
+using Ninject.Web.Common;
+
 using NZBDash.Api.Controllers;
-using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Services;
 using NZBDash.Core.SettingsService;
+using NZBDash.ThirdParty.Api;
+using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.UI.App_Start;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NZBDash.UI.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NZBDash.UI.App_Start.NinjectWebCommon), "Stop")]
+using WebActivatorEx;
+
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: ApplicationShutdownMethod(typeof(NinjectWebCommon), "Stop")]
 
 namespace NZBDash.UI.App_Start
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

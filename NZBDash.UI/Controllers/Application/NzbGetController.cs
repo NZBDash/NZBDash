@@ -10,6 +10,7 @@ using NZBDash.Common.Mapping;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.NzbGet;

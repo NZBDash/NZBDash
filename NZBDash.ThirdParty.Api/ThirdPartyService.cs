@@ -2,8 +2,7 @@
 
 using NZBDash.Api.Models;
 using NZBDash.Common.Interfaces;
-
-using IThirdPartyService = NZBDash.Api.Controllers.IThirdPartyService;
+using NZBDash.ThirdParty.Api.Interfaces;
 
 namespace NZBDash.ThirdParty.Api
 {
