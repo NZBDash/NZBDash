@@ -1,12 +1,14 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Diagnostics.CodeAnalysis;
 
 using NZBDash.DataAccess.Models;
 using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess
 {
-    public class NZBDashContext : DbContext 
+    [ExcludeFromCodeCoverage]
+    public class NZBDashContext : DbContext
     {
         public NZBDashContext()
             : base("NZBDashConnection")

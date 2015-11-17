@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+
+
 namespace NZBDash.DataAccess.Migrations
 {
     using System;
@@ -5,6 +8,7 @@ namespace NZBDash.DataAccess.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+    [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<NZBDash.DataAccess.NZBDashContext>
     {
         public Configuration()
@@ -16,7 +20,7 @@ namespace NZBDash.DataAccess.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data. E.g.
             //
             //    context.People.AddOrUpdate(

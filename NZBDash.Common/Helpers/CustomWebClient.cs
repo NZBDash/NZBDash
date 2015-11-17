@@ -1,9 +1,11 @@
-﻿using System.Net;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 
 using NZBDash.Common.Interfaces;
 
 namespace NZBDash.Common.Helpers
 {
+    [ExcludeFromCodeCoverage]
     public class CustomWebClient : IWebClient
     {
         private WebClient Client { get; set; }

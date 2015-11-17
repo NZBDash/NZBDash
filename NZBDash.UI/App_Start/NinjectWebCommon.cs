@@ -81,7 +81,7 @@ namespace NZBDash.UI.App_Start
 #endif
             // Services
             kernel.Bind<IThirdPartyService>().To<ThirdPartyService>();
-            
+
             // Applications
             kernel.Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
             kernel.Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();

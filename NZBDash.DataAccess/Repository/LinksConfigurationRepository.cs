@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ using NZBDash.DataAccess.Models;
 
 namespace NZBDash.DataAccess.Repository
 {
+    [ExcludeFromCodeCoverage]
     public class LinksConfigurationRepository : IRepository<LinksConfiguration>
     {
         public LinksConfigurationRepository()
