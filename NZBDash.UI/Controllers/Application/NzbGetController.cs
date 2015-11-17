@@ -5,6 +5,7 @@ using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
+using NZBDash.Common.Helpers;
 using NZBDash.Common.Mapping;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
@@ -104,7 +105,6 @@ namespace NZBDash.UI.Controllers.Application
                     {
                         progressBar = "progress-bar-success";
                     }
-                    
 
                     model.DownloadItem.Add(new DownloadItem
                     {

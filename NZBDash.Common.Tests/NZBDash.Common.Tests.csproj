@@ -55,6 +55,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -74,13 +77,19 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="MemorySizeConverterTest.cs" />
+    <Compile Include="Helpers\ThirdPartySerializerTest.cs" />
+    <Compile Include="Helpers\MemorySizeConverterTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Mapping\MappingHelperTests.cs" />
     <Compile Include="Mapping\NzbGetHistoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\Class.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
@@ -91,6 +100,11 @@
       <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>
       <Name>NZBDash.Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\Class.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

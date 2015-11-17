@@ -1,0 +1,17 @@
+﻿<root>
+  <version>3.1</version>
+  <releaseDate>2014-06-25T00:00:00.000Z</releaseDate>
+  <demo>true</demo>
+  <person>
+    <id>12345</id>
+    <name>John Doe</name>
+    <phones>
+      <home>800-123-4567</home>
+      <mobile>877-123-1234</mobile>
+    </phones>
+    <email>jd@example.com</email>
+    <email>jd@example.org</email>
+    <dateOfBirth>1980-01-02T00:00:00.000Z</dateOfBirth>
+    <registered>true</registered>
+  </person>
+</root>

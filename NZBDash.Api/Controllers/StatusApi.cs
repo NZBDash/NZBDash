@@ -20,52 +20,11 @@ namespace NZBDash.Api.Controllers
     [RoutePrefix("api/{controller}/{action}")]
     public class StatusApiController : ApiController, IStatusApi
     {
-        // GET api/<controller>
-        public IEnumerable<DriveInfoObj> Get()
-        {
-            return GetPhysicalDrives();
-        }
-
-        [HttpGet]
-        [ActionName("DriveInfo")]
-        public IEnumerable<DriveInfoObj> GetDriveInfo()
-        {
-            return GetPhysicalDrives();
-        }
-
-        [HttpGet]
-        [ActionName("RamInfo")]
-        public RamInfoObj GetRamInfo()
-        {
-            return new RamInfoObj(new ComputerInfo());
-        }
-
-        [HttpGet]
-        [ActionName("UpTime")]
-        public TimeSpan UpTime()
-        {
-            using (var uptime = new PerformanceCounter("System", "System Up Time"))
-            {
-                // Call this an extra time before reading its value
-                uptime.NextValue();
-                return TimeSpan.FromSeconds(uptime.NextValue());
-            }
-        }
-
         [HttpGet]
         [ActionName("NetworkInfo")]
         public NetworkInfo GetNetworkInfo()
         {
             return GetNetworkingDetails();
-        }
-
-        [HttpGet]
-        [ActionName("Processes")]
-        public List<ProcessObj> GetProcesses()
-        {
-            var list = new List<ProcessObj>();
-            Process.GetProcesses().ToList().ForEach(o => list.Add(MakeProcessObj(o)));
-            return list;
         }
 
         [HttpGet]
@@ -181,49 +140,6 @@ namespace NZBDash.Api.Controllers
                 var rdr = new StringReader(data);
                 return (T)serializer.Deserialize(rdr);
             }
-        }
-
-        private IEnumerable<DriveInfoObj> GetPhysicalDrives()
-        {
-            var list = new List<DriveInfoObj>();
-            foreach (var drive in DriveInfo.GetDrives())
-            {
-                if (drive.IsReady)
-                {
-                    list.Add(new DriveInfoObj(drive));
-                }
-            }
-
-            return list;
-        }
-
-        private ProcessObj MakeProcessObj(Process proc)
-        {
-            ProcessObj obj = new ProcessObj
-            {
-                BasePriority = proc.BasePriority,
-                EnableRaisingEvents = proc.EnableRaisingEvents,
-                HandleCount = proc.HandleCount,
-                Id = proc.Id,
-                MachineName = proc.MachineName,
-                MainWindowHandle = proc.MainWindowHandle,
-                MainWindowTitle = proc.MainWindowTitle,
-                NonpagedSystemMemorySize64 = proc.NonpagedSystemMemorySize64,
-                PagedMemorySize64 = proc.PagedMemorySize64,
-                PagedSystemMemorySize64 = proc.PagedSystemMemorySize64,
-                PeakPagedMemorySize64 = proc.PeakPagedMemorySize64,
-                PeakVirtualMemorySize64 = proc.PeakVirtualMemorySize64,
-                PeakWorkingSet64 = proc.PeakWorkingSet64,
-                PrivateMemorySize64 = proc.PrivateMemorySize64,
-                ProcessName = proc.ProcessName,
-                Responding = proc.Responding,
-                SessionId = proc.SessionId,
-                StartInfo = proc.StartInfo,
-                VirtualMemorySize64 = proc.VirtualMemorySize64,
-                WorkingSet64 = proc.WorkingSet64
-            };
-
-            return obj;
         }
 
         private NetworkInfo GetNetworkingDetails()

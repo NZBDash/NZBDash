@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NZBDash.Common
+namespace NZBDash.Common.Interfaces
 {
     public interface ILogger
     {

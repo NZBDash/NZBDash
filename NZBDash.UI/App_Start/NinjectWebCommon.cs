@@ -1,4 +1,7 @@
 using NZBDash.Api.Controllers;
+using NZBDash.Common;
+using NZBDash.Common.Helpers;
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Services;
@@ -82,6 +85,10 @@ namespace NZBDash.UI.App_Start
             kernel.Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
             kernel.Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsServiceService>();
             kernel.Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
+
+            // Serializer
+            kernel.Bind<ISerializer>().To<ThirdPartySerializer>();
+
         }
     }
 }

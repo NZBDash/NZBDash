@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using NZBDash.Common;
+using NZBDash.Common.Interfaces;
 
 namespace NZBDash.UI.Controllers
 {

@@ -2,6 +2,7 @@
 using System.Linq;
 
 using NZBDash.Common;
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Models.Settings;

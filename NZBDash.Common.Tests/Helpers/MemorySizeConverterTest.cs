@@ -1,7 +1,10 @@
 ﻿using System;
+
 using NUnit.Framework;
 
-namespace NZBDash.Common.Tests
+using NZBDash.Common.Helpers;
+
+namespace NZBDash.Common.Tests.Helpers
 {
     [TestFixture]
     public class MemorySizeConverterTest

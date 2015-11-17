@@ -2,6 +2,7 @@
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common;
+using NZBDash.Common.Interfaces;
 
 namespace NZBDash.UI.Helpers
 {
