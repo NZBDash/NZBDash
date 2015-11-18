@@ -36,7 +36,8 @@ namespace NZBDash.DependencyResolver.Test
         public void ResolveSerializerDependency()
         {
             var module = new SerializerModule();
-            var kernal = new StandardKernel(module);
+            var webClientModule = new ServiceModule();
+            var kernal = new StandardKernel(module, webClientModule);
 
             var service = kernal.Get<ISerializer>();
             Assert.That(service, Is.Not.Null);

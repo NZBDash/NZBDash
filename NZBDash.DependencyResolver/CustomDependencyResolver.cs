@@ -6,7 +6,7 @@ using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver
 {
-    public class CustomDependencyResolver
+    public class CustomDependencyResolver : IDependencyResolver
     {
         public List<INinjectModule> GetModules()
         {

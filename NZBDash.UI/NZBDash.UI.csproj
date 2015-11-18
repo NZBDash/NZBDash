@@ -1322,6 +1322,10 @@
       <Project>{e54f85fe-269a-4b32-bcbb-239cf1fd63e1}</Project>
       <Name>NZBDash.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
+      <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
+      <Name>NZBDash.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521cb3c7-f19c-4b92-8a39-4537bec094b5}</Project>
       <Name>NZBDash.Common.Models</Name>
@@ -1329,6 +1333,10 @@
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9dd8a9da-16ba-4447-af4a-414148702b04}</Project>
       <Name>NZBDash.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Interfaces\NZBDash.Core.Interfaces.csproj">
+      <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
+      <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>

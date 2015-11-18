@@ -55,6 +55,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -82,6 +86,10 @@
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -116,9 +124,11 @@
     <Compile Include="Controllers\SettingsControllerTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppStartConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\NzbGetControllerTests.cs" />
     <Compile Include="IconHelperTests.cs" />
+    <Compile Include="NinjectWebCommonTests.cs" />
     <Compile Include="UrlHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +140,10 @@
       <Project>{e54f85fe-269a-4b32-bcbb-239cf1fd63e1}</Project>
       <Name>NZBDash.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
+      <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
+      <Name>NZBDash.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
@@ -137,6 +151,10 @@
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
       <Name>NZBDash.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Interfaces\NZBDash.Core.Interfaces.csproj">
+      <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
+      <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>

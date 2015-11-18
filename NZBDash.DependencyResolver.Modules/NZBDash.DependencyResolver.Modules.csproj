@@ -55,7 +55,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\NZBDash.UI\Bin\System.Web.Http.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -74,9 +74,17 @@
       <Project>{E54F85FE-269A-4B32-BCBB-239CF1FD63E1}</Project>
       <Name>NZBDash.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
+      <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
+      <Name>NZBDash.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
       <Name>NZBDash.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Interfaces\NZBDash.Core.Interfaces.csproj">
+      <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
+      <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
