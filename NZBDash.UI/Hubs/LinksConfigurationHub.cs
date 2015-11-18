@@ -13,8 +13,12 @@ namespace NZBDash.UI.Hubs
 {
     public class LinksConfigurationHub : Hub
     {
-        [Inject]
         private IRepository<LinksConfiguration> LinksRepository { get; set; }
+
+        public LinksConfigurationHub(IRepository<LinksConfiguration> configurationRepository)
+        {
+            LinksRepository = configurationRepository;
+        }
 
         public void AddLink(string linkName, string linkEndpoint)
         {
