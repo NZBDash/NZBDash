@@ -3,7 +3,7 @@
 using Moq;
 
 using NUnit.Framework;
-
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
@@ -23,6 +23,7 @@ namespace NZBDash.Core.Test.Services
         public void SetUp()
         {
             var mockRepo = new Mock<IRepository<NzbGetSettings>>();
+            var mockLogger = new Mock<ILogger>();
             ExpectedGetLinks = new List<NzbGetSettings>
             {
                 new NzbGetSettings

@@ -11,14 +11,9 @@ namespace NZBDash.UI.Helpers
     {
 
         public EndpointTester(IThirdPartyService service)
-            : this(new NLogLogger(typeof(EndpointTester)))
         {
             Api = service;
-        }
-
-        public EndpointTester(ILogger logger)
-        {
-            _logger = logger;
+            _logger = new NLogLogger(typeof(EndpointTester));
         }
 
         private ILogger _logger { get; set; }

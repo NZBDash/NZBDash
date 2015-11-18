@@ -1,18 +1,21 @@
 ﻿using System;
-
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
+using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 
 namespace NZBDash.UI.Hubs
 {
     public class ApplicationConfigurationHub : BaseHub
     {
-        public ApplicationConfigurationHub()
+        private IThirdPartyService Service { get; set; }
+
+        public ApplicationConfigurationHub(IThirdPartyService service)
             : base(typeof(ApplicationConfigurationHub))
         {
-
+            Service = service;
         }
 
         public void TestNzbGetConnection(string ipAddress, int port, string username, string password)
@@ -20,7 +23,7 @@ namespace NZBDash.UI.Hubs
             Logger.Trace(string.Format("Started TestNzbGetConnection with {0}:{1}, {2}", ipAddress, port, username));
             const Applications selectedApp = Applications.NzbGet;
 
-            var tester = new EndpointTester(new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            var tester = new EndpointTester(Service);
 
             Logger.Trace("Converting IP Address into URI");
             var uri = UrlHelper.ReturnUri(ipAddress, port);
@@ -55,7 +58,7 @@ namespace NZBDash.UI.Hubs
         {
             const Applications selectedApp = Applications.SabNZB;
 
-            var tester = new EndpointTester(new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            var tester = new EndpointTester(Service);
             var uri = UrlHelper.ReturnUri(ipAddress, port);
             if (uri == null)
             {
@@ -84,7 +87,7 @@ namespace NZBDash.UI.Hubs
         {
             const Applications selectedApp = Applications.Plex;
 
-            var tester = new EndpointTester(new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            var tester = new EndpointTester(Service);
             var uri = UrlHelper.ReturnUri(ipAddress, port);
             if (uri == null)
             {
@@ -113,7 +116,7 @@ namespace NZBDash.UI.Hubs
         {
             const Applications selectedApp = Applications.Sonarr;
 
-            var tester = new EndpointTester(new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            var tester = new EndpointTester(Service);
             var uri = UrlHelper.ReturnUri(ipAddress, port);
             if (uri == null)
             {

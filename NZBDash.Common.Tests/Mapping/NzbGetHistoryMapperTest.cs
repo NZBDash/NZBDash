@@ -35,7 +35,7 @@ namespace NZBDash.Common.Tests.Mapping
 
             Assert.That(target.Id, Is.EqualTo(id));
             Assert.That(target.NzbName, Is.EqualTo(nzbName));
-            Assert.That(target.FileSize, Is.EqualTo(fileSize));
+            Assert.That(target.FileSize, Is.EqualTo(fileSize.ToString()));
             Assert.That(target.Category, Is.EqualTo(category));
             Assert.That(target.Health, Is.EqualTo(health));
             Assert.That(target.HistoryTime, Is.EqualTo(historyTime));

@@ -16,14 +16,9 @@ namespace NZBDash.Core.SettingsService
     {
         private IRepository<NzbGetSettings> Repo { get; set; }
         public NzbGetSettingsService(IRepository<NzbGetSettings> repo)
-            : this(new NLogLogger(typeof(NzbGetSettingsService)))
         {
             Repo = repo;
-        }
-
-        public NzbGetSettingsService(ILogger logger)
-        {
-            _logger = logger;
+            _logger = new NLogLogger(typeof(NzbGetSettingsService));
         }
 
         private ILogger _logger { get; set; }

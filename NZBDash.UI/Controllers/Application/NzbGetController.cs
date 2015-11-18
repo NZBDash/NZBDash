@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web.Mvc;
-
-using NZBDash.Api.Controllers;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
@@ -14,20 +13,18 @@ using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.NzbGet;
-
 using Omu.ValueInjecter;
-
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IThirdPartyService api)
-            : base(typeof(NzbGetController))
+        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
         {
             SettingsService = settingsService;
             Api = api;
+            Logger = logger;
         }
 
         private ISettingsService<NzbGetSettingsDto> SettingsService { get; set; }
@@ -138,11 +135,16 @@ namespace NZBDash.UI.Controllers.Application
                 var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
                 var model = new List<NzbGetHistoryViewModel>();
-
                 foreach (var result in history.result)
                 {
                     var singleItem = new NzbGetHistoryViewModel();
                     var mappedResult = (NzbGetHistoryViewModel)singleItem.InjectFrom(new NzbGetHistoryMapper(), result);
+                    if (!string.IsNullOrEmpty(mappedResult.FileSize))
+                    {
+                        long newFileSize;
+                        long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
+                        mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
+                    }
                     model.Add(mappedResult);
                 }
 

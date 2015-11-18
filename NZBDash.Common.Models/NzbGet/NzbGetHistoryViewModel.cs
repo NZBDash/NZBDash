@@ -11,7 +11,7 @@ namespace NZBDash.UI.Models.NzbGet
         public string NzbName { get; set; }
         public string Category { get; set; }
         [Display(Name = "File Size")]
-        public int FileSize { get; set; }
+        public string FileSize { get; set; }
         public int Health { get; set; }
         [Display(Name = "Time")]
         public int HistoryTime { get; set; }

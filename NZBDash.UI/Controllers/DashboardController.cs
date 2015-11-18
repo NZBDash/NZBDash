@@ -4,18 +4,16 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
-
-using NZBDash.Api.Controllers;
 using NZBDash.Common.Models.Data.Models;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.SettingsService;
+using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
-
+    
 using Applications = NZBDash.Common.Applications;
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
@@ -23,18 +21,19 @@ namespace NZBDash.UI.Controllers
 {
     public class DashboardController : BaseController
     {
-        private IStatusApi Api { get; set; }
+        private IThirdPartyService Api { get; set; }
         private IHardwareService Service { get; set; }
         private IRepository<LinksConfiguration> LinksRepository { get; set; }
-        private IRepository<NzbGetSettings> NzbGetRepository { get; set; }
+        private ISettingsService<NzbGetSettingsDto> NzbGetService { get; set; }
 
-        public DashboardController(IHardwareService service, IStatusApi statusApi, IRepository<LinksConfiguration> linkRepo, IRepository<NzbGetSettings> nzbGetRepo)
+        public DashboardController(IHardwareService service, IThirdPartyService api, IRepository<LinksConfiguration> linkRepo,
+            ISettingsService<NzbGetSettingsDto> nzbGetService)
             : base(typeof(DashboardController))
         {
-            Api = statusApi;
+            Api = api;
             Service = service;
             LinksRepository = linkRepo;
-            NzbGetRepository = nzbGetRepo;
+            NzbGetService = nzbGetService;
         }
 
         public ActionResult Index()
@@ -44,15 +43,12 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetNzbGetDownloadInformation()
         {
-            var admin = new NzbGetSettingsService(NzbGetRepository);
-            var config = admin.GetSettings();
+            var config = NzbGetService.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try
             {
                 var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
-
                 var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
-
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
                 var model = new DownloaderViewModel

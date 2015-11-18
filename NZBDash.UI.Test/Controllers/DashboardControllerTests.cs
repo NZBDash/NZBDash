@@ -11,7 +11,9 @@ using NZBDash.Common.Models.Data.Models;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Controllers;
 
 using TestStack.FluentMVCTesting;
@@ -22,18 +24,18 @@ namespace NZBDash.UI.Test.Controllers
     public class DashboardControllerTests
     {
         private DashboardController _controller;
-        private Mock<IStatusApi> StatusApiMock { get; set; }
+        private Mock<IThirdPartyService> StatusApiMock { get; set; }
         private Mock<IHardwareService> HardwareServiceMock { get; set; }
         private Mock<IRepository<LinksConfiguration>> LinksConfigurationServiceMock { get; set; }
-        private Mock<IRepository<NzbGetSettings>> NzbGetMock { get; set; }
+        private Mock<ISettingsService<NzbGetSettingsDto>> NzbGetMock { get; set; }
 
         [SetUp]
         public void MockSetup()
         {
             var mockHardware = new Mock<IHardwareService>();
-            var mockApi = new Mock<IStatusApi>();
+            var mockApi = new Mock<IThirdPartyService>();
             var mockLinks = new Mock<IRepository<LinksConfiguration>>();
-            var mocknzbGet = new Mock<IRepository<NzbGetSettings>>();
+            var mocknzbGet = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var ramModel = new RamModel
             {
                 AvailablePhysicalMemory = 22,

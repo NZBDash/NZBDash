@@ -20,7 +20,6 @@ namespace NZBDash.DependencyResolver.Modules
 
 #if LINUX
            Bind<IHardwareService>().To<LinuxHardwareService>();
-           Bind<IStatusApi>().To<StatusApiController>();
 #endif
             Bind<IThirdPartyService>().To<ThirdPartyService>();
             Bind<IWebClient>().To<CustomWebClient>();

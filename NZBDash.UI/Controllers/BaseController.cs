@@ -10,6 +10,10 @@ namespace NZBDash.UI.Controllers
     {
         public ILogger Logger { get; set; }
 
+        public BaseController()
+        {
+            
+        }
         public BaseController(Type classType)
         {
             Logger = new NLogLogger(classType);

@@ -67,6 +67,7 @@
     <Compile Include="RepositoryModule.cs" />
     <Compile Include="SerializerModule.cs" />
     <Compile Include="ApplicationSettingsModule.cs" />
+    <Compile Include="LoggerModule.cs" />
     <Compile Include="ServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

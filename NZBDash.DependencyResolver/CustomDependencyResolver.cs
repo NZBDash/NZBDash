@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using Ninject.Modules;
-
 using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver
@@ -16,6 +15,7 @@ namespace NZBDash.DependencyResolver
                 new ApplicationSettingsModule(),
                 new SerializerModule(),
                 new RepositoryModule(),
+                new LoggerModule(),
             };
 
             return modules;
