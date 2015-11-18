@@ -3,17 +3,22 @@
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.DataAccess.Repository.Settings;
 
 namespace NZBDash.Core.SettingsService
 {
     public class PlexSettingsService : ISettingsService<PlexSettingsDto>
     {
+        private IRepository<PlexSettings> Repo { get; set; }
+        public PlexSettingsService(IRepository<PlexSettings> repo)
+        {
+            Repo = repo;
+        }
+
         public PlexSettingsDto GetSettings()
         {
-            var repo = new PlexRepository();
-
-            var result = repo.GetAll();
+            var result = Repo.GetAll();
             var setting = result.FirstOrDefault();
             if (setting == null)
             {
@@ -36,9 +41,7 @@ namespace NZBDash.Core.SettingsService
 
         public bool SaveSettings(PlexSettingsDto model)
         {
-            var repo = new PlexRepository();
-
-            var entity = repo.Find(model.Id);
+            var entity = Repo.Find(model.Id);
 
             if (entity == null)
             {
@@ -53,7 +56,7 @@ namespace NZBDash.Core.SettingsService
                     Password = model.Password
                 };
 
-                var insertResult = repo.Insert(newEntity);
+                var insertResult = Repo.Insert(newEntity);
                 return insertResult != null;
             }
 
@@ -65,7 +68,7 @@ namespace NZBDash.Core.SettingsService
             entity.Username = model.Username;
             entity.Password = model.Password;
 
-            var result = repo.Modify(entity);
+            var result = Repo.Modify(entity);
 
             return result == 1;
         }

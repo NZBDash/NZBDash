@@ -8,7 +8,6 @@ using Microsoft.VisualBasic.Devices;
 
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model;
 
 using Omu.ValueInjecter;
 
@@ -92,9 +91,9 @@ namespace NZBDash.Core.Services
             }
         }
 
-        private RamInfoObj GetRamInfo()
+        private ComputerInfo GetRamInfo()
         {
-            return new RamInfoObj(new ComputerInfo());
+            return new ComputerInfo();
         }
 
         private DriveInfo[] GetDriveInfo()

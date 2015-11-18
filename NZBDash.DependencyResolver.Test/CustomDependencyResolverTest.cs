@@ -28,7 +28,8 @@ namespace NZBDash.DependencyResolver.Test
         public void ResolveApplicationDependency()
         {
             var module = new ApplicationSettingsModule();
-            var kernal = new StandardKernel(module);
+            var repoModule = new RepositoryModule();
+            var kernal = new StandardKernel(module, repoModule);
 
             var service = kernal.Get<ISettingsService<PlexSettingsDto>>();
             Assert.That(service, Is.Not.Null);
@@ -48,7 +49,7 @@ namespace NZBDash.DependencyResolver.Test
         [Test]
         public void ResolveDataDependency()
         {
-            var module = new DataModule();
+            var module = new RepositoryModule();
             var kernal = new StandardKernel(module);
 
             var service = kernal.Get<IRepository<LinksConfiguration>>();

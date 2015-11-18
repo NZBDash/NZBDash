@@ -5,17 +5,15 @@ using Moq;
 
 using NUnit.Framework;
 
-using NZBDash.Api.Controllers;
 using NZBDash.Api.Models;
-using NZBDash.Common;
 using NZBDash.Common.Helpers;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccess.Repository.Settings;
 using NZBDash.ThirdParty.Api;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.NzbGet;
 
@@ -43,7 +41,6 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
-        [Ignore]
         public void GetNzbGetDownloadHistory()
         {
             var expectedSettings = new NzbGetSettingsDto
@@ -74,23 +71,23 @@ namespace NZBDash.UI.Test.Controllers
             };
 
             var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
-            var mockApi = new Mock<IStatusApi>();
+            var mockApi = new Mock<IThirdPartyService>();
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings).Verifiable();
             mockApi.Setup(x => x.GetNzbGetHistory(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedApi).Verifiable();
 
-            //var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
-            //var result = (PartialViewResult)controller.GetNzbGetDownloadHistory();
-            //var model = (List<NzbGetHistoryViewModel>)result.Model;
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
+            var result = (PartialViewResult)controller.GetNzbGetDownloadHistory();
+            var model = (List<NzbGetHistoryViewModel>)result.Model;
 
-            //Assert.That(result.Model, Is.TypeOf<List<NzbGetHistoryViewModel>>());
-            //Assert.That(model, Is.Not.Null);
-            //Assert.That(model[0].FileSize, Is.EqualTo(200));
-            //Assert.That(model[0].Id, Is.EqualTo(22));
-            //Assert.That(model[0].Name, Is.EqualTo("test"));
-            //Assert.That(model[0].Status, Is.EqualTo("Running"));
-            //Assert.That(model[0].NzbName, Is.EqualTo("nzb"));
-            //Assert.That(model[0].Category, Is.EqualTo("cata"));
-            //Assert.That(model[0].FileSize, Is.EqualTo(200));
+            Assert.That(result.Model, Is.TypeOf<List<NzbGetHistoryViewModel>>());
+            Assert.That(model, Is.Not.Null);
+            Assert.That(model[0].FileSize, Is.EqualTo(200));
+            Assert.That(model[0].Id, Is.EqualTo(22));
+            Assert.That(model[0].Name, Is.EqualTo("test"));
+            Assert.That(model[0].Status, Is.EqualTo("Running"));
+            Assert.That(model[0].NzbName, Is.EqualTo("nzb"));
+            Assert.That(model[0].Category, Is.EqualTo("cata"));
+            Assert.That(model[0].FileSize, Is.EqualTo(200));
 
         }
 
@@ -104,18 +101,18 @@ namespace NZBDash.UI.Test.Controllers
             };
             var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { ServerPaused = true } };
 
-            //var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
-            //var mockApi = new Mock<IThirdPartyService>();
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
 
-            //mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
-            //mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus);
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+            mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus);
 
-            //var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
-            //var result = controller.GetNzbGetStatus();
-            //var model = (NzbGetViewModel)result.Data;
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
+            var result = controller.GetNzbGetStatus();
+            var model = (NzbGetViewModel)result.Data;
 
 
-            //Assert.That(model.Status,Is.EqualTo("Paused"));
+            Assert.That(model.Status, Is.EqualTo("Paused"));
         }
     }
 }

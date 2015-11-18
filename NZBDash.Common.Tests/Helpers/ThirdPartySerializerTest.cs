@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 using Moq;
@@ -33,7 +34,20 @@ namespace NZBDash.Common.Tests.Helpers
         }
 
         [Test]
-        [Ignore("Need to make valid xml file")]
+        [ExpectedException(typeof(Exception))]
+        public void JsonSerializerException()
+        {
+            var jsonData = File.ReadAllText("TestData/Class.json");
+            var mockWebClient = new Mock<IWebClient>();
+
+            mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Throws<Exception>();
+
+
+            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
+            var result = seralizer.SerializedJsonData<RootObject>(jsonData);
+        }
+
+        [Test]
         public void XmlSerializer()
         {
             var xmlData = File.ReadAllText("TestData/Class.xml");

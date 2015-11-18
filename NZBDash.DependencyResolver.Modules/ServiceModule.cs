@@ -15,8 +15,7 @@ namespace NZBDash.DependencyResolver.Modules
         public override void Load()
         {
 #if WINDOWS || DEBUG
-           Bind<IHardwareService>().To<WindowsHardwareService>();
-           Bind<IStatusApi>().To<StatusApiController>();
+            Bind<IHardwareService>().To<WindowsHardwareService>();
 #endif
 
 #if LINUX

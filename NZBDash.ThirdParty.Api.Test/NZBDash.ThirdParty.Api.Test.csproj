@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53D73B63-32BC-4ECC-ACD4-7ED909F08C70}</ProjectGuid>
+    <ProjectGuid>{F24F8138-6200-4FB4-97BC-3D70D0381C27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NZBDash.Core.Test</RootNamespace>
-    <AssemblyName>NZBDash.Core.Test</AssemblyName>
+    <RootNamespace>NZBDash.ThirdParty.Api.Test</RootNamespace>
+    <AssemblyName>NZBDash.ThirdParty.Api.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,30 +36,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Windows|AnyCPU'">
-    <OutputPath>bin\Windows\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Linux|AnyCPU'">
-    <OutputPath>bin\Linux\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.36.11.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.36.11\lib\net40\Ploeh.AutoFixture.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -73,44 +59,25 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Services\SabNzbSettingsServiceTest.cs" />
-    <Compile Include="Services\SonarrSettingsServiceTest.cs" />
-    <Compile Include="Services\PlexSettingsServiceTest.cs" />
-    <Compile Include="Services\NzbGetSettingsServiceTest.cs" />
-    <Compile Include="Services\DashboardSettingsServiceTests.cs" />
-    <Compile Include="Services\CouchPotatoSettingsServiceTest.cs" />
-    <Compile Include="Services\LinksConfigurationServiceTest.cs" />
-    <Compile Include="NLogLoggerTests.cs" />
-    <Compile Include="WindowsHardwareServiceTests.cs" />
+    <Compile Include="ThirdPartyServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Api\NZBDash.Api.csproj">
+      <Project>{E54F85FE-269A-4B32-BCBB-239CF1FD63E1}</Project>
+      <Name>NZBDash.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
       <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
       <Name>NZBDash.Common.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
-      <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
-      <Name>NZBDash.Common.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
-      <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
-      <Name>NZBDash.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Core.Interfaces\NZBDash.Core.Interfaces.csproj">
-      <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
-      <Name>NZBDash.Core.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
-      <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
-      <Name>NZBDash.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.DataAccess.Interfaces\NZBDash.DataAccess.Interfaces.csproj">
-      <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
-      <Name>NZBDash.DataAccess.Interfaces</Name>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
+      <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
+      <Name>NZBDash.ThirdParty.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

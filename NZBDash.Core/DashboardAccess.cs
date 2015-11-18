@@ -2,13 +2,13 @@
 
 using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Model.DTO;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.DataAccess.Repository;
 
 namespace NZBDash.Core
 {
     public class DashboardAccess
     {
-
         public bool UpdateDashboard(DashboardGridDto[] dto)
         {
 

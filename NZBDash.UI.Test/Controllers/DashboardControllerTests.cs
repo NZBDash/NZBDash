@@ -41,10 +41,8 @@ namespace NZBDash.UI.Test.Controllers
                 OSFullName = "Windows",
                 OSPlatform = "10",
                 OSVersion = "10.0",
-                PhysicalPercentageFilled = 98,
                 TotalPhysicalMemory = 1024,
                 TotalVirtualMemory = 2048,
-                VirtualPercentageFilled = 50
             };
             var driveModels = new List<DriveModel>()
             {
@@ -108,7 +106,7 @@ namespace NZBDash.UI.Test.Controllers
 
             Assert.That(model.AvailablePhysicalMemory, Is.EqualTo(22));
             Assert.That(model.AvailableVirtualMemory, Is.EqualTo(23));
-            Assert.That(model.VirtualPercentageFilled, Is.EqualTo(50));
+            Assert.That(model.VirtualPercentageFilled, Is.EqualTo(99));
             Assert.That(model.PhysicalPercentageFilled, Is.EqualTo(98));
         }
 

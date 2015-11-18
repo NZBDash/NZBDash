@@ -14,7 +14,7 @@ namespace NZBDash.UI.Helpers
             switch (application)
             {
                 case Applications.SabNZB:
-                    return new SabNzbSettingsService().GetSettings().Enabled;
+                    return new SabNzbSettingsService(new SabNzbRepository()).GetSettings().Enabled;
                 case Applications.Sickbeard:
                     break;
                 case Applications.CouchPotato:
@@ -22,9 +22,9 @@ namespace NZBDash.UI.Helpers
                 case Applications.Kodi:
                     break;
                 case Applications.Sonarr:
-                    return new SonarrSettingsService().GetSettings().Enabled;
+                    return new SonarrSettingsService(new SonarrRepository()).GetSettings().Enabled;
                 case Applications.Plex:
-                    return new PlexSettingsService().GetSettings().Enabled;
+                    return new PlexSettingsService(new PlexRepository()).GetSettings().Enabled;
                 case Applications.NzbGet:
                    return new NzbGetSettingsService(new NzbGetRepository()).GetSettings().Enabled;
                 case Applications.Headphones:

@@ -85,8 +85,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            var save = new SabNzbSettingsService();
-            var dto = save.GetSettings();
+            var dto = SabNzbSettingsServiceSettingsService.GetSettings();
             var model = new SabNzbSettingsViewModel
             {
                 ApiKey = dto.ApiKey,

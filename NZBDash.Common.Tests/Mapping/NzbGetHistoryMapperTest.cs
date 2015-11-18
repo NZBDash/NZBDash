@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
 
@@ -12,6 +13,7 @@ using Omu.ValueInjecter;
 namespace NZBDash.Common.Tests.Mapping
 {
     [TestFixture]
+    [ExcludeFromCodeCoverage]
     public class NzbGetHistoryMapperTest
     {
         [TestCaseSource("TestCaseData")]
@@ -40,7 +42,6 @@ namespace NZBDash.Common.Tests.Mapping
             Assert.That(target.Status, Is.EqualTo(status));
             Assert.That(target.Name, Is.EqualTo(name));
         }
-
 
         private static IEnumerable<ITestCaseData> TestCaseData
         {
