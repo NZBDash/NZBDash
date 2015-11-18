@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 using NZBDash.Api.Models;
 using NZBDash.Common.Mapping;
+
 using NZBDash.UI.Models.NzbGet;
 
 using Omu.ValueInjecter;
