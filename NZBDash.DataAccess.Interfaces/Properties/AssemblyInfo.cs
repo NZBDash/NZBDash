@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NZBDash.Common.Interfaces")]
+[assembly: AssemblyTitle("NZBDash.DataAccess.Interfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NZBDash.Common.Interfaces")]
+[assembly: AssemblyProduct("NZBDash.DataAccess.Interfaces")]
 [assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("50c0f02b-4868-4e93-84b2-c96caeb3da34")]
+[assembly: Guid("d8739b05-3469-4e87-ad1b-805ae4f987e7")]
 
 // Version information for an assembly consists of the following four values:
 //

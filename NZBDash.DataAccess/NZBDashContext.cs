@@ -2,13 +2,13 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics.CodeAnalysis;
 
-using NZBDash.DataAccess.Models;
-using NZBDash.DataAccess.Models.Settings;
-
+using NZBDash.Common.Models.Data.Models;
+using NZBDash.Common.Models.Data.Models.Settings;
+using NZBDash.DataAccess.Interfaces;
 namespace NZBDash.DataAccess
 {
     [ExcludeFromCodeCoverage]
-    public class NZBDashContext : DbContext
+    public class NZBDashContext : DbContext, INzbDashContext
     {
         public NZBDashContext()
             : base("NZBDashConnection")

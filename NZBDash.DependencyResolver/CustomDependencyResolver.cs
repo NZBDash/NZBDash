@@ -14,7 +14,8 @@ namespace NZBDash.DependencyResolver
             {
                 new ServiceModule(),
                 new ApplicationSettingsModule(),
-                new SerializerModule()
+                new SerializerModule(),
+                new DataModule(),
             };
 
             return modules;

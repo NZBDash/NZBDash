@@ -4,15 +4,18 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
+
 using NZBDash.Api.Controllers;
-using NZBDash.Common;
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.SettingsService;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 
+using Applications = NZBDash.Common.Applications;
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers
@@ -21,12 +24,14 @@ namespace NZBDash.UI.Controllers
     {
         private IStatusApi Api { get; set; }
         private IHardwareService Service { get; set; }
+        private IRepository<LinksConfiguration> LinksRepository { get; set; }
 
-        public DashboardController(IHardwareService service, IStatusApi statusApi)
+        public DashboardController(IHardwareService service, IStatusApi statusApi, IRepository<LinksConfiguration> repo)
             : base(typeof(DashboardController))
         {
             Api = statusApi;
             Service = service;
+            LinksRepository = repo;
         }
 
         public ActionResult Index()
@@ -86,7 +91,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetLinks()
         {
-            var config = new LinksConfigurationService();
+            var config = new LinksConfigurationService(LinksRepository);
             var allLinks = config.GetLinks();
 
             var model = allLinks.Select(link => new DashboardLinksViewModel { LinkEndpoint = link.LinkEndpoint, LinkName = link.LinkName }).ToList();

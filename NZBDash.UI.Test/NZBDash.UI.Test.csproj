@@ -160,6 +160,10 @@
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccess.Interfaces\NZBDash.DataAccess.Interfaces.csproj">
+      <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
+      <Name>NZBDash.DataAccess.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>

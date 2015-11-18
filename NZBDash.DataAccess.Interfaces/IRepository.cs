@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using NZBDash.DataAccess.Models;
+using NZBDash.Common.Models.Data;
 
 namespace NZBDash.DataAccess.Interfaces
 {

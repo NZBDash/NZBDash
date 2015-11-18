@@ -1342,6 +1342,10 @@
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccess.Interfaces\NZBDash.DataAccess.Interfaces.csproj">
+      <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
+      <Name>NZBDash.DataAccess.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>
       <Name>NZBDash.DependencyResolver</Name>

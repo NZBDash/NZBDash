@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccess.Interfaces;
-using NZBDash.DataAccess.Models;
 
 namespace NZBDash.DataAccess.Repository
 {
@@ -25,9 +25,9 @@ namespace NZBDash.DataAccess.Repository
             return Db.LinksConfiguration.Find(id);
         }
 
-        public Task<LinksConfiguration> FindAsync(int id)
+        public async Task<LinksConfiguration> FindAsync(int id)
         {
-            throw new NotImplementedException();
+            return await Db.LinksConfiguration.FindAsync(id);
         }
 
         public IEnumerable<LinksConfiguration> GetAll()

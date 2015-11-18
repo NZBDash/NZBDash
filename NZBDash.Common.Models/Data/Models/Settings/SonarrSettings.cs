@@ -1,4 +1,4 @@
-﻿namespace NZBDash.DataAccess.Models.Settings
+﻿namespace NZBDash.Common.Models.Data.Models.Settings
 {
     public class SonarrSettings : SettingsEntity
     {

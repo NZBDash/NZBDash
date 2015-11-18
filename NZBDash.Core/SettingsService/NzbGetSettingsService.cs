@@ -3,9 +3,9 @@ using System.Linq;
 
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.DataAccess.Models.Settings;
 using NZBDash.DataAccess.Repository.Settings;
 
 namespace NZBDash.Core.SettingsService

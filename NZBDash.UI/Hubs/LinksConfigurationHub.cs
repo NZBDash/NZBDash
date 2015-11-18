@@ -2,13 +2,20 @@
 
 using Microsoft.AspNet.SignalR;
 
+using Ninject;
+
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Model.DTO;
+using NZBDash.DataAccess.Interfaces;
 
 namespace NZBDash.UI.Hubs
 {
     public class LinksConfigurationHub : Hub
     {
+        [Inject]
+        private IRepository<LinksConfiguration> LinksRepository { get; set; }
+
         public void AddLink(string linkName, string linkEndpoint)
         {
             Uri uri = null;
@@ -22,7 +29,7 @@ namespace NZBDash.UI.Hubs
                 return;
             }
 
-            var config = new LinksConfigurationService();
+            var config = new LinksConfigurationService(LinksRepository);
             var dto = new LinksConfigurationDto { LinkEndpoint = linkEndpoint, LinkName = linkName };
             var result = config.AddLink(dto);
 
@@ -35,7 +42,7 @@ namespace NZBDash.UI.Hubs
 
         public void RemoveLink(int modelId)
         {
-            var config = new LinksConfigurationService();
+            var config = new LinksConfigurationService(LinksRepository);
             var result = config.RemoveLink(modelId);
 
             if (result)

@@ -1,6 +1,6 @@
-﻿using NZBDash.DataAccess.Models.Settings;
+﻿using NZBDash.Common.Models.Data.Models.Settings;
 
-namespace NZBDash.DataAccess.Models
+namespace NZBDash.Common.Models.Data.Models
 {
     public class Applications : SettingsEntity
     {

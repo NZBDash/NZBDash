@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModule.cs" />
     <Compile Include="SerializerModule.cs" />
     <Compile Include="ApplicationSettingsModule.cs" />
     <Compile Include="ServiceModule.cs" />
@@ -78,6 +79,10 @@
       <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
       <Name>NZBDash.Common.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
+      <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
+      <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
       <Name>NZBDash.Common</Name>
@@ -90,10 +95,21 @@
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccess.Interfaces\NZBDash.DataAccess.Interfaces.csproj">
+      <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
+      <Name>NZBDash.DataAccess.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccess\NZBDash.DataAccess.csproj">
+      <Project>{315278FF-796B-4A81-A3FF-BC5E707839A8}</Project>
+      <Name>NZBDash.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

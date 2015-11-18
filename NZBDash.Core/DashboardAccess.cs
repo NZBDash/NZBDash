@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Model.DTO;
-using NZBDash.DataAccess.Models;
 using NZBDash.DataAccess.Repository;
 
 namespace NZBDash.Core

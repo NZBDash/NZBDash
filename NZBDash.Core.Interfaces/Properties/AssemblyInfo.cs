@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("NZBDash.Core.Interfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Exclaimer Ltd")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NZBDash.Core.Interfaces")]
-[assembly: AssemblyCopyright("Copyright © Exclaimer Ltd 2015")]
+[assembly: AssemblyCopyright("Copyright © 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

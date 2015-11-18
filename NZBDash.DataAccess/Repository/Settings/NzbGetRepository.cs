@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccess.Interfaces;
-using NZBDash.DataAccess.Models.Settings;
 
 namespace NZBDash.DataAccess.Repository.Settings
 {

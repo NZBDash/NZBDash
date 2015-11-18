@@ -3,8 +3,10 @@
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver.Test
@@ -40,6 +42,16 @@ namespace NZBDash.DependencyResolver.Test
             var kernal = new StandardKernel(module, webClientModule);
 
             var service = kernal.Get<ISerializer>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        public void ResolveDataDependency()
+        {
+            var module = new DataModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<IRepository<LinksConfiguration>>();
             Assert.That(service, Is.Not.Null);
         }
 

@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccess.Interfaces;
-using NZBDash.DataAccess.Models;
 
 namespace NZBDash.DataAccess.Repository
 {

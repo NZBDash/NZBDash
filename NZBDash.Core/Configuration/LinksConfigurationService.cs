@@ -2,23 +2,24 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Model.DTO;
-using NZBDash.DataAccess.Repository;
+using NZBDash.DataAccess.Interfaces;
 
 namespace NZBDash.Core.Configuration
 {
     public class LinksConfigurationService
     {
-        public LinksConfigurationService()
+        public LinksConfigurationService(IRepository<LinksConfiguration> repo)
         {
-            Repo = new LinksConfigurationRepository();
+            Repo = repo;
         }
 
-        public LinksConfigurationRepository Repo { get; set; }
+        public IRepository<LinksConfiguration> Repo { get; set; }
         public async Task<IEnumerable<LinksConfigurationDto>> GetLinksAsync()
         {
-            var reuslt = await Repo.GetAllAsync();
-            var dto = reuslt.Select(r => new LinksConfigurationDto
+            var result = await Repo.GetAllAsync();
+            var dto = result.Select(r => new LinksConfigurationDto
             {
                 LinkEndpoint = r.LinkEndpoint,
                 Id = r.Id,
@@ -53,7 +54,7 @@ namespace NZBDash.Core.Configuration
 
         public async Task<bool> UpdateLinkAsync(LinksConfigurationDto dto)
         {
-            var entity = Repo.Find(dto.Id);
+            var entity = await Repo.FindAsync(dto.Id);
             entity.LinkEndpoint = dto.LinkEndpoint;
             entity.LinkName = dto.LinkName;
 
@@ -63,7 +64,7 @@ namespace NZBDash.Core.Configuration
 
         public LinksConfigurationDto AddLink(LinksConfigurationDto link)
         {
-            var entity = new DataAccess.Models.LinksConfiguration { LinkEndpoint = link.LinkEndpoint, LinkName = link.LinkName };
+            var entity = new LinksConfiguration { LinkEndpoint = link.LinkEndpoint, LinkName = link.LinkName };
 
             var result = Repo.Insert(entity);
 

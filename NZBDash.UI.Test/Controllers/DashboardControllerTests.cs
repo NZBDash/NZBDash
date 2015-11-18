@@ -7,8 +7,10 @@ using Moq;
 using NUnit.Framework;
 
 using NZBDash.Api.Controllers;
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
+using NZBDash.DataAccess.Interfaces;
 using NZBDash.UI.Controllers;
 
 using TestStack.FluentMVCTesting;
@@ -21,12 +23,14 @@ namespace NZBDash.UI.Test.Controllers
         private DashboardController _controller;
         private Mock<IStatusApi> StatusApiMock { get; set; }
         private Mock<IHardwareService> HardwareServiceMock { get; set; }
+        private Mock<IRepository<LinksConfiguration>> LinksConfigurationServiceMock { get; set; }
 
         [SetUp]
         public void MockSetup()
         {
             var mockHardware = new Mock<IHardwareService>();
             var mockApi = new Mock<IStatusApi>();
+            var mockLinks = new Mock<IRepository<LinksConfiguration>>();
             var ramModel = new RamModel
             {
                 AvailablePhysicalMemory = 22,
@@ -62,9 +66,9 @@ namespace NZBDash.UI.Test.Controllers
 
             HardwareServiceMock = mockHardware;
             StatusApiMock = mockApi;
+            LinksConfigurationServiceMock = mockLinks;
 
-
-            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object);
         }
 
 
