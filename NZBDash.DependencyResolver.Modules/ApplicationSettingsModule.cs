@@ -13,7 +13,7 @@ namespace NZBDash.DependencyResolver.Modules
            Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
            Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();
            Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
-           Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsServiceService>();
+           Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
            Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
         }
     }

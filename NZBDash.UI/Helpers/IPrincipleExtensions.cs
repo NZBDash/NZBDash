@@ -3,6 +3,7 @@ using System.Security.Principal;
 
 using NZBDash.Common;
 using NZBDash.Core.SettingsService;
+using NZBDash.DataAccess.Repository.Settings;
 
 namespace NZBDash.UI.Helpers
 {
@@ -17,7 +18,7 @@ namespace NZBDash.UI.Helpers
                 case Applications.Sickbeard:
                     break;
                 case Applications.CouchPotato:
-                    return new CouchPotatoSettingsServiceService().GetSettings().Enabled;
+                    return new CouchPotatoSettingsService(new CouchPotatoRepository()).GetSettings().Enabled;
                 case Applications.Kodi:
                     break;
                 case Applications.Sonarr:
@@ -25,7 +26,7 @@ namespace NZBDash.UI.Helpers
                 case Applications.Plex:
                     return new PlexSettingsService().GetSettings().Enabled;
                 case Applications.NzbGet:
-                   return new NzbGetSettingsService().GetSettings().Enabled;
+                   return new NzbGetSettingsService(new NzbGetRepository()).GetSettings().Enabled;
                 case Applications.Headphones:
                     break;
                 default:

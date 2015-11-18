@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common.Models.Data.Models;
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
 using NZBDash.DataAccess.Interfaces;
@@ -24,6 +25,7 @@ namespace NZBDash.UI.Test.Controllers
         private Mock<IStatusApi> StatusApiMock { get; set; }
         private Mock<IHardwareService> HardwareServiceMock { get; set; }
         private Mock<IRepository<LinksConfiguration>> LinksConfigurationServiceMock { get; set; }
+        private Mock<IRepository<NzbGetSettings>> NzbGetMock { get; set; }
 
         [SetUp]
         public void MockSetup()
@@ -31,6 +33,7 @@ namespace NZBDash.UI.Test.Controllers
             var mockHardware = new Mock<IHardwareService>();
             var mockApi = new Mock<IStatusApi>();
             var mockLinks = new Mock<IRepository<LinksConfiguration>>();
+            var mocknzbGet = new Mock<IRepository<NzbGetSettings>>();
             var ramModel = new RamModel
             {
                 AvailablePhysicalMemory = 22,
@@ -67,8 +70,9 @@ namespace NZBDash.UI.Test.Controllers
             HardwareServiceMock = mockHardware;
             StatusApiMock = mockApi;
             LinksConfigurationServiceMock = mockLinks;
+            NzbGetMock = mocknzbGet;
 
-            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object, NzbGetMock.Object);
         }
 
 

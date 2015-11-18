@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Common.Models.Data.Models;
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
@@ -25,13 +26,15 @@ namespace NZBDash.UI.Controllers
         private IStatusApi Api { get; set; }
         private IHardwareService Service { get; set; }
         private IRepository<LinksConfiguration> LinksRepository { get; set; }
+        private IRepository<NzbGetSettings> NzbGetRepository { get; set; }
 
-        public DashboardController(IHardwareService service, IStatusApi statusApi, IRepository<LinksConfiguration> repo)
+        public DashboardController(IHardwareService service, IStatusApi statusApi, IRepository<LinksConfiguration> linkRepo, IRepository<NzbGetSettings> nzbGetRepo)
             : base(typeof(DashboardController))
         {
             Api = statusApi;
             Service = service;
-            LinksRepository = repo;
+            LinksRepository = linkRepo;
+            NzbGetRepository = nzbGetRepo;
         }
 
         public ActionResult Index()
@@ -41,7 +44,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetNzbGetDownloadInformation()
         {
-            var admin = new NzbGetSettingsService();
+            var admin = new NzbGetSettingsService(NzbGetRepository);
             var config = admin.GetSettings();
             var formattedUri = UrlHelper.ReturnUri(config.IpAddress).ToString();
             try

@@ -6,15 +6,19 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.DataAccess.Repository.Settings;
+using NZBDash.DataAccess.Interfaces;
+
+using Omu.ValueInjecter;
 
 namespace NZBDash.Core.SettingsService
 {
     public class NzbGetSettingsService : ISettingsService<NzbGetSettingsDto>
     {
-        public NzbGetSettingsService()
+        private IRepository<NzbGetSettings> Repo { get; set; }
+        public NzbGetSettingsService(IRepository<NzbGetSettings> repo)
             : this(new NLogLogger(typeof(NzbGetSettingsService)))
         {
+            Repo = repo;
         }
 
         public NzbGetSettingsService(ILogger logger)
@@ -27,11 +31,10 @@ namespace NZBDash.Core.SettingsService
         public NzbGetSettingsDto GetSettings()
         {
             _logger.Trace("Started NzbGetRepository");
-            var repo = new NzbGetRepository();
             try
             {
                 _logger.Trace("Getting all items from NzbGetRepository");
-                var result = repo.GetAll();
+                var result = Repo.GetAll();
                 var setting = result.FirstOrDefault();
                 if (setting == null)
                 {
@@ -40,16 +43,8 @@ namespace NZBDash.Core.SettingsService
                 }
 
                 _logger.Trace("Creating dto from the results from NzbGetRepository");
-                var model = new NzbGetSettingsDto
-                {
-                    Enabled = setting.Enabled,
-                    Id = setting.Id,
-                    IpAddress = setting.IpAddress,
-                    Password = setting.Password,
-                    Port = setting.Port,
-                    Username = setting.Username,
-                    ShowOnDashboard = setting.ShowOnDashboard
-                };
+                var model = new NzbGetSettingsDto();
+                model.InjectFrom(setting);
 
                 return model;
             }
@@ -63,25 +58,18 @@ namespace NZBDash.Core.SettingsService
         public bool SaveSettings(NzbGetSettingsDto model)
         {
             _logger.Trace("Started NzbGetRepository");
-            var repo = new NzbGetRepository();
 
             _logger.Trace(string.Format("Looking for id {0} in the NzbGetRepository", model.Id));
-            var entity = repo.Find(model.Id);
+            var entity = Repo.Find(model.Id);
 
             if (entity == null)
             {
                 _logger.Trace("Our entity is null so we are going to insert one");
-                var newEntity = new NzbGetSettings
-                {
-                    Port = model.Port,
-                    Username = model.Username,
-                    Enabled = model.Enabled,
-                    IpAddress = model.IpAddress,
-                    Password = model.Password,
-                    ShowOnDashboard = model.ShowOnDashboard
-                };
+                var newEntity = new NzbGetSettings();
+                newEntity.InjectFrom(model);
+
                 _logger.Trace("Inserting now");
-                var insertResult = repo.Insert(newEntity);
+                var insertResult = Repo.Insert(newEntity);
 
                 _logger.Trace(string.Format("Our insert was {0}", insertResult != null));
                 return insertResult != null;
@@ -96,7 +84,7 @@ namespace NZBDash.Core.SettingsService
             entity.ShowOnDashboard = model.ShowOnDashboard;
 
             _logger.Trace("Updating modified record");
-            var result = repo.Modify(entity);
+            var result = Repo.Modify(entity);
 
             _logger.Trace(string.Format("Our modify was {0}", result == 1));
             return result == 1;

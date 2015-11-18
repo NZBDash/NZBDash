@@ -73,7 +73,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="LinksConfigurationServiceTest.cs" />
+    <Compile Include="Services\NzbGetSettingsServiceTest.cs" />
+    <Compile Include="Services\DashboardSettingsServiceTests.cs" />
+    <Compile Include="Services\CouchPotatoSettingsServiceTest.cs" />
+    <Compile Include="Services\LinksConfigurationServiceTest.cs" />
     <Compile Include="NLogLoggerTests.cs" />
     <Compile Include="WindowsHardwareServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

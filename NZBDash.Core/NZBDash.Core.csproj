@@ -96,7 +96,7 @@
     <Compile Include="Services\WindowsHardwareService.cs" />
     <Compile Include="SettingsService\PlexSettingsService.cs" />
     <Compile Include="SettingsService\SabNzbSettingsService.cs" />
-    <Compile Include="SettingsService\CouchPotatoSettingsServiceService.cs" />
+    <Compile Include="SettingsService\CouchPotatoSettingsService.cs" />
     <Compile Include="SettingsService\NzbGetSettingsService.cs" />
     <Compile Include="SettingsService\DashboardSettingsService.cs" />
     <Compile Include="SettingsService\SonarrSettingsService.cs" />

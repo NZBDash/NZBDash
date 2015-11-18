@@ -80,7 +80,7 @@ namespace NZBDash.DataAccess.Repository.Settings
         public int Modify(NzbGetSettings entity)
         {
             Db.NzbGetSettings.Attach(entity);
-         
+
             var entry = Db.Entry(entity);
             entry.State = EntityState.Modified;
 

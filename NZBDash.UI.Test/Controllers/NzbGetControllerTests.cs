@@ -7,11 +7,14 @@ using NUnit.Framework;
 
 using NZBDash.Api.Controllers;
 using NZBDash.Api.Models;
+using NZBDash.Common;
 using NZBDash.Common.Helpers;
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
+using NZBDash.DataAccess.Repository.Settings;
 using NZBDash.ThirdParty.Api;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.NzbGet;
@@ -28,13 +31,13 @@ namespace NZBDash.UI.Test.Controllers
         [SetUp]
         public void Setup()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository()), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
         }
 
         [Test]
         public void EnsureThatIndexReturnsDefaultView()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository()), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())));
 
             _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
