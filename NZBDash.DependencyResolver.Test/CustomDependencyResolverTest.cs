@@ -1,4 +1,5 @@
 ﻿using Ninject;
+using Ninject.Parameters;
 
 using NUnit.Framework;
 
@@ -53,6 +54,16 @@ namespace NZBDash.DependencyResolver.Test
             var kernal = new StandardKernel(module);
 
             var service = kernal.Get<IRepository<LinksConfiguration>>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        [Ignore]
+        public void ResolveLoggerDependency()
+        {
+            var module = new LoggerModule();
+            var kernal = new StandardKernel(module);
+            var service = kernal.Get<ILogger>(new ConstructorArgument("type", typeof(CustomDependencyResolverTest)));
             Assert.That(service, Is.Not.Null);
         }
 

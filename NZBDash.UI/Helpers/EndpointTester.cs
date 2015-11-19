@@ -50,10 +50,18 @@ namespace NZBDash.UI.Helpers
         public bool NzbGetConnection(string ip, string username, string password)
         {
             _logger.Trace("Calling GetNZBGetStatus");
-            var result = Api.GetNzbGetStatus(ip, username, password);
+            try
+            {
+                var result = Api.GetNzbGetStatus(ip, username, password);
+                _logger.Trace(string.Format("Calling GetNZBGetStatus result = {0}", result.version != null));
+                return result.version != null;
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e);
+                return false;
+            }
 
-            _logger.Trace(string.Format("Calling GetNZBGetStatus result = {0}", result.version != null));
-            return result.version != null;
         }
 
         public bool SabNzbConnection(string ip, string apiKey)
@@ -65,8 +73,9 @@ namespace NZBDash.UI.Helpers
 
                 return result.QueueObject.state != null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.Fatal(e);
                 return false;
             }
         }
@@ -78,8 +87,9 @@ namespace NZBDash.UI.Helpers
                 var result = Api.GetCouchPotatoStatus(ip, api);
                 return result.success;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.Fatal(e);
                 return false;
             }
         }
@@ -91,8 +101,9 @@ namespace NZBDash.UI.Helpers
                 var result = Api.GetSonarrSystemStatus(ip, api);
                 return result.version != null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.Fatal(e);
                 return false;
             }
         }
@@ -104,8 +115,9 @@ namespace NZBDash.UI.Helpers
                 var result = Api.GetPlexServers(ip);
                 return result.Server.Name != null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.Fatal(e);
                 return false;
             }
         }

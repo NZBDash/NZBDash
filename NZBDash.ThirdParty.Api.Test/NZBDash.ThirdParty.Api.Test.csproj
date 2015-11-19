@@ -75,6 +75,10 @@
       <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
       <Name>NZBDash.Common.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
+      <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
+      <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>

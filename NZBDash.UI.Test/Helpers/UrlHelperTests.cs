@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 using NZBDash.UI.Helpers;
 
-namespace NZBDash.UI.Test
+namespace NZBDash.UI.Test.Helpers
 {
     [TestFixture]
     public class UrlHelperTests
@@ -28,8 +28,11 @@ namespace NZBDash.UI.Test
 
         [TestCase("www.google.com", 80, "http://www.google.com:80/")]
         [TestCase("www.google.com", 443, "http://www.google.com:443/")]
+        [TestCase("http://www.google.com", 443, "http://www.google.com:443/")]
         [TestCase("https://www.google.com", 443, "https://www.google.com:443/")]
         [TestCase("http://www.google.com/id=2", 443, "http://www.google.com:443/id=2")]
+        [TestCase("http://www.google.com/id=2", 443, "http://www.google.com:443/id=2")]
+        [TestCase("https://www.google.com/id=2", 443, "https://www.google.com:443/id=2")]
         public void TestUrlHelperWithPort(string input, int port, string output)
         {
             var expected = new Uri(output);
