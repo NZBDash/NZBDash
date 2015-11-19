@@ -83,7 +83,6 @@
     <Compile Include="Model\DTO\LinksConfigurationDto.cs" />
     <Compile Include="Model\SabNzbModels.cs" />
     <Compile Include="Model\ServerStatus.cs" />
-    <Compile Include="Model\Settings\BaseSettingsDto.cs" />
     <Compile Include="Model\Settings\PlexSettingsDto.cs" />
     <Compile Include="Model\Settings\CouchPotatoSettingsDto.cs" />
     <Compile Include="Model\Settings\EnabledDashletsDto.cs" />

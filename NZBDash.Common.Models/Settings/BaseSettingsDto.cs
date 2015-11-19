@@ -1,4 +1,4 @@
-﻿namespace NZBDash.Core.Model.Settings
+﻿namespace NZBDash.Common.Models.Settings
 {
     public class BaseSettingsDto
     {
