@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\NzbGetHistory.cs" />
+    <Compile Include="Api\SoanrrSeries.cs" />
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\Models\Applications.cs" />
     <Compile Include="Data\Models\DashboardGrid.cs" />
@@ -71,12 +72,14 @@
     <Compile Include="Data\Models\Settings\SonarrSettings.cs" />
     <Compile Include="Hardware\DriveModel.cs" />
     <Compile Include="Hardware\ServerInformationViewModel.cs" />
-    <Compile Include="NzbGet\NzbGetHistoryViewModel.cs" />
-    <Compile Include="NzbGet\NzbGetViewModel.cs" />
+    <Compile Include="ViewModels\NzbGet\NzbGetHistoryViewModel.cs" />
+    <Compile Include="ViewModels\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Hardware\RamModel.cs" />
     <Compile Include="Settings\BaseSettingsDto.cs" />
+    <Compile Include="ViewModels\Sonarr\SonarrSeriesViewModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

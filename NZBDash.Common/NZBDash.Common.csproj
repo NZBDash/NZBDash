@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Applications.cs" />
     <Compile Include="Helpers\CustomWebClient.cs" />
+    <Compile Include="Mapping\JsonSerializerTargetMapper.cs" />
     <Compile Include="Mapping\MappingHelper.cs" />
     <Compile Include="Mapping\NzbGetHistoryMapper.cs">
       <SubType>Code</SubType>

@@ -1293,6 +1293,7 @@
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Scripts\kendo\kendo.all.min.js" />
     <Content Include="Views\Sonarr\Index.cshtml" />
+    <Content Include="Views\Sonarr\SeriesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

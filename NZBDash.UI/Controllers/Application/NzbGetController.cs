@@ -6,7 +6,7 @@ using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.NzbGet;
+using NZBDash.Common.Models.ViewModels.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;

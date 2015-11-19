@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IThirdPartyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThirdPartyService.cs" />
+    <Compile Include="Service\ThirdPartyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.Api\NZBDash.Api.csproj">

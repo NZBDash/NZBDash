@@ -1,4 +1,6 @@
-﻿using Ninject;
+﻿using System.Linq;
+
+using Ninject;
 using Ninject.Parameters;
 
 using NUnit.Framework;
@@ -73,7 +75,7 @@ namespace NZBDash.DependencyResolver.Test
             var customResolver = new CustomDependencyResolver();
             var modules = customResolver.GetModules();
 
-            Assert.That(modules.Count, Is.GreaterThan(0));
+            Assert.That(modules.Count(), Is.GreaterThan(0));
         }
     }
 }

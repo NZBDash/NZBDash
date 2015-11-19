@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: CustomDependencyResolver.cs
+//  File: SonarrSeriesViewModel.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,29 +24,32 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject.Modules;
+using System.Collections.Generic;
 
-using NZBDash.DependencyResolver.Modules;
-
-namespace NZBDash.DependencyResolver
+namespace NZBDash.Common.Models.ViewModels.Sonarr
 {
-    public class CustomDependencyResolver : IDependencyResolver
+    public class SonarrSeriesViewModel
     {
-        /// <summary>
-        /// Gets the Ninject modules.
-        /// </summary>
-        public INinjectModule[] GetModules()
-        {
-            var modules = new INinjectModule[]
-            {
-                new ServiceModule(),
-                new ApplicationSettingsModule(),
-                new SerializerModule(),
-                new RepositoryModule(),
-                new LoggerModule(),
-            };
-
-            return modules;
-        }
+        public string Title { get; set; }
+        public int SeasonCount { get; set; }
+        public int EpisodeCount { get; set; }
+        public string Status { get; set; }
+        public string Overview { get; set; }
+        public string NextAiring { get; set; }
+        public string Network { get; set; }
+        public string AirTime { get; set; }
+        public List<string> ImageUrls { get; set; }
+        public int Year { get; set; }
+        public string Path { get; set; }
+        public int QualityProfileId { get; set; }
+        public bool SeasonFolder { get; set; }
+        public bool Monitored { get; set; }
+        public int Runtime { get; set; }
+        public string FirstAired { get; set; }
+        public string SeriesType { get; set; }
+        public string CleanTitle { get; set; }
+        public string ImdbId { get; set; }
+        public string TitleSlug { get; set; }
+        public int Id { get; set; }
     }
 }

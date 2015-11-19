@@ -2,9 +2,10 @@
 
 using NZBDash.Api.Models;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.Api;
 using NZBDash.ThirdParty.Api.Interfaces;
 
-namespace NZBDash.ThirdParty.Api
+namespace NZBDash.ThirdParty.Api.Service
 {
     public class ThirdPartyService : IThirdPartyService
     {
@@ -27,6 +28,11 @@ namespace NZBDash.ThirdParty.Api
         public SonarrSystemStatus GetSonarrSystemStatus(string uri, string api)
         {
             return Serializer.SerializedJsonData<SonarrSystemStatus>(uri + "api/system/status?apikey=" + api);
+        }
+
+        public SonarrSeriesWrapper GetSonarrSeries(string uri, string api)
+        {
+            return Serializer.SerializedJsonData<SonarrSeriesWrapper>(uri + "api/system/series?apikey=" + api);
         }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)

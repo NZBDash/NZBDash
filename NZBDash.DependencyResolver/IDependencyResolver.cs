@@ -6,6 +6,6 @@ namespace NZBDash.DependencyResolver
 {
     public interface IDependencyResolver
     {
-        List<INinjectModule> GetModules();
+        INinjectModule[] GetModules();
     }
 }

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: CustomDependencyResolver.cs
+//  File: JsonNameMapper.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,29 +24,19 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject.Modules;
+using Omu.ValueInjecter.Injections;
 
-using NZBDash.DependencyResolver.Modules;
-
-namespace NZBDash.DependencyResolver
+namespace NZBDash.Common.Mapping
 {
-    public class CustomDependencyResolver : IDependencyResolver
+    /// <summary>
+    /// Map the objects that have come back from our JsonSerializer.
+    /// </summary>
+    /// <typeparam name="T">Type of source</typeparam>
+    public class JsonSerializerTargetMapper<T> : KnownTargetInjection<T>
     {
-        /// <summary>
-        /// Gets the Ninject modules.
-        /// </summary>
-        public INinjectModule[] GetModules()
+        protected override void Inject(object source, ref T target)
         {
-            var modules = new INinjectModule[]
-            {
-                new ServiceModule(),
-                new ApplicationSettingsModule(),
-                new SerializerModule(),
-                new RepositoryModule(),
-                new LoggerModule(),
-            };
-
-            return modules;
+            MappingHelper.MapMatchingProperties(target, source);
         }
     }
 }

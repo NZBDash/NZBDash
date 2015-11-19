@@ -44,8 +44,8 @@ namespace NZBDash.UI.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            IDependencyResolver modules = new CustomDependencyResolver();
-            var newKernal = modules.GetModules().ToArray();
+            var modules = new CustomDependencyResolver();
+            var newKernal = modules.GetModules();
 
             var kernel = new StandardKernel(newKernal);
             try

@@ -7,6 +7,7 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Services;
 using NZBDash.ThirdParty.Api;
 using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.ThirdParty.Api.Service;
 
 namespace NZBDash.DependencyResolver.Modules
 {

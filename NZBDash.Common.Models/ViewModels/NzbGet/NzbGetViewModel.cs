@@ -1,4 +1,4 @@
-﻿namespace NZBDash.Common.Models.NzbGet
+﻿namespace NZBDash.Common.Models.ViewModels.NzbGet
 {
     public class NzbGetViewModel
     {

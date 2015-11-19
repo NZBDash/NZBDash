@@ -9,13 +9,12 @@ using NZBDash.Api.Models;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccess.Repository.Settings;
-using NZBDash.ThirdParty.Api;
 using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.ThirdParty.Api.Service;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.NzbGet;
 
@@ -77,7 +76,7 @@ namespace NZBDash.UI.Test.Controllers
             var mockLogger = new Mock<ILogger>();
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings).Verifiable();
             mockApi.Setup(x => x.GetNzbGetHistory(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedApi).Verifiable();
-            
+
             var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
             var result = (PartialViewResult)controller.GetNzbGetDownloadHistory();
             var model = (List<NzbGetHistoryViewModel>)result.Model;

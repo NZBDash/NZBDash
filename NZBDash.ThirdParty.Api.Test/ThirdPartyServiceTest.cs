@@ -6,6 +6,8 @@ using NUnit.Framework;
 
 using NZBDash.Api.Models;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.Api;
+using NZBDash.ThirdParty.Api.Service;
 
 using Ploeh.AutoFixture;
 
@@ -22,6 +24,7 @@ namespace NZBDash.ThirdParty.Api.Test
         private NzbGetHistory NzbGetHistory { get; set; }
         private NzbGetList NzbGetList { get; set; }
         private NzbGetStatus NzbGetStatus { get; set; }
+        private SonarrSeriesWrapper SonarrSeriesWrapper { get; set; }
 
         [SetUp]
         public void SetUp()
@@ -34,6 +37,7 @@ namespace NZBDash.ThirdParty.Api.Test
             NzbGetHistory = fixture.Create<NzbGetHistory>();
             NzbGetList = fixture.Create<NzbGetList>();
             NzbGetStatus = fixture.Create<NzbGetStatus>();
+            SonarrSeriesWrapper = fixture.Create<SonarrSeriesWrapper>();
 
             mock.Setup(x => x.SerializeXmlData<PlexServers>(It.IsAny<string>())).Returns(Plex);
             mock.Setup(x => x.SerializedJsonData<SonarrSystemStatus>(It.IsAny<string>())).Returns(SonarrSystemStatus);
@@ -41,6 +45,7 @@ namespace NZBDash.ThirdParty.Api.Test
             mock.Setup(x => x.SerializedJsonData<NzbGetHistory>(It.IsAny<string>())).Returns(NzbGetHistory);
             mock.Setup(x => x.SerializedJsonData<NzbGetList>(It.IsAny<string>())).Returns(NzbGetList);
             mock.Setup(x => x.SerializedJsonData<NzbGetStatus>(It.IsAny<string>())).Returns(NzbGetStatus);
+            mock.Setup(x => x.SerializedJsonData<SonarrSeriesWrapper>(It.IsAny<string>())).Returns(SonarrSeriesWrapper);
 
             Mock = mock;
             Service = new ThirdPartyService(Mock.Object);
@@ -61,6 +66,15 @@ namespace NZBDash.ThirdParty.Api.Test
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(SonarrSystemStatus.version));
         }
+
+        [Test]
+        public void GetSonarrSeries()
+        {
+            var result = Service.GetSonarrSeries("a", "api");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.SonarrSeries[0].id, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].id));
+        }
+
 
         [Test]
         public void GetCouchPotatoStatus()
