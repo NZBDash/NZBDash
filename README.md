@@ -10,7 +10,7 @@ So there will be functionality to alert you when disk space on a certain drive i
 ## Early Preview (No styling has been done)
 ![alt tag1](http://i.imgur.com/PYzIs83.png)
 
-![alt tag2](http://i.imgur.com/PYzIs83.png)
+![alt tag2](http://i.imgur.com/4Q9ynWP.png)
 
 ## Ideas
 
