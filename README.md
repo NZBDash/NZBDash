@@ -8,9 +8,9 @@ The goal is to provide basic information about your news reader (SabNZB, NZBGet)
 So there will be functionality to alert you when disk space on a certain drive is low etc.
 
 ## Early Preview (No styling has been done)
-![alt tag1](http://imgur.com/PYzIs83)
+![alt tag1](http://i.imgur.com/PYzIs83.png)
 
-![alt tag2](http://imgur.com/PYzIs83)
+![alt tag2](http://i.imgur.com/PYzIs83.png)
 
 ## Ideas
 
