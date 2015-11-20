@@ -1,6 +1,5 @@
 ﻿using System;
 
-using NZBDash.Api.Controllers;
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
@@ -66,12 +65,11 @@ namespace NZBDash.UI.Helpers
 
         public bool SabNzbConnection(string ip, string apiKey)
         {
-            var api = new StatusApiController();
             try
             {
-                var result = api.GetSabNzb(ip, apiKey);
+                var result = Api.GetSanNzbQueue(ip, apiKey);
 
-                return result.QueueObject.state != null;
+                return result.state != null;
             }
             catch (Exception e)
             {

@@ -59,5 +59,16 @@ namespace NZBDash.Core.Test
             Assert.That(process, Is.Not.Null);
             Assert.That(process, Is.GreaterThan(0));
         }
+
+        [Test]
+        public void GetNetworkInformation()
+        {
+            var process = Service.GetNetworkInformation();
+
+            Assert.That(process, Is.Not.Null);
+            Assert.That(process.Recieved, Is.Not.Null);
+            Assert.That(process.Sent, Is.Not.Null);
+            Assert.That(process.Total, Is.Not.Null);
+        }
     }
 }

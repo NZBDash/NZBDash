@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using NZBDash.Common.Models.Api;
 using NZBDash.Common.Models.Hardware;
 
 namespace NZBDash.Core.Interfaces
@@ -34,5 +35,10 @@ namespace NZBDash.Core.Interfaces
         /// Gets the available ram for the current PC.
         /// </summary>
         float GetAvailableRam();
+
+        /// <summary>
+        /// Gets the network information.
+        /// </summary>
+        NetworkInfo GetNetworkInformation();
     }
 }

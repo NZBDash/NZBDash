@@ -2,31 +2,46 @@
 using System.Security.Principal;
 
 using NZBDash.Common;
-using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Repository.Settings;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 
 namespace NZBDash.UI.Helpers
 {
-    public static class IPrincipleExtensions
+    public class PrincipleExtension
     {
-        public static bool IsApplicationEnabled(this IPrincipal principal, Applications application)
+        private ISettingsService<SabNzbSettingsDto> SabService { get; set; }
+        private ISettingsService<CouchPotatoSettingsDto> CpService { get; set; }
+        private ISettingsService<PlexSettingsDto> PlexService { get; set; }
+        private ISettingsService<NzbGetSettingsDto> NzbService { get; set; }
+        private ISettingsService<SonarrSettingsViewModelDto> SonarrService { get; set; }
+
+        public PrincipleExtension(ISettingsService<SabNzbSettingsDto> sab, ISettingsService<CouchPotatoSettingsDto> cp,
+            ISettingsService<SonarrSettingsViewModelDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget)
+        {
+            SabService = sab;
+            CpService = cp;
+            SonarrService = sonarr;
+            PlexService = plex;
+            NzbService = nzbget;
+        }
+        public bool IsApplicationEnabled(IPrincipal principal, Applications application)
         {
             switch (application)
             {
                 case Applications.SabNZB:
-                    return new SabNzbSettingsService(new SabNzbRepository()).GetSettings().Enabled;
+                    return SabService.GetSettings().Enabled;
                 case Applications.Sickbeard:
                     break;
                 case Applications.CouchPotato:
-                    return new CouchPotatoSettingsService(new CouchPotatoRepository()).GetSettings().Enabled;
+                    return CpService.GetSettings().Enabled;
                 case Applications.Kodi:
                     break;
                 case Applications.Sonarr:
-                    return new SonarrSettingsService(new SonarrRepository()).GetSettings().Enabled;
+                    return SonarrService.GetSettings().Enabled;
                 case Applications.Plex:
-                    return new PlexSettingsService(new PlexRepository()).GetSettings().Enabled;
+                    return PlexService.GetSettings().Enabled;
                 case Applications.NzbGet:
-                   return new NzbGetSettingsService(new NzbGetRepository()).GetSettings().Enabled;
+                    return NzbService.GetSettings().Enabled;
                 case Applications.Headphones:
                     break;
                 default:

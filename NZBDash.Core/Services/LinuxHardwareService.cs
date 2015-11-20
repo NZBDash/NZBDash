@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using NZBDash.Common.Models.Api;
 using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
 
@@ -29,6 +30,11 @@ namespace NZBDash.Core.Services
         }
 
         public float GetAvailableRam()
+        {
+            throw new NotImplementedException();
+        }
+
+        public NetworkInfo GetNetworkInformation()
         {
             throw new NotImplementedException();
         }

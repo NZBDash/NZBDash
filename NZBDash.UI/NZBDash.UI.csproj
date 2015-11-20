@@ -1307,10 +1307,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NZBDash.Api\NZBDash.Api.csproj">
-      <Project>{e54f85fe-269a-4b32-bcbb-239cf1fd63e1}</Project>
-      <Name>NZBDash.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
       <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
       <Name>NZBDash.Common.Interfaces</Name>
@@ -1330,14 +1326,6 @@
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.DataAccess.Interfaces\NZBDash.DataAccess.Interfaces.csproj">
-      <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
-      <Name>NZBDash.DataAccess.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NZBDash.DataAccess\NZBDash.DataAccess.csproj">
-      <Project>{315278FF-796B-4A81-A3FF-BC5E707839A8}</Project>
-      <Name>NZBDash.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>

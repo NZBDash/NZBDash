@@ -4,11 +4,11 @@ namespace NZBDash.Core.Model
 {
     public class SabNzbObject
     {
-        public SabNzbQueueObject QueueObject { get; set; }
+        public SabNzbQueue Queue { get; set; }
         public History SabHistory { get; set; }
     }
 
-    public class SabNzbQueueObject
+    public class SabNzbQueue
     {
         public string have_warnings { get; set; }
         public bool pp_active { get; set; }

@@ -1,11 +1,9 @@
 ﻿using Ninject.Modules;
 
-using NZBDash.Api.Controllers;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Services;
-using NZBDash.ThirdParty.Api;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Service;
 

@@ -1,4 +1,4 @@
-﻿namespace NZBDash.Core.Model
+﻿namespace NZBDash.Common.Models.Api
 {
     public class NetworkInfo
     {

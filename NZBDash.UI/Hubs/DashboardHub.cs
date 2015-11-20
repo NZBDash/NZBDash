@@ -2,20 +2,20 @@
 
 using Microsoft.AspNet.SignalR;
 
-using NZBDash.Api.Controllers;
 using NZBDash.Core;
 using NZBDash.Core.Model.DTO;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.Dashboard;
 
 namespace NZBDash.UI.Hubs
 {
     public class DashboardHub : Hub
     {
-        private IStatusApi Api { get; set; }
+        private IThirdPartyService Api { get; set; }
 
-        public DashboardHub(IStatusApi statusApi)
+        public DashboardHub(IThirdPartyService serviceApi)
         {
-            Api = statusApi;
+            Api = serviceApi;
         }
 
         public void GetGrid()

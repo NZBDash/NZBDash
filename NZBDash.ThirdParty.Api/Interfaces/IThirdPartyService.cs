@@ -26,6 +26,7 @@
 #endregion
 using NZBDash.Api.Models;
 using NZBDash.Common.Models.Api;
+using NZBDash.Core.Model;
 
 namespace NZBDash.ThirdParty.Api.Interfaces
 {
@@ -39,5 +40,7 @@ namespace NZBDash.ThirdParty.Api.Interfaces
         NzbGetHistory GetNzbGetHistory(string url, string username, string password);
         NzbGetList GetNzbGetList(string url, string username, string password);
         NzbGetStatus GetNzbGetStatus(string url, string username, string password);
+        SabNzbHistory GetSabNzbHistory(string url, string apiKey);
+        SabNzbQueue GetSanNzbQueue(string url, string apiKey);
     }
 }
