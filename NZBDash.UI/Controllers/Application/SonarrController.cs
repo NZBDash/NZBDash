@@ -29,9 +29,9 @@ using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.ViewModels.Sonarr;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 
 using Omu.ValueInjecter;
@@ -41,9 +41,9 @@ namespace NZBDash.UI.Controllers.Application
     public class SonarrController : BaseController
     {
         private IThirdPartyService ApiService { get; set; }
-        private ISettingsService<SonarrSettings> SettingsService { get; set; }
+        private ISettingsService<SonarrSettingsViewModelDto> SettingsService { get; set; }
 
-        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettings> settingsService)
+        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsViewModelDto> settingsService)
             : base(typeof(SonarrController))
         {
             ApiService = apiService;

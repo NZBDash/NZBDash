@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NZBDash.UI.Models.NzbGet
+namespace NZBDash.Common.Models.ViewModels.NzbGet
 {
     public class NzbGetHistoryViewModel
     {

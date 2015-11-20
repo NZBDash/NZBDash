@@ -36,7 +36,7 @@ namespace NZBDash.UI
                       "~/Content/site.css",
                       "~/Content/font-awesome.css",
                       "~/Content/web/kendo.common-bootstrap.core.css",
-                      "~/Content/web/kendo.default.css"));
+                      "~/Content/web/kendo.material.css"));
         }
     }
 }

@@ -5,8 +5,7 @@ using NUnit.Framework;
 
 using NZBDash.Api.Models;
 using NZBDash.Common.Mapping;
-
-using NZBDash.UI.Models.NzbGet;
+using NZBDash.Common.Models.ViewModels.NzbGet;
 
 using Omu.ValueInjecter;
 

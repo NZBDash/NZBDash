@@ -9,3 +9,18 @@
     <li id="HomeTab" role="presentation" class="active"><a id="Home" href="#">Current TV Shows</a></li>
 </ul>
 
+<div id="Series"></div>
+
+<script>
+    $(function() {
+
+        $.ajax("@Url.Action("GetSeries")").success(function (view) {
+            $('#Series').html(view);
+        });
+
+
+
+
+
+    });
+</script>

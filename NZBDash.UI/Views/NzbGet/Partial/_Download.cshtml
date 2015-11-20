@@ -4,7 +4,7 @@
     <div class="panel-heading">
         @Model.Application
         <span id="DlSpeed" style="float:right">@Model.DownloadSpeed</span>
-       
+
     </div>
     <div class="panel-body">
         @if (Model.DownloadItem.Count > 0)
@@ -16,7 +16,7 @@
                         <i id="@(item.NzbId)icon" class="fa @item.FontAwesomeIcon fa-4x"></i>
                     </div>
                     <div class="col-md-3 h6">
-                        @item.DownloadingName 
+                        @item.DownloadingName
                     </div>
                     <div class="col-md-7">
                         <div class="progress h1">

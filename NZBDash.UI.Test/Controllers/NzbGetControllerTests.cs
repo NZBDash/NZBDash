@@ -9,6 +9,7 @@ using NZBDash.Api.Models;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.ViewModels.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
@@ -16,7 +17,6 @@ using NZBDash.DataAccess.Repository.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Service;
 using NZBDash.UI.Controllers.Application;
-using NZBDash.UI.Models.NzbGet;
 
 using TestStack.FluentMVCTesting;
 

@@ -17,6 +17,7 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<IRepository<PlexSettings>>().To<PlexRepository>();
             Bind<IRepository<NzbGetSettings>>().To<NzbGetRepository>();
             Bind<IRepository<DashboardGrid>>().To<DashboardGridRepository>();
+            Bind<IRepository<SonarrSettings>>().To<SonarrRepository>();
         }
     }
 }

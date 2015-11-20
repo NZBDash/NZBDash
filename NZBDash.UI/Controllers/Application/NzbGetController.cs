@@ -12,8 +12,11 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
-using NZBDash.UI.Models.NzbGet;
+
 using Omu.ValueInjecter;
+
+using Ploeh.AutoFixture;
+
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
@@ -155,6 +158,15 @@ namespace NZBDash.UI.Controllers.Application
                 Logger.Error(e.Message, e);
                 return PartialView("DashletError");
             }
+        }
+
+        [HttpGet]
+        public JsonResult History()
+        {
+            var f = new Fixture();
+            var model = f.CreateMany<NzbGetHistoryViewModel>();
+
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }
