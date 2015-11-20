@@ -35,6 +35,7 @@ using NZBDash.Common.Models.Api;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.ViewModels.Sonarr;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Controllers.Application;
 
@@ -46,19 +47,19 @@ namespace NZBDash.UI.Test.Controllers
     public class SonarrControllerTests
     {
         private SonarrController _controller;
-        private SonarrSettings ExpectedSettings { get; set; }
+        private SonarrSettingsViewModelDto ExpectedSettings { get; set; }
         private SonarrSeriesWrapper SonarrSeriesWrapper { get; set; }
-        private Mock<ISettingsService<SonarrSettings>> SettingsMock { get; set; }
+        private Mock<ISettingsService<SonarrSettingsViewModelDto>> SettingsMock { get; set; }
         private Mock<IThirdPartyService> ServiceMock { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            SettingsMock = new Mock<ISettingsService<SonarrSettings>>();
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
             ServiceMock = new Mock<IThirdPartyService>();
             var f = new Fixture();
 
-            ExpectedSettings = f.Create<SonarrSettings>();
+            ExpectedSettings = f.Create<SonarrSettingsViewModelDto>();
             SonarrSeriesWrapper = f.Create<SonarrSeriesWrapper>();
 
 
