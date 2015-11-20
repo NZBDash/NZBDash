@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: ApplicationSettingsModule.cs
+//  File: MappingExtensions.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,32 +24,15 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject;
-using Ninject.Modules;
+using Omu.ValueInjecter;
 
-using NZBDash.Common.Models.Data.Models;
-using NZBDash.Core.Configuration;
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
-using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Interfaces;
-
-namespace NZBDash.DependencyResolver.Modules
+namespace NZBDash.Common.Mapping
 {
-    public class ApplicationSettingsModule : NinjectModule
+    public static class MappingExtensions
     {
-        /// <summary>
-        /// Loads the module into the kernel.
-        /// </summary>
-        public override void Load()
+        public static T InjectFromJson<T>(this object target, object source)
         {
-           Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
-           Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();
-           Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
-           Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
-           Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
-
-           Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<IRepository<LinksConfiguration>>());
+            return (T)target.InjectFrom(new JsonSerializerTargetMapper<T>(), source);
         }
     }
 }

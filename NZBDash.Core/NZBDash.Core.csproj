@@ -79,8 +79,6 @@
   <ItemGroup>
     <Compile Include="Configuration\LinksConfigurationService.cs" />
     <Compile Include="DashboardAccess.cs" />
-    <Compile Include="Model\DTO\DashboardGridDto.cs" />
-    <Compile Include="Model\DTO\LinksConfigurationDto.cs" />
     <Compile Include="Model\SabNzbModels.cs" />
     <Compile Include="Model\ServerStatus.cs" />
     <Compile Include="Model\Settings\PlexSettingsDto.cs" />

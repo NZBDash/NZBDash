@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Api\NzbGetHistory.cs" />
     <Compile Include="Api\SoanrrSeries.cs" />
+    <Compile Include="Core\DTO\DashboardGridDto.cs" />
+    <Compile Include="Core\DTO\LinksConfigurationDto.cs" />
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\Models\Applications.cs" />
     <Compile Include="Data\Models\DashboardGrid.cs" />

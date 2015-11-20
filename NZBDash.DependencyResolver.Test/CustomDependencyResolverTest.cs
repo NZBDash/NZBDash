@@ -60,12 +60,11 @@ namespace NZBDash.DependencyResolver.Test
         }
 
         [Test]
-        [Ignore]
         public void ResolveLoggerDependency()
         {
             var module = new LoggerModule();
             var kernal = new StandardKernel(module);
-            var service = kernal.Get<ILogger>(new ConstructorArgument("type", typeof(CustomDependencyResolverTest)));
+            var service = kernal.Get<TestClass>();
             Assert.That(service, Is.Not.Null);
         }
 
@@ -76,6 +75,20 @@ namespace NZBDash.DependencyResolver.Test
             var modules = customResolver.GetModules();
 
             Assert.That(modules.Count(), Is.GreaterThan(0));
+        }
+    }
+    public class TestClass
+    {
+        private readonly ILogger m_Logger;
+
+        public TestClass(ILogger logger)
+        {
+            m_Logger = logger;
+        }
+
+        public ILogger Logger
+        {
+            get { return m_Logger; }
         }
     }
 }

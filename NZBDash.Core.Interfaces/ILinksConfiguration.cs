@@ -1,9 +1,9 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: ApplicationSettingsModule.cs
+//  File: ILinksConfiguration.cs
 //  Created By: Jamie Rees
-//
+// 
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//
+//  
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//
+//  
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,32 +24,20 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject;
-using Ninject.Modules;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-using NZBDash.Common.Models.Data.Models;
-using NZBDash.Core.Configuration;
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
-using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Interfaces;
+using NZBDash.Core.Model.DTO;
 
-namespace NZBDash.DependencyResolver.Modules
+namespace NZBDash.Core.Interfaces
 {
-    public class ApplicationSettingsModule : NinjectModule
+    public interface ILinksConfiguration
     {
-        /// <summary>
-        /// Loads the module into the kernel.
-        /// </summary>
-        public override void Load()
-        {
-           Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
-           Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();
-           Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
-           Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
-           Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
-
-           Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<IRepository<LinksConfiguration>>());
-        }
+        Task<IEnumerable<LinksConfigurationDto>> GetLinksAsync();
+        IEnumerable<LinksConfigurationDto> GetLinks();
+        bool UpdateLink(LinksConfigurationDto dto);
+        Task<bool> UpdateLinkAsync(LinksConfigurationDto dto);
+        LinksConfigurationDto AddLink(LinksConfigurationDto link);
+        bool RemoveLink(int id);
     }
 }

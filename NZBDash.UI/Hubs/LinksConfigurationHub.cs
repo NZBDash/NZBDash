@@ -2,8 +2,6 @@
 
 using Microsoft.AspNet.SignalR;
 
-using Ninject;
-
 using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Model.DTO;

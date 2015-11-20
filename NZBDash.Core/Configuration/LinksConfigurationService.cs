@@ -3,19 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using NZBDash.Common.Models.Data.Models;
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.DTO;
 using NZBDash.DataAccess.Interfaces;
 
 namespace NZBDash.Core.Configuration
 {
-    public class LinksConfigurationService
+    public class LinksConfigurationService : ILinksConfiguration
     {
         public LinksConfigurationService(IRepository<LinksConfiguration> repo)
         {
             Repo = repo;
         }
 
-        public IRepository<LinksConfiguration> Repo { get; set; }
+        private IRepository<LinksConfiguration> Repo { get; set; }
         public async Task<IEnumerable<LinksConfigurationDto>> GetLinksAsync()
         {
             var result = await Repo.GetAllAsync();
