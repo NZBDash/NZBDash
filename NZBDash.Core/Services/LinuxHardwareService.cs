@@ -11,8 +11,7 @@ namespace NZBDash.Core.Services
     {
         public IEnumerable<DriveModel> GetDrives()
         {
-            var drives = System.IO.DriveInfo.GetDrives();
-            
+			throw new NotImplementedException();
         }
 
         public RamModel GetRam()
