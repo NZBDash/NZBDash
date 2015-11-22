@@ -15,8 +15,6 @@ using NZBDash.UI.Models.Dashboard;
 
 using Omu.ValueInjecter;
 
-using Ploeh.AutoFixture;
-
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
@@ -163,10 +161,33 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public JsonResult History()
         {
-            var f = new Fixture();
-            var model = f.CreateMany<NzbGetHistoryViewModel>();
+			try
+			{
+				var config = SettingsService.GetSettings();
+				var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+				var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+				var model = new List<NzbGetHistoryViewModel>();
+				foreach (var result in history.result)
+				{
+					var singleItem = new NzbGetHistoryViewModel();
+					var mappedResult = (NzbGetHistoryViewModel)singleItem.InjectFrom(new NzbGetHistoryMapper(), result);
+					if (!string.IsNullOrEmpty(mappedResult.FileSize))
+					{
+						long newFileSize;
+						long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
+						mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
+					}
+					model.Add(mappedResult);
+				}
+
+				return Json(model, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				Logger.Error(e.Message, e);				
+				return Json(null);
+			}
         }
     }
 }
