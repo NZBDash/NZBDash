@@ -7,7 +7,7 @@
 
     </div>
     <div class="panel-body">
-        @if (Model.DownloadItem.Count > 0)
+        @if (Model.DownloadItem.Any())
         {
             foreach (var item in Model.DownloadItem)
             {

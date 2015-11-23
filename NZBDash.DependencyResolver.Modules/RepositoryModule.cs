@@ -18,6 +18,7 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<IRepository<NzbGetSettings>>().To<NzbGetRepository>();
             Bind<IRepository<DashboardGrid>>().To<DashboardGridRepository>();
             Bind<IRepository<SonarrSettings>>().To<SonarrRepository>();
+            Bind<IRepository<SabNzbSettings>>().To<SabNzbRepository>();
         }
     }
 }
