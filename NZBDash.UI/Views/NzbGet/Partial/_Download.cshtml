@@ -1,4 +1,5 @@
-﻿@model NZBDash.UI.Models.Dashboard.DownloaderViewModel
+﻿@using NZBDash.Resources
+@model NZBDash.UI.Models.Dashboard.DownloaderViewModel
 
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -34,19 +35,9 @@
                 <div class="col-md-2 h6 text-center">
                     <i class="fa fa-smile-o fa-5x"></i>
                 </div>
-                Nothing to see here
+                @Resources.Applications_NzbGet_Download_NothingToSee
             </div>
-
         }
     </div>
 </div>
-
-
-<script>
-    $(document).ready(function() {
-
-        var items = @Model.DownloadItem.Count;
-        resizeWidgets(items, 4,1);
-    });
-</script>
 

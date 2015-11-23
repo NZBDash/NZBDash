@@ -1,6 +1,7 @@
-﻿@using NZBDash.UI.Helpers
+﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
 @{
-    ViewBag.Title = "NzbGet";
+    ViewBag.Title = @Resources.Applications_NzbGet_Title;
 }
 
 <h2>@ViewBag.Title</h2>
@@ -8,25 +9,17 @@
 
 
 <ul class="nav nav-tabs">
-        <li id="HomeTab" role="presentation" class="active"><a id="Home" href="#">Home</a></li>
-        <li id="HistoryTab" role="presentation"><a id="History" href="#">History</a></li>
-    </ul>
+    <li id="HomeTab" role="presentation" class="active"><a id="Home" href="#">@Resources.Applications_NzbGet_Tab_Home</a></li>
+    <li id="HistoryTab" role="presentation"><a id="History" href="#">@Resources.Applications_NzbGet_Tab_History</a></li>
+</ul>
 
 
 <div class="DownloadArea">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-        </div>
-        <div class="panel-body">
-            <div class="col-md-12">
-                <div class="col-md-12 h6 text-center">
-                    @Html.LoadingSpinner()
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-<div id="HistoryArea"></div>
+    @Html.AjaxPanel()
+</div>
+<div id="HistoryArea">
+    @Html.AjaxPanel()
+</div>
 
 
 
@@ -36,20 +29,20 @@
 
     <script>
         $(function () {
-            setInterval(function() {
+            setInterval(function () {
 
-                    $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function(view) {
-                        $('#DownloadArea').html(view);
-                    });
+                $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
+                    $('#DownloadArea').html(view);
+                });
 
 
-                    $.ajax("@Url.Action("GetNzbGetStatus")").success(function(data) {
-                        $('#status').html(data.Status);
-                    });
-                }, 2000);
+                $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
+                    $('#status').html(data.Status);
+                });
+            }, 2000);
 
-            $('#History').click(function() {
-                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function(view) {
+            $('#History').click(function () {
+                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function (view) {
                     $('#HistoryArea').html(view);
                     $('#HomeTab').removeClass("active");
                     $('#HistoryTab').addClass("active");

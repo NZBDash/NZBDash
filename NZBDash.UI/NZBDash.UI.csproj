@@ -405,6 +405,10 @@
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>
       <Name>NZBDash.DependencyResolver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Resources\NZBDash.Resources.csproj">
+      <Project>{900a9447-bd0f-4d92-a92d-554fa8e7a00c}</Project>
+      <Name>NZBDash.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>
