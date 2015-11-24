@@ -81,7 +81,15 @@ namespace NZBDash.DataAccessLayer
         /// </value>
         public virtual string DbFile
         {
-            get { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite"; }
+            get
+            {
+            #if WINDOWS || DEBUG
+                    return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite";
+            #endif
+            #if LINUX
+                return "~\\Library\\Application Support" + "\\NZBDash\\" + @"\\NZBDash.sqlite";
+            #endif
+            }
         }
 
         /// <summary>

@@ -13,9 +13,9 @@ namespace NZBDash.DependencyResolver.Modules
     {
         public override void Load()
         {
-//#if WINDOWS || DEBUG
+#if WINDOWS || DEBUG
             Bind<IHardwareService>().To<WindowsHardwareService>();
-//#endif
+#endif
 
 #if LINUX
            Bind<IHardwareService>().To<LinuxHardwareService>();
