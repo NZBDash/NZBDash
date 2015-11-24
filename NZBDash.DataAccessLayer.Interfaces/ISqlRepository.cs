@@ -34,7 +34,7 @@ namespace NZBDash.DataAccessLayer.Interfaces
         /// Inserts the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        void Insert(T entity);
+        long Insert(T entity);
 
         /// <summary>
         /// Gets all.

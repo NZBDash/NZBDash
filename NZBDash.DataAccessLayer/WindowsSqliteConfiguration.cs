@@ -24,6 +24,9 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+
+
+using NZBDash.DataAccessLayer.Interfaces;
 using System;
 using System.Data.SQLite;
 using System.IO;
@@ -33,9 +36,9 @@ using NZBDash.Common.Interfaces;
 
 namespace NZBDash.DataAccessLayer
 {
-    public abstract class BaseSqliteConfiguration
+	public class WindowsSqliteConfiguration : ISqliteConfiguration
     {
-        protected BaseSqliteConfiguration(ILogger logger)
+		public WindowsSqliteConfiguration(ILogger logger)
         {
             Logger = logger;
         }
@@ -47,7 +50,7 @@ namespace NZBDash.DataAccessLayer
         public virtual void CheckDb()
         {
             Logger.Trace("Checking if DB exists");
-            if (!File.Exists(DbFile))
+			if (!File.Exists(DbFile()))
             {
                 Logger.Trace("Could not find the DB, so we will create it.");
                 CreateDatabase();
@@ -62,15 +65,14 @@ namespace NZBDash.DataAccessLayer
         /// <value>
         /// The assembly directory.
         /// </value>
-        public static string AssemblyDirectory
+		public string AssemblyDirectory()
         {
-            get
-            {
+
                 var codeBase = Assembly.GetExecutingAssembly().CodeBase;
                 var uri = new UriBuilder(codeBase);
                 var path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
-            }
+
         }
 
         /// <summary>
@@ -79,39 +81,34 @@ namespace NZBDash.DataAccessLayer
         /// <value>
         /// The database file.
         /// </value>
-        public virtual string DbFile
+		public virtual string DbFile()
         {
-            get
-            {
-            #if WINDOWS || DEBUG
-                    return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite";
-            #endif
-            #if LINUX
-                return "~\\Library\\Application Support" + "\\NZBDash\\" + @"\\NZBDash.sqlite";
-            #endif
-            }
+			return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite";
         }
 
         /// <summary>
         /// Returns the Database connection.
         /// </summary>
-        public virtual SQLiteConnection DbConnection()
+		public virtual SqliteConnectionWrapper DbConnection()
         {
-            return new SQLiteConnection("Data Source=" + DbFile);
+			return new SqliteConnectionWrapper("Data Source=" + DbFile());
         }
 
         /// <summary>
         /// Creates the database.
         /// </summary>
-        private void CreateDatabase()
+		public void CreateDatabase()
         {
-            var fs = File.Create(DbFile);
+			var fs = File.Create(DbFile());
             fs.Close();
             Logger.Trace("Created and Closed the FileStream");
             Logger.Trace("Creating tables");
             try
             {
-                TableCreation.CreateLinksConfigurationTable(DbConnection());
+				var connection = DbConnection();
+				TableCreation.CreateLinksConfigurationTable(connection);
+				TableCreation.CreateNzbGetSettingsTable(connection);
+				TableCreation.CreateSonarrSettingsTable(connection);
                 Logger.Trace("Created LinksConfiguration");
             }
             catch (Exception e)

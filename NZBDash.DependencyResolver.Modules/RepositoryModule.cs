@@ -5,6 +5,8 @@ using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccess.Interfaces;
 using NZBDash.DataAccess.Repository;
 using NZBDash.DataAccess.Repository.Settings;
+using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer;
 
 namespace NZBDash.DependencyResolver.Modules
 {
@@ -19,6 +21,9 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<IRepository<DashboardGrid>>().To<DashboardGridRepository>();
             Bind<IRepository<SonarrSettings>>().To<SonarrRepository>();
             Bind<IRepository<SabNzbSettings>>().To<SabNzbRepository>();
+
+			// Sql Repo
+			Bind<ISqlRepository<NzbGetSettings>>().To<NzbGetConfiguration>();
         }
     }
 }

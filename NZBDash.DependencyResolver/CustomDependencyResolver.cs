@@ -44,6 +44,7 @@ namespace NZBDash.DependencyResolver
                 new SerializerModule(),
                 new RepositoryModule(),
                 new LoggerModule(),
+				new SqliteModule(),
             };
 
             return modules;

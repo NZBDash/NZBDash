@@ -14,10 +14,10 @@
 </ul>
 
 
-<div class="DownloadArea">
+<div id="DownloadArea">
     @Html.AjaxPanel()
 </div>
-<div id="HistoryArea">
+<div id="HistoryArea" hidden="hidden">
     @Html.AjaxPanel()
 </div>
 
@@ -29,10 +29,21 @@
 
     <script>
         $(function () {
+
+                     $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
+                    $("#DownloadArea").html(view);
+                });
+
+
+                $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
+                    $('#status').html(data.Status);
+                });
+
+
             setInterval(function () {
 
                 $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
-                    $('#DownloadArea').html(view);
+                    $("#DownloadArea").html(view);
                 });
 
 

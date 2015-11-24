@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: LinksConfiguration.cs
+//  File: SonarrConfiguration.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,6 +24,9 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+
+using NZBDash.Common.Models.Data.Models.Settings;
+
 using System.Collections.Generic;
 
 using Dapper.Contrib.Extensions;
@@ -32,74 +35,67 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccessLayer.Interfaces;
 
-using Mono.Data.Sqlite;
-
 namespace NZBDash.DataAccessLayer
 {
-    public sealed class LinksConfigurationSql : ISqlRepository<LinksConfiguration>
-    {
+	public class SonarrConfiguration : ISqlRepository<SonarrSettings>
+	{
 		private ISqliteConfiguration Config{ get; set; }
-		private ILogger Logger { get; set; }
-		public LinksConfigurationSql(ILogger logger, ISqliteConfiguration config)
-        {
+		private ILogger Logger {get;set;}
+		public SonarrConfiguration(ILogger logger, ISqliteConfiguration config)
+		{
 			Config = config;
-            Config.CheckDb();
-			Logger = logger;
-        }
+			Config.CheckDb();
+			Logger = Logger;
+		}
 
-
-        /// <summary>
-        /// Gets all.
-        /// </summary>
-        public IEnumerable<LinksConfiguration> GetAll()
-        {
+		/// <summary>
+		/// Gets all.
+		/// </summary>
+		public IEnumerable<SonarrSettings> GetAll()
+		{
 			using (var db = Config.DbConnection().GetConnection())
-            {
-                db.Open();
-                var result = db.GetAll<LinksConfiguration>();
-                return result;
-            }
-			return null;
-        }
+			{
+				db.Open();
+				var result = db.GetAll<SonarrSettings>();
+				return result;
+			}
+		}
 
-        public LinksConfiguration Get(long id)
-        {
+		public SonarrSettings Get(long id)
+		{
 			using (var db = Config.DbConnection().GetConnection())
-            {
-                db.Open();
-                var result = db.Get<LinksConfiguration>(id);
-                return result;
-            }
-			return null;
-        }
+			{
+				db.Open();
+				var result = db.Get<SonarrSettings>(id);
+				return result;
+			}
+		}
 
-        public void Delete(LinksConfiguration entity)
-        {
+		public void Delete(SonarrSettings entity)
+		{
 			using (var db = Config.DbConnection().GetConnection())
-            {
-                db.Open();
-                db.Delete(entity);
-            }
-        }
+			{
+				db.Open();
+				db.Delete(entity);
+			}
+		}
 
-        public bool Update(LinksConfiguration entity)
-        {
+		public bool Update(SonarrSettings entity)
+		{
 			using (var db = Config.DbConnection().GetConnection())
-            {
-                db.Open();
-                return db.Update<LinksConfiguration>(entity);
-            }
-			return false;
-        }
+			{
+				db.Open();
+				return db.Update<SonarrSettings>(entity);
+			}
+		}
 
-        public long Insert(LinksConfiguration entity)
-        {
+		public long Insert(SonarrSettings entity)
+		{
 			using (var cnn = Config.DbConnection().GetConnection())
-            {
-                cnn.Open();
-                return cnn.Insert(entity);
-            }
-			return 0L;
-        }
-    }
+			{
+				cnn.Open();
+				return cnn.Insert(entity);
+			}
+		}
+	}
 }

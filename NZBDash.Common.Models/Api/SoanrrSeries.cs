@@ -47,6 +47,6 @@ namespace NZBDash.Common.Models.Api
 
     public class SonarrSeriesWrapper
     {
-        public List<SonarrSeries> SonarrSeries { get; set; }
+		public IEnumerable<SonarrSeries> SonarrSeries { get; set; }
     }
 }

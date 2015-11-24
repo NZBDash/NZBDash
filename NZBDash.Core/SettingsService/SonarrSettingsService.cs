@@ -4,13 +4,14 @@ using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.Core.SettingsService
 {
     public class SonarrSettingsService : ISettingsService<SonarrSettingsViewModelDto>
     {
-        private IRepository<SonarrSettings> Repo { get; set; }
-        public SonarrSettingsService(IRepository<SonarrSettings> repo)
+        private ISqlRepository<SonarrSettings> Repo { get; set; }
+		public SonarrSettingsService(ISqlRepository<SonarrSettings> repo)
         {
             Repo = repo;
         }
@@ -37,7 +38,7 @@ namespace NZBDash.Core.SettingsService
 
         public bool SaveSettings(SonarrSettingsViewModelDto model)
         {
-            var entity = Repo.Find(model.Id);
+			var entity = Repo.Get(model.Id);
 
             if (entity == null)
             {
@@ -62,9 +63,9 @@ namespace NZBDash.Core.SettingsService
             entity.Id = model.Id;
             entity.ShowOnDashboard = model.ShowOnDashboard;
 
-            var result = Repo.Modify(entity);
+			var result = Repo.Update(entity);
 
-            return result == 1;
+            return result;
         }
     }
 }

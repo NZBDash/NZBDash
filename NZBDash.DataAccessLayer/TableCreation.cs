@@ -36,12 +36,12 @@ namespace NZBDash.DataAccessLayer
         /// Creates the links configuration table.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        public static void CreateLinksConfigurationTable(SQLiteConnection connection)
+		public static void CreateLinksConfigurationTable(SqliteConnectionWrapper connection)
         {
-            using (connection)
+			using (var con = connection.GetConnection())
             {
-                connection.Open();
-                connection.Execute(
+                con.Open();
+                con.Execute(
                     @"create table LinksConfigurations
               (
                  ID                                  integer primary key AUTOINCREMENT,
@@ -50,5 +50,43 @@ namespace NZBDash.DataAccessLayer
               )");
             }
         }
+
+		public static void CreateNzbGetSettingsTable(SqliteConnectionWrapper connection)
+		{
+			using (var con = connection.GetConnection())
+			{
+				con.Open();
+				con.Execute(
+					@"create table NzbGetSettings
+              (
+                 ID                                  integer primary key AUTOINCREMENT,
+                 IpAddress                           varchar(100) not null,
+                 Port                            integer not null,
+				 Enabled           					 integer not null,
+				 ShowOnDashboard					 integer not null,
+				 Username							 varchar(100) not null,
+				 Password							 varchar(100) not null	
+              )");
+			}
+		}
+
+		public static void CreateSonarrSettingsTable(SqliteConnectionWrapper connection)
+		{
+			using (var con = connection.GetConnection())
+			{
+				con.Open();
+				con.Execute(
+					@"create table SonarrSettings
+              (
+                 ID                                  integer primary key AUTOINCREMENT,
+                 IpAddress                           varchar(100) not null,
+                 Port                            integer not null,
+				 Enabled           					 integer not null,
+				 ShowOnDashboard					 integer not null,
+				 ApiKey					 varchar(100) not null
+				 
+              )");
+			}
+		}
     }
 }

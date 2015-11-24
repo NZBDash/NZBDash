@@ -23,6 +23,9 @@
 //  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
+using System.Collections.Generic;
+
+
 #endregion
 using NZBDash.Api.Models;
 using NZBDash.Common.Models.Api;
@@ -34,7 +37,7 @@ namespace NZBDash.ThirdParty.Api.Interfaces
     {
         void GetCouchPotatoMovies(string uri, string api);
         PlexServers GetPlexServers(string uri);
-        SonarrSeriesWrapper GetSonarrSeries(string uri, string api);
+		List<SonarrSeries> GetSonarrSeries(string uri, string api);
         SonarrSystemStatus GetSonarrSystemStatus(string uri, string api);
         CouchPotatoStatus GetCouchPotatoStatus(string uri, string api);
         NzbGetHistory GetNzbGetHistory(string url, string username, string password);

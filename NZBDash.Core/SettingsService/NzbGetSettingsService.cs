@@ -9,13 +9,14 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccess.Interfaces;
 
 using Omu.ValueInjecter;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.Core.SettingsService
 {
     public class NzbGetSettingsService : ISettingsService<NzbGetSettingsDto>
     {
-        private IRepository<NzbGetSettings> Repo { get; set; }
-        public NzbGetSettingsService(IRepository<NzbGetSettings> repo)
+		private ISqlRepository<NzbGetSettings> Repo { get; set; }
+        public NzbGetSettingsService(ISqlRepository<NzbGetSettings> repo)
         {
             Repo = repo;
             _logger = new NLogLogger(typeof(NzbGetSettingsService));
@@ -29,7 +30,7 @@ namespace NZBDash.Core.SettingsService
             try
             {
                 _logger.Trace("Getting all items from NzbGetRepository");
-                var result = Repo.GetAll();
+				var result = Repo.GetAll();
                 var setting = result.FirstOrDefault();
                 if (setting == null)
                 {
@@ -55,7 +56,7 @@ namespace NZBDash.Core.SettingsService
             _logger.Trace("Started NzbGetRepository");
 
             _logger.Trace(string.Format("Looking for id {0} in the NzbGetRepository", model.Id));
-            var entity = Repo.Find(model.Id);
+			var entity = Repo.Get(model.Id);
 
             if (entity == null)
             {
@@ -66,8 +67,8 @@ namespace NZBDash.Core.SettingsService
                 _logger.Trace("Inserting now");
                 var insertResult = Repo.Insert(newEntity);
 
-                _logger.Trace(string.Format("Our insert was {0}", insertResult != null));
-                return insertResult != null;
+				_logger.Trace(string.Format("Our insert was {0}", insertResult != long.MinValue));
+				return insertResult != long.MinValue;
             }
 
             _logger.Trace("We found an entity so we are going to modify the existing one");
@@ -79,10 +80,10 @@ namespace NZBDash.Core.SettingsService
             entity.ShowOnDashboard = model.ShowOnDashboard;
 
             _logger.Trace("Updating modified record");
-            var result = Repo.Modify(entity);
+			var result = Repo.Update(entity);
 
-            _logger.Trace(string.Format("Our modify was {0}", result == 1));
-            return result == 1;
+            _logger.Trace(string.Format("Our modify was {0}", result));
+            return result;
         }
     }
 }
