@@ -1,8 +1,10 @@
 ﻿using System.Web.Mvc;
 
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
+using NZBDash.DataAccessLayer;
 using NZBDash.UI.Models.Settings;
 
 namespace NZBDash.UI.Controllers
@@ -121,7 +123,7 @@ namespace NZBDash.UI.Controllers
             var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-               return RedirectToAction("SabNzbSettings");
+                return RedirectToAction("SabNzbSettings");
             }
 
             return View("Error");
