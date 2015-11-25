@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 #if WINDOWS
 using System.Data.SQLite;
 #endif
@@ -7,7 +6,7 @@ using System.Data.SQLite;
 using Mono.Data.Sqlite;
 #endif
 
-namespace NZBDash.DataAccessLayer
+namespace NZBDash.DataAccessLayer.Interfaces
 {
 	#if LINUX || DEBUG
 	public class SqliteConnectionWrapper

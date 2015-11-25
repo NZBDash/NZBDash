@@ -197,6 +197,14 @@
       <Project>{C52C966D-B232-4717-9642-6D810E4C7D1B}</Project>
       <Name>NZBDash.DataAccess.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Interfaces\NZBDash.DataAccessLayer.Interfaces.csproj">
+      <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
+      <Name>NZBDash.DataAccessLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
+      <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
+      <Name>NZBDash.DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DataAccess\NZBDash.DataAccess.csproj">
       <Project>{315278FF-796B-4A81-A3FF-BC5E707839A8}</Project>
       <Name>NZBDash.DataAccess</Name>

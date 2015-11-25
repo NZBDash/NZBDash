@@ -7,6 +7,8 @@ using NZBDash.Core.Model;
 using NZBDash.ThirdParty.Api.Interfaces;
 using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
 namespace NZBDash.ThirdParty.Api.Service
 {
     public class ThirdPartyService : IThirdPartyService
@@ -38,11 +40,18 @@ namespace NZBDash.ThirdParty.Api.Service
             return Serializer.SerializedJsonData<SonarrSystemStatus>(uri + SonarrApiAddress + api);
         }
 
-		public List<SonarrSeries> GetSonarrSeries(string uri, string api)
+        public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-			return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
+            //var jsonData = string.Empty;
 
-		}
+             //jsonData = Resources.Resources.Json;
+
+            //var s = JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData);
+            //return s;
+
+            return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
+
+        }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)
         {

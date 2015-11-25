@@ -13,7 +13,7 @@ using NZBDash.Common.Models.ViewModels.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Repository.Settings;
+using NZBDash.DataAccessLayer;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Service;
 using NZBDash.UI.Controllers.Application;
@@ -30,13 +30,13 @@ namespace NZBDash.UI.Test.Controllers
         [SetUp]
         public void Setup()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository()), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetConfiguration(new NLogLogger(typeof(string)),new WindowsSqliteConfiguration(new NLogLogger(typeof(string))) )), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
         }
 
         [Test]
         public void EnsureThatIndexReturnsDefaultView()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository()), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetConfiguration(new NLogLogger(typeof(string)), new WindowsSqliteConfiguration(new NLogLogger(typeof(string))))), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
 
             _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
@@ -104,17 +104,18 @@ namespace NZBDash.UI.Test.Controllers
 
             var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
 
             mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
             mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus);
 
-            //TODO
-            //var controller = new NzbGetController(mockSettings.Object, mockApi.Object);
-            //var result = controller.GetNzbGetStatus();
-            //var model = (NzbGetViewModel)result.Data;
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = controller.GetNzbGetStatus();
+            var model = (NzbGetViewModel)result.Data;
 
 
-            //Assert.That(model.Status, Is.EqualTo("Paused"));
+            Assert.That(model.Status, Is.EqualTo("Paused"));
         }
     }
 }

@@ -142,8 +142,8 @@
   <ItemGroup>
     <Compile Include="LinksConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableCreation.cs" />
     <Compile Include="NzbGetConfiguration.cs" />
+    <Compile Include="TableCreation.cs" />
     <Compile Include="MonoSqliteConfiguration.cs" />
     <Compile Include="WindowsSqliteConfiguration.cs" />
     <Compile Include="SonarrConfiguration.cs" />

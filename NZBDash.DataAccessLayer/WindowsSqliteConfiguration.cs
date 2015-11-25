@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: BaseSqliteConfiguration.cs
+//  File: WindowsSqliteConfiguration.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,15 +24,12 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-
-
-using NZBDash.DataAccessLayer.Interfaces;
 using System;
-using System.Data.SQLite;
 using System.IO;
 using System.Reflection;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DataAccessLayer
 {

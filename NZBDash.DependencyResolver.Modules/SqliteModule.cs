@@ -1,8 +1,9 @@
-﻿using System;
-using Ninject.Modules;
-using NZBDash.DataAccessLayer.Interfaces;
-using NZBDash.DataAccessLayer;
+﻿using Ninject.Modules;
+
 using NZBDash.Common.Models.Data.Models.Settings;
+using NZBDash.Core;
+using NZBDash.DataAccessLayer;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DependencyResolver.Modules
 {
@@ -10,8 +11,8 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-
 			Bind<ISqlRepository<SonarrSettings>>().To<SonarrConfiguration> ();
+			Bind<ISetup>().To<Setup>();
 
 			#if WINDOWS
 			Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();

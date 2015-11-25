@@ -115,6 +115,22 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;title&quot;: &quot;Archer (2009)&quot;,
+        ///    &quot;seasonCount&quot;: 5,
+        ///    &quot;episodeCount&quot;: 47,
+        ///    &quot;episodeFileCount&quot;: 47,
+        ///    &quot;status&quot;: &quot;continuing&quot;,
+        ///    &quot;overview&quot;: &quot;At ISIS, an international spy agency, global crises are merely opportunities for its highly trained employees to confuse, undermine, betray and royally screw each other. At the center of it all is suave master spy Sterling Archer, whose less-than-masculine code name is \&quot;Duchess.\&quot; Archer works with his domineering mother Malory, who is also his bo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Json {
+            get {
+                return ResourceManager.GetString("Json", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api Key.
         /// </summary>
         public static string Settings_ApiKey {

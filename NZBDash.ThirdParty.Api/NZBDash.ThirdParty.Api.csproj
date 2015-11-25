@@ -80,6 +80,10 @@
     <OutputPath>bin\x86\Linux\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +109,10 @@
     <ProjectReference Include="..\NZBDash.Common\NZBDash.Common.csproj">
       <Project>{9DD8A9DA-16BA-4447-AF4A-414148702B04}</Project>
       <Name>NZBDash.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Resources\NZBDash.Resources.csproj">
+      <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
+      <Name>NZBDash.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

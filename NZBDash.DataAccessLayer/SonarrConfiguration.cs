@@ -24,15 +24,12 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-
-using NZBDash.Common.Models.Data.Models.Settings;
-
 using System.Collections.Generic;
 
 using Dapper.Contrib.Extensions;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Data.Models;
+using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DataAccessLayer

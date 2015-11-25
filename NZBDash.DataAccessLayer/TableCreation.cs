@@ -24,32 +24,37 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System.Data.SQLite;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 using Dapper;
+using Dapper.Contrib.Extensions;
+
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DataAccessLayer
 {
-    public static class TableCreation
-    {
-        /// <summary>
-        /// Creates the links configuration table.
-        /// </summary>
-        /// <param name="connection">The connection.</param>
+	public static class TableCreation
+	{
+		/// <summary>
+		/// Creates the links configuration table.
+		/// </summary>
+		/// <param name="connection">The connection.</param>
 		public static void CreateLinksConfigurationTable(SqliteConnectionWrapper connection)
-        {
+		{
 			using (var con = connection.GetConnection())
-            {
-                con.Open();
-                con.Execute(
-                    @"create table LinksConfigurations
-              (
-                 ID                                  integer primary key AUTOINCREMENT,
-                 LinkName                           varchar(100) not null,
-                 LinkEndpoint                            varchar(1024) not null
-              )");
-            }
-        }
+			{
+				con.Open();
+				con.Execute(
+					@"create table LinksConfigurations
+			  (
+				 ID                                  integer primary key AUTOINCREMENT,
+				 LinkName                           varchar(100) not null,
+				 LinkEndpoint                            varchar(1024) not null
+			  )");
+			}
+		}
 
 		public static void CreateNzbGetSettingsTable(SqliteConnectionWrapper connection)
 		{
@@ -58,15 +63,15 @@ namespace NZBDash.DataAccessLayer
 				con.Open();
 				con.Execute(
 					@"create table NzbGetSettings
-              (
-                 ID                                  integer primary key AUTOINCREMENT,
-                 IpAddress                           varchar(100) not null,
-                 Port                            integer not null,
+			  (
+				 ID                                  integer primary key AUTOINCREMENT,
+				 IpAddress                           varchar(100) not null,
+				 Port                            integer not null,
 				 Enabled           					 integer not null,
 				 ShowOnDashboard					 integer not null,
 				 Username							 varchar(100) not null,
-				 Password							 varchar(100) not null	
-              )");
+				 Password							 varchar(100) not null
+			  )");
 			}
 		}
 
@@ -77,16 +82,43 @@ namespace NZBDash.DataAccessLayer
 				con.Open();
 				con.Execute(
 					@"create table SonarrSettings
-              (
-                 ID                                  integer primary key AUTOINCREMENT,
-                 IpAddress                           varchar(100) not null,
-                 Port                            integer not null,
+			  (
+				 ID                                  integer primary key AUTOINCREMENT,
+				 IpAddress                           varchar(100) not null,
+				 Port                            integer not null,
 				 Enabled           					 integer not null,
 				 ShowOnDashboard					 integer not null,
 				 ApiKey					 varchar(100) not null
-				 
-              )");
+
+			  )");
 			}
 		}
-    }
+
+		public static List<string> GetAllTables(SqliteConnectionWrapper connection)
+		{
+			using (var con = connection.GetConnection())
+			{
+				con.Open();
+				var list = new List<string>();
+				var result = con.GetAll<SqliteMasterTable>();
+				var records = result.Where(x => x.type == "table");
+				foreach (var record in records)
+				{
+					list.Add(record.name);
+				}
+				return list;
+			}
+		}
+
+		[Table("sqlite_master")]
+		public class SqliteMasterTable
+		{
+			public string type { get; set; }
+			public string name { get; set; }
+			public string tbl_name { get; set; }
+            [Key]
+			public long rootpage { get; set; }
+			public string sql { get; set; }
+		}
+	}
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Web;
-using System.Web.Mvc;
 
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -20,6 +19,7 @@ namespace NZBDash.UI.App_Start
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static IKernel Kernel{ get; set; }
 
         /// <summary>
         /// Starts the application
@@ -40,6 +40,14 @@ namespace NZBDash.UI.App_Start
         }
 
         /// <summary>
+        /// Stops the application.
+        /// </summary>
+        public static IKernel GetKernel()
+        {
+            return Kernel;
+        }
+
+        /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
@@ -49,11 +57,13 @@ namespace NZBDash.UI.App_Start
             var newKernal = modules.GetModules();
 
             var kernel = new StandardKernel(newKernal);
+
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                
+
+                Kernel = kernel;
                 return kernel;
                 
             }
