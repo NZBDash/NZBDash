@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
 namespace NZBDash.Common.Models.Api
 {
     public class Image
@@ -43,10 +45,5 @@ namespace NZBDash.Common.Models.Api
         public string imdbId { get; set; }
         public string titleSlug { get; set; }
         public int id { get; set; }
-    }
-
-    public class SonarrSeriesWrapper
-    {
-        public List<SonarrSeries> SonarrSeries { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace NZBDash.DependencyResolver
     public class CustomDependencyResolver : IDependencyResolver
     {
         /// <summary>
-        /// Gets the Ninject modules to pass into the Kernal.
+        /// Gets the Ninject modules to pass into the Kernel.
         /// </summary>
         public INinjectModule[] GetModules()
         {
@@ -42,8 +42,9 @@ namespace NZBDash.DependencyResolver
                 new ServiceModule(),
                 new ApplicationSettingsModule(),
                 new SerializerModule(),
-                new RepositoryModule(),
                 new LoggerModule(),
+				new SqliteModule(),
+                new SetupModule(), 
             };
 
             return modules;

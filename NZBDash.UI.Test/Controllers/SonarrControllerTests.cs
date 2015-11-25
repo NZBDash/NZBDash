@@ -25,6 +25,7 @@
 //  ***********************************************************************
 #endregion
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using Moq;
@@ -32,7 +33,6 @@ using Moq;
 using NUnit.Framework;
 
 using NZBDash.Common.Models.Api;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Common.Models.ViewModels.Sonarr;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
@@ -48,7 +48,7 @@ namespace NZBDash.UI.Test.Controllers
     {
         private SonarrController _controller;
         private SonarrSettingsViewModelDto ExpectedSettings { get; set; }
-        private SonarrSeriesWrapper SonarrSeriesWrapper { get; set; }
+        private List<SonarrSeries> SonarrSeries { get; set; }
         private Mock<ISettingsService<SonarrSettingsViewModelDto>> SettingsMock { get; set; }
         private Mock<IThirdPartyService> ServiceMock { get; set; }
 
@@ -60,11 +60,11 @@ namespace NZBDash.UI.Test.Controllers
             var f = new Fixture();
 
             ExpectedSettings = f.Create<SonarrSettingsViewModelDto>();
-            SonarrSeriesWrapper = f.Create<SonarrSeriesWrapper>();
+            SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
 
 
             SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
-            ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeriesWrapper);
+            ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
             _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
         }
 
@@ -75,27 +75,27 @@ namespace NZBDash.UI.Test.Controllers
             var model = (List<SonarrSeriesViewModel>)series.Model;
 
             Assert.That(model.Count, Is.GreaterThan(0));
-            Assert.That(model[0].Id, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].id));
-            Assert.That(model[0].ImdbId, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].imdbId));
-            Assert.That(model[0].Monitored, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].monitored));
-            Assert.That(model[0].FirstAired, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].firstAired));
-            Assert.That(model[0].EpisodeCount, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].episodeCount));
-            Assert.That(model[0].CleanTitle, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].cleanTitle));
-            Assert.That(model[0].AirTime, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].airTime));
-            Assert.That(model[0].Network, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].network));
-            Assert.That(model[0].NextAiring, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].nextAiring));
-            Assert.That(model[0].Overview, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].overview));
-            Assert.That(model[0].Path, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].path));
-            Assert.That(model[0].QualityProfileId, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].qualityProfileId));
-            Assert.That(model[0].Runtime, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].runtime));
-            Assert.That(model[0].SeasonCount, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].seasonCount));
-            Assert.That(model[0].SeasonFolder, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].seasonFolder));
-            Assert.That(model[0].SeriesType, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].seriesType));
-            Assert.That(model[0].Status, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].status));
-            Assert.That(model[0].Title, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].title));
-            Assert.That(model[0].TitleSlug, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].titleSlug));
-            Assert.That(model[0].Year, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].year));
-            Assert.That(model[0].ImageUrls[0], Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].images[0].url));
+            Assert.That(model[0].Id, Is.EqualTo(SonarrSeries[0].id));
+            Assert.That(model[0].ImdbId, Is.EqualTo(SonarrSeries[0].imdbId));
+            Assert.That(model[0].Monitored, Is.EqualTo(SonarrSeries[0].monitored));
+            Assert.That(model[0].FirstAired, Is.EqualTo(SonarrSeries[0].firstAired));
+            Assert.That(model[0].EpisodeCount, Is.EqualTo(SonarrSeries[0].episodeCount));
+            Assert.That(model[0].CleanTitle, Is.EqualTo(SonarrSeries[0].cleanTitle));
+            Assert.That(model[0].AirTime, Is.EqualTo(SonarrSeries[0].airTime));
+            Assert.That(model[0].Network, Is.EqualTo(SonarrSeries[0].network));
+            Assert.That(model[0].NextAiring, Is.EqualTo(SonarrSeries[0].nextAiring));
+            Assert.That(model[0].Overview, Is.EqualTo(SonarrSeries[0].overview));
+            Assert.That(model[0].Path, Is.EqualTo(SonarrSeries[0].path));
+            Assert.That(model[0].QualityProfileId, Is.EqualTo(SonarrSeries[0].qualityProfileId));
+            Assert.That(model[0].Runtime, Is.EqualTo(SonarrSeries[0].runtime));
+            Assert.That(model[0].SeasonCount, Is.EqualTo(SonarrSeries[0].seasonCount));
+            Assert.That(model[0].SeasonFolder, Is.EqualTo(SonarrSeries[0].seasonFolder));
+            Assert.That(model[0].SeriesType, Is.EqualTo(SonarrSeries[0].seriesType));
+            Assert.That(model[0].Status, Is.EqualTo(SonarrSeries[0].status));
+            Assert.That(model[0].Title, Is.EqualTo(SonarrSeries[0].title));
+            Assert.That(model[0].TitleSlug, Is.EqualTo(SonarrSeries[0].titleSlug));
+            Assert.That(model[0].Year, Is.EqualTo(SonarrSeries[0].year));
+            Assert.That(model[0].ImageUrls[0], Is.EqualTo(SonarrSeries[0].images[0].url));
 
             ServiceMock.Verify(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             SettingsMock.Verify(x => x.GetSettings(), Times.Once);

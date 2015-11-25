@@ -41,16 +41,10 @@ namespace NZBDash.UI.Hubs
 
         public void RemoveLink(int modelId)
         {
-            var result = LinksService.RemoveLink(modelId);
+            LinksService.RemoveLink(modelId);
 
-            if (result)
-            {
-                Clients.All.success(string.Format("You have removed the link!"));
-                Clients.All.remove(modelId);
-                return;
-            }
-            Clients.All.error(string.Format("We could not remove the link!"));
-
+            Clients.All.success(string.Format("You have removed the link!"));
+            Clients.All.remove(modelId);
         }
     }
 }

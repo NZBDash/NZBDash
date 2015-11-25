@@ -42,7 +42,6 @@ using NZBDash.UI.Models.Dashboard;
 
 using Omu.ValueInjecter;
 
-using Ploeh.AutoFixture;
 
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 

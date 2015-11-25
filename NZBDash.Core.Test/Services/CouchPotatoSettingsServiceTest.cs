@@ -1,4 +1,30 @@
-﻿using System.Collections.Generic;
+﻿#region Copyright
+//  ***********************************************************************
+//  Copyright (c) 2015 Jamie Rees
+//  File: CouchPotatoSettingsServiceTest.cs
+//  Created By: Jamie Rees
+// 
+//  Permission is hereby granted, free of charge, to any person obtaining
+//  a copy of this software and associated documentation files (the
+//  "Software"), to deal in the Software without restriction, including
+//  without limitation the rights to use, copy, modify, merge, publish,
+//  distribute, sublicense, and/or sell copies of the Software, and to
+//  permit persons to whom the Software is furnished to do so, subject to
+//  the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  ***********************************************************************
+#endregion
+using System.Collections.Generic;
 
 using Moq;
 
@@ -7,14 +33,14 @@ using NUnit.Framework;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.Core.Test.Services
 {
     [TestFixture]
     public class CouchPotatoSettingsServiceTest
     {
-        private Mock<IRepository<CouchPotatoSettings>> MockRepo { get; set; }
+        private Mock<ISqlRepository<CouchPotatoSettings>> MockRepo { get; set; }
         private List<CouchPotatoSettings> ExpectedGetLinks { get; set; }
         private CouchPotatoSettings ExpectedLink { get; set; }
         private CouchPotatoSettingsService Service { get; set; }
@@ -22,7 +48,7 @@ namespace NZBDash.Core.Test.Services
         [SetUp]
         public void SetUp()
         {
-            var mockRepo = new Mock<IRepository<CouchPotatoSettings>>();
+            var mockRepo = new Mock<ISqlRepository<CouchPotatoSettings>>();
             ExpectedGetLinks = new List<CouchPotatoSettings> { new CouchPotatoSettings { Id = 1, Enabled = true, ApiKey = "abc", IpAddress = "192", Password = "abc", Port = 25, Username = "bvc", ShowOnDashboard = true } };
             ExpectedLink = new CouchPotatoSettings
             {
@@ -37,16 +63,12 @@ namespace NZBDash.Core.Test.Services
             };
 
             mockRepo.Setup(x => x.GetAll()).Returns(ExpectedGetLinks).Verifiable();
-            mockRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(ExpectedGetLinks).Verifiable();
 
-            mockRepo.Setup(x => x.Find(1)).Returns(ExpectedLink).Verifiable();
-            mockRepo.Setup(x => x.FindAsync(1)).ReturnsAsync(ExpectedLink).Verifiable();
+            mockRepo.Setup(x => x.Get(1)).Returns(ExpectedLink).Verifiable();
 
-            mockRepo.Setup(x => x.Modify(It.IsAny<CouchPotatoSettings>())).Returns(1).Verifiable();
-            mockRepo.Setup(x => x.ModifyAsync(It.IsAny<CouchPotatoSettings>())).ReturnsAsync(1).Verifiable();
+            mockRepo.Setup(x => x.Update(It.IsAny<CouchPotatoSettings>())).Returns(true).Verifiable();
 
-            mockRepo.Setup(x => x.Insert(It.IsAny<CouchPotatoSettings>())).Returns(ExpectedLink).Verifiable();
-            mockRepo.Setup(x => x.InsertAsync(It.IsAny<CouchPotatoSettings>())).ReturnsAsync(ExpectedLink).Verifiable();
+            mockRepo.Setup(x => x.Insert(It.IsAny<CouchPotatoSettings>())).Returns(1).Verifiable();
 
 
             MockRepo = mockRepo;
@@ -79,9 +101,9 @@ namespace NZBDash.Core.Test.Services
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.True);
 
-            MockRepo.Verify(x => x.Find(2), Times.Once);
+            MockRepo.Verify(x => x.Get(2), Times.Once);
             MockRepo.Verify(x => x.Insert(It.IsAny<CouchPotatoSettings>()), Times.Once);
-            MockRepo.Verify(x => x.Modify(It.IsAny<CouchPotatoSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Update(It.IsAny<CouchPotatoSettings>()), Times.Never);
         }
 
         [Test]
@@ -93,9 +115,9 @@ namespace NZBDash.Core.Test.Services
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.True);
 
-            MockRepo.Verify(x => x.Find(1), Times.Once);
+            MockRepo.Verify(x => x.Get(1), Times.Once);
             MockRepo.Verify(x => x.Insert(It.IsAny<CouchPotatoSettings>()), Times.Never);
-            MockRepo.Verify(x => x.Modify(It.IsAny<CouchPotatoSettings>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<CouchPotatoSettings>()), Times.Once);
         }
 
 

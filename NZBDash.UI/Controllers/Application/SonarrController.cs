@@ -34,6 +34,7 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 
+using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 using Omu.ValueInjecter;
 
 namespace NZBDash.UI.Controllers.Application
@@ -60,10 +61,12 @@ namespace NZBDash.UI.Controllers.Application
         public ActionResult GetSeries()
         {
             var config = SettingsService.GetSettings();
-            var series = ApiService.GetSonarrSeries(config.IpAddress, config.ApiKey);
+			var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+
+			var series = ApiService.GetSonarrSeries(formattedUri, config.ApiKey);
             var viewModel = new List<SonarrSeriesViewModel>();
 
-            foreach (var s in series.SonarrSeries)
+            foreach (var s in series)
             {
                 var seriesViewModel = new SonarrSeriesViewModel();
                 var mappedResult = (SonarrSeriesViewModel)seriesViewModel

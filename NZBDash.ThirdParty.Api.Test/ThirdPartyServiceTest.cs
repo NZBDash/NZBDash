@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Moq;
 
@@ -25,7 +27,7 @@ namespace NZBDash.ThirdParty.Api.Test
         private NzbGetHistory NzbGetHistory { get; set; }
         private NzbGetList NzbGetList { get; set; }
         private NzbGetStatus NzbGetStatus { get; set; }
-        private SonarrSeriesWrapper SonarrSeriesWrapper { get; set; }
+        private List<SonarrSeries> SonarrSeries { get; set; }
         private SabNzbHistory SabNzbHistory { get; set; }
         private SabNzbQueue SabNzbQueue { get; set; }
 
@@ -40,7 +42,7 @@ namespace NZBDash.ThirdParty.Api.Test
             NzbGetHistory = fixture.Create<NzbGetHistory>();
             NzbGetList = fixture.Create<NzbGetList>();
             NzbGetStatus = fixture.Create<NzbGetStatus>();
-            SonarrSeriesWrapper = fixture.Create<SonarrSeriesWrapper>();
+            SonarrSeries = fixture.CreateMany<SonarrSeries>().ToList();
             SabNzbHistory = fixture.Create<SabNzbHistory>();
             SabNzbQueue = fixture.Create<SabNzbQueue>();
 
@@ -50,7 +52,7 @@ namespace NZBDash.ThirdParty.Api.Test
             mock.Setup(x => x.SerializedJsonData<NzbGetHistory>(It.IsAny<string>())).Returns(NzbGetHistory);
             mock.Setup(x => x.SerializedJsonData<NzbGetList>(It.IsAny<string>())).Returns(NzbGetList);
             mock.Setup(x => x.SerializedJsonData<NzbGetStatus>(It.IsAny<string>())).Returns(NzbGetStatus);
-            mock.Setup(x => x.SerializedJsonData<SonarrSeriesWrapper>(It.IsAny<string>())).Returns(SonarrSeriesWrapper);
+            mock.Setup(x => x.SerializedJsonData<List<SonarrSeries>>(It.IsAny<string>())).Returns(SonarrSeries);
             mock.Setup(x => x.SerializedJsonData<SabNzbHistory>(It.IsAny<string>())).Returns(SabNzbHistory);
             mock.Setup(x => x.SerializedJsonData<SabNzbQueue>(It.IsAny<string>())).Returns(SabNzbQueue);
 
@@ -79,7 +81,7 @@ namespace NZBDash.ThirdParty.Api.Test
         {
             var result = Service.GetSonarrSeries("a", "api");
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.SonarrSeries[0].id, Is.EqualTo(SonarrSeriesWrapper.SonarrSeries[0].id));
+            Assert.That(result[0].id, Is.EqualTo(SonarrSeries[0].id));
         }
 
 

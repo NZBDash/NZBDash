@@ -1,15 +1,38 @@
-﻿using System.Linq;
+﻿#region Copyright
+//  ***********************************************************************
+//  Copyright (c) 2015 Jamie Rees
+//  File: CustomDependencyResolverTest.cs
+//  Created By: Jamie Rees
+// 
+//  Permission is hereby granted, free of charge, to any person obtaining
+//  a copy of this software and associated documentation files (the
+//  "Software"), to deal in the Software without restriction, including
+//  without limitation the rights to use, copy, modify, merge, publish,
+//  distribute, sublicense, and/or sell copies of the Software, and to
+//  permit persons to whom the Software is furnished to do so, subject to
+//  the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  ***********************************************************************
+#endregion
+using System.Linq;
 
 using Ninject;
-using Ninject.Parameters;
 
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.DataAccess.Interfaces;
 using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver.Test
@@ -31,8 +54,9 @@ namespace NZBDash.DependencyResolver.Test
         public void ResolveApplicationDependency()
         {
             var module = new ApplicationSettingsModule();
-            var repoModule = new RepositoryModule();
-            var kernal = new StandardKernel(module, repoModule);
+            var repoModule = new SqliteModule();
+            var loggerModule = new LoggerModule();
+            var kernal = new StandardKernel(module, repoModule, loggerModule);
 
             var service = kernal.Get<ISettingsService<PlexSettingsDto>>();
             Assert.That(service, Is.Not.Null);
@@ -46,16 +70,6 @@ namespace NZBDash.DependencyResolver.Test
             var kernal = new StandardKernel(module, webClientModule);
 
             var service = kernal.Get<ISerializer>();
-            Assert.That(service, Is.Not.Null);
-        }
-
-        [Test]
-        public void ResolveDataDependency()
-        {
-            var module = new RepositoryModule();
-            var kernal = new StandardKernel(module);
-
-            var service = kernal.Get<IRepository<LinksConfiguration>>();
             Assert.That(service, Is.Not.Null);
         }
 

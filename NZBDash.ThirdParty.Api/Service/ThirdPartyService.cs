@@ -5,6 +5,9 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Api;
 using NZBDash.Core.Model;
 using NZBDash.ThirdParty.Api.Interfaces;
+using System.Collections.Generic;
+
+using Newtonsoft.Json;
 
 namespace NZBDash.ThirdParty.Api.Service
 {
@@ -37,9 +40,17 @@ namespace NZBDash.ThirdParty.Api.Service
             return Serializer.SerializedJsonData<SonarrSystemStatus>(uri + SonarrApiAddress + api);
         }
 
-        public SonarrSeriesWrapper GetSonarrSeries(string uri, string api)
+        public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-            return Serializer.SerializedJsonData<SonarrSeriesWrapper>(uri + SonarrApiAddress + api);
+            //var jsonData = string.Empty;
+
+             //jsonData = Resources.Resources.Json;
+
+            //var s = JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData);
+            //return s;
+
+            return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
+
         }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)
@@ -49,17 +60,17 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public NzbGetHistory GetNzbGetHistory(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetHistory>(string.Format("{0}{1}:{2}{3}/history", url, username, password, NzbGetApiAddress));
+            return Serializer.SerializedJsonData<NzbGetHistory>(string.Format("{0}{1}:{2}{3}history", url, username, password, NzbGetApiAddress));
         }
 
         public NzbGetList GetNzbGetList(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetList>(string.Format("{0}{1}:{2}{3}/listgroups", url, username, password, NzbGetApiAddress));
+            return Serializer.SerializedJsonData<NzbGetList>(string.Format("{0}{1}:{2}{3}listgroups", url, username, password, NzbGetApiAddress));
         }
 
         public NzbGetStatus GetNzbGetStatus(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetStatus>(string.Format("{0}{1}:{2}{3}/status", url, username, password, NzbGetApiAddress));
+            return Serializer.SerializedJsonData<NzbGetStatus>(string.Format("{0}{1}:{2}{3}status", url, username, password, NzbGetApiAddress));
         }
 
         public SabNzbHistory GetSabNzbHistory(string url, string apiKey)
