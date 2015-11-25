@@ -7,7 +7,6 @@ using NUnit.Framework;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.Core.Test.Services

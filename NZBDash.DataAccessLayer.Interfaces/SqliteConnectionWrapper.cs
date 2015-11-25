@@ -1,14 +1,14 @@
 ﻿
-#if WINDOWS
+#if WINDOWS|| DEBUG
 using System.Data.SQLite;
 #endif
-#if LINUX || DEBUG
+#if LINUX 
 using Mono.Data.Sqlite;
 #endif
 
 namespace NZBDash.DataAccessLayer.Interfaces
 {
-	#if LINUX || DEBUG
+	#if LINUX
 	public class SqliteConnectionWrapper
 	{
 		private string ConnectionString { get; set; }
@@ -24,8 +24,8 @@ namespace NZBDash.DataAccessLayer.Interfaces
 	}
 	#endif
 
-	#if WINDOWS
-	public class SqliteConnectionWrapper
+#if WINDOWS|| DEBUG
+    public class SqliteConnectionWrapper
 	{
 		private string ConnectionString { get; set; }
 

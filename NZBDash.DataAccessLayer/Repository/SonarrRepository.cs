@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: NzbGetConfiguration.cs
+//  File: SonarrConfiguration.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -34,41 +34,40 @@ using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DataAccessLayer
 {
-	public class NzbGetConfiguration : ISqlRepository<NzbGetSettings>
+	public class SonarrRepository : ISqlRepository<SonarrSettings>
 	{
 		private ISqliteConfiguration Config{ get; set; }
 		private ILogger Logger {get;set;}
-		public NzbGetConfiguration(ILogger logger, ISqliteConfiguration config)
+		public SonarrRepository(ILogger logger, ISqliteConfiguration config)
 		{
 			Config = config;
-			Config.CheckDb();
 			Logger = Logger;
 		}
 
 		/// <summary>
 		/// Gets all.
 		/// </summary>
-		public IEnumerable<NzbGetSettings> GetAll()
+		public IEnumerable<SonarrSettings> GetAll()
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-                var result = db.GetAll<NzbGetSettings>();
+				var result = db.GetAll<SonarrSettings>();
 				return result;
 			}
 		}
 
-		public NzbGetSettings Get(long id)
+		public SonarrSettings Get(long id)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-				var result = db.Get<NzbGetSettings>(id);
+				var result = db.Get<SonarrSettings>(id);
 				return result;
 			}
 		}
 
-		public void Delete(NzbGetSettings entity)
+		public void Delete(SonarrSettings entity)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
@@ -77,16 +76,16 @@ namespace NZBDash.DataAccessLayer
 			}
 		}
 
-		public bool Update(NzbGetSettings entity)
+		public bool Update(SonarrSettings entity)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-				return db.Update<NzbGetSettings>(entity);
+				return db.Update<SonarrSettings>(entity);
 			}
 		}
 
-		public long Insert(NzbGetSettings entity)
+		public long Insert(SonarrSettings entity)
 		{
 			using (var cnn = Config.DbConnection().GetConnection())
 			{

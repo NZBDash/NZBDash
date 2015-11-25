@@ -32,16 +32,15 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccessLayer.Interfaces;
 
-namespace NZBDash.DataAccessLayer
+namespace NZBDash.DataAccessLayer.Repository
 {
-    public sealed class LinksConfigurationSql : ISqlRepository<LinksConfiguration>
+    public sealed class LinksRepository : ISqlRepository<LinksConfiguration>
     {
 		private ISqliteConfiguration Config{ get; set; }
 		private ILogger Logger { get; set; }
-		public LinksConfigurationSql(ILogger logger, ISqliteConfiguration config)
+		public LinksRepository(ILogger logger, ISqliteConfiguration config)
         {
 			Config = config;
-            Config.CheckDb();
 			Logger = logger;
         }
 
@@ -57,7 +56,6 @@ namespace NZBDash.DataAccessLayer
                 var result = db.GetAll<LinksConfiguration>();
                 return result;
             }
-			return null;
         }
 
         public LinksConfiguration Get(long id)
@@ -68,7 +66,6 @@ namespace NZBDash.DataAccessLayer
                 var result = db.Get<LinksConfiguration>(id);
                 return result;
             }
-			return null;
         }
 
         public void Delete(LinksConfiguration entity)
@@ -87,7 +84,6 @@ namespace NZBDash.DataAccessLayer
                 db.Open();
                 return db.Update<LinksConfiguration>(entity);
             }
-			return false;
         }
 
         public long Insert(LinksConfiguration entity)
@@ -97,7 +93,6 @@ namespace NZBDash.DataAccessLayer
                 cnn.Open();
                 return cnn.Insert(entity);
             }
-			return 0L;
         }
     }
 }

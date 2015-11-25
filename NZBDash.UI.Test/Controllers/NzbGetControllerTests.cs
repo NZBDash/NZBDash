@@ -30,13 +30,13 @@ namespace NZBDash.UI.Test.Controllers
         [SetUp]
         public void Setup()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetConfiguration(new NLogLogger(typeof(string)),new WindowsSqliteConfiguration(new NLogLogger(typeof(string))) )), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository(new NLogLogger(typeof(string)),new WindowsSqliteConfiguration(new NLogLogger(typeof(string))) )), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
         }
 
         [Test]
         public void EnsureThatIndexReturnsDefaultView()
         {
-            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetConfiguration(new NLogLogger(typeof(string)), new WindowsSqliteConfiguration(new NLogLogger(typeof(string))))), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
+            _controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository(new NLogLogger(typeof(string)), new WindowsSqliteConfiguration(new NLogLogger(typeof(string))))), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
 
             _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }

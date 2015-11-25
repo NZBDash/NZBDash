@@ -94,6 +94,64 @@ namespace NZBDash.DataAccessLayer
 			}
 		}
 
+        public static void CreatePlexSettingsTable(SqliteConnectionWrapper connection)
+        {
+            using (var con = connection.GetConnection())
+            {
+                con.Open();
+                con.Execute(
+                    @"create table PlexSettings
+			  (
+				 ID                                  integer primary key AUTOINCREMENT,
+				 IpAddress                           varchar(100) not null,
+				 Port                            integer not null,
+				 Enabled           					 integer not null,
+				 ShowOnDashboard					 integer not null,
+				 Username							 varchar(100) not null,
+				 Password							 varchar(100) not null
+
+			  )");
+            }
+        }
+
+        public static void CreateCouchPotatoSettingsTable(SqliteConnectionWrapper connection)
+        {
+            using (var con = connection.GetConnection())
+            {
+                con.Open();
+                con.Execute(
+                    @"create table CouchPotatoSettings
+			  (
+				ID                                  integer primary key AUTOINCREMENT,
+				IpAddress                           varchar(100) not null,
+				Port                                integer not null,
+				Enabled           					integer not null,
+				ShowOnDashboard					    integer not null,
+				Username							varchar(100) not null,
+				Password							varchar(100) not null,
+                ApiKey					            varchar(100) not null
+			  )");
+            }
+        }
+
+        public static void CreateSabNzbSettingsSettingsTable(SqliteConnectionWrapper connection)
+        {
+            using (var con = connection.GetConnection())
+            {
+                con.Open();
+                con.Execute(
+                    @"create table SabNzbSettings
+			  (
+				ID                                  integer primary key AUTOINCREMENT,
+				IpAddress                           varchar(100) not null,
+				Port                                integer not null,
+				Enabled           					integer not null,
+				ShowOnDashboard					    integer not null,
+                ApiKey					            varchar(100) not null
+			  )");
+            }
+        }
+
 		public static List<string> GetAllTables(SqliteConnectionWrapper connection)
 		{
 			using (var con = connection.GetConnection())

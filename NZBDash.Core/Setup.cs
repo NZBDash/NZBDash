@@ -53,7 +53,10 @@ namespace NZBDash.Core
                 "sqlite_sequence",
                 "SonarrSettings",
                 "NzbGetSettings",
-                "LinksConfigurations"
+                "LinksConfigurations",
+                "PlexSettings",
+                "CouchPotatoSettings",
+                "SabNzbSettings"
             };
             }
         }
@@ -62,6 +65,7 @@ namespace NZBDash.Core
         {
             try
             {
+                Configuration.CheckDb();
                 MigrateDatabase();
                 return true;
             }
@@ -96,6 +100,21 @@ namespace NZBDash.Core
                 if (table.Equals("LinksConfigurations"))
                 {
                     TableCreation.CreateLinksConfigurationTable(connection);
+                    continue;
+                }
+                if (table.Equals("PlexSettings"))
+                {
+                    TableCreation.CreatePlexSettingsTable(connection);
+                    continue;
+                }
+                if (table.Equals("CouchPotatoSettings"))
+                {
+                    TableCreation.CreateCouchPotatoSettingsTable(connection);
+                    continue;
+                }
+                if (table.Equals("SabNzbSettings"))
+                {
+                    TableCreation.CreateSabNzbSettingsSettingsTable(connection);
                     continue;
                 }
             }

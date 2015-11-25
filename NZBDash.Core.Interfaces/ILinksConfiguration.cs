@@ -25,7 +25,6 @@
 //  ***********************************************************************
 #endregion
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 using NZBDash.Core.Model.DTO;
 
@@ -33,11 +32,9 @@ namespace NZBDash.Core.Interfaces
 {
     public interface ILinksConfiguration
     {
-        Task<IEnumerable<LinksConfigurationDto>> GetLinksAsync();
         IEnumerable<LinksConfigurationDto> GetLinks();
         bool UpdateLink(LinksConfigurationDto dto);
-        Task<bool> UpdateLinkAsync(LinksConfigurationDto dto);
         LinksConfigurationDto AddLink(LinksConfigurationDto link);
-        bool RemoveLink(int id);
+        void RemoveLink(int id);
     }
 }

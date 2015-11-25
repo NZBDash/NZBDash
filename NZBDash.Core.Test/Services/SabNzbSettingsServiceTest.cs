@@ -7,14 +7,14 @@ using NUnit.Framework;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
-using NZBDash.DataAccess.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.Core.Test.Services
 {
     [TestFixture]
     public class SabNzbSettingsServiceTest
     {
-        private Mock<IRepository<SabNzbSettings>> MockRepo { get; set; }
+        private Mock<ISqlRepository<SabNzbSettings>> MockRepo { get; set; }
         private List<SabNzbSettings> ExpectedGetLinks { get; set; }
         private SabNzbSettings ExpectedLink { get; set; }
         private SabNzbSettingsService Service { get; set; }
@@ -22,7 +22,7 @@ namespace NZBDash.Core.Test.Services
         [SetUp]
         public void SetUp()
         {
-            var mockRepo = new Mock<IRepository<SabNzbSettings>>();
+            var mockRepo = new Mock<ISqlRepository<SabNzbSettings>>();
             ExpectedLink = new SabNzbSettings
             {
                 Id = 1,
@@ -39,16 +39,11 @@ namespace NZBDash.Core.Test.Services
 
 
             mockRepo.Setup(x => x.GetAll()).Returns(ExpectedGetLinks).Verifiable();
-            mockRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(ExpectedGetLinks).Verifiable();
 
-            mockRepo.Setup(x => x.Find(1)).Returns(ExpectedLink).Verifiable();
-            mockRepo.Setup(x => x.FindAsync(1)).ReturnsAsync(ExpectedLink).Verifiable();
+            mockRepo.Setup(x => x.Get(1)).Returns(ExpectedLink).Verifiable();
 
-            mockRepo.Setup(x => x.Modify(It.IsAny<SabNzbSettings>())).Returns(1).Verifiable();
-            mockRepo.Setup(x => x.ModifyAsync(It.IsAny<SabNzbSettings>())).ReturnsAsync(1).Verifiable();
-
-            mockRepo.Setup(x => x.Insert(It.IsAny<SabNzbSettings>())).Returns(ExpectedLink).Verifiable();
-            mockRepo.Setup(x => x.InsertAsync(It.IsAny<SabNzbSettings>())).ReturnsAsync(ExpectedLink).Verifiable();
+            mockRepo.Setup(x => x.Update(It.IsAny<SabNzbSettings>())).Returns(true).Verifiable();
+            mockRepo.Setup(x => x.Insert(It.IsAny<SabNzbSettings>())).Returns(1).Verifiable();
 
 
             MockRepo = mockRepo;
@@ -76,9 +71,9 @@ namespace NZBDash.Core.Test.Services
             var result = Service.SaveSettings(dto);
 
             Assert.That(result, Is.True);
-            MockRepo.Verify(x => x.Find(2), Times.Once);
+            MockRepo.Verify(x => x.Get(2), Times.Once);
             MockRepo.Verify(x => x.Insert(It.IsAny<SabNzbSettings>()), Times.Once);
-            MockRepo.Verify(x => x.Modify(It.IsAny<SabNzbSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Update(It.IsAny<SabNzbSettings>()), Times.Never);
         }
 
         [Test]
@@ -88,9 +83,9 @@ namespace NZBDash.Core.Test.Services
             var result = Service.SaveSettings(dto);
 
             Assert.That(result, Is.True);
-            MockRepo.Verify(x => x.Find(1), Times.Once);
+            MockRepo.Verify(x => x.Get(1), Times.Once);
             MockRepo.Verify(x => x.Insert(It.IsAny<SabNzbSettings>()), Times.Never);
-            MockRepo.Verify(x => x.Modify(It.IsAny<SabNzbSettings>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<SabNzbSettings>()), Times.Once);
         }
     }
 }

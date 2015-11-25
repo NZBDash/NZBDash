@@ -32,43 +32,42 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 
-namespace NZBDash.DataAccessLayer
+namespace NZBDash.DataAccessLayer.Repository
 {
-	public class SonarrConfiguration : ISqlRepository<SonarrSettings>
+	public class SabNzbRepository : ISqlRepository<SabNzbSettings>
 	{
 		private ISqliteConfiguration Config{ get; set; }
 		private ILogger Logger {get;set;}
-		public SonarrConfiguration(ILogger logger, ISqliteConfiguration config)
+        public SabNzbRepository(ILogger logger, ISqliteConfiguration config)
 		{
 			Config = config;
-			Config.CheckDb();
 			Logger = Logger;
 		}
 
 		/// <summary>
 		/// Gets all.
 		/// </summary>
-		public IEnumerable<SonarrSettings> GetAll()
+        public IEnumerable<SabNzbSettings> GetAll()
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-				var result = db.GetAll<SonarrSettings>();
+                var result = db.GetAll<SabNzbSettings>();
 				return result;
 			}
 		}
 
-		public SonarrSettings Get(long id)
+        public SabNzbSettings Get(long id)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-				var result = db.Get<SonarrSettings>(id);
+                var result = db.Get<SabNzbSettings>(id);
 				return result;
 			}
 		}
 
-		public void Delete(SonarrSettings entity)
+        public void Delete(SabNzbSettings entity)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
@@ -77,16 +76,16 @@ namespace NZBDash.DataAccessLayer
 			}
 		}
 
-		public bool Update(SonarrSettings entity)
+        public bool Update(SabNzbSettings entity)
 		{
 			using (var db = Config.DbConnection().GetConnection())
 			{
 				db.Open();
-				return db.Update<SonarrSettings>(entity);
+                return db.Update<SabNzbSettings>(entity);
 			}
 		}
 
-		public long Insert(SonarrSettings entity)
+        public long Insert(SabNzbSettings entity)
 		{
 			using (var cnn = Config.DbConnection().GetConnection())
 			{
