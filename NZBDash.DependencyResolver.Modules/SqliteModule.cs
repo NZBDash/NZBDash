@@ -1,5 +1,5 @@
 ﻿using Ninject.Modules;
-
+using NZBDash.Common.Models.Data.Models;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer;
 using NZBDash.DataAccessLayer.Interfaces;
@@ -16,12 +16,13 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISqlRepository<NzbGetSettings>>().To<NzbGetRepository>();
             Bind<ISqlRepository<CouchPotatoSettings>>().To<CouchPotatoRepository>();
             Bind<ISqlRepository<SabNzbSettings>>().To<SabNzbRepository>();
-            
+            Bind<ISqlRepository<LinksConfiguration>>().To<LinksRepository>();
 
-			#if WINDOWS
-			Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
+
+#if WINDOWS || DEBUG
+            Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
 			#endif
-			#if LINUX || DEBUG
+			#if LINUX 
 			Bind<ISqliteConfiguration>().To<MonoSqliteConfiguration>();
 			#endif
 		}
