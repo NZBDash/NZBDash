@@ -179,7 +179,7 @@ namespace NZBDash.UI.Controllers.Application
 				}
 
                 // Order by Id desc and get the last 30 downloads
-			    var model = items.OrderByDescending(x => x.Id).Take(30);
+			    var model = items.OrderByDescending(x => x.Id).Take(30).ToList();
 				return PartialView("Partial/History", model);
 			}
 			catch (Exception e)
@@ -188,5 +188,22 @@ namespace NZBDash.UI.Controllers.Application
 				return PartialView("DashletError");
 			}
 		}
+
+        [HttpGet]
+	    public ActionResult Logs()
+        {
+            var config = SettingsService.GetSettings();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var logs = Api.GetNzbGetLogs(formattedUri, config.Username, config.Password);
+
+            var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
+
+            var model = orderdLogs.Select(log => 
+                (NzbGetLogViewModel)new NzbGetLogViewModel()
+                .InjectFrom(new NzbGetLogMapper(), log))
+                .ToList().Take(50);
+
+            return PartialView("Partial/Logs",model);
+        }
 	}
 }

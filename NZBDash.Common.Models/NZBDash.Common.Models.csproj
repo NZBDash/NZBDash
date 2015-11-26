@@ -125,6 +125,7 @@
     <Compile Include="Api\CouchPotatoStatus.cs" />
     <Compile Include="Api\NzbGetHistory.cs" />
     <Compile Include="Api\NzbGetList.cs" />
+    <Compile Include="Api\NzbGetLogs.cs" />
     <Compile Include="Api\NzbGetStatus.cs" />
     <Compile Include="Api\PlexServers.cs" />
     <Compile Include="Api\SabNzbModels.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Data\Models\Settings\SonarrSettings.cs" />
     <Compile Include="Hardware\DriveModel.cs" />
     <Compile Include="Hardware\ServerInformationViewModel.cs" />
+    <Compile Include="ViewModels\NzbGet\NzbGetLogViewModel.cs" />
     <Compile Include="ViewModels\NzbGet\NzbGetHistoryViewModel.cs" />
     <Compile Include="ViewModels\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

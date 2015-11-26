@@ -42,13 +42,6 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-            //var jsonData = string.Empty;
-
-             //jsonData = Resources.Resources.Json;
-
-            //var s = JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData);
-            //return s;
-
             return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
 
         }
@@ -71,6 +64,11 @@ namespace NZBDash.ThirdParty.Api.Service
         public NzbGetStatus GetNzbGetStatus(string url, string username, string password)
         {
             return Serializer.SerializedJsonData<NzbGetStatus>(string.Format("{0}{1}:{2}{3}status", url, username, password, NzbGetApiAddress));
+        }
+
+        public NzbGetLogs GetNzbGetLogs(string url, string username, string password)
+        {
+            return Serializer.SerializedJsonData<NzbGetLogs>(string.Format("{0}{1}:{2}{3}/log?IDFrom=0&NumberOfEntries=1000", url, username, password, NzbGetApiAddress));
         }
 
         public SabNzbHistory GetSabNzbHistory(string url, string apiKey)
