@@ -154,7 +154,7 @@ namespace NZBDash.UI.Test.Controllers
 
 
             var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
-            var result = (PartialViewResult)controller.Log();
+            var result = (PartialViewResult)controller.Logs();
             var model = (List<NzbGetLogViewModel>)result.Model;
 
 
