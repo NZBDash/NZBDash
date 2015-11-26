@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using Moq;
@@ -9,6 +11,7 @@ using NZBDash.Api.Models;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Models.Api;
 using NZBDash.Common.Models.ViewModels.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
@@ -17,6 +20,8 @@ using NZBDash.DataAccessLayer;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Service;
 using NZBDash.UI.Controllers.Application;
+
+using Ploeh.AutoFixture;
 
 using TestStack.FluentMVCTesting;
 
@@ -116,6 +121,47 @@ namespace NZBDash.UI.Test.Controllers
 
 
             Assert.That(model.Status, Is.EqualTo("Paused"));
+        }
+
+        [Test]
+        public void GetNzbGetLogsTest()
+        {
+
+            var expectedSettings = new NzbGetSettingsDto
+            {
+                IpAddress = "192.168.0.1",
+                Port = 25
+            };
+
+            var expected = new NzbGetLogs
+            {
+                result =
+                    new List<LogResult>
+                    {
+                        new LogResult { ID = 2, Kind = "WARNING", Text = "TEXT", Time = 22, },
+                        new LogResult { ID = 9999, Kind = "WARNING", Text = "TEXT", Time = 1448544679, },
+                    },
+            };
+
+            var ordered = expected.result.OrderByDescending(x => x.ID).ToList();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+            mockApi.Setup(x => x.GetNzbGetLogs(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expected);
+
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.Logs();
+            var model = (List<NzbGetLogViewModel>)result.Model;
+
+
+            Assert.That(model[0].Id, Is.EqualTo(9999));
+            Assert.That(model[0].Kind, Is.EqualTo(ordered[0].Kind));
+            Assert.That(model[0].Text, Is.EqualTo(ordered[0].Text));
+            Assert.That(model[0].Time, Is.EqualTo(new DateTime(2015, 11, 26, 13, 31, 19)));
         }
     }
 }

@@ -31,6 +31,8 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 
+using Omu.ValueInjecter;
+
 namespace NZBDash.Core.SettingsService
 {
     public class SonarrSettingsService : ISettingsService<SonarrSettingsViewModelDto>
@@ -67,18 +69,11 @@ namespace NZBDash.Core.SettingsService
 
             if (entity == null)
             {
-                var newEntity = new SonarrSettings
-                {
-                    Port = model.Port,
-                    Enabled = model.Enabled,
-                    IpAddress = model.IpAddress,
-                    Id = model.Id,
-                    ApiKey = model.ApiKey,
-                    ShowOnDashboard = model.ShowOnDashboard
-                };
+                var newEntity = new SonarrSettings();
+                newEntity.InjectFrom(model);
 
                 var insertResult = Repo.Insert(newEntity);
-                return insertResult != null;
+                return insertResult != long.MinValue;
             }
 
             entity.Enabled = model.Enabled;

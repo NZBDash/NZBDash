@@ -88,6 +88,15 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string Applications_NzbGet_Tab_Logs {
+            get {
+                return ResourceManager.GetString("Applications_NzbGet_Tab_Logs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NzbGet.
         /// </summary>
         public static string Applications_NzbGet_Title {
@@ -115,14 +124,27 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [
-        ///  {
-        ///    &quot;title&quot;: &quot;Archer (2009)&quot;,
-        ///    &quot;seasonCount&quot;: 5,
-        ///    &quot;episodeCount&quot;: 47,
-        ///    &quot;episodeFileCount&quot;: 47,
-        ///    &quot;status&quot;: &quot;continuing&quot;,
-        ///    &quot;overview&quot;: &quot;At ISIS, an international spy agency, global crises are merely opportunities for its highly trained employees to confuse, undermine, betray and royally screw each other. At the center of it all is suave master spy Sterling Archer, whose less-than-masculine code name is \&quot;Duchess.\&quot; Archer works with his domineering mother Malory, who is also his bo [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {
+        ///&quot;version&quot; : &quot;1.1&quot;,
+        ///&quot;result&quot; : [
+        ///{
+        ///&quot;ID&quot; : 11132,
+        ///&quot;Kind&quot; : &quot;INFO&quot;,
+        ///&quot;Time&quot; : 1448417467,
+        ///&quot;Text&quot; : &quot;Collection Family.Guy.S14E04.720p.HDTV.x264-KILLERS removed from history&quot;
+        ///},
+        ///{
+        ///&quot;ID&quot; : 11133,
+        ///&quot;Kind&quot; : &quot;INFO&quot;,
+        ///&quot;Time&quot; : 1448419464,
+        ///&quot;Text&quot; : &quot;Deleting file D:\\Downloads\\nzb\\Mission.Impossible.Rogue.Nation.2015.DVDRip-SPARKS.nzb.4.queued&quot;
+        ///},
+        ///{
+        ///&quot;ID&quot; : 11134,
+        ///&quot;Kind&quot; : &quot;INFO&quot;,
+        ///&quot;Time&quot; : 1448419473,
+        ///&quot;Text&quot; : &quot;Collection Mission.Impossible.Rogue.Nation.2015.DVDRip-SPARKS removed from history&quot;
+        ///},        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Json {
             get {

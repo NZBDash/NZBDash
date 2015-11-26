@@ -113,6 +113,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\TimeExtensionTest.cs" />
     <Compile Include="Helpers\ThirdPartySerializerTest.cs" />
     <Compile Include="Helpers\MemorySizeConverterTest.cs">
       <SubType>Code</SubType>

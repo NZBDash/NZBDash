@@ -1,0 +1,20 @@
+﻿@using GridMvc.Html
+@model IEnumerable<NZBDash.Common.Models.ViewModels.NzbGet.NzbGetLogViewModel>
+
+<div class="col-md-12">
+
+    @*//TODO: Resource*@
+
+    @Html.Grid(Model).Named("NzbGetLogGrid").Columns(columns =>
+{
+    columns.Add(x => x.Time);
+
+    columns.Add(x => x.Id);
+
+    columns.Add(x => x.Kind);
+
+    columns.Add(x => x.Text);
+
+});
+
+</div>

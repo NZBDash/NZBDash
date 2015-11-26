@@ -71,6 +71,10 @@ namespace NZBDash.Common.Mapping
                     {
                         castType = (long)objVal;
                     }
+                    else if (newType == typeof(DateTime))
+                    {
+                        castType = objVal as DateTime? ?? new DateTime();
+                    }
 
                     if (castType == null)
                     {

@@ -371,6 +371,7 @@
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Views\Sonarr\Index.cshtml" />
     <Content Include="Views\Sonarr\SeriesList.cshtml" />
+    <Content Include="Views\NzbGet\Partial\Logs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,6 +27,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common;
@@ -163,7 +164,7 @@ namespace NZBDash.UI.Controllers.Application
 				var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
 				var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
-				var model = new List<NzbGetHistoryViewModel>();
+				var items = new List<NzbGetHistoryViewModel>();
 				foreach (var result in history.result)
 				{
 					var singleItem = new NzbGetHistoryViewModel();
@@ -174,9 +175,11 @@ namespace NZBDash.UI.Controllers.Application
 						long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
 						mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
 					}
-					model.Add(mappedResult);
+					items.Add(mappedResult);
 				}
 
+                // Order by Id desc and get the last 30 downloads
+			    var model = items.OrderByDescending(x => x.Id).Take(30).ToList();
 				return PartialView("Partial/History", model);
 			}
 			catch (Exception e)
@@ -185,5 +188,23 @@ namespace NZBDash.UI.Controllers.Application
 				return PartialView("DashletError");
 			}
 		}
+
+        [HttpGet]
+	    public ActionResult Logs()
+        {
+            var config = SettingsService.GetSettings();
+            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var logs = Api.GetNzbGetLogs(formattedUri, config.Username, config.Password);
+
+            var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
+
+            var model = orderdLogs.Select(log => 
+                (NzbGetLogViewModel)new NzbGetLogViewModel()
+                .InjectFrom(new NzbGetLogMapper(), log))
+                .Take(50)
+                .ToList();
+
+            return PartialView("Partial/Logs",model);
+        }
 	}
 }

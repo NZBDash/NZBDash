@@ -18,7 +18,7 @@ namespace NZBDash.DependencyResolver.Modules
 #endif
 
 #if LINUX
-           Bind<IHardwareService>().To<LinuxHardwareService>();
+           Bind<IHardwareService>().To<MonoHardwareService>();
 #endif
             Bind<IThirdPartyService>().To<ThirdPartyService>();
             Bind<IWebClient>().To<CustomWebClient>();
