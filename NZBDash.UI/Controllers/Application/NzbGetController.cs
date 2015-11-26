@@ -201,7 +201,8 @@ namespace NZBDash.UI.Controllers.Application
             var model = orderdLogs.Select(log => 
                 (NzbGetLogViewModel)new NzbGetLogViewModel()
                 .InjectFrom(new NzbGetLogMapper(), log))
-                .ToList().Take(50);
+                .Take(50)
+                .ToList();
 
             return PartialView("Partial/Logs",model);
         }
