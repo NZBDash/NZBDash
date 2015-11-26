@@ -31,6 +31,8 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 
+using Omu.ValueInjecter;
+
 namespace NZBDash.Core.SettingsService
 {
     public class PlexSettingsService : ISettingsService<PlexSettingsDto>
@@ -50,16 +52,8 @@ namespace NZBDash.Core.SettingsService
                 return new PlexSettingsDto();
             }
 
-            var model = new PlexSettingsDto
-            {
-                Enabled = setting.Enabled,
-                Id = setting.Id,
-                IpAddress = setting.IpAddress,
-                Password = setting.Password,
-                Port = setting.Port,
-                Username = setting.Username,
-                ShowOnDashboard = setting.ShowOnDashboard,
-            };
+            var model = new PlexSettingsDto();
+            model.InjectFrom(setting);
 
             return model;
         }
@@ -70,16 +64,8 @@ namespace NZBDash.Core.SettingsService
 
             if (entity == null)
             {
-                var newEntity = new PlexSettings
-                {
-                    Port = model.Port,
-                    Enabled = model.Enabled,
-                    IpAddress = model.IpAddress,
-                    Id = model.Id,
-                    ShowOnDashboard = model.ShowOnDashboard,
-                    Username = model.Username,
-                    Password = model.Password
-                };
+                var newEntity = new PlexSettings();
+                newEntity.InjectFrom(model);
 
                 var insertResult = Repo.Insert(newEntity);
                 return insertResult != long.MinValue;

@@ -7,7 +7,7 @@ using NZBDash.Core.Interfaces;
 
 namespace NZBDash.Core.Services
 {
-    public class LinuxHardwareService : IHardwareService
+    public class MonoHardwareService : IHardwareService
     {
         public IEnumerable<DriveModel> GetDrives()
         {

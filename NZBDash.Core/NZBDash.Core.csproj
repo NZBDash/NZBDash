@@ -136,7 +136,7 @@
     <Compile Include="Model\Settings\SabNzbSettingsDto.cs" />
     <Compile Include="Model\Settings\SonarrSettingsViewModelDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\LinuxHardwareService.cs" />
+    <Compile Include="Services\MonoHardwareService.cs" />
     <Compile Include="Services\WindowsHardwareService.cs" />
     <Compile Include="SettingsService\PlexSettingsService.cs" />
     <Compile Include="SettingsService\SabNzbSettingsService.cs" />

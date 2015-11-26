@@ -31,6 +31,8 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 
+using Omu.ValueInjecter;
+
 namespace NZBDash.Core.SettingsService
 {
     public class SabNzbSettingsService : ISettingsService<SabNzbSettingsDto>
@@ -50,15 +52,8 @@ namespace NZBDash.Core.SettingsService
                 return new SabNzbSettingsDto();
             }
 
-            var model = new SabNzbSettingsDto
-            {
-                Enabled = setting.Enabled,
-                Id = setting.Id,
-                IpAddress = setting.IpAddress,
-                Port = setting.Port,
-                ShowOnDashboard = setting.ShowOnDashboard,
-                ApiKey = setting.ApiKey,
-            };
+            var model = new SabNzbSettingsDto();
+            model.InjectFrom(setting);
 
             return model;
         }
@@ -69,16 +64,9 @@ namespace NZBDash.Core.SettingsService
 
             if (entity == null)
             {
-                var newEntity = new SabNzbSettings
-                {
-                    Port = model.Port,
-                    Enabled = model.Enabled,
-                    IpAddress = model.IpAddress,
-                    Id = model.Id,
-                    ApiKey = model.ApiKey,
-                    ShowOnDashboard = model.ShowOnDashboard
-                };
-
+                var newEntity = new SabNzbSettings();
+                newEntity.InjectFrom(model);
+                
                 var insertResult = Repo.Insert(newEntity);
                 return insertResult != long.MinValue;
             }
