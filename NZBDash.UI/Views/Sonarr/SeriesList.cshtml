@@ -9,11 +9,11 @@
         @foreach (var series in Model)
         {
             <div class="col-md-12 row grid-row">
-                <div class="col-md-2">@series.CleanTitle</div>
+            <div class="col-md-2"><img src="@(series.ImageUrls != null ? series.ImageUrls.FirstOrDefault() : string.Empty)"/></div>
+                <div class="col-md-2">@series.Title</div>
                 <div class="col-md-2">@series.Status</div>
-                <div class="col-md-4">@series.Overview</div>
+                <div class="col-md-4">@(series.Overview ?? string.Empty)</div>
                 <div class="col-md-2">@series.EpisodeCount</div>
-                <div class="col-md-2">@series.FirstAired</div>
             </div>
         }
     </div>

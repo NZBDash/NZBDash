@@ -50,7 +50,8 @@ namespace NZBDash.Common.Mapping
                 if (sourceProperty != null)
                 {
                     var objVal = GetPropValue(source, sourceProperty.Name);
-
+                    if(objVal == null ) continue;
+                    
                     var fullProperty = target.GetType().GetProperty(targetProps[i].Name);
                     var newType = fullProperty.PropertyType;
                     object castType = null;

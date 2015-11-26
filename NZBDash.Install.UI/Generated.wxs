@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="RootDirectory" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="SourceComponentGroup">
+            <Component Id="cmp7228EE5E1B6F3C0B1E3F6DA96429A4BC" Directory="RootDirectory" Guid="*">
+                <File Id="fil172D3E72E6AA9C1942457F4ADE9D6CE4" KeyPath="yes" Source="$(var.SourcePath)\Antlr3.Runtime.dll" />
+            </Component>
+            <Component Id="cmp0D1ACCA62D250E79EEBA32F5AA80D842" Directory="RootDirectory" Guid="*">
+                <File Id="fil916239832EE2DCCFAEB1CED132C92456" KeyPath="yes" Source="$(var.SourcePath)\Antlr3.Runtime.pdb" />
+            </Component>
+            <Component Id="cmp0939E2880CE680A436AA3DFB6D6B473A" Directory="RootDirectory" Guid="*">
+                <File Id="filB6A9D9FF300FD5588D75D6A7B7B6FC55" KeyPath="yes" Source="$(var.SourcePath)\Dapper.Contrib.dll" />
+            </Component>
+            <Component Id="cmp58346CDFC910AAF5B65604FBEDEDC308" Directory="RootDirectory" Guid="*">
+                <File Id="fil3E57F255F7BEE0D8A0D78B7D5C1BF428" KeyPath="yes" Source="$(var.SourcePath)\Dapper.Contrib.pdb" />
+            </Component>
+            <Component Id="cmpC237C576174F6574EFDC7258C25A4847" Directory="RootDirectory" Guid="*">
+                <File Id="fil8E098E1DD29BBC47907DB07302B25B39" KeyPath="yes" Source="$(var.SourcePath)\Dapper.Contrib.xml" />
+            </Component>
+            <Component Id="cmp45D294AD44E231D10EF8FE05A617ED36" Directory="RootDirectory" Guid="*">
+                <File Id="fil6F677E0D3152390D42254C3FB9ECFB6B" KeyPath="yes" Source="$(var.SourcePath)\Dapper.dll" />
+            </Component>
+            <Component Id="cmpF133B85348820FECC164FE477920F69F" Directory="RootDirectory" Guid="*">
+                <File Id="fil879233453CB12B0058B9D983D7B0D5F1" KeyPath="yes" Source="$(var.SourcePath)\Dapper.pdb" />
+            </Component>
+            <Component Id="cmp598E655C1B6CD4CD1DDDC6D63E3EF4A8" Directory="RootDirectory" Guid="*">
+                <File Id="filAA5C150442BC19DE24DB01A3EDB97642" KeyPath="yes" Source="$(var.SourcePath)\Dapper.xml" />
+            </Component>
+            <Component Id="cmp2839C2A55A265BB641FE319E7A907A61" Directory="RootDirectory" Guid="*">
+                <File Id="fil08E3F812518EB3F0C56C65914341B15A" KeyPath="yes" Source="$(var.SourcePath)\EntityFramework.dll" />
+            </Component>
+            <Component Id="cmpDAC12CC5412AA7D84763635FF11D250B" Directory="RootDirectory" Guid="*">
+                <File Id="fil6A576385A78C9B0CCFC5EF76D139BFDE" KeyPath="yes" Source="$(var.SourcePath)\EntityFramework.SqlServer.dll" />
+            </Component>
+            <Component Id="cmp88708F712EECB69E4392520FCB78334D" Directory="RootDirectory" Guid="*">
+                <File Id="fil2C756A757772AE16C06BB5CB8E995513" KeyPath="yes" Source="$(var.SourcePath)\EntityFramework.SqlServer.xml" />
+            </Component>
+            <Component Id="cmpDA6430BA4EAA7A79022499EBA2BE3247" Directory="RootDirectory" Guid="*">
+                <File Id="fil6667EA9DBC692DB7CC0CA268AE56F9C6" KeyPath="yes" Source="$(var.SourcePath)\EntityFramework.xml" />
+            </Component>
+            <Component Id="cmpD37AB302E1623DD88E07F711EF4D783D" Directory="RootDirectory" Guid="*">
+                <File Id="fil8BF3656B41BF06CA5D92E97200D9C6D7" KeyPath="yes" Source="$(var.SourcePath)\GridMvc.dll" />
+            </Component>
+            <Component Id="cmpF6FEA3FBB420A24CF2736676739D3338" Directory="RootDirectory" Guid="*">
+                <Class Id="{86151455-DD77-3273-A25B-D2434B5BE822}" Context="InprocServer32" Description="HtmlAgilityPack.PermissionHelper" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="HtmlAgilityPack.PermissionHelper" Description="HtmlAgilityPack.PermissionHelper" />
+                </Class>
+                <Class Id="{9E39925C-37EB-389C-909F-EE4C454C7F1B}" Context="InprocServer32" Description="HtmlAgilityPack.MixedCodeDocument" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="HtmlAgilityPack.MixedCodeDocument" Description="HtmlAgilityPack.MixedCodeDocument" />
+                </Class>
+                <Class Id="{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}" Context="InprocServer32" Description="HtmlAgilityPack.Crc32" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="HtmlAgilityPack.Crc32" Description="HtmlAgilityPack.Crc32" />
+                </Class>
+                <Class Id="{EB60C5C7-0277-3544-987E-3009B0A3D77D}" Context="InprocServer32" Description="HtmlAgilityPack.HtmlDocument" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="HtmlAgilityPack.HtmlDocument" Description="HtmlAgilityPack.HtmlDocument" />
+                </Class>
+                <Class Id="{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}" Context="InprocServer32" Description="HtmlAgilityPack.HtmlWeb" ThreadingModel="both" ForeignServer="mscoree.dll">
+                    <ProgId Id="HtmlAgilityPack.HtmlWeb" Description="HtmlAgilityPack.HtmlWeb" />
+                </Class>
+                <File Id="fil8488DBECF10201A605123CBAE9243625" KeyPath="yes" Source="$(var.SourcePath)\HtmlAgilityPack.dll" />
+                <ProgId Id="Record" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32\1.4.9.0" Name="Class" Value="HtmlAgilityPack.PermissionHelper" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32" Name="Class" Value="HtmlAgilityPack.PermissionHelper" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{86151455-DD77-3273-A25B-D2434B5BE822}\InprocServer32" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32\1.4.9.0" Name="Class" Value="HtmlAgilityPack.MixedCodeDocument" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32" Name="Class" Value="HtmlAgilityPack.MixedCodeDocument" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{9E39925C-37EB-389C-909F-EE4C454C7F1B}\InprocServer32" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32\1.4.9.0" Name="Class" Value="HtmlAgilityPack.Crc32" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32" Name="Class" Value="HtmlAgilityPack.Crc32" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EAD1324F-B5E0-30D7-AD50-EE28509C5EB6}\InprocServer32" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32\1.4.9.0" Name="Class" Value="HtmlAgilityPack.HtmlDocument" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32" Name="Class" Value="HtmlAgilityPack.HtmlDocument" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{EB60C5C7-0277-3544-987E-3009B0A3D77D}\InprocServer32" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\Implemented Categories\{62C8FE65-4EBB-45e7-B440-6E39B2CDBF29}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32\1.4.9.0" Name="Class" Value="HtmlAgilityPack.HtmlWeb" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32" Name="Class" Value="HtmlAgilityPack.HtmlWeb" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="CLSID\{FD50C6AE-EBC4-3E33-B76D-1E166ABFC82E}\InprocServer32" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{7E81ABBB-1FBF-3F7B-832B-27777187A8B3}\1.4.9.0" Name="Class" Value="HtmlAgilityPack.AttributeValueQuote" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{7E81ABBB-1FBF-3F7B-832B-27777187A8B3}\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{7E81ABBB-1FBF-3F7B-832B-27777187A8B3}\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{7E81ABBB-1FBF-3F7B-832B-27777187A8B3}\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{832BE5D2-5E06-388C-B55F-B204F60E1551}\1.4.9.0" Name="Class" Value="HtmlAgilityPack.HtmlElementFlag" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{832BE5D2-5E06-388C-B55F-B204F60E1551}\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{832BE5D2-5E06-388C-B55F-B204F60E1551}\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{832BE5D2-5E06-388C-B55F-B204F60E1551}\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{843ECBFC-CA96-39F4-90C6-B34546D0C78C}\1.4.9.0" Name="Class" Value="HtmlAgilityPack.HtmlNodeType" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{843ECBFC-CA96-39F4-90C6-B34546D0C78C}\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{843ECBFC-CA96-39F4-90C6-B34546D0C78C}\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{843ECBFC-CA96-39F4-90C6-B34546D0C78C}\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{9B4FCD9D-5976-34AB-8B45-C6ABCC424C58}\1.4.9.0" Name="Class" Value="HtmlAgilityPack.HtmlParseErrorCode" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{9B4FCD9D-5976-34AB-8B45-C6ABCC424C58}\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{9B4FCD9D-5976-34AB-8B45-C6ABCC424C58}\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{9B4FCD9D-5976-34AB-8B45-C6ABCC424C58}\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{C73A5941-744E-3510-BCE9-EFD205633F5D}\1.4.9.0" Name="Class" Value="HtmlAgilityPack.MixedCodeDocumentFragmentType" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{C73A5941-744E-3510-BCE9-EFD205633F5D}\1.4.9.0" Name="Assembly" Value="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{C73A5941-744E-3510-BCE9-EFD205633F5D}\1.4.9.0" Name="RuntimeVersion" Value="v4.0.30319" Type="string" Action="write" />
+                <RegistryValue Root="HKCR" Key="Record\{C73A5941-744E-3510-BCE9-EFD205633F5D}\1.4.9.0" Name="CodeBase" Value="file:///[#fil8488DBECF10201A605123CBAE9243625]" Type="string" Action="write" />
+            </Component>
+            <Component Id="cmp8ACC0D881845937B7C5EF06B4A79723B" Directory="RootDirectory" Guid="*">
+                <File Id="filD8D94DBEF5A83B78CB8564E91B158917" KeyPath="yes" Source="$(var.SourcePath)\HtmlAgilityPack.pdb" />
+            </Component>
+            <Component Id="cmp2029C63E28A0E89B37A92EE15AAD62D3" Directory="RootDirectory" Guid="*">
+                <File Id="filF1795042A7D6CC02B2CFF710B9818208" KeyPath="yes" Source="$(var.SourcePath)\HtmlAgilityPack.xml" />
+            </Component>
+            <Component Id="cmp637D8C05613FFCB8CF4079C0A830E74C" Directory="RootDirectory" Guid="*">
+                <File Id="filF652FCE00BD6C25C4BAE48D56E75E6C1" KeyPath="yes" Source="$(var.SourcePath)\ISqliteConfiguration.cs" />
+            </Component>
+            <Component Id="cmpE49630E18E126413E758FA598C0D5697" Directory="RootDirectory" Guid="*">
+                <File Id="fil79C065B51D3D5D8C05BDECEB2CDD1696" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.Core.dll" />
+            </Component>
+            <Component Id="cmp56EE10C642BA1057122EDF330056829F" Directory="RootDirectory" Guid="*">
+                <File Id="fil44B1C7DBE090F1999C0E090FEC63A42C" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.Core.xml" />
+            </Component>
+            <Component Id="cmpFE608F2A1AD0F06642D7506CE79E44CA" Directory="RootDirectory" Guid="*">
+                <File Id="fil4FE81AE81437901C9359301A0CC8CE4F" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.EntityFramework.dll" />
+            </Component>
+            <Component Id="cmp67E6A212D20DEE1EBA4D51CC5B27A327" Directory="RootDirectory" Guid="*">
+                <File Id="fil22A24A84EFADC7BB5629854223B79332" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.EntityFramework.xml" />
+            </Component>
+            <Component Id="cmp884669CA44C37A96ACFA7F3C1CF4400B" Directory="RootDirectory" Guid="*">
+                <File Id="fil54FCB7375B482EE48DF7A67819510571" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.Owin.dll" />
+            </Component>
+            <Component Id="cmpDDD22D3FF0D5D600CC0BE6CC1C43FDBA" Directory="RootDirectory" Guid="*">
+                <File Id="fil6BEDB38591BB1A29BBEF949A0C4A0FBF" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.Identity.Owin.xml" />
+            </Component>
+            <Component Id="cmp2157A825F702077677B9AFAE59C5AA1F" Directory="RootDirectory" Guid="*">
+                <File Id="filFC2A7762062BC6646E9B8F52323EFAA3" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.SignalR.Core.dll" />
+            </Component>
+            <Component Id="cmp18E8610B5686A2BE2764F39C6D71385A" Directory="RootDirectory" Guid="*">
+                <File Id="fil265DFBB0F3FB3C02598FC8A4E4C442A2" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.SignalR.Core.xml" />
+            </Component>
+            <Component Id="cmpF20E7C4156717AE3CE70A5343B3F9FF8" Directory="RootDirectory" Guid="*">
+                <File Id="filF9AEAAAC6446B904886DB44F25C2B4FB" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.SignalR.SystemWeb.dll" />
+            </Component>
+            <Component Id="cmpD01E8C96246FD27AAB8BB26A8DD71581" Directory="RootDirectory" Guid="*">
+                <File Id="fil2E90F380D0ADE8B117B09C69FE816506" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.AspNet.SignalR.SystemWeb.xml" />
+            </Component>
+            <Component Id="cmp427B06033B5FC3CB340197D0E3639C73" Directory="RootDirectory" Guid="*">
+                <File Id="fil7BBC637CAEE62BE0CACE278E42EAB8A9" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.dll" />
+            </Component>
+            <Component Id="cmpE8E958A5E6E7CEB03D7B698AAB878CD3" Directory="RootDirectory" Guid="*">
+                <File Id="fil8E1AF1E42E1EA964E33242CDC3518981" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Host.SystemWeb.dll" />
+            </Component>
+            <Component Id="cmp0B6D1EA024C5C1A1D31AE172F31118C0" Directory="RootDirectory" Guid="*">
+                <File Id="filA7690D883D0654010D91C3B45823F9E4" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Host.SystemWeb.xml" />
+            </Component>
+            <Component Id="cmp56F8086BE985F0E1FD795AD328FBB0E4" Directory="RootDirectory" Guid="*">
+                <File Id="filA6898515F3BAFC5A1A5BF9791CE393DF" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Cookies.dll" />
+            </Component>
+            <Component Id="cmp84804887A5ADE5B44A93EB004DA8F66B" Directory="RootDirectory" Guid="*">
+                <File Id="fil4E470157116A4C56C2F258B8B6B479B5" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Cookies.xml" />
+            </Component>
+            <Component Id="cmpEFC13BF4BED0190B8721FB2B4854EEF1" Directory="RootDirectory" Guid="*">
+                <File Id="filA012A9E85469F64ADF6B89FC52F06E01" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.dll" />
+            </Component>
+            <Component Id="cmp5592CD2BD1FF0D230E1783EC9D0D710F" Directory="RootDirectory" Guid="*">
+                <File Id="fil88A68FADFFCE5B49DDCE67B5452AA1E7" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Facebook.dll" />
+            </Component>
+            <Component Id="cmp4DDF03EC0F119486039BB20A3B9E17D9" Directory="RootDirectory" Guid="*">
+                <File Id="filA7DAF3000A4C9551632C6FA0407B8C60" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Facebook.xml" />
+            </Component>
+            <Component Id="cmp0DA5E231B6EC9A580A3CBF3157053449" Directory="RootDirectory" Guid="*">
+                <File Id="filEBB18E1ED35470E54F5F68EFBF369991" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Google.dll" />
+            </Component>
+            <Component Id="cmp8A2A562B5B4407111A6C324F05C9A990" Directory="RootDirectory" Guid="*">
+                <File Id="fil80945C23A5AD13CAA50EC0C5CABCF92A" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Google.xml" />
+            </Component>
+            <Component Id="cmpB3BAC7F6B0BF8CCC0B27CF530EACBF1C" Directory="RootDirectory" Guid="*">
+                <File Id="fil9F01BBB68FFC3B3F0E5572822E5E4BA1" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.MicrosoftAccount.dll" />
+            </Component>
+            <Component Id="cmpFEA9903446E7BC904D955E2D4E7C272A" Directory="RootDirectory" Guid="*">
+                <File Id="fil3CF560453C340C6E5FD264450931766F" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.MicrosoftAccount.xml" />
+            </Component>
+            <Component Id="cmpABC4AF25C20DADC7EBFCD945926C29D0" Directory="RootDirectory" Guid="*">
+                <File Id="filA5DEE151EE0EA066FA73BC4BE3361E96" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.OAuth.dll" />
+            </Component>
+            <Component Id="cmpF2F49EB4E232B9F1B9937DC9E371ACF0" Directory="RootDirectory" Guid="*">
+                <File Id="fil0BCFD18A65C2312418BD868CDFFAE635" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.OAuth.xml" />
+            </Component>
+            <Component Id="cmpFD3C41E37D66FE8DC1B9E8A03F581D10" Directory="RootDirectory" Guid="*">
+                <File Id="filC7196C56025C4DACB5403B0D7EB5D478" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Twitter.dll" />
+            </Component>
+            <Component Id="cmpE72C78B39B6E9CFB5BCFCD501677126F" Directory="RootDirectory" Guid="*">
+                <File Id="fil09DB44E05FCF367B5B1FB42982C7C78E" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.Twitter.xml" />
+            </Component>
+            <Component Id="cmp146AB3F0CC2053B391F997E5F3539C5C" Directory="RootDirectory" Guid="*">
+                <File Id="fil5D15F17698B4695881772A79FEAA7850" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.Security.xml" />
+            </Component>
+            <Component Id="cmp2E85623BF6BEC56A0FB81D9696D3A505" Directory="RootDirectory" Guid="*">
+                <File Id="fil08E784E3588E444E70C85DFBEFA0315C" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Owin.xml" />
+            </Component>
+            <Component Id="cmp6382F6ADC09128B909713A743F168713" Directory="RootDirectory" Guid="*">
+                <File Id="filFB944D4B8C077A34B714EB2290914171" KeyPath="yes" Source="$(var.SourcePath)\Microsoft.Web.Infrastructure.dll" />
+            </Component>
+            <Component Id="cmpC9FC9E123FF811292D61A332A945A2D6" Directory="RootDirectory" Guid="*">
+                <File Id="fil8D18A6C0FD7B9827C852C4F0F120D1F1" KeyPath="yes" Source="$(var.SourcePath)\mono.data.sqlite.dll" />
+            </Component>
+            <Component Id="cmp6F0300C5B63980FD2F1566987FE7F216" Directory="RootDirectory" Guid="*">
+                <File Id="filCCECE5841B510C7D3FCB3A6E246AE174" KeyPath="yes" Source="$(var.SourcePath)\Newtonsoft.Json.dll" />
+            </Component>
+            <Component Id="cmp20174E0C694A4A5926FFFA07E361BA39" Directory="RootDirectory" Guid="*">
+                <File Id="filEABCE0C3E6A9FBB38D59A1965E694418" KeyPath="yes" Source="$(var.SourcePath)\Newtonsoft.Json.xml" />
+            </Component>
+            <Component Id="cmp3FF32C57A614BDBE4302336E28490AE9" Directory="RootDirectory" Guid="*">
+                <File Id="filE7342DD8DDD73D4E164000D529F2EB3F" KeyPath="yes" Source="$(var.SourcePath)\Ninject.dll" />
+            </Component>
+            <Component Id="cmp41DF3C9E9D76EECD57BF16BBF9A0FB34" Directory="RootDirectory" Guid="*">
+                <File Id="filC546651DCAFF5A0D973A62B9984336E0" KeyPath="yes" Source="$(var.SourcePath)\Ninject.Web.Common.dll" />
+            </Component>
+            <Component Id="cmpDB7DC17947225EDB68141F84D4D3123A" Directory="RootDirectory" Guid="*">
+                <File Id="fil9AFB3278647247A2823431691D9544AF" KeyPath="yes" Source="$(var.SourcePath)\Ninject.Web.Common.xml" />
+            </Component>
+            <Component Id="cmp3B567360B70B300AA6502F58C32F82AE" Directory="RootDirectory" Guid="*">
+                <File Id="filC18754569EB28FA6657ABF648159D6F8" KeyPath="yes" Source="$(var.SourcePath)\Ninject.Web.Mvc.dll" />
+            </Component>
+            <Component Id="cmp54615B7456D7527248F86FDAEC45BA82" Directory="RootDirectory" Guid="*">
+                <File Id="fil451A3966F3D8D75BD6CF2C9C47931966" KeyPath="yes" Source="$(var.SourcePath)\Ninject.Web.Mvc.xml" />
+            </Component>
+            <Component Id="cmp805F2488796253DAC2481ADEA436E118" Directory="RootDirectory" Guid="*">
+                <File Id="filF13A3F77FEBEC8CFF82CB3FCE152BABF" KeyPath="yes" Source="$(var.SourcePath)\Ninject.xml" />
+            </Component>
+            <Component Id="cmp87FCAF7636A97B19C20FA4EBB60FBC8E" Directory="RootDirectory" Guid="*">
+                <File Id="fil34B8B430D5A709B12A34C549AF49043D" KeyPath="yes" Source="$(var.SourcePath)\NLog.dll" />
+            </Component>
+            <Component Id="cmp134B5DF329984026AED9BE003B3D2196" Directory="RootDirectory" Guid="*">
+                <File Id="fil549D7D8047AA10DDA2845A7F9E6FDA17" KeyPath="yes" Source="$(var.SourcePath)\NLog.xml" />
+            </Component>
+            <Component Id="cmpC7152A90706CE703BCBC1403F98F5CD8" Directory="RootDirectory" Guid="*">
+                <File Id="fil66894231533262A669355624F9A711BD" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.dll" />
+            </Component>
+            <Component Id="cmp2DC0063A0B476A2569F423FD378B1E34" Directory="RootDirectory" Guid="*">
+                <File Id="fil2AB16513694F0DC1C85FAA2D7A0B4799" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.Interfaces.dll" />
+            </Component>
+            <Component Id="cmpB73579A0D2FFA4F4E767628FEB6F67D7" Directory="RootDirectory" Guid="*">
+                <File Id="filEDBD44CF3698E05C7FE44394A282A791" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.Interfaces.pdb" />
+            </Component>
+            <Component Id="cmp5C8175FF2030E36F214DF11E81FFFEB7" Directory="RootDirectory" Guid="*">
+                <File Id="fil3C73411B97D74DB4C19769722A57CA1A" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.Models.dll" />
+            </Component>
+            <Component Id="cmp32662E122165E8F324CF65CBB6871C4A" Directory="RootDirectory" Guid="*">
+                <File Id="fil42022518C18CA04DE354C84903382ACC" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.Models.pdb" />
+            </Component>
+            <Component Id="cmpBCE5F23A8698BFD48925DF7F6D3DE2B5" Directory="RootDirectory" Guid="*">
+                <File Id="fil78D4D7838EF6AD49923AF7EBD073F487" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Common.pdb" />
+            </Component>
+            <Component Id="cmp8FF2C8DA4890D8031D359A7FC79628B4" Directory="RootDirectory" Guid="*">
+                <File Id="filAAAEC6ECB0D4FBCA72A1EA247C56AF8C" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Core.dll" />
+            </Component>
+            <Component Id="cmpE701024B10E5F6DB5797911ABC55B088" Directory="RootDirectory" Guid="*">
+                <File Id="filCD6EC6DFD7C92F9F148D6064F5348768" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Core.Interfaces.dll" />
+            </Component>
+            <Component Id="cmpE44CACACC7A1D30424EC2433F9D36563" Directory="RootDirectory" Guid="*">
+                <File Id="fil8E4449DDFBA1A89632A6EE95500413AD" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Core.Interfaces.pdb" />
+            </Component>
+            <Component Id="cmp97CF9A983A8E45D65576E28CB2942D5B" Directory="RootDirectory" Guid="*">
+                <File Id="fil376C6850471E321F8F27247B8B3FBC62" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Core.pdb" />
+            </Component>
+            <Component Id="cmp2BC5149913C732E2ADBAE9ED0994298C" Directory="RootDirectory" Guid="*">
+                <File Id="fil63AD6A4E764B67949BAA56BEDE555CAA" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DataAccessLayer.dll" />
+            </Component>
+            <Component Id="cmp678EE901AEC48BE7BBCCE4C80FF2FCDA" Directory="RootDirectory" Guid="*">
+                <File Id="fil8473E1A5F493E31F4D3FCD87620BA39C" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DataAccessLayer.Interfaces.dll" />
+            </Component>
+            <Component Id="cmpDCB7782B1EC94CE6A95856F3C743E229" Directory="RootDirectory" Guid="*">
+                <File Id="fil1A131895CBA8B1A82317EADF3B834620" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DataAccessLayer.Interfaces.pdb" />
+            </Component>
+            <Component Id="cmp2136511CF187076DAEA91FC93AD46CAB" Directory="RootDirectory" Guid="*">
+                <File Id="filEA5B632FF74C35E365B1CA2A9BFBF10B" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DataAccessLayer.pdb" />
+            </Component>
+            <Component Id="cmpA719D4C68893A759A055272A4E5327BB" Directory="RootDirectory" Guid="*">
+                <File Id="fil9049E0A9F0F421FC3C283418AFFD2487" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DependencyResolver.dll" />
+            </Component>
+            <Component Id="cmp2492637EDCC11A24DFE47506C4C2A45C" Directory="RootDirectory" Guid="*">
+                <File Id="filBB9FC93196B57D756D4682826EE99CDA" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DependencyResolver.Modules.dll" />
+            </Component>
+            <Component Id="cmp7EE3DEE4766A0F49DE263DF594572DAA" Directory="RootDirectory" Guid="*">
+                <File Id="filD7617C692C38AC687F5B69119CAF49D1" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DependencyResolver.Modules.pdb" />
+            </Component>
+            <Component Id="cmp628977EC4F02FE850769CD502A09F019" Directory="RootDirectory" Guid="*">
+                <File Id="fil6EDCF71F9540431D980806AFD0C79B18" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.DependencyResolver.pdb" />
+            </Component>
+            <Component Id="cmpA5D649BC2F6DA28770545CDEF805B536" Directory="RootDirectory" Guid="*">
+                <File Id="filC3F8F491F87373736D2C24F42B47DA43" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Resources.dll" />
+            </Component>
+            <Component Id="cmpE3AE2D9C059E372C58A6888A5FDD52F0" Directory="RootDirectory" Guid="*">
+                <File Id="filDE48B3A47E7F76AF283312145944018A" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.Resources.pdb" />
+            </Component>
+            <Component Id="cmpBB27490AEB34988F120BC992AE7E406F" Directory="RootDirectory" Guid="*">
+                <File Id="fil9D83FFC3DC7BC262C6EF9237B146D533" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.ThirdParty.Api.dll" />
+            </Component>
+            <Component Id="cmpECBE1900B868E7F047C9121C94A25E15" Directory="RootDirectory" Guid="*">
+                <File Id="fil3901820FE5485CE7A757B5FC7D74E4B3" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.ThirdParty.Api.pdb" />
+            </Component>
+            <Component Id="cmp1E31F7A466EE97235D156E0FD5F038A9" Directory="RootDirectory" Guid="*">
+                <File Id="fil6F74B25F0A38780828E4A6A6A94495BE" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.UI.dll" />
+            </Component>
+            <Component Id="cmp9189440C08A1A86BD2D36009EBBE670C" Directory="RootDirectory" Guid="*">
+                <File Id="fil3D8BDA29974EDEFBD131FAA2312E183F" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.UI.dll.config" />
+            </Component>
+            <Component Id="cmp930097F7EBE3CA569E0C4742489272C4" Directory="RootDirectory" Guid="*">
+                <File Id="fil5B439EE51D23FF201D0086AD33709DE4" KeyPath="yes" Source="$(var.SourcePath)\NZBDash.UI.pdb" />
+            </Component>
+            <Component Id="cmp4CD819AB0947275C11F56B7C85092E6B" Directory="RootDirectory" Guid="*">
+                <File Id="fil42CA6C4C6B4FC2E902411EBE8F0965F9" KeyPath="yes" Source="$(var.SourcePath)\Omu.ValueInjecter.dll" />
+            </Component>
+            <Component Id="cmp2068A8F3E677B3512D95C88C2E2757DD" Directory="RootDirectory" Guid="*">
+                <File Id="fil18F1FB54F138B23E35B8FDF81D36D602" KeyPath="yes" Source="$(var.SourcePath)\Omu.ValueInjecter.pdb" />
+            </Component>
+            <Component Id="cmp0208AB96F8D67F15230BDAEAF01D233B" Directory="RootDirectory" Guid="*">
+                <File Id="filFE342CD809204A80F08C385A85273DD1" KeyPath="yes" Source="$(var.SourcePath)\Omu.ValueInjecter.xml" />
+            </Component>
+            <Component Id="cmp0E9E1D645ACD49383B6512FF2648234D" Directory="RootDirectory" Guid="*">
+                <File Id="fil2FEC436460373A9BD575C39620C1A1DB" KeyPath="yes" Source="$(var.SourcePath)\Owin.dll" />
+            </Component>
+            <Component Id="cmpB76E144FC87224D2FDFEAE065DD404F2" Directory="RootDirectory" Guid="*">
+                <File Id="fil8E18EAFAD4659B3E35B15F582EF86760" KeyPath="yes" Source="$(var.SourcePath)\Ploeh.AutoFixture.dll" />
+            </Component>
+            <Component Id="cmpF8602441AA985C75794226256AB05DC1" Directory="RootDirectory" Guid="*">
+                <File Id="fil91817F7EDCC217ED1F82FE3C1EF565D4" KeyPath="yes" Source="$(var.SourcePath)\Ploeh.AutoFixture.xml" />
+            </Component>
+            <Component Id="cmp74214AFCB702709F79E79DB5F308A2E1" Directory="RootDirectory" Guid="*">
+                <File Id="fil9F6674079F401E4320C2069FE430D490" KeyPath="yes" Source="$(var.SourcePath)\SQLite.Interop.dll" />
+            </Component>
+            <Component Id="cmp557620AD08FAB73EE0FC59E0C828FA1A" Directory="RootDirectory" Guid="*">
+                <File Id="fil73C5D90CD282DF55B60D1C8FBB0D39F9" KeyPath="yes" Source="$(var.SourcePath)\System.Data.SQLite.dll" />
+            </Component>
+            <Component Id="cmp92BC2C23ABB73E43B02F36D1E43E5F6C" Directory="RootDirectory" Guid="*">
+                <File Id="fil11C10EB8869F0631C79B853FF52E18CC" KeyPath="yes" Source="$(var.SourcePath)\System.Data.SQLite.xml" />
+            </Component>
+            <Component Id="cmp7D99CF11EBA5F07BE53149529F510D6A" Directory="RootDirectory" Guid="*">
+                <File Id="fil9601BCC3DAB8A3C6FA26E62AD80E5A39" KeyPath="yes" Source="$(var.SourcePath)\System.Net.Http.Formatting.dll" />
+            </Component>
+            <Component Id="cmp9F93425C6124803FC44C7AD198DD7933" Directory="RootDirectory" Guid="*">
+                <File Id="filB07D365F92772A1CA272E6EFADE99A35" KeyPath="yes" Source="$(var.SourcePath)\System.Net.Http.Formatting.xml" />
+            </Component>
+            <Component Id="cmpBBCAB98F7A1A68A6B1BAE9870B603077" Directory="RootDirectory" Guid="*">
+                <File Id="fil3CAB55B2D61A060B0115DF10DB29B66F" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Helpers.dll" />
+            </Component>
+            <Component Id="cmpDFD5383A96429053C098B8DF115466B8" Directory="RootDirectory" Guid="*">
+                <File Id="fil05143F51236B5E8A6750AA3035659D11" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Helpers.xml" />
+            </Component>
+            <Component Id="cmpB88B3DEEC9B25BDCA7634F2468F2C32A" Directory="RootDirectory" Guid="*">
+                <File Id="filB4B250586F2926C04C1E77EB7D316A0A" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Http.dll" />
+            </Component>
+            <Component Id="cmp07EA729DDB5C3B09768F3267784E44FE" Directory="RootDirectory" Guid="*">
+                <File Id="fil6C752ADE4DA3A62EE0E5394C6866D1E5" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Http.xml" />
+            </Component>
+            <Component Id="cmpE7AEA028D0EE6BA92639DCCC73BCB69E" Directory="RootDirectory" Guid="*">
+                <File Id="filD351B2185ED983396D2C7886F438BB54" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Mvc.dll" />
+            </Component>
+            <Component Id="cmpF472247218CCE17F90F289FFB5615839" Directory="RootDirectory" Guid="*">
+                <File Id="fil2D5D8AFE7253C96C800618368D83E375" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Mvc.xml" />
+            </Component>
+            <Component Id="cmpC5784A3A6976E28989E8E8C2A544CC00" Directory="RootDirectory" Guid="*">
+                <File Id="fil49733B0BF6AA68BFC9A8252720B5B723" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Optimization.dll" />
+            </Component>
+            <Component Id="cmpD78F0000F7C4CCF0C86310410B6D6B8A" Directory="RootDirectory" Guid="*">
+                <File Id="filF9F9D62020CF0D469EC06EBD2382B765" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Optimization.xml" />
+            </Component>
+            <Component Id="cmp07EEF061957F912107294516D6D6127A" Directory="RootDirectory" Guid="*">
+                <File Id="fil3B382B91D6C601B0DA315C537DE9146C" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Razor.dll" />
+            </Component>
+            <Component Id="cmp1E792A930F580BD24DC7790959FC2CCB" Directory="RootDirectory" Guid="*">
+                <File Id="fil77A20C054B6A46AC41F205304D7AF018" KeyPath="yes" Source="$(var.SourcePath)\System.Web.Razor.xml" />
+            </Component>
+            <Component Id="cmpFC8646DFB9D3DDA51C9EE503507097F9" Directory="RootDirectory" Guid="*">
+                <File Id="fil08687682FBB1B8380096C67AE4AD4E90" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.Deployment.dll" />
+            </Component>
+            <Component Id="cmp95AC812C673BC2CEF10519F363B5B276" Directory="RootDirectory" Guid="*">
+                <File Id="fil86CB8CF3937D3D615E1077BC9A2DEFA2" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.Deployment.xml" />
+            </Component>
+            <Component Id="cmp5230552EDD1C86C85B8ADC04F2353009" Directory="RootDirectory" Guid="*">
+                <File Id="fil0FA6923198F3D23425B70A6548FF927E" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.dll" />
+            </Component>
+            <Component Id="cmpBC87C6561AAD197AF09B9F81300E8DF3" Directory="RootDirectory" Guid="*">
+                <File Id="fil1CF6FB182555F1D2A66B7CFAEB365A73" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.Razor.dll" />
+            </Component>
+            <Component Id="cmp91713817F58D15B6C263F078A8E04FC7" Directory="RootDirectory" Guid="*">
+                <File Id="fil4902F7BA7DF42013394738EA5F9F4483" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.Razor.xml" />
+            </Component>
+            <Component Id="cmpCA33EDCCA16A8B066EC81AD0015B4AAC" Directory="RootDirectory" Guid="*">
+                <File Id="fil300136120D0F6D3A7FA14FCE87B45BC5" KeyPath="yes" Source="$(var.SourcePath)\System.Web.WebPages.xml" />
+            </Component>
+            <Component Id="cmp9687402FC7709B0CEA3B89307A64ED95" Directory="RootDirectory" Guid="*">
+                <File Id="fil352EDB0C3BB82648B8419C96B0536D77" KeyPath="yes" Source="$(var.SourcePath)\WebActivatorEx.dll" />
+            </Component>
+            <Component Id="cmp50CA54FC4C288280BDABD9C5F2B2F21D" Directory="RootDirectory" Guid="*">
+                <File Id="fil3655DB9CFF324E71DF89F535306AF53C" KeyPath="yes" Source="$(var.SourcePath)\WebGrease.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
