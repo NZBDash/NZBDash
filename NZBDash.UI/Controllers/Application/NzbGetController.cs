@@ -27,6 +27,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common;
@@ -163,7 +164,7 @@ namespace NZBDash.UI.Controllers.Application
 				var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
 				var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
 
-				var model = new List<NzbGetHistoryViewModel>();
+				var items = new List<NzbGetHistoryViewModel>();
 				foreach (var result in history.result)
 				{
 					var singleItem = new NzbGetHistoryViewModel();
@@ -174,9 +175,11 @@ namespace NZBDash.UI.Controllers.Application
 						long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
 						mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
 					}
-					model.Add(mappedResult);
+					items.Add(mappedResult);
 				}
 
+                // Order by Id desc and get the last 30 downloads
+			    var model = items.OrderByDescending(x => x.Id).Take(30);
 				return PartialView("Partial/History", model);
 			}
 			catch (Exception e)
