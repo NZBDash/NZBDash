@@ -201,9 +201,17 @@
       <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
       <Name>NZBDash.DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.UI.Models\NZBDash.UI.Models.csproj">
+      <Project>{C61C3778-A4D2-4C61-891C-353248EEB25B}</Project>
+      <Name>NZBDash.UI.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.UI\NZBDash.UI.csproj">
       <Project>{30ed7e20-5c5b-4643-b3a6-7d10be172241}</Project>

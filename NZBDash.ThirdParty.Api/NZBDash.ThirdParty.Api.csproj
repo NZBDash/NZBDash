@@ -114,6 +114,10 @@
       <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
       <Name>NZBDash.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -130,6 +130,10 @@
       <Project>{521cb3c7-f19c-4b92-8a39-4537bec094b5}</Project>
       <Name>NZBDash.Common.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

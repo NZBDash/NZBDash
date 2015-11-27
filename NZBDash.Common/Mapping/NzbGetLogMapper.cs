@@ -28,7 +28,7 @@ using System;
 using System.Reflection;
 
 using NZBDash.Common.Helpers;
-using NZBDash.Common.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api;
 
 using Omu.ValueInjecter.Injections;
 

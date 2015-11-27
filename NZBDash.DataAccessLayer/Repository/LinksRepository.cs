@@ -50,7 +50,7 @@ namespace NZBDash.DataAccessLayer.Repository
         /// </summary>
         public IEnumerable<LinksConfiguration> GetAll()
         {
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
             {
                 db.Open();
                 var result = db.GetAll<LinksConfiguration>();
@@ -60,7 +60,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public LinksConfiguration Get(long id)
         {
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
             {
                 db.Open();
                 var result = db.Get<LinksConfiguration>(id);
@@ -70,7 +70,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public void Delete(LinksConfiguration entity)
         {
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
             {
                 db.Open();
                 db.Delete(entity);
@@ -79,7 +79,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(LinksConfiguration entity)
         {
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
             {
                 db.Open();
                 return db.Update<LinksConfiguration>(entity);
@@ -88,7 +88,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public long Insert(LinksConfiguration entity)
         {
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
             {
                 cnn.Open();
                 return cnn.Insert(entity);

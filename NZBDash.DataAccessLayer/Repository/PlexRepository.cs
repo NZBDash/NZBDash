@@ -46,7 +46,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public IEnumerable<PlexSettings> GetAll()
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.GetAll<PlexSettings>();
@@ -56,7 +56,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public PlexSettings Get(long id)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.Get<PlexSettings>(id);
@@ -66,7 +66,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public void Delete(PlexSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				db.Delete(entity);
@@ -75,7 +75,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(PlexSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 return db.Update<PlexSettings>(entity);
@@ -84,7 +84,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public long Insert(PlexSettings entity)
 		{
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
 			{
 				cnn.Open();
 				return cnn.Insert(entity);

@@ -25,20 +25,25 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Configuration;
+using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Reflection;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
 
-namespace NZBDash.DataAccessLayer
+namespace NZBDash.DataAccessLayer.Configuration
 {
     public class WindowsSqliteConfiguration : ISqliteConfiguration
     {
-        public WindowsSqliteConfiguration(ILogger logger)
+        public WindowsSqliteConfiguration(ILogger logger, DbProviderFactory provider)
         {
             Logger = logger;
+            Factory = provider;
         }
+        private DbProviderFactory Factory { get; set; }
         private ILogger Logger { get; set; }
 
         /// <summary>
@@ -86,9 +91,15 @@ namespace NZBDash.DataAccessLayer
         /// <summary>
         /// Returns the Database connection.
         /// </summary>
-        public virtual SqliteConnectionWrapper DbConnection()
+        public virtual IDbConnection DbConnection()
         {
-            return new SqliteConnectionWrapper("Data Source=" + DbFile());
+            var fact = Factory.CreateConnection();
+            if (fact != null)
+            {
+                fact.ConnectionString = "Data Source=" + DbFile();
+                return fact;
+            }
+            throw new Exception("Factory returned null");
         }
 
         /// <summary>

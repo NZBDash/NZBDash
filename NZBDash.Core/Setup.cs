@@ -26,6 +26,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 
 using NZBDash.Common.Interfaces;
@@ -36,12 +37,14 @@ namespace NZBDash.Core
 {
     public class Setup : ISetup
     {
-        public Setup(ISqliteConfiguration sql, ILogger logger)
+        public Setup(ISqliteConfiguration sql, ILogger logger, DbProviderFactory factory)
         {
             Configuration = sql;
             Logger = logger;
+            Factory = factory;
         }
         private ILogger Logger { get; set; }
+        private DbProviderFactory Factory { get; set; }
         private ISqliteConfiguration Configuration { get; set; }
 
         private List<string> ExpectedTables

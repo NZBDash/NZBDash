@@ -49,7 +49,7 @@ namespace NZBDash.DataAccessLayer.Repository
 		/// </summary>
         public IEnumerable<CouchPotatoSettings> GetAll()
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.GetAll<CouchPotatoSettings>();
@@ -59,7 +59,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public CouchPotatoSettings Get(long id)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.Get<CouchPotatoSettings>(id);
@@ -69,7 +69,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public void Delete(CouchPotatoSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				db.Delete(entity);
@@ -78,7 +78,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(CouchPotatoSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 return db.Update<CouchPotatoSettings>(entity);
@@ -87,7 +87,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public long Insert(CouchPotatoSettings entity)
 		{
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
 			{
 				cnn.Open();
 				return cnn.Insert(entity);

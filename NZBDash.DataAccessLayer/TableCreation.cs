@@ -25,44 +25,40 @@
 //  ***********************************************************************
 #endregion
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 using Dapper;
 using Dapper.Contrib.Extensions;
 
-using NZBDash.DataAccessLayer.Interfaces;
-
 namespace NZBDash.DataAccessLayer
 {
-	public static class TableCreation
-	{
-		/// <summary>
-		/// Creates the links configuration table.
-		/// </summary>
-		/// <param name="connection">The connection.</param>
-		public static void CreateLinksConfigurationTable(SqliteConnectionWrapper connection)
-		{
-			using (var con = connection.GetConnection())
-			{
-				con.Open();
-				con.Execute(
-					@"create table LinksConfigurations
+    public static class TableCreation
+    {
+        /// <summary>
+        /// Creates the links configuration table.
+        /// </summary>
+        /// <param name="connection">The connection.</param>
+        public static void CreateLinksConfigurationTable(IDbConnection connection)
+        {
+
+            connection.Open();
+            connection.Execute(
+                @"create table LinksConfigurations
 			  (
 				 ID                                  integer primary key AUTOINCREMENT,
 				 LinkName                           varchar(100) not null,
 				 LinkEndpoint                            varchar(1024) not null
 			  )");
-			}
-		}
+            connection.Close();
+        }
 
-		public static void CreateNzbGetSettingsTable(SqliteConnectionWrapper connection)
-		{
-			using (var con = connection.GetConnection())
-			{
-				con.Open();
-				con.Execute(
-					@"create table NzbGetSettings
+        public static void CreateNzbGetSettingsTable(IDbConnection connection)
+        {
+
+            connection.Open();
+            connection.Execute(
+                @"create table NzbGetSettings
 			  (
 				 ID                                  integer primary key AUTOINCREMENT,
 				 IpAddress                           varchar(100) not null,
@@ -72,16 +68,16 @@ namespace NZBDash.DataAccessLayer
 				 Username							 varchar(100) not null,
 				 Password							 varchar(100) not null
 			  )");
-			}
-		}
+            connection.Close();
 
-		public static void CreateSonarrSettingsTable(SqliteConnectionWrapper connection)
-		{
-			using (var con = connection.GetConnection())
-			{
-				con.Open();
-				con.Execute(
-					@"create table SonarrSettings
+        }
+
+        public static void CreateSonarrSettingsTable(IDbConnection connection)
+        {
+
+            connection.Open();
+            connection.Execute(
+                @"create table SonarrSettings
 			  (
 				 ID                                  integer primary key AUTOINCREMENT,
 				 IpAddress                           varchar(100) not null,
@@ -91,16 +87,15 @@ namespace NZBDash.DataAccessLayer
 				 ApiKey					 varchar(100) not null
 
 			  )");
-			}
-		}
+            connection.Close();
+        }
 
-        public static void CreatePlexSettingsTable(SqliteConnectionWrapper connection)
+        public static void CreatePlexSettingsTable(IDbConnection connection)
         {
-            using (var con = connection.GetConnection())
-            {
-                con.Open();
-                con.Execute(
-                    @"create table PlexSettings
+
+            connection.Open();
+            connection.Execute(
+                @"create table PlexSettings
 			  (
 				 ID                                  integer primary key AUTOINCREMENT,
 				 IpAddress                           varchar(100) not null,
@@ -111,16 +106,15 @@ namespace NZBDash.DataAccessLayer
 				 Password							 varchar(100) not null
 
 			  )");
-            }
+            connection.Close();
         }
 
-        public static void CreateCouchPotatoSettingsTable(SqliteConnectionWrapper connection)
+        public static void CreateCouchPotatoSettingsTable(IDbConnection connection)
         {
-            using (var con = connection.GetConnection())
-            {
-                con.Open();
-                con.Execute(
-                    @"create table CouchPotatoSettings
+
+            connection.Open();
+            connection.Execute(
+                @"create table CouchPotatoSettings
 			  (
 				ID                                  integer primary key AUTOINCREMENT,
 				IpAddress                           varchar(100) not null,
@@ -131,16 +125,14 @@ namespace NZBDash.DataAccessLayer
 				Password							varchar(100) not null,
                 ApiKey					            varchar(100) not null
 			  )");
-            }
+            connection.Close();
         }
 
-        public static void CreateSabNzbSettingsSettingsTable(SqliteConnectionWrapper connection)
+        public static void CreateSabNzbSettingsSettingsTable(IDbConnection connection)
         {
-            using (var con = connection.GetConnection())
-            {
-                con.Open();
-                con.Execute(
-                    @"create table SabNzbSettings
+            connection.Open();
+            connection.Execute(
+                @"create table SabNzbSettings
 			  (
 				ID                                  integer primary key AUTOINCREMENT,
 				IpAddress                           varchar(100) not null,
@@ -149,34 +141,32 @@ namespace NZBDash.DataAccessLayer
 				ShowOnDashboard					    integer not null,
                 ApiKey					            varchar(100) not null
 			  )");
-            }
+            connection.Close();
         }
 
-		public static List<string> GetAllTables(SqliteConnectionWrapper connection)
-		{
-			using (var con = connection.GetConnection())
-			{
-				con.Open();
-				var list = new List<string>();
-				var result = con.GetAll<SqliteMasterTable>();
-				var records = result.Where(x => x.type == "table");
-				foreach (var record in records)
-				{
-					list.Add(record.name);
-				}
-				return list;
-			}
-		}
+        public static List<string> GetAllTables(IDbConnection connection)
+        {
+            connection.Open();
+            var list = new List<string>();
+            var result = connection.GetAll<SqliteMasterTable>();
+            var records = result.Where(x => x.type == "table");
+            foreach (var record in records)
+            {
+                list.Add(record.name);
+            }
+            connection.Close();
+            return list;
+        }
 
-		[Table("sqlite_master")]
-		public class SqliteMasterTable
-		{
-			public string type { get; set; }
-			public string name { get; set; }
-			public string tbl_name { get; set; }
+        [Table("sqlite_master")]
+        public class SqliteMasterTable
+        {
+            public string type { get; set; }
+            public string name { get; set; }
+            public string tbl_name { get; set; }
             [Key]
-			public long rootpage { get; set; }
-			public string sql { get; set; }
-		}
-	}
+            public long rootpage { get; set; }
+            public string sql { get; set; }
+        }
+    }
 }

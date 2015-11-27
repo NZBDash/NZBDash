@@ -25,21 +25,25 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Reflection;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
 
-namespace NZBDash.DataAccessLayer
+namespace NZBDash.DataAccessLayer.Configuration
 {
     public class MonoSqliteConfiguration : ISqliteConfiguration
     {
-        public MonoSqliteConfiguration(ILogger logger)
+        public MonoSqliteConfiguration(ILogger logger, DbProviderFactory provider)
         {
             Logger = logger;
+            Factory = provider;
         }
         private ILogger Logger { get; set; }
+        private DbProviderFactory Factory { get; set; }
 
         /// <summary>
         /// Checks the database.
@@ -84,9 +88,15 @@ namespace NZBDash.DataAccessLayer
         /// <summary>
         /// Returns the Database connection.
         /// </summary>
-        public virtual SqliteConnectionWrapper DbConnection()
+        public virtual IDbConnection DbConnection()
         {
-            return new SqliteConnectionWrapper("Data Source=" + DbFile());
+            var fact = Factory.CreateConnection();
+            if (fact != null)
+            {
+                fact.ConnectionString = "Data Source=" + DbFile();
+                return fact;
+            }
+            throw new Exception("Factory returned null");
         }
 
         /// <summary>

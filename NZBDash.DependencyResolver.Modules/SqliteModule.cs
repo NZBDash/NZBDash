@@ -1,7 +1,13 @@
-﻿using Ninject.Modules;
+﻿using System.Data.Common;
+using System.Data.SQLite;
+
+using Mono.Data.Sqlite;
+
+using Ninject.Modules;
 using NZBDash.Common.Models.Data.Models;
 using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer;
+using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Repository;
 
@@ -19,13 +25,17 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISqlRepository<LinksConfiguration>>().To<LinksRepository>();
 
 
+
 #if WINDOWS || DEBUG
             Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
-			#endif
-			#if LINUX 
+            Bind<DbProviderFactory>().To<SQLiteFactory>();
+#endif
+
+#if LINUX 
 			Bind<ISqliteConfiguration>().To<MonoSqliteConfiguration>();
-			#endif
-		}
+		    Bind<DbProviderFactory>().To<SqliteFactory.Instance>();
+#endif
+        }
 	}
 }
 

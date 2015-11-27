@@ -29,13 +29,14 @@ using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.ViewModels.Sonarr;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.UI.Models.ViewModels.Sonarr;
+
+using Omu.ValueInjecter;
 
 using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
-using Omu.ValueInjecter;
 
 namespace NZBDash.UI.Controllers.Application
 {

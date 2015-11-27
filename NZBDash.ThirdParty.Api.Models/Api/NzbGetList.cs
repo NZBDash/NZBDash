@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NZBDash.Api.Models
+namespace NZBDash.ThirdParty.Api.Models.Api
 {
     public class NzbGetParameter
     {

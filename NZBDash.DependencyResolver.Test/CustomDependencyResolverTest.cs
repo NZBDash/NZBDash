@@ -27,6 +27,7 @@
 using System.Linq;
 
 using Ninject;
+using Ninject.Modules;
 
 using NUnit.Framework;
 
@@ -56,7 +57,8 @@ namespace NZBDash.DependencyResolver.Test
             var module = new ApplicationSettingsModule();
             var repoModule = new SqliteModule();
             var loggerModule = new LoggerModule();
-            var kernal = new StandardKernel(module, repoModule, loggerModule);
+            var modules = new NinjectModule[] { module, repoModule, loggerModule };
+            var kernal = new StandardKernel(modules);
 
             var service = kernal.Get<ISettingsService<PlexSettingsDto>>();
             Assert.That(service, Is.Not.Null);

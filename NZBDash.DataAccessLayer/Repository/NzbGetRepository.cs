@@ -49,7 +49,7 @@ namespace NZBDash.DataAccessLayer
 		/// </summary>
 		public IEnumerable<NzbGetSettings> GetAll()
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.GetAll<NzbGetSettings>();
@@ -59,7 +59,7 @@ namespace NZBDash.DataAccessLayer
 
 		public NzbGetSettings Get(long id)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				var result = db.Get<NzbGetSettings>(id);
@@ -69,7 +69,7 @@ namespace NZBDash.DataAccessLayer
 
 		public void Delete(NzbGetSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				db.Delete(entity);
@@ -78,7 +78,7 @@ namespace NZBDash.DataAccessLayer
 
 		public bool Update(NzbGetSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				return db.Update<NzbGetSettings>(entity);
@@ -87,7 +87,7 @@ namespace NZBDash.DataAccessLayer
 
 		public long Insert(NzbGetSettings entity)
 		{
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
 			{
 				cnn.Open();
 				return cnn.Insert(entity);

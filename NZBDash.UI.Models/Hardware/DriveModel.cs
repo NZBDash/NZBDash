@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: NzbGetLogViewModel.cs
+//  File: DriveModel.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//  
+// 
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//  
+// 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,15 +24,25 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
-
-namespace NZBDash.Common.Models.ViewModels.NzbGet
+namespace NZBDash.UI.Models.Hardware
 {
-    public class NzbGetLogViewModel
+    public class DriveModel
     {
-        public int Id { get; set; }
-        public string Kind { get; set; }
-        public DateTime Time { get; set; }
-        public string Text { get; set; }
+        public long AvailableFreeSpace { get; set; }
+        public string DriveFormat { get; set; }
+        public string DriveType { get; set; }
+        public bool IsReady { get; set; }
+        public string Name { get; set; }
+        public long TotalFreeSpace { get; set; }
+        public long TotalSize { get; set; }
+        public string VolumeLabel { get; set; }
+        public int PercentageFilled
+        {
+            get
+            {
+                var i = TotalFreeSpace * 100 / TotalSize;
+                return int.Parse((100 - i).ToString());
+            }
+        }
     }
 }

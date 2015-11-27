@@ -1,13 +1,9 @@
 ﻿using System;
-
-using NZBDash.Api.Models;
-using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Api;
-using NZBDash.Core.Model;
-using NZBDash.ThirdParty.Api.Interfaces;
 using System.Collections.Generic;
 
-using Newtonsoft.Json;
+using NZBDash.Common.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.ThirdParty.Api.Models.Api;
 
 namespace NZBDash.ThirdParty.Api.Service
 {

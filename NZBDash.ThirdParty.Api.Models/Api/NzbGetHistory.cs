@@ -26,7 +26,7 @@
 #endregion
 using System.Collections.Generic;
 
-namespace NZBDash.Api.Models
+namespace NZBDash.ThirdParty.Api.Models.Api
 {
     //https://github.com/nzbget/nzbget/wiki/API-Method-%22history%22
     public class NzbGetHistoryResult

@@ -49,7 +49,7 @@ namespace NZBDash.DataAccessLayer
 		/// </summary>
 		public IEnumerable<SonarrSettings> GetAll()
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				var result = db.GetAll<SonarrSettings>();
@@ -59,7 +59,7 @@ namespace NZBDash.DataAccessLayer
 
 		public SonarrSettings Get(long id)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				var result = db.Get<SonarrSettings>(id);
@@ -69,7 +69,7 @@ namespace NZBDash.DataAccessLayer
 
 		public void Delete(SonarrSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				db.Delete(entity);
@@ -78,7 +78,7 @@ namespace NZBDash.DataAccessLayer
 
 		public bool Update(SonarrSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				return db.Update<SonarrSettings>(entity);
@@ -87,7 +87,7 @@ namespace NZBDash.DataAccessLayer
 
 		public long Insert(SonarrSettings entity)
 		{
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
 			{
 				cnn.Open();
 				return cnn.Insert(entity);

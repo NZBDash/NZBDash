@@ -143,6 +143,14 @@
       <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
       <Name>NZBDash.DataAccessLayer.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.UI.Models\NZBDash.UI.Models.csproj">
+      <Project>{C61C3778-A4D2-4C61-891C-353248EEB25B}</Project>
+      <Name>NZBDash.UI.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

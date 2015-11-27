@@ -2,10 +2,10 @@
 using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.Dashboard;
+using NZBDash.UI.Models.Hardware;
 
 using Omu.ValueInjecter;
 

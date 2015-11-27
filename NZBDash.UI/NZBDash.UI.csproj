@@ -306,6 +306,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\ServerStatus.js" />
     <Content Include="Scripts\_references.js" />
+    <None Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Styles\ServerStatus.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -405,10 +408,6 @@
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
-      <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
-      <Name>NZBDash.DataAccessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>
       <Name>NZBDash.DependencyResolver</Name>
@@ -417,9 +416,17 @@
       <Project>{900a9447-bd0f-4d92-a92d-554fa8e7a00c}</Project>
       <Name>NZBDash.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
       <Name>NZBDash.ThirdParty.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.UI.Models\NZBDash.UI.Models.csproj">
+      <Project>{C61C3778-A4D2-4C61-891C-353248EEB25B}</Project>
+      <Name>NZBDash.UI.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

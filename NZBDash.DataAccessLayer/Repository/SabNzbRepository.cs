@@ -49,7 +49,7 @@ namespace NZBDash.DataAccessLayer.Repository
 		/// </summary>
         public IEnumerable<SabNzbSettings> GetAll()
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.GetAll<SabNzbSettings>();
@@ -59,7 +59,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public SabNzbSettings Get(long id)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 var result = db.Get<SabNzbSettings>(id);
@@ -69,7 +69,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public void Delete(SabNzbSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
 				db.Delete(entity);
@@ -78,7 +78,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(SabNzbSettings entity)
 		{
-			using (var db = Config.DbConnection().GetConnection())
+			using (var db = Config.DbConnection())
 			{
 				db.Open();
                 return db.Update<SabNzbSettings>(entity);
@@ -87,7 +87,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public long Insert(SabNzbSettings entity)
 		{
-			using (var cnn = Config.DbConnection().GetConnection())
+			using (var cnn = Config.DbConnection())
 			{
 				cnn.Open();
 				return cnn.Insert(entity);

@@ -34,12 +34,12 @@ using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.ViewModels.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
+using NZBDash.UI.Models.ViewModels.NzbGet;
 
 using Omu.ValueInjecter;
 

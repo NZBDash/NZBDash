@@ -32,9 +32,9 @@ using System.Threading;
 
 using Microsoft.VisualBasic.Devices;
 
-using NZBDash.Common.Models.Api;
-using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
+using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.UI.Models.Hardware;
 
 using Omu.ValueInjecter;
 

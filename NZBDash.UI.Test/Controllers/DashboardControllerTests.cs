@@ -33,13 +33,13 @@ using Moq;
 
 using NUnit.Framework;
 
-using NZBDash.Common.Models.Hardware;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.DTO;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Dashboard;
+using NZBDash.UI.Models.Hardware;
 
 using Ploeh.AutoFixture;
 

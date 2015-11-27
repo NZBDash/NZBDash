@@ -1,4 +1,6 @@
-﻿#region Copyright
+﻿
+using NZBDash.ThirdParty.Api.Models.Api;
+#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
 //  File: IThirdPartyService.cs
@@ -23,13 +25,9 @@
 //  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
-using System.Collections.Generic;
-
-
 #endregion
-using NZBDash.Api.Models;
-using NZBDash.Common.Models.Api;
-using NZBDash.Core.Model;
+
+using System.Collections.Generic;
 
 namespace NZBDash.ThirdParty.Api.Interfaces
 {
