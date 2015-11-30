@@ -46,7 +46,7 @@ namespace NZBDash.UI.Test.Controllers
     [TestFixture]
     public class NzbGetControllerTests
     {
-        private NzbGetController _controller;
+        //private NzbGetController _controller;
 
         [SetUp]
         public void Setup()

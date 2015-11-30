@@ -52,19 +52,6 @@ namespace NZBDash.DependencyResolver.Test
         }
 
         [Test]
-        public void ResolveApplicationDependency()
-        {
-            var module = new ApplicationSettingsModule();
-            var repoModule = new SqliteModule();
-            var loggerModule = new LoggerModule();
-            var modules = new NinjectModule[] { module, repoModule, loggerModule };
-            var kernal = new StandardKernel(modules);
-
-            var service = kernal.Get<ISettingsService<PlexSettingsDto>>();
-            Assert.That(service, Is.Not.Null);
-        }
-
-        [Test]
         public void ResolveSerializerDependency()
         {
             var module = new SerializerModule();
