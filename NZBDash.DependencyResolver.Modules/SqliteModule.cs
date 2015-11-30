@@ -1,5 +1,8 @@
 ﻿using System.Data.Common;
+
+#if WINDOWS || DEBUG
 using System.Data.SQLite;
+#endif
 
 #if LINUX 
 using Mono.Data.Sqlite;
@@ -35,7 +38,7 @@ namespace NZBDash.DependencyResolver.Modules
 
 #if LINUX 
 			Bind<ISqliteConfiguration>().To<MonoSqliteConfiguration>();
-		    Bind<DbProviderFactory>().To<SqliteFactory.Instance>();
+		    Bind<DbProviderFactory>().To<SqliteFactory>();
 #endif
         }
 	}
