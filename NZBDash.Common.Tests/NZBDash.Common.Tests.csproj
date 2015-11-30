@@ -119,6 +119,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mapping\MappingHelperTests.cs" />
+    <Compile Include="Mapping\SonarrEpisodeMapperTest.cs" />
+    <Compile Include="Mapping\NzbGetLogMapperTest.cs" />
     <Compile Include="Mapping\NzbGetHistoryMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

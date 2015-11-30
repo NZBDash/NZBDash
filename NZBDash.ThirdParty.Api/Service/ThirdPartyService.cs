@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
 namespace NZBDash.ThirdParty.Api.Service
 {
@@ -39,7 +40,11 @@ namespace NZBDash.ThirdParty.Api.Service
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
             return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
+        }
 
+        public List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId)
+        {
+            return Serializer.SerializedJsonData<List<SonarrEpisode>>(string.Format("{0}api/episode?seriesId={1}&apikey={2}",uri,seriesId,api));
         }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)

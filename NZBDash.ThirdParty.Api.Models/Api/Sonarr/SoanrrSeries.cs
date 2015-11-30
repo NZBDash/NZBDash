@@ -26,7 +26,7 @@
 #endregion
 using System.Collections.Generic;
 
-namespace NZBDash.ThirdParty.Api.Models.Api
+namespace NZBDash.ThirdParty.Api.Models.Api.Sonarr
 {
     public class Image
     {

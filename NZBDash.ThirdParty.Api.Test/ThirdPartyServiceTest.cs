@@ -34,6 +34,7 @@ using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.ThirdParty.Api.Service;
 
 using Ploeh.AutoFixture;

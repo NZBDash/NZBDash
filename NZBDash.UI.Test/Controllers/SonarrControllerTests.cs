@@ -35,7 +35,7 @@ using NUnit.Framework;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
-using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
@@ -49,6 +49,7 @@ namespace NZBDash.UI.Test.Controllers
         private SonarrController _controller;
         private SonarrSettingsViewModelDto ExpectedSettings { get; set; }
         private List<SonarrSeries> SonarrSeries { get; set; }
+        private List<SonarrEpisode> SonarrEpisode { get; set; }
         private Mock<ISettingsService<SonarrSettingsViewModelDto>> SettingsMock { get; set; }
         private Mock<IThirdPartyService> ServiceMock { get; set; }
 
@@ -61,10 +62,12 @@ namespace NZBDash.UI.Test.Controllers
 
             ExpectedSettings = f.Create<SonarrSettingsViewModelDto>();
             SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
+            SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
 
 
             SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
+            ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
             _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
         }
 
@@ -98,6 +101,28 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model[0].ImageUrls[0], Is.EqualTo(SonarrSeries[0].images[0].url));
 
             ServiceMock.Verify(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            SettingsMock.Verify(x => x.GetSettings(), Times.Once);
+        }
+
+        [Test]
+        public void GetEpisodesForSeries()
+        {
+            var series = (PartialViewResult)_controller.GetEpisodes(1);
+            var model = (List<SonarrEpisodeViewModel>)series.Model;
+
+            Assert.That(model.Count, Is.GreaterThan(0));
+            Assert.That(model[0].Monitored, Is.EqualTo(SonarrEpisode[0].monitored));
+            Assert.That(model[0].Overview, Is.EqualTo(SonarrEpisode[0].overview));
+            Assert.That(model[0].Title, Is.EqualTo(SonarrEpisode[0].title));
+            Assert.That(model[0].AbsoluteEpisodeNumber, Is.EqualTo(SonarrEpisode[0].absoluteEpisodeNumber));
+            Assert.That(model[0].Downloading, Is.EqualTo(SonarrEpisode[0].downloading));
+            Assert.That(model[0].EpisodeFileId, Is.EqualTo(SonarrEpisode[0].episodeFileId));
+            Assert.That(model[0].HasFile, Is.EqualTo(SonarrEpisode[0].hasFile));
+            Assert.That(model[0].ID, Is.EqualTo(SonarrEpisode[0].id));
+            Assert.That(model[0].SeasonNumber, Is.EqualTo(SonarrEpisode[0].seasonNumber));
+
+
+            ServiceMock.Verify(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()), Times.Once);
             SettingsMock.Verify(x => x.GetSettings(), Times.Once);
         }
     }

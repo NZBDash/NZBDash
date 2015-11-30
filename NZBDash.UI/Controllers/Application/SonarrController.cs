@@ -44,12 +44,14 @@ namespace NZBDash.UI.Controllers.Application
     {
         private IThirdPartyService ApiService { get; set; }
         private ISettingsService<SonarrSettingsViewModelDto> SettingsService { get; set; }
+        private SonarrSettingsViewModelDto Settings { get; set; }
 
         public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsViewModelDto> settingsService)
             : base(typeof(SonarrController))
         {
             ApiService = apiService;
             SettingsService = settingsService;
+            Settings = SettingsService.GetSettings();
         }
 
         [HttpGet]
@@ -61,10 +63,9 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetSeries()
         {
-            var config = SettingsService.GetSettings();
-			var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 
-			var series = ApiService.GetSonarrSeries(formattedUri, config.ApiKey);
+            var series = ApiService.GetSonarrSeries(formattedUri, Settings.ApiKey);
             var viewModel = new List<SonarrSeriesViewModel>();
 
             foreach (var s in series)
@@ -82,6 +83,24 @@ namespace NZBDash.UI.Controllers.Application
             }
 
             return PartialView("SeriesList", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult GetEpisodes(int id)
+        {
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+
+            var episodes = ApiService.GetSonarrEpisodes(formattedUri, Settings.ApiKey, id);
+            var viewModel = new List<SonarrEpisodeViewModel>();
+            foreach (var e in episodes)
+            {
+                var episodeViewModel = new SonarrEpisodeViewModel();
+                var mappedResult = (SonarrEpisodeViewModel)episodeViewModel.InjectFrom(new SonarrEpisodeMapper(), e);
+
+                viewModel.Add(mappedResult);
+            }
+
+            return PartialView("Episodes", viewModel);
         }
     }
 }

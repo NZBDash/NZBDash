@@ -113,6 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\MemorySizeConverter.cs" />
+    <Compile Include="Mapping\SonarrEpisodeMapper.cs" />
     <Compile Include="Mapping\NzbGetLogMapper.cs" />
     <Compile Include="NLogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

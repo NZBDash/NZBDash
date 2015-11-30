@@ -53,8 +53,9 @@
     <Compile Include="Api\PlexServers.cs" />
     <Compile Include="Api\SabNzbModels.cs" />
     <Compile Include="Api\ServerStatus.cs" />
-    <Compile Include="Api\SoanrrSeries.cs" />
-    <Compile Include="Api\SonarrSystemStatus.cs" />
+    <Compile Include="Api\Sonarr\SoanrrSeries.cs" />
+    <Compile Include="Api\Sonarr\SonarrSystemStatus.cs" />
+    <Compile Include="Api\Sonarr\SonarrEpisode.cs" />
     <Compile Include="Api\XbmcModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
