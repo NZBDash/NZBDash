@@ -136,131 +136,26 @@
     <value>Sonarr</value>
   </data>
   <data name="Json" xml:space="preserve">
-    <value>{
-"version" : "1.1",
-"result" : [
-{
-"ID" : 11132,
-"Kind" : "INFO",
-"Time" : 1448417467,
-"Text" : "Collection Family.Guy.S14E04.720p.HDTV.x264-KILLERS removed from history"
-},
-{
-"ID" : 11133,
-"Kind" : "INFO",
-"Time" : 1448419464,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Mission.Impossible.Rogue.Nation.2015.DVDRip-SPARKS.nzb.4.queued"
-},
-{
-"ID" : 11134,
-"Kind" : "INFO",
-"Time" : 1448419473,
-"Text" : "Collection Mission.Impossible.Rogue.Nation.2015.DVDRip-SPARKS removed from history"
-},
-{
-"ID" : 11135,
-"Kind" : "INFO",
-"Time" : 1448419473,
-"Text" : "Deleting file D:\\Downloads\\nzb\\The.Walking.Dead.S06E03.720p.HDTV.x264-KILLERS.nzb.queued"
-},
-{
-"ID" : 11136,
-"Kind" : "INFO",
-"Time" : 1448419473,
-"Text" : "Collection The.Walking.Dead.S06E03.720p.HDTV.x264-KILLERS removed from history"
-},
-{
-"ID" : 11137,
-"Kind" : "INFO",
-"Time" : 1448420809,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Fantastic.Four.2015.720p.BluRay.x264-GECKOS.nzb.queued"
-},
-{
-"ID" : 11138,
-"Kind" : "INFO",
-"Time" : 1448420809,
-"Text" : "Collection Fantastic.Four.2015.720p.BluRay.x264-GECKOS removed from history"
-},
-{
-"ID" : 11139,
-"Kind" : "INFO",
-"Time" : 1448468421,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Star.Wars.V.The.Empire.Strikes.Back.1980.BluRay.720p.x264.DTS-SiLeNcE.nzb.queued"
-},
-{
-"ID" : 11140,
-"Kind" : "INFO",
-"Time" : 1448468421,
-"Text" : "Collection Star.Wars.V.The.Empire.Strikes.Back.1980.BluRay.720p.x264.DTS-SiLeNcE removed from history"
-},
-{
-"ID" : 11141,
-"Kind" : "INFO",
-"Time" : 1448475048,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Marvel.s.Agents.of.S.H.I.E.L.D.S03E01.Laws.of.Nature.1080p.HDTV.H.264.DD2.0-Irishman.nzb.queued"
-},
-{
-"ID" : 11142,
-"Kind" : "INFO",
-"Time" : 1448475048,
-"Text" : "Collection Marvel.s.Agents.of.S.H.I.E.L.D.S03E01.Laws.of.Nature.1080p.HDTV.H.264.DD2.0-Irishman removed from history"
-},
-{
-"ID" : 11143,
-"Kind" : "INFO",
-"Time" : 1448508340,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Blindspot.S01E06.720p.HDTV.X264-DIMENSION.nzb.queued"
-},
-{
-"ID" : 11144,
-"Kind" : "INFO",
-"Time" : 1448508350,
-"Text" : "Collection Blindspot.S01E06.720p.HDTV.X264-DIMENSION removed from history"
-},
-{
-"ID" : 11145,
-"Kind" : "INFO",
-"Time" : 1448523542,
-"Text" : "Deleting file D:\\Downloads\\nzb\\The.Big.Bang.Theory.S09E06.720p.HDTV.X264-DIMENSION.nzb.queued"
-},
-{
-"ID" : 11146,
-"Kind" : "INFO",
-"Time" : 1448523553,
-"Text" : "Collection The.Big.Bang.Theory.S09E06.720p.HDTV.X264-DIMENSION removed from history"
-},
-{
-"ID" : 11147,
-"Kind" : "INFO",
-"Time" : 1448523553,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Minority.Report.S01E06.720p.HDTV.x264-KILLERS.nzb.queued"
-},
-{
-"ID" : 11148,
-"Kind" : "INFO",
-"Time" : 1448523553,
-"Text" : "Collection Minority.Report.S01E06.720p.HDTV.x264-KILLERS removed from history"
-},
-{
-"ID" : 11149,
-"Kind" : "INFO",
-"Time" : 1448523553,
-"Text" : "Deleting file D:\\Downloads\\nzb\\Gotham.S02E06.720p.HDTV.X264-DIMENSION.nzb.queued"
-},
-{
-"ID" : 11150,
-"Kind" : "INFO",
-"Time" : 1448523553,
-"Text" : "Collection Gotham.S02E06.720p.HDTV.X264-DIMENSION removed from history"
-},
-{
-"ID" : 11151,
-"Kind" : "WARNING",
-"Time" : 1448544679,
-"Text" : "Web-Server: 404 Not Found, Resource: \/favicon.ico"
-}
-]
-}</value>
+    <value>[
+  {
+    "seriesId": 1,
+    "episodeFileId": 0,
+    "seasonNumber": 1,
+    "episodeNumber": 1,
+    "title": "Mole Hunt",
+    "airDate": "2009-09-17",
+    "airDateUtc": "2009-09-18T02:00:00Z",
+    "overview": "Archer is in trouble with his Mother and the Comptroller because his expense account is way out of proportion to his actual expenses. So he creates the idea that a Mole has breached ISIS and he needs to get into the mainframe to hunt him down (so he can cover his tracks!). All this leads to a surprising ending.",
+    "hasFile": false,
+    "monitored": true,
+    "sceneEpisodeNumber": 0,
+    "sceneSeasonNumber": 0,
+    "tvDbEpisodeId": 0,
+    "absoluteEpisodeNumber": 1,
+    "downloading": false,
+    "id": 1
+  }
+]</value>
   </data>
   <data name="Settings_ApiKey" xml:space="preserve">
     <value>Api Key</value>
@@ -300,5 +195,76 @@
   </data>
   <data name="Applications_NzbGet_Tab_Logs" xml:space="preserve">
     <value>Logs</value>
+  </data>
+  <data name="Json2" xml:space="preserve">
+    <value>[
+  {
+    "title": "Archer (2009)",
+    "seasonCount": 5,
+    "episodeCount": 47,
+    "episodeFileCount": 47,
+    "status": "continuing",
+    "overview": "At ISIS, an international spy agency, global crises are merely opportunities for its highly trained employees to confuse, undermine, betray and royally screw each other. At the center of it all is suave master spy Sterling Archer, whose less-than-masculine code name is \"Duchess.\" Archer works with his domineering mother Malory, who is also his boss. Drama revolves around Archer's ex-girlfriend, Agent Lana Kane and her new boyfriend, ISIS comptroller Cyril Figgis, as well as Malory's lovesick secretary, Cheryl.",
+    "nextAiring": "2014-01-21T03:00:00Z",
+    "network": "FX",
+    "airTime": "7:00pm",
+    "images": [
+      {
+        "coverType": "banner",
+        "url": "/MediaCover/7/banner.jpg?lastWrite=635114443841234311"
+      },
+      {
+        "coverType": "poster",
+        "url": "/MediaCover/7/poster.jpg?lastWrite=635114443843262329"
+      },
+      {
+        "coverType": "fanart",
+        "url": "/MediaCover/7/fanart.jpg?lastWrite=635114443844822347"
+      }
+    ],
+    "seasons": [
+      {
+        "seasonNumber": 5,
+        "monitored": true
+      },
+      {
+        "seasonNumber": 4,
+        "monitored": true
+      },
+      {
+        "seasonNumber": 3,
+        "monitored": true
+      },
+      {
+        "seasonNumber": 2,
+        "monitored": true
+      },
+      {
+        "seasonNumber": 1,
+        "monitored": true
+      },
+      {
+        "seasonNumber": 0,
+        "monitored": false
+      }
+    ],
+    "year": 0,
+    "path": "T:\\Archer (2009)",
+    "qualityProfileId": 1,
+    "seasonFolder": true,
+    "monitored": true,
+    "useSceneNumbering": false,
+    "runtime": 30,
+    "tvdbId": 110381,
+    "tvRageId": 23354,
+    "firstAired": "2009-09-18T02:00:00Z",
+    "lastInfoSync": "2014-01-17T05:10:23.253208Z",
+    "seriesType": "standard",
+    "cleanTitle": "archer2009",
+    "imdbId": "tt1486217",
+    "titleSlug": "archer-2009",
+    "id": 1
+  }
+]</value>
   </data>
 </root>
