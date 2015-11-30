@@ -25,6 +25,7 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Globalization;
 using System.Reflection;
 
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
@@ -46,11 +47,11 @@ namespace NZBDash.Common.Mapping
             if (airDateUtc == null) return;
 
             DateTime convertedAirDate;
-            DateTime.TryParse(source.airDate, out convertedAirDate);
+            DateTime.TryParse(source.airDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedAirDate);
             if (convertedAirDate == default(DateTime)) return;
 
             DateTime convertedAirDateUtc;
-            DateTime.TryParse(source.airDateUtc, out convertedAirDateUtc);
+            DateTime.TryParse(source.airDateUtc, CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedAirDateUtc);
             if (convertedAirDateUtc == default(DateTime)) return;
 
             airDate.SetValue(target, convertedAirDate);
