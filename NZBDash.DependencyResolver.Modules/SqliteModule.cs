@@ -1,7 +1,9 @@
 ﻿using System.Data.Common;
 using System.Data.SQLite;
 
+#if LINUX 
 using Mono.Data.Sqlite;
+#endif
 
 using Ninject.Modules;
 using NZBDash.Common.Models.Data.Models;
