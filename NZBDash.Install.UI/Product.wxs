@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="NZBDash.Install.UI" Language="1033" Version="1.0.0.0" Manufacturer="Jamie Tech" UpgradeCode="e7b7e46d-b860-4cf2-baad-3cb815754889">
+	<Product Id="*" Name="NZBDash" Language="1033" Version="1.0.0.0" Manufacturer="Jamie Tech" UpgradeCode="e7b7e46d-b860-4cf2-baad-3cb815754889">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of NZBDash is already installed." />
+    <MediaTemplate EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="NZBDash.Install.UI" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+    <!-- Launch Conditions/Pre-requisite checks --><!--
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message="Requires .NET Framework 4.5">
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
+
+    <Property Id="IISMAJORVERSION" Secure="yes">
+      <RegistrySearch Id="RegistryIISMajorVersion" Key="SOFTWARE\Microsoft\InetStp" Root="HKLM" Type="raw" Name="MajorVersion" />
+    </Property>
+
+    <Condition Message="Requires IIS version greater than 7">
+      <![CDATA[Installed OR IISMAJORVERSION >= "#7"]]>
+    </Condition>-->
+    
+		<Feature Id="ProductFeature" Title="NZBDash" Level="1">
+			<ComponentGroupRef Id="SourceComponentGroup" />
 		</Feature>
 	</Product>
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="NZBDash.Install.UI" />
+				<Directory Id="RootDirectory" Name="NZBDash" />
 			</Directory>
 		</Directory>
 	</Fragment>
@@ -28,3 +42,4 @@
 		</ComponentGroup>
 	</Fragment>
 </Wix>
+

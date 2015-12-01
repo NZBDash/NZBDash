@@ -40,6 +40,7 @@ using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
 using Ploeh.AutoFixture;
+using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Test.Controllers
 {
@@ -98,7 +99,7 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model[0].Title, Is.EqualTo(SonarrSeries[0].title));
             Assert.That(model[0].TitleSlug, Is.EqualTo(SonarrSeries[0].titleSlug));
             Assert.That(model[0].Year, Is.EqualTo(SonarrSeries[0].year));
-            Assert.That(model[0].ImageUrls[0], Is.EqualTo(SonarrSeries[0].images[0].url));
+            Assert.That(model[0].ImageUrls[0], Is.EqualTo(UrlHelper.ReturnUri(ExpectedSettings.IpAddress, ExpectedSettings.Port) + SonarrSeries[0].images[0].url));
 
             ServiceMock.Verify(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
             SettingsMock.Verify(x => x.GetSettings(), Times.Once);

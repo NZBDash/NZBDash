@@ -77,7 +77,11 @@ namespace NZBDash.UI.Controllers.Application
                 var images = s.images.Select(x => x.url);
                 if (images.Any())
                 {
-                    mappedResult.ImageUrls = new List<string>(images);
+                    mappedResult.ImageUrls = new List<string>();
+                    foreach (var format in images.Select(image => string.Format("{0}{1}", formattedUri, image)))
+                    {
+                        mappedResult.ImageUrls.Add(format);
+                    }
                 }
                 viewModel.Add(mappedResult);
             }
