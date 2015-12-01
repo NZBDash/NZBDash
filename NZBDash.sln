@@ -50,8 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.UI.Models", "NZBDas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.ThirdParty.Api.Models", "NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj", "{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "NZBDash.Install", "NZBDash.Install\NZBDash.Install.isproj", "{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -518,27 +516,6 @@ Global
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|x64.ActiveCfg = Release|Any CPU
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|x86.ActiveCfg = Release|Any CPU
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|Any CPU.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|Mixed Platforms.ActiveCfg = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|Mixed Platforms.Build.0 = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|x64.ActiveCfg = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|x64.Build.0 = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|x86.ActiveCfg = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Debug|x86.Build.0 = DVD-5
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|Any CPU.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|Mixed Platforms.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|Mixed Platforms.Build.0 = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|x64.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|x64.Build.0 = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|x86.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Linux|x86.Build.0 = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|Any CPU.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|Mixed Platforms.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|Mixed Platforms.Build.0 = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|x64.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|x64.Build.0 = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|x86.ActiveCfg = SingleImage
-		{5125CC4C-A9D0-4BB8-AD26-30D43C5F69EE}.Windows|x86.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
