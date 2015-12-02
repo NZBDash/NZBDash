@@ -40,7 +40,7 @@ using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
 using Ploeh.AutoFixture;
-using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
+using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Test.Controllers
 {
@@ -106,6 +106,29 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
+        public void GetSeriesNoConfig()
+        {
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
+            ServiceMock = new Mock<IThirdPartyService>();
+            var f = new Fixture();
+
+            ExpectedSettings = new SonarrSettingsViewModelDto();
+            SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
+            SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
+
+
+            SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
+            ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
+            ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
+            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
+
+            var series = (PartialViewResult)_controller.GetSeries();
+            var model = series.ViewBag;
+
+            Assert.That(model.Error, Is.Not.Null);
+        }
+
+        [Test]
         public void GetEpisodesForSeries()
         {
             var series = (PartialViewResult)_controller.GetEpisodes(1);
@@ -125,6 +148,29 @@ namespace NZBDash.UI.Test.Controllers
 
             ServiceMock.Verify(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()), Times.Once);
             SettingsMock.Verify(x => x.GetSettings(), Times.Once);
+        }
+
+        [Test]
+        public void GetEpisodesForSeriesNoConfig()
+        {
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
+            ServiceMock = new Mock<IThirdPartyService>();
+            var f = new Fixture();
+
+            ExpectedSettings = new SonarrSettingsViewModelDto();
+            SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
+            SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
+
+
+            SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
+            ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
+            ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
+            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
+
+            var series = (PartialViewResult)_controller.GetEpisodes(1);
+            var model = series.ViewBag;
+
+            Assert.That(model.Error, Is.Not.Null);
         }
     }
 }

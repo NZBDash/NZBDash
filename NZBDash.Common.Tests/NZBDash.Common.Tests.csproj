@@ -118,6 +118,7 @@
     <Compile Include="Helpers\MemorySizeConverterTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\UrlHelperTests.cs" />
     <Compile Include="Mapping\MappingHelperTests.cs" />
     <Compile Include="Mapping\SonarrEpisodeMapperTest.cs" />
     <Compile Include="Mapping\NzbGetLogMapperTest.cs" />

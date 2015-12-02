@@ -107,6 +107,7 @@
     <Compile Include="Helpers\AssemblyDirectoryHelper.cs" />
     <Compile Include="Helpers\CustomWebClient.cs" />
     <Compile Include="Helpers\TimeExtensions.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Mapping\JsonSerializerTargetMapper.cs" />
     <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Mapping\MappingHelper.cs" />

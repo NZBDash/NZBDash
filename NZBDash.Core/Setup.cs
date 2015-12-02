@@ -25,9 +25,7 @@
 //  ***********************************************************************
 #endregion
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccessLayer;

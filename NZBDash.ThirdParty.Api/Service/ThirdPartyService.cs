@@ -42,20 +42,15 @@ namespace NZBDash.ThirdParty.Api.Service
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
             //var jsonData = Resources.Resources.Json2;
-
-
             //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData) : new List<SonarrSeries>();
+            
             return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
         }
 
         public List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId)
         {
-
-
-                    //var jsonData = Resources.Resources.Json;
-
-
-                    //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrEpisode>>(jsonData) : new List<SonarrEpisode>();
+            //var jsonData = Resources.Resources.Json;
+            //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrEpisode>>(jsonData) : new List<SonarrEpisode>();
 
             return Serializer.SerializedJsonData<List<SonarrEpisode>>(string.Format("{0}api/episode?seriesId={1}&apikey={2}", uri, seriesId, api));
         }

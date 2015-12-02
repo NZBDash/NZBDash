@@ -2,9 +2,9 @@
 
 using NUnit.Framework;
 
-using NZBDash.UI.Helpers;
+using NZBDash.Common.Helpers;
 
-namespace NZBDash.UI.Test.Helpers
+namespace NZBDash.Common.Tests.Helpers
 {
     [TestFixture]
     public class UrlHelperTests

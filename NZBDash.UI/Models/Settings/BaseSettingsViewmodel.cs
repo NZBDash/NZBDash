@@ -24,7 +24,11 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
 using System.ComponentModel.DataAnnotations;
+
+using NZBDash.Common.Helpers;
+using NZBDash.UI.Helpers;
 
 namespace NZBDash.UI.Models.Settings
 {
@@ -40,5 +44,13 @@ namespace NZBDash.UI.Models.Settings
         [Required]
         [Display(Name = "Settings_Port", ResourceType = typeof(Resources.Resources))]
         public int Port { get; set; }
+
+        public Uri FullUri
+        {
+            get
+            {
+                return UrlHelper.ReturnUri(IpAddress, Port);
+            }
+        }
     }
 }

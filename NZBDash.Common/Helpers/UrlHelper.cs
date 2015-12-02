@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NZBDash.UI.Helpers
+namespace NZBDash.Common.Helpers
 {
     public static class UrlHelper
     {

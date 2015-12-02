@@ -27,57 +27,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Web.Mvc;
 
 using Moq;
 
 using NUnit.Framework;
 
+using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Controllers.Application;
+using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.ViewModels.NzbGet;
+
+using Ploeh.AutoFixture;
 
 namespace NZBDash.UI.Test.Controllers
 {
     [TestFixture]
     public class NzbGetControllerTests
     {
-        //private NzbGetController _controller;
-
-        [SetUp]
-        public void Setup()
+        public NzbGetSettingsDto ExpectedSettings
         {
-            //TODO: Fix test
-            //_controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository(new NLogLogger(typeof(string)),new WindowsSqliteConfiguration(new NLogLogger(typeof(string)), new Sqlite) )), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
-        }
-
-        [Test]
-        public void EnsureThatIndexReturnsDefaultView()
-        {
-            //TODO: Fix test
-            //_controller = new NzbGetController(new NzbGetSettingsService(new NzbGetRepository(new NLogLogger(typeof(string)), new WindowsSqliteConfiguration(new NLogLogger(typeof(string))))), new ThirdPartyService(new ThirdPartySerializer(new CustomWebClient())), new NLogLogger(typeof(string)));
-
-            //_controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
+            get
+            {
+                return new NzbGetSettingsDto { Username = "test", Id = 2, Password = "1", ShowOnDashboard = true, Enabled = true, IpAddress = "192.168.0.1", Port = 25 };
+            }
         }
 
         [Test]
         public void GetNzbGetDownloadHistory()
         {
-            var expectedSettings = new NzbGetSettingsDto
-            {
-                Username = "test",
-                Id = 2,
-                Password = "1",
-                ShowOnDashboard = true,
-                Enabled = true,
-                IpAddress = "192.168.0.1",
-                Port = 25
-            };
-
             var expectedApi = new NzbGetHistory
             {
                 result = new List<NzbGetHistoryResult>
@@ -97,7 +81,7 @@ namespace NZBDash.UI.Test.Controllers
             var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var mockApi = new Mock<IThirdPartyService>();
             var mockLogger = new Mock<ILogger>();
-            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings).Verifiable();
+            mockSettings.Setup(x => x.GetSettings()).Returns(ExpectedSettings).Verifiable();
             mockApi.Setup(x => x.GetNzbGetHistory(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedApi).Verifiable();
 
             var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
@@ -116,25 +100,37 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
+        public void GetNzbGetDownloadHistoryMissingSettings()
+        {
+            var expectedSettings = new NzbGetSettingsDto();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings).Verifiable();
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.GetNzbGetDownloadHistory();
+            var model = result.ViewBag;
+
+            Assert.That(model.Error, Is.Not.Null);
+        }
+
+        [Test]
         public void GetNzbGetStatusTest()
         {
-            var expectedSettings = new NzbGetSettingsDto
-            {
-                IpAddress = "192.168.0.1",
-                Port = 25
-            };
             var expectedStatus = new NzbGetStatus { Result = new NzbGetStatusResult { ServerPaused = true } };
 
             var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
             var mockApi = new Mock<IThirdPartyService>();
             var mockLogger = new Mock<ILogger>();
 
-            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+            mockSettings.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus);
 
 
             var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
-            var result = controller.GetNzbGetStatus();
+            var result = (JsonResult)controller.GetNzbGetStatus();
             var model = (NzbGetViewModel)result.Data;
 
 
@@ -142,15 +138,27 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
+        public void GetNzbGetStatusMissingConfigTest()
+        {
+            var expectedSettings = new NzbGetSettingsDto();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.GetNzbGetStatus();
+            var model = result.ViewBag;
+
+
+            Assert.That(model.Error, Is.Not.Null);
+        }
+
+        [Test]
         public void GetNzbGetLogsTest()
         {
-
-            var expectedSettings = new NzbGetSettingsDto
-            {
-                IpAddress = "192.168.0.1",
-                Port = 25
-            };
-
             var expected = new NzbGetLogs
             {
                 result =
@@ -167,7 +175,7 @@ namespace NZBDash.UI.Test.Controllers
             var mockApi = new Mock<IThirdPartyService>();
             var mockLogger = new Mock<ILogger>();
 
-            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+            mockSettings.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             mockApi.Setup(x => x.GetNzbGetLogs(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expected);
 
 
@@ -180,6 +188,66 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model[0].Kind, Is.EqualTo(ordered[0].Kind));
             Assert.That(model[0].Text, Is.EqualTo(ordered[0].Text));
             Assert.That(model[0].Time, Is.EqualTo(new DateTime(2015, 11, 26, 13, 31, 19)));
+        }
+
+        [Test]
+        public void GetNzbGetLogsNoConfigTest()
+        {
+            var expectedSettings = new NzbGetSettingsDto();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockLogger = new Mock<ILogger>();
+            var mockApi = new Mock<IThirdPartyService>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(expectedSettings);
+
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.Logs();
+            var model = result.ViewBag;
+
+            Assert.That(model.Error, Is.Not.Null);
+        }
+
+        [Test]
+        public void GetNzbGetDownloadInformation()
+        {
+            var f = new Fixture();
+            var expectedApi = f.Create<NzbGetList>();
+            var expectedStatus = f.Create<NzbGetStatus>();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+            mockSettings.Setup(x => x.GetSettings()).Returns(ExpectedSettings).Verifiable();
+            mockApi.Setup(x => x.GetNzbGetList(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedApi).Verifiable();
+            mockApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expectedStatus).Verifiable();
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.GetNzbGetDownloadInformation();
+            var model = (DownloaderViewModel)result.Model;
+
+            Assert.That(result.Model, Is.TypeOf<DownloaderViewModel>());
+            Assert.That(model.Application, Is.EqualTo(Applications.NzbGet));
+            Assert.That(model.DownloadItem[0].DownloadingName, Is.EqualTo(expectedApi.result[0].NZBName));
+            Assert.That(model.DownloadItem[0].NzbId, Is.EqualTo(expectedApi.result[0].NZBID)); 
+       }
+
+        [Test]
+        public void GetNzbGetDownloadInformationNoConfig()
+        {
+            var badSettings = new NzbGetSettingsDto();
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+            mockSettings.Setup(x => x.GetSettings()).Returns(badSettings).Verifiable();
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.GetNzbGetDownloadInformation();
+            var model = result.ViewBag;
+
+            Assert.That(model.Error, Is.Not.Null);
         }
     }
 }

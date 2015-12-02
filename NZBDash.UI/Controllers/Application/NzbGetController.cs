@@ -43,8 +43,7 @@ using NZBDash.UI.Models.ViewModels.NzbGet;
 
 using Omu.ValueInjecter;
 
-
-using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
+using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
@@ -55,9 +54,11 @@ namespace NZBDash.UI.Controllers.Application
 			SettingsService = settingsService;
 			Api = api;
 			Logger = logger;
+		    Settings = SettingsService.GetSettings();
 		}
 
 		private ISettingsService<NzbGetSettingsDto> SettingsService { get; set; }
+        private NzbGetSettingsDto Settings { get; set; }
 		private IThirdPartyService Api { get; set; }
 
 		[HttpGet]
@@ -67,15 +68,20 @@ namespace NZBDash.UI.Controllers.Application
 		}
 
 		[HttpGet]
-		public JsonResult GetNzbGetStatus()
+		public ActionResult GetNzbGetStatus()
 		{
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
 			Logger.Trace("Getting Config");
-			var config = SettingsService.GetSettings();
-			var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 			try
 			{
 				Logger.Trace("Getting NzbGetStatus");
-				var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
+                var statusInfo = Api.GetNzbGetStatus(formattedUri, Settings.Username, Settings.Password);
 
 				var nzbModel = new NzbGetViewModel
 				{
@@ -95,16 +101,21 @@ namespace NZBDash.UI.Controllers.Application
 		[HttpGet]
 		public ActionResult GetNzbGetDownloadInformation()
 		{
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
 			Logger.Trace("Getting Config");
-			var config = SettingsService.GetSettings();
-			var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 			try
 			{
 				Logger.Trace("Getting NzbGetStatus");
-				var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
+                var statusInfo = Api.GetNzbGetStatus(formattedUri, Settings.Username, Settings.Password);
 
 				Logger.Trace("Getting Current NZBGetlist");
-				var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
+                var downloadInfo = Api.GetNzbGetList(formattedUri, Settings.Username, Settings.Password);
 
 				var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
@@ -160,9 +171,14 @@ namespace NZBDash.UI.Controllers.Application
 		{
 			try
 			{
-				var config = SettingsService.GetSettings();
-				var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
-				var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
+                if (!Settings.HasSettings)
+                {
+                    ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                    return PartialView("DashletError");
+                }
+
+                var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+                var history = Api.GetNzbGetHistory(formattedUri, Settings.Username, Settings.Password);
 
 				var items = new List<NzbGetHistoryViewModel>();
 				foreach (var result in history.result)
@@ -192,9 +208,14 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
 	    public ActionResult Logs()
         {
-            var config = SettingsService.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
-            var logs = Api.GetNzbGetLogs(formattedUri, config.Username, config.Password);
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+            var logs = Api.GetNzbGetLogs(formattedUri, Settings.Username, Settings.Password);
 
             var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
 

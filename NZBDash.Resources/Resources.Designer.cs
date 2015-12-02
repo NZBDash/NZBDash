@@ -124,6 +124,24 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Common_Error {
+            get {
+                return ResourceManager.GetString("Common_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong! Check the logs! :(.
+        /// </summary>
+        public static string Common_Error_Description {
+            get {
+                return ResourceManager.GetString("Common_Error_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
         ///    &quot;seriesId&quot;: 1,
@@ -190,6 +208,60 @@ namespace NZBDash.Resources {
         public static string Settings_IpAddress {
             get {
                 return ResourceManager.GetString("Settings_IpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for Couch Potato.
+        /// </summary>
+        public static string Settings_Missing_Cp {
+            get {
+                return ResourceManager.GetString("Settings_Missing_Cp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for Kodi.
+        /// </summary>
+        public static string Settings_Missing_Kodi {
+            get {
+                return ResourceManager.GetString("Settings_Missing_Kodi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for NzbGet.
+        /// </summary>
+        public static string Settings_Missing_NzbGet {
+            get {
+                return ResourceManager.GetString("Settings_Missing_NzbGet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for Plex.
+        /// </summary>
+        public static string Settings_Missing_Plex {
+            get {
+                return ResourceManager.GetString("Settings_Missing_Plex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for SabNzb.
+        /// </summary>
+        public static string Settings_Missing_SabNzb {
+            get {
+                return ResourceManager.GetString("Settings_Missing_SabNzb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please configure your settings for Sonarr.
+        /// </summary>
+        public static string Settings_Missing_Sonarr {
+            get {
+                return ResourceManager.GetString("Settings_Missing_Sonarr", resourceCulture);
             }
         }
         

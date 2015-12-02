@@ -1,24 +1,23 @@
-﻿<div class="panel panel-default">
+﻿@using NZBDash.Resources
+<div class="panel panel-default">
     <div class="panel-heading">
-        Error
+        @Resources.Common_Error
     </div>
     <div class="panel-body">
             <div class="col-md-12">
                 <div class="col-md-2 h6 text-center">
                     <i class="fa fa-exclamation-circle fa-2x"></i>
                 </div>
-                @ViewBag.Error
+                @if (ViewBag.Error != null)
+                {
+                    @ViewBag.Error
+                }
+                else
+                {
+                    @Resources.Common_Error_Description
+                }
             </div>
     </div>
 </div>
-
-
-<script>
-    $(document).ready(function() {
-        var items = 1;
-        resizeWidgets(items, 2,1);
-
-    });
-</script>
 
 

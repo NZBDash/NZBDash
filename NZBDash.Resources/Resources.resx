@@ -267,4 +267,28 @@
   }
 ]</value>
   </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Common_Error_Description" xml:space="preserve">
+    <value>Something went wrong! Check the logs! :(</value>
+  </data>
+  <data name="Settings_Missing_Cp" xml:space="preserve">
+    <value>Please configure your settings for Couch Potato</value>
+  </data>
+  <data name="Settings_Missing_Kodi" xml:space="preserve">
+    <value>Please configure your settings for Kodi</value>
+  </data>
+  <data name="Settings_Missing_NzbGet" xml:space="preserve">
+    <value>Please configure your settings for NzbGet</value>
+  </data>
+  <data name="Settings_Missing_Plex" xml:space="preserve">
+    <value>Please configure your settings for Plex</value>
+  </data>
+  <data name="Settings_Missing_SabNzb" xml:space="preserve">
+    <value>Please configure your settings for SabNzb</value>
+  </data>
+  <data name="Settings_Missing_Sonarr" xml:space="preserve">
+    <value>Please configure your settings for Sonarr</value>
+  </data>
 </root>

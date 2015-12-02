@@ -232,7 +232,6 @@
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Helpers\IPrincipleExtensions.cs" />
-    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\LogsHub.cs" />

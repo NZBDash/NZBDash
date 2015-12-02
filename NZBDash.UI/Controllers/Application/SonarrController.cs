@@ -36,7 +36,7 @@ using NZBDash.UI.Models.ViewModels.Sonarr;
 
 using Omu.ValueInjecter;
 
-using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
+using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
@@ -63,6 +63,12 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetSeries()
         {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_Sonarr;
+                return PartialView("DashletError");
+            }
+
             var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 
             var series = ApiService.GetSonarrSeries(formattedUri, Settings.ApiKey);
@@ -92,6 +98,12 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetEpisodes(int id)
         {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_Sonarr;
+                return PartialView("DashletError");
+            }
+
             var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 
             var episodes = ApiService.GetSonarrEpisodes(formattedUri, Settings.ApiKey, id);
