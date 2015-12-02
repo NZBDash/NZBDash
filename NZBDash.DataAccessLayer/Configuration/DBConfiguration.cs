@@ -1,9 +1,9 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: WindowsSqliteConfiguration.cs
+//  File: DbConfiguration.cs
 //  Created By: Jamie Rees
-//
+// 
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//
+// 
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//
+// 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,28 +25,66 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Data;
 using System.Data.Common;
+using System.IO;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
 
 namespace NZBDash.DataAccessLayer.Configuration
 {
-    public class WindowsSqliteConfiguration : DbConfiguration
+    public abstract class DbConfiguration : ISqliteConfiguration
     {
-        public WindowsSqliteConfiguration(ILogger logger, DbProviderFactory provider)
-            : base(logger, provider)
+        protected DbConfiguration(ILogger logger, DbProviderFactory provider)
         {
+            Logger = logger;
+            Factory = provider;
         }
 
-        /// <summary>
-        /// Gets the database file.
-        /// </summary>
-        /// <value>
-        /// The database file.
-        /// </value>
-        public override string DbFile()
+        private DbProviderFactory Factory { get; set; }
+        private ILogger Logger { get; set; }
+
+        public virtual void CheckDb()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite";
+            Logger.Trace("Checking if DB exists");
+            if (!File.Exists(DbFile()))
+            {
+                Logger.Trace("Could not find the DB, so we will create it.");
+                CreateDatabase();
+                return;
+            }
+            Logger.Trace("Db exists");
+        }
+
+
+
+        public abstract string DbFile();
+
+        public virtual IDbConnection DbConnection()
+        {
+            var fact = Factory.CreateConnection();
+            if (fact != null)
+            {
+                fact.ConnectionString = "Data Source=" + DbFile();
+                return fact;
+            }
+            throw new Exception("Factory returned null");
+        }
+
+        public virtual void CreateDatabase()
+        {
+            try
+            {
+                var fs = File.Create(DbFile());
+                fs.Close();
+                Logger.Trace("Created and Closed the FileStream");
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e);
+                throw;
+            }
         }
     }
 }

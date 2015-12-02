@@ -135,16 +135,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository\SabNzbRepository.cs" />
-    <Compile Include="Repository\LinksRepository.cs" />
+    <Compile Include="Configuration\DbConfiguration.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\NzbGetRepository.cs" />
-    <Compile Include="Repository\PlexRepository.cs" />
-    <Compile Include="Repository\CouchPotatoRepository.cs" />
     <Compile Include="TableCreation.cs" />
     <Compile Include="Configuration\MonoSqliteConfiguration.cs" />
     <Compile Include="Configuration\WindowsSqliteConfiguration.cs" />
-    <Compile Include="Repository\SonarrRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

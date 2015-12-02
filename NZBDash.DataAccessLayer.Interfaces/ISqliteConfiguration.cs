@@ -31,7 +31,6 @@ namespace NZBDash.DataAccessLayer.Interfaces
 	public interface ISqliteConfiguration
 	{
 		void CheckDb();
-		string AssemblyDirectory();
 		string DbFile();
 		IDbConnection DbConnection ();
 		void CreateDatabase();

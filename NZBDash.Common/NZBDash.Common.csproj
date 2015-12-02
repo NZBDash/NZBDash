@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Applications.cs" />
+    <Compile Include="Helpers\AssemblyDirectoryHelper.cs" />
     <Compile Include="Helpers\CustomWebClient.cs" />
     <Compile Include="Helpers\TimeExtensions.cs" />
     <Compile Include="Mapping\JsonSerializerTargetMapper.cs" />

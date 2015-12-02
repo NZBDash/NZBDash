@@ -1,9 +1,9 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: MonoSqliteConfiguration.cs
+//  File: AssemblyDirectoryHelper.cs
 //  Created By: Jamie Rees
-//
+// 
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//
+// 
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//
+// 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,27 +24,24 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System.Data.Common;
+using System;
+using System.IO;
+using System.Reflection;
 
-using NZBDash.Common.Interfaces;
-
-namespace NZBDash.DataAccessLayer.Configuration
+namespace NZBDash.Common.Helpers
 {
-    public class MonoSqliteConfiguration : DbConfiguration
+    public static class AssemblyDirectoryHelper
     {
-        public MonoSqliteConfiguration(ILogger logger, DbProviderFactory provider) : base(logger,provider)
-        {
-        }
-
         /// <summary>
-        /// Gets the database file.
+        /// Assemblies the directory.
         /// </summary>
-        /// <value>
-        /// The database file.
-        /// </value>
-        public override string DbFile()
+        /// <returns></returns>
+        public static string AssemblyDirectory()
         {
-            return "App_Data" + @"\\NZBDash.sqlite";
+            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
     }
 }
