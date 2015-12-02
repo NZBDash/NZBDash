@@ -24,9 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 using Dapper;
 using Dapper.Contrib.Extensions;
@@ -36,126 +34,14 @@ namespace NZBDash.DataAccessLayer
     public static class TableCreation
     {
         /// <summary>
-        /// Creates the links configuration table.
+        /// Creates the tables located in the SqlTables.sql file.
         /// </summary>
         /// <param name="connection">The connection.</param>
-        public static void CreateLinksConfigurationTable(IDbConnection connection)
-        {
-
-            connection.Open();
-            connection.Execute(
-                @"create table LinksConfigurations
-			  (
-				 ID                                  integer primary key AUTOINCREMENT,
-				 LinkName                           varchar(100) not null,
-				 LinkEndpoint                            varchar(1024) not null
-			  )");
-            connection.Close();
-        }
-
-        public static void CreateNzbGetSettingsTable(IDbConnection connection)
-        {
-
-            connection.Open();
-            connection.Execute(
-                @"create table NzbGetSettings
-			  (
-				 ID                                  integer primary key AUTOINCREMENT,
-				 IpAddress                           varchar(100) not null,
-				 Port                            integer not null,
-				 Enabled           					 integer not null,
-				 ShowOnDashboard					 integer not null,
-				 Username							 varchar(100) not null,
-				 Password							 varchar(100) not null
-			  )");
-            connection.Close();
-
-        }
-
-        public static void CreateSonarrSettingsTable(IDbConnection connection)
-        {
-
-            connection.Open();
-            connection.Execute(
-                @"create table SonarrSettings
-			  (
-				 ID                                  integer primary key AUTOINCREMENT,
-				 IpAddress                           varchar(100) not null,
-				 Port                            integer not null,
-				 Enabled           					 integer not null,
-				 ShowOnDashboard					 integer not null,
-				 ApiKey					 varchar(100) not null
-
-			  )");
-            connection.Close();
-        }
-
-        public static void CreatePlexSettingsTable(IDbConnection connection)
-        {
-
-            connection.Open();
-            connection.Execute(
-                @"create table PlexSettings
-			  (
-				 ID                                  integer primary key AUTOINCREMENT,
-				 IpAddress                           varchar(100) not null,
-				 Port                            integer not null,
-				 Enabled           					 integer not null,
-				 ShowOnDashboard					 integer not null,
-				 Username							 varchar(100) not null,
-				 Password							 varchar(100) not null
-
-			  )");
-            connection.Close();
-        }
-
-        public static void CreateCouchPotatoSettingsTable(IDbConnection connection)
-        {
-
-            connection.Open();
-            connection.Execute(
-                @"create table CouchPotatoSettings
-			  (
-				ID                                  integer primary key AUTOINCREMENT,
-				IpAddress                           varchar(100) not null,
-				Port                                integer not null,
-				Enabled           					integer not null,
-				ShowOnDashboard					    integer not null,
-				Username							varchar(100) not null,
-				Password							varchar(100) not null,
-                ApiKey					            varchar(100) not null
-			  )");
-            connection.Close();
-        }
-
-        public static void CreateSabNzbSettingsSettingsTable(IDbConnection connection)
+        public static void CreateTables(IDbConnection connection)
         {
             connection.Open();
-            connection.Execute(
-                @"create table SabNzbSettings
-			  (
-				ID                                  integer primary key AUTOINCREMENT,
-				IpAddress                           varchar(100) not null,
-				Port                                integer not null,
-				Enabled           					integer not null,
-				ShowOnDashboard					    integer not null,
-                ApiKey					            varchar(100) not null
-			  )");
+            connection.Execute(SqlResource.SqlTables);
             connection.Close();
-        }
-
-        public static List<string> GetAllTables(IDbConnection connection)
-        {
-            connection.Open();
-            var list = new List<string>();
-            var result = connection.GetAll<SqliteMasterTable>();
-            var records = result.Where(x => x.type == "table");
-            foreach (var record in records)
-            {
-                list.Add(record.name);
-            }
-            connection.Close();
-            return list;
         }
 
         [Table("sqlite_master")]

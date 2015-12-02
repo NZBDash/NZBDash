@@ -47,23 +47,10 @@ namespace NZBDash.Core
         private DbProviderFactory Factory { get; set; }
         private ISqliteConfiguration Configuration { get; set; }
 
-        private List<string> ExpectedTables
-        {
-            get
-            {
-                return new List<string>
-            {
-                "sqlite_sequence",
-                "SonarrSettings",
-                "NzbGetSettings",
-                "LinksConfigurations",
-                "PlexSettings",
-                "CouchPotatoSettings",
-                "SabNzbSettings"
-            };
-            }
-        }
-
+        /// <summary>
+        /// Starts the application setup.
+        /// </summary>
+        /// <returns></returns>
         public bool Start()
         {
             try
@@ -75,52 +62,15 @@ namespace NZBDash.Core
             catch (Exception e)
             {
                 Logger.Fatal(e);
-                Logger.Error("Migration Failed");
+                Logger.Fatal("Migration Failed");
                 return false;
             }
         }
 
-
-
         private void MigrateDatabase()
         {
             var connection = Configuration.DbConnection();
-            var current = TableCreation.GetAllTables(connection);
-            var missingTables = ExpectedTables.Except(current);
-            
-            foreach (var table in missingTables)
-            {
-                if (table.Equals("SonarrSettings"))
-                {
-                    TableCreation.CreateSonarrSettingsTable(connection);
-                    continue;
-                }
-                if (table.Equals("NzbGetSettings"))
-                {
-                    TableCreation.CreateNzbGetSettingsTable(connection);
-                    continue;
-                }
-                if (table.Equals("LinksConfigurations"))
-                {
-                    TableCreation.CreateLinksConfigurationTable(connection);
-                    continue;
-                }
-                if (table.Equals("PlexSettings"))
-                {
-                    TableCreation.CreatePlexSettingsTable(connection);
-                    continue;
-                }
-                if (table.Equals("CouchPotatoSettings"))
-                {
-                    TableCreation.CreateCouchPotatoSettingsTable(connection);
-                    continue;
-                }
-                if (table.Equals("SabNzbSettings"))
-                {
-                    TableCreation.CreateSabNzbSettingsSettingsTable(connection);
-                    continue;
-                }
-            }
+            TableCreation.CreateTables(connection);
         }
     }
 
