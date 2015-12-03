@@ -35,7 +35,7 @@ using Omu.ValueInjecter;
 
 namespace NZBDash.Core.SettingsService
 {
-    public class SabNzbSettingsService : ISettingsService<SabNzbSettingsDto>
+    public class SabNzbSettingsService : ISettingsService<SabNzbdSettingsDto>
     {
         private ISqlRepository<SabNzbSettings> Repo { get; set; }
         public SabNzbSettingsService(ISqlRepository<SabNzbSettings> repo)
@@ -43,22 +43,22 @@ namespace NZBDash.Core.SettingsService
             Repo = repo;
         }
 
-        public SabNzbSettingsDto GetSettings()
+        public SabNzbdSettingsDto GetSettings()
         {
             var result = Repo.GetAll();
             var setting = result.FirstOrDefault();
             if (setting == null)
             {
-                return new SabNzbSettingsDto();
+                return new SabNzbdSettingsDto();
             }
 
-            var model = new SabNzbSettingsDto();
+            var model = new SabNzbdSettingsDto();
             model.InjectFrom(setting);
 
             return model;
         }
 
-        public bool SaveSettings(SabNzbSettingsDto model)
+        public bool SaveSettings(SabNzbdSettingsDto model)
         {
             var entity = Repo.Get(model.Id);
 

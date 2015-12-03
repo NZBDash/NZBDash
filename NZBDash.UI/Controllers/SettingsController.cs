@@ -35,12 +35,12 @@ namespace NZBDash.UI.Controllers
     public class SettingsController : BaseController
     {
         private ISettingsService<NzbGetSettingsDto> NzbGetSettingsServiceSettingsService { get; set; }
-        private ISettingsService<SabNzbSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
+        private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
         private ISettingsService<SonarrSettingsViewModelDto> SonarrSettingsServiceSettingsService { get; set; }
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
         private ISettingsService<PlexSettingsDto> PlexSettingsServiceSettingsService { get; set; }
 
-        public SettingsController(ISettingsService<NzbGetSettingsDto> nzbGetSettingsService, ISettingsService<SabNzbSettingsDto> sabNzbSettingsService, ISettingsService<SonarrSettingsViewModelDto> sonarSettingsService,
+        public SettingsController(ISettingsService<NzbGetSettingsDto> nzbGetSettingsService, ISettingsService<SabNzbdSettingsDto> sabNzbSettingsService, ISettingsService<SonarrSettingsViewModelDto> sonarSettingsService,
              ISettingsService<CouchPotatoSettingsDto> cpSettingsService, ISettingsService<PlexSettingsDto> plexSettingsService)
             : base(typeof(SettingsController))
         {
@@ -133,7 +133,7 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new SabNzbSettingsDto
+            var dto = new SabNzbdSettingsDto
             {
                 IpAddress = viewModel.IpAddress,
                 Port = viewModel.Port,

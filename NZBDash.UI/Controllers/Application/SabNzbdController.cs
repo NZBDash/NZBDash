@@ -50,7 +50,7 @@ namespace NZBDash.UI.Controllers.Application
 {
 	public class SabNzbdController : BaseController
 	{
-        public SabNzbdController(ISettingsService<SabNzbSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
+        public SabNzbdController(ISettingsService<SabNzbdSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
 		{
 			SettingsService = settingsService;
 			Api = api;
@@ -58,8 +58,8 @@ namespace NZBDash.UI.Controllers.Application
 		    Settings = SettingsService.GetSettings();
 		}
 
-        private ISettingsService<SabNzbSettingsDto> SettingsService { get; set; }
-        private SabNzbSettingsDto Settings { get; set; }
+        private ISettingsService<SabNzbdSettingsDto> SettingsService { get; set; }
+        private SabNzbdSettingsDto Settings { get; set; }
 		private IThirdPartyService Api { get; set; }
 
 		[HttpGet]
@@ -118,7 +118,7 @@ namespace NZBDash.UI.Controllers.Application
 
                 var model = new DownloaderViewModel
                 {
-                    Application = Applications.SabNZB,
+                    Application = Applications.SabNZBD,
                     DownloadSpeed = MemorySizeConverter.SizeSuffix((long)downloadSpeed),
                     DownloadItem = new List<DownloadItem>()
                 };

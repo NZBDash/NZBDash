@@ -24,7 +24,7 @@ namespace NZBDash.UI.Helpers
             _logger.Trace(string.Format("Testing application {0}", application));
             switch (application)
             {
-                case Applications.SabNZB:
+                case Applications.SabNZBD:
                     return SabNzbConnection(ipAddress, apiKey);
                 case Applications.Sickbeard:
                     throw new NotImplementedException();

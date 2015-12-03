@@ -44,7 +44,7 @@ namespace NZBDash.DependencyResolver.Modules
         public override void Load()
         {
            Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
-           Bind<ISettingsService<SabNzbSettingsDto>>().To<SabNzbSettingsService>();
+           Bind<ISettingsService<SabNzbdSettingsDto>>().To<SabNzbSettingsService>();
            Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
            Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
            Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();

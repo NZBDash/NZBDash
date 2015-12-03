@@ -67,7 +67,7 @@ namespace NZBDash.Core.Test.Services
         [Test]
         public void InsertSettings()
         {
-            var dto = new SabNzbSettingsDto { Id = 2 };
+            var dto = new SabNzbdSettingsDto { Id = 2 };
             var result = Service.SaveSettings(dto);
 
             Assert.That(result, Is.True);
@@ -79,7 +79,7 @@ namespace NZBDash.Core.Test.Services
         [Test]
         public void ModifySettings()
         {
-            var dto = new SabNzbSettingsDto { Id = 1 };
+            var dto = new SabNzbdSettingsDto { Id = 1 };
             var result = Service.SaveSettings(dto);
 
             Assert.That(result, Is.True);

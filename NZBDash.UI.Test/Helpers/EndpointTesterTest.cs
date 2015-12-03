@@ -104,7 +104,7 @@ namespace NZBDash.UI.Test.Helpers
         [Test]
         public void GetSabNzbStatus()
         {
-            var result = Tester.TestApplicationConnectivity(Applications.SabNZB, "a", "a", "a", "a");
+            var result = Tester.TestApplicationConnectivity(Applications.SabNZBD, "a", "a", "a", "a");
             Assert.That(result, Is.True);
         }
 

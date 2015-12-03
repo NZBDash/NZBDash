@@ -9,13 +9,13 @@ namespace NZBDash.UI.Helpers
 {
     public class PrincipleExtension
     {
-        private ISettingsService<SabNzbSettingsDto> SabService { get; set; }
+        private ISettingsService<SabNzbdSettingsDto> SabService { get; set; }
         private ISettingsService<CouchPotatoSettingsDto> CpService { get; set; }
         private ISettingsService<PlexSettingsDto> PlexService { get; set; }
         private ISettingsService<NzbGetSettingsDto> NzbService { get; set; }
         private ISettingsService<SonarrSettingsViewModelDto> SonarrService { get; set; }
 
-        public PrincipleExtension(ISettingsService<SabNzbSettingsDto> sab, ISettingsService<CouchPotatoSettingsDto> cp,
+        public PrincipleExtension(ISettingsService<SabNzbdSettingsDto> sab, ISettingsService<CouchPotatoSettingsDto> cp,
             ISettingsService<SonarrSettingsViewModelDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget)
         {
             SabService = sab;
@@ -28,7 +28,7 @@ namespace NZBDash.UI.Helpers
         {
             switch (application)
             {
-                case Applications.SabNZB:
+                case Applications.SabNZBD:
                     return SabService.GetSettings().Enabled;
                 case Applications.Sickbeard:
                     break;

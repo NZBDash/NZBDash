@@ -56,7 +56,7 @@ namespace NZBDash.UI.Hubs
 
         public void TestSabNzbConnection(string ipAddress, int port, string apiKey)
         {
-            const Applications selectedApp = Applications.SabNZB;
+            const Applications selectedApp = Applications.SabNZBD;
 
             var tester = new EndpointTester(Service);
             var uri = UrlHelper.ReturnUri(ipAddress, port);

@@ -2,7 +2,7 @@
 
 namespace NZBDash.Core.Model.Settings
 {
-    public class SabNzbSettingsDto : BaseSettingsDto
+    public class SabNzbdSettingsDto : BaseSettingsDto
     {
         public string ApiKey { get; set; }
     }
