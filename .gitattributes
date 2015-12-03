@@ -63,3 +63,4 @@
 #*.RTF   diff=astextplain
 
 NZBDash.UI/Content/* linguist-vendored
+NZBDash.UI/Scripts/* linguist-vendored
