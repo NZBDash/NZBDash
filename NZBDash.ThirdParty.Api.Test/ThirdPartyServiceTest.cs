@@ -53,8 +53,8 @@ namespace NZBDash.ThirdParty.Api.Test
         private NzbGetList NzbGetList { get; set; }
         private NzbGetStatus NzbGetStatus { get; set; }
         private List<SonarrSeries> SonarrSeries { get; set; }
-        private SabNzbHistory SabNzbHistory { get; set; }
-        private SabNzbQueue SabNzbQueue { get; set; }
+        private SabNzbdHistory SabNzbdHistory { get; set; }
+        private SabNzbdQueue SabNzbdQueue { get; set; }
 
         [SetUp]
         public void SetUp()
@@ -68,8 +68,8 @@ namespace NZBDash.ThirdParty.Api.Test
             NzbGetList = fixture.Create<NzbGetList>();
             NzbGetStatus = fixture.Create<NzbGetStatus>();
             SonarrSeries = fixture.CreateMany<SonarrSeries>().ToList();
-            SabNzbHistory = fixture.Create<SabNzbHistory>();
-            SabNzbQueue = fixture.Create<SabNzbQueue>();
+            SabNzbdHistory = fixture.Create<SabNzbdHistory>();
+            SabNzbdQueue = fixture.Create<SabNzbdQueue>();
 
             mock.Setup(x => x.SerializeXmlData<PlexServers>(It.IsAny<string>())).Returns(Plex);
             mock.Setup(x => x.SerializedJsonData<SonarrSystemStatus>(It.IsAny<string>())).Returns(SonarrSystemStatus);
@@ -78,8 +78,8 @@ namespace NZBDash.ThirdParty.Api.Test
             mock.Setup(x => x.SerializedJsonData<NzbGetList>(It.IsAny<string>())).Returns(NzbGetList);
             mock.Setup(x => x.SerializedJsonData<NzbGetStatus>(It.IsAny<string>())).Returns(NzbGetStatus);
             mock.Setup(x => x.SerializedJsonData<List<SonarrSeries>>(It.IsAny<string>())).Returns(SonarrSeries);
-            mock.Setup(x => x.SerializedJsonData<SabNzbHistory>(It.IsAny<string>())).Returns(SabNzbHistory);
-            mock.Setup(x => x.SerializedJsonData<SabNzbQueue>(It.IsAny<string>())).Returns(SabNzbQueue);
+            mock.Setup(x => x.SerializedJsonData<SabNzbdHistory>(It.IsAny<string>())).Returns(SabNzbdHistory);
+            mock.Setup(x => x.SerializedJsonData<SabNzbdQueue>(It.IsAny<string>())).Returns(SabNzbdQueue);
 
             Mock = mock;
             Service = new ThirdPartyService(Mock.Object);
@@ -145,17 +145,17 @@ namespace NZBDash.ThirdParty.Api.Test
         [Test]
         public void GetSabNzbHistory()
         {
-            var result = Service.GetSabNzbHistory("a", "api");
+            var result = Service.GetSabNzbdHistory("a", "api");
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.History, Is.EqualTo(SabNzbHistory.History));
+            Assert.That(result.History, Is.EqualTo(SabNzbdHistory.History));
         }
 
         [Test]
         public void GetSanNzbQueue()
         {
-            var result = Service.GetSanNzbQueue("a", "api");
+            var result = Service.GetSabNzbdQueue("a", "api");
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.diskspace1, Is.EqualTo(SabNzbQueue.diskspace1));
+            Assert.That(result.diskspace1, Is.EqualTo(SabNzbdQueue.diskspace1));
         }
 
         [Test]

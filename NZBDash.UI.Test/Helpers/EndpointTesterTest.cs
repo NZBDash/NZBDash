@@ -48,7 +48,7 @@ namespace NZBDash.UI.Test.Helpers
         private NzbGetStatus NzbGetStatus { get; set; }
         private SonarrSystemStatus SonarrSystemStatus { get; set; }
         private PlexServers PlexServers { get; set; }
-        private SabNzbQueue SabNzbQueue { get; set; }
+        private SabNzbdQueue SabNzbdQueue { get; set; }
         private CouchPotatoStatus CouchPotatoStatus { get; set; }
 
         [SetUp]
@@ -59,14 +59,14 @@ namespace NZBDash.UI.Test.Helpers
             NzbGetStatus = f.Create<NzbGetStatus>();
             SonarrSystemStatus = f.Create<SonarrSystemStatus>();
             PlexServers = f.Create<PlexServers>();
-            SabNzbQueue = f.Create<SabNzbQueue>();
+            SabNzbdQueue = f.Create<SabNzbdQueue>();
             CouchPotatoStatus = f.Build<CouchPotatoStatus>().With(x => x.success, true).Create();
 
             mockThirdPartyService.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(NzbGetStatus);
             mockThirdPartyService.Setup(x => x.GetSonarrSystemStatus(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSystemStatus);
             mockThirdPartyService.Setup(x => x.GetPlexServers(It.IsAny<string>())).Returns(PlexServers);
             mockThirdPartyService.Setup(x => x.GetCouchPotatoStatus(It.IsAny<string>(), It.IsAny<string>())).Returns(CouchPotatoStatus);
-            mockThirdPartyService.Setup(x => x.GetSanNzbQueue(It.IsAny<string>(), It.IsAny<string>())).Returns(SabNzbQueue);
+            mockThirdPartyService.Setup(x => x.GetSabNzbdQueue(It.IsAny<string>(), It.IsAny<string>())).Returns(SabNzbdQueue);
 
 
             ThirdPartyServiceMock = mockThirdPartyService;

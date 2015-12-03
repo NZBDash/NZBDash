@@ -30,11 +30,11 @@ namespace NZBDash.ThirdParty.Api.Models.Api
 {
     public class SabNzbObject
     {
-        public SabNzbQueue Queue { get; set; }
+        public SabNzbdQueue Queue { get; set; }
         public History SabHistory { get; set; }
     }
 
-    public class SabNzbQueue
+    public class SabNzbdQueue
     {
         public string have_warnings { get; set; }
         public bool pp_active { get; set; }
@@ -61,7 +61,7 @@ namespace NZBDash.ThirdParty.Api.Models.Api
         public double mb { get; set; }
     }
 
-    public class SabNzbHistory
+    public class SabNzbdHistory
     {
         public History History { get; set; }
     }
@@ -137,6 +137,11 @@ namespace NZBDash.ThirdParty.Api.Models.Api
         public int bytes { get; set; }
         public string url_info { get; set; }
         public List<StageLog> stage_log { get; set; }
+    }
+
+    public class SabNzbdVersion
+    {
+        public string version { get; set; }
     }
 
 }

@@ -106,6 +106,33 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History.
+        /// </summary>
+        public static string Applications_SabNzbd_Tab_History {
+            get {
+                return ResourceManager.GetString("Applications_SabNzbd_Tab_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string Applications_SabNzbd_Tab_Home {
+            get {
+                return ResourceManager.GetString("Applications_SabNzbd_Tab_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SabNzbd.
+        /// </summary>
+        public static string Applications_SabNzbd_Title {
+            get {
+                return ResourceManager.GetString("Applications_SabNzbd_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TV Shows.
         /// </summary>
         public static string Applications_Sonarr_Tab_TvShows {
@@ -138,40 +165,6 @@ namespace NZBDash.Resources {
         public static string Common_Error_Description {
             get {
                 return ResourceManager.GetString("Common_Error_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to [
-        ///  {
-        ///    &quot;seriesId&quot;: 1,
-        ///    &quot;episodeFileId&quot;: 0,
-        ///    &quot;seasonNumber&quot;: 1,
-        ///    &quot;episodeNumber&quot;: 1,
-        ///    &quot;title&quot;: &quot;Mole Hunt&quot;,
-        ///    &quot;airDate&quot;: &quot;2009-09-17&quot;,
-        ///    &quot;airDateUtc&quot;: &quot;2009-09-18T02:00:00Z&quot;,
-        ///    &quot;overview&quot;: &quot;Archer is in trouble with his Mother and the Comptroller because his expense account is way out of proportion to his actual expenses. So he creates the idea that a Mole has breached ISIS and he needs to get into the mainframe to hunt him down (so he can cover his tracks!). All this leads to a [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Json {
-            get {
-                return ResourceManager.GetString("Json", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to [
-        ///  {
-        ///    &quot;title&quot;: &quot;Archer (2009)&quot;,
-        ///    &quot;seasonCount&quot;: 5,
-        ///    &quot;episodeCount&quot;: 47,
-        ///    &quot;episodeFileCount&quot;: 47,
-        ///    &quot;status&quot;: &quot;continuing&quot;,
-        ///    &quot;overview&quot;: &quot;At ISIS, an international spy agency, global crises are merely opportunities for its highly trained employees to confuse, undermine, betray and royally screw each other. At the center of it all is suave master spy Sterling Archer, whose less-than-masculine code name is \&quot;Duchess.\&quot; Archer works with his domineering mother Malory, who is also his bo [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string Json2 {
-            get {
-                return ResourceManager.GetString("Json2", resourceCulture);
             }
         }
         
@@ -248,7 +241,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please configure your settings for SabNzb.
+        ///   Looks up a localized string similar to Please configure your settings for SabNzbd.
         /// </summary>
         public static string Settings_Missing_SabNzb {
             get {
@@ -302,7 +295,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SabNzb Settings.
+        ///   Looks up a localized string similar to SabNzbd Settings.
         /// </summary>
         public static string Settings_SabNzb_Title {
             get {

@@ -67,7 +67,7 @@ namespace NZBDash.UI.Helpers
         {
             try
             {
-                var result = Api.GetSanNzbQueue(ip, apiKey);
+                var result = Api.GetSabNzbdQueue(ip, apiKey);
 
                 return result.state != null;
             }

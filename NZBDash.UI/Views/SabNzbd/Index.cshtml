@@ -1,0 +1,80 @@
+﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
+@{
+    ViewBag.Title = @Resources.Applications_SabNzbd_Title;
+}
+
+<h2>@ViewBag.Title</h2>
+<h3 id="status"></h3>
+
+
+<ul class="nav nav-tabs">
+    <li id="HomeTab" name="tab" role="presentation" class="active"><a id="Home" href="#">@Resources.Applications_SabNzbd_Tab_Home</a></li>
+    <li id="HistoryTab" name="tab" role="presentation"><a id="History" href="#">@Resources.Applications_SabNzbd_Tab_History</a></li>
+</ul>
+
+
+<div id="DownloadArea" class="area">
+    @Html.AjaxPanel()
+</div>
+<div id="HistoryArea" class="area" hidden="hidden">
+    @Html.AjaxPanel()
+</div>
+
+
+
+
+
+@section scripts
+{
+
+    <script>
+    function enableTab(elementToEnable, tabToEnable) {
+        $('.area').hide();
+        $("li[name=tab]").removeClass("active");
+        $(elementToEnable).show();
+        $(tabToEnable).addClass("active");
+
+    }
+    $(function () {
+
+        $.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
+            $("#DownloadArea").html(view);
+        });
+
+
+        $.ajax("@Url.Action("GetSabNzbStatus")").success(function (data) {
+            $('#status').html(data.Status);
+        });
+
+
+        setInterval(function () {
+
+            @*$.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
+                    $("#DownloadArea").html(view);
+                });*@
+
+
+            $.ajax("@Url.Action("GetSabNzbStatus")").success(function (data) {
+                $('#status').html(data.Status);
+            });
+        }, 2000);
+
+        @*$('#History').click(function () {
+                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function (view) {
+                    $('#HistoryArea').html(view);
+                    $('#HomeTab').removeClass("active");
+                    $('#HistoryTab').addClass("active");
+                    enableTab($('#HistoryArea'), $('#HistoryTab'));
+                });
+            });
+
+            $('#Home').click(function () {
+                $('#HomeTab').addClass("active");
+                $('#HistoryTab').removeClass("active");
+                enableTab($('#DownloadArea'), $('#HomeTab'));
+            });*@
+    });
+    </script>
+
+}

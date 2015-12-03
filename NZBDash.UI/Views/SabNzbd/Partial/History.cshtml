@@ -1,0 +1,26 @@
+﻿@using GridMvc.Html
+@model IEnumerable<NZBDash.UI.Models.ViewModels.NzbGet.NzbGetHistoryViewModel>
+
+
+<div class="col-md-12">
+
+    @Html.Grid(Model).Named("NzbGetHistoryGrid").Columns(columns =>
+{
+    columns.Add(x => x.Name)
+        .Titled("Name")
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(300);
+
+    columns.Add(x => x.Status)
+        .Titled("Status");
+
+
+    columns.Add(x => x.Category)
+        .Titled("Category");
+
+    columns.Add(x => x.FileSize);
+
+});
+
+</div>

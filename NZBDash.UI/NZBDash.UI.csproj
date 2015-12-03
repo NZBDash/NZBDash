@@ -216,6 +216,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Application\SabNzbdController.cs" />
     <Compile Include="Controllers\Application\SonarrController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -375,6 +376,10 @@
     <Content Include="Views\Sonarr\SeriesList.cshtml" />
     <Content Include="Views\NzbGet\Partial\Logs.cshtml" />
     <Content Include="Views\Sonarr\Episodes.cshtml" />
+    <Content Include="Views\SabNzbd\Index.cshtml" />
+    <Content Include="Views\SabNzbd\Partial\_Download.cshtml" />
+    <Content Include="Views\SabNzbd\Partial\History.cshtml" />
+    <Content Include="Views\SabNzbd\Partial\Logs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

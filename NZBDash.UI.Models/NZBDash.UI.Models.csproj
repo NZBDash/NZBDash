@@ -47,6 +47,7 @@
     <Compile Include="ViewModels\NzbGet\NzbGetHistoryViewModel.cs" />
     <Compile Include="ViewModels\NzbGet\NzbGetLogViewModel.cs" />
     <Compile Include="ViewModels\NzbGet\NzbGetViewModel.cs" />
+    <Compile Include="ViewModels\SabNzbd\SabNzbdStatusViewModel.cs" />
     <Compile Include="ViewModels\Sonarr\EpisodeViewModel.cs" />
     <Compile Include="ViewModels\Sonarr\SonarrSeriesViewModel.cs" />
   </ItemGroup>

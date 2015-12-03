@@ -147,7 +147,7 @@ namespace NZBDash.UI.Controllers.Application
 
 					model.DownloadItem.Add(new DownloadItem
 					{
-						FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
+                        FontAwesomeIcon = IconHelper.ChooseIcon(status),
 						DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.CurrentUICulture),
 						DownloadingName = result.NZBName,
 						Status = status,
