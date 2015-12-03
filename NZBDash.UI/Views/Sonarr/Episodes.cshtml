@@ -1,10 +1,22 @@
-﻿@model IEnumerable<NZBDash.UI.Models.ViewModels.Sonarr.SonarrEpisodeViewModel>
-
-<div class="col-md-12">
-    @foreach (var ep in Model)
+﻿@model NZBDash.UI.Models.ViewModels.Sonarr.SonarrEpisodeViewModel
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">@Model.SeasonTitle</h4>
+</div>
+<div class="modal-body">
+    @foreach (var kvp in Model.EpisodeViewModels)
     {
-        <div>
-            @ep.Title
+
+        <div class="modal-title">Season @kvp.Key</div>
+        <div class="modal-body">
+            <div class="col-md-4">@kvp.Value.Select(c => c.Title).FirstOrDefault()</div>
+            <div class="col-md-1">@kvp.Value.Select(c => c.EpisodeNumber).FirstOrDefault()</div>
+            <div class="col-md-1">@kvp.Value.Select(c => c.HasFile).FirstOrDefault()</div>
+
+ 
         </div>
     }
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>

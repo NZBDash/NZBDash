@@ -43,7 +43,7 @@ namespace NZBDash.ThirdParty.Api.Service
         {
             //var jsonData = Resources.Resources.Json2;
             //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData) : new List<SonarrSeries>();
-            
+
             return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
         }
 

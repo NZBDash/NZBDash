@@ -89,3 +89,17 @@ footer {
  .tabstrip_ts_active {
      border: none;
  }
+ @media screen and (min-width: 768px) {
+  .modal-dialog-middle {
+    right: auto;
+      left: 0;
+    width: 600px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+      position: static;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}

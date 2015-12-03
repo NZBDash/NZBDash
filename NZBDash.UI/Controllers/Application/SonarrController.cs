@@ -96,7 +96,7 @@ namespace NZBDash.UI.Controllers.Application
         }
 
         [HttpGet]
-        public ActionResult GetEpisodes(int id)
+        public ActionResult GetEpisodes(int id, string title)
         {
             if (!Settings.HasSettings)
             {
@@ -107,13 +107,19 @@ namespace NZBDash.UI.Controllers.Application
             var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
 
             var episodes = ApiService.GetSonarrEpisodes(formattedUri, Settings.ApiKey, id);
-            var viewModel = new List<SonarrEpisodeViewModel>();
+            var viewModel = new SonarrEpisodeViewModel { EpisodeViewModels = new Dictionary<int, List<EpisodeViewModel>>(), SeasonTitle = title };
+            
             foreach (var e in episodes)
             {
-                var episodeViewModel = new SonarrEpisodeViewModel();
-                var mappedResult = (SonarrEpisodeViewModel)episodeViewModel.InjectFrom(new SonarrEpisodeMapper(), e);
+                var episodeViewModel = new EpisodeViewModel();
 
-                viewModel.Add(mappedResult);
+                if (!viewModel.EpisodeViewModels.ContainsKey(e.seasonNumber))
+                {
+                    viewModel.EpisodeViewModels.Add(e.seasonNumber, new List<EpisodeViewModel>());
+                }
+                var mappedResult = (EpisodeViewModel)episodeViewModel.InjectFrom(new SonarrEpisodeMapper(), e);
+                viewModel.EpisodeViewModels[e.seasonNumber].Add(mappedResult);
+    
             }
 
             return PartialView("Episodes", viewModel);

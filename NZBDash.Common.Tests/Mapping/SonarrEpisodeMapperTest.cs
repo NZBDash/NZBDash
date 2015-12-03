@@ -68,7 +68,7 @@ namespace NZBDash.Common.Tests.Mapping
                 tvDbEpisodeId = tvdbId
             };
 
-            var target = new SonarrEpisodeViewModel();
+            var target = new EpisodeViewModel();
             target.InjectFrom(new SonarrEpisodeMapper(), source);
 
             Assert.That(target.ID, Is.EqualTo(id));

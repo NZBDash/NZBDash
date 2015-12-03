@@ -131,19 +131,20 @@ namespace NZBDash.UI.Test.Controllers
         [Test]
         public void GetEpisodesForSeries()
         {
-            var series = (PartialViewResult)_controller.GetEpisodes(1);
-            var model = (List<SonarrEpisodeViewModel>)series.Model;
+            var series = (PartialViewResult)_controller.GetEpisodes(1, "stringTitle");
+            var model = (SonarrEpisodeViewModel)series.Model;
 
-            Assert.That(model.Count, Is.GreaterThan(0));
-            Assert.That(model[0].Monitored, Is.EqualTo(SonarrEpisode[0].monitored));
-            Assert.That(model[0].Overview, Is.EqualTo(SonarrEpisode[0].overview));
-            Assert.That(model[0].Title, Is.EqualTo(SonarrEpisode[0].title));
-            Assert.That(model[0].AbsoluteEpisodeNumber, Is.EqualTo(SonarrEpisode[0].absoluteEpisodeNumber));
-            Assert.That(model[0].Downloading, Is.EqualTo(SonarrEpisode[0].downloading));
-            Assert.That(model[0].EpisodeFileId, Is.EqualTo(SonarrEpisode[0].episodeFileId));
-            Assert.That(model[0].HasFile, Is.EqualTo(SonarrEpisode[0].hasFile));
-            Assert.That(model[0].ID, Is.EqualTo(SonarrEpisode[0].id));
-            Assert.That(model[0].SeasonNumber, Is.EqualTo(SonarrEpisode[0].seasonNumber));
+            Assert.That(model.EpisodeViewModels.Count, Is.GreaterThan(0));
+            Assert.That(model.SeasonTitle, Is.EqualTo("stringTitle"));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].Monitored, Is.EqualTo(SonarrEpisode[0].monitored));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].Overview, Is.EqualTo(SonarrEpisode[0].overview));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].Title, Is.EqualTo(SonarrEpisode[0].title));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].AbsoluteEpisodeNumber, Is.EqualTo(SonarrEpisode[0].absoluteEpisodeNumber));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].Downloading, Is.EqualTo(SonarrEpisode[0].downloading));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].EpisodeFileId, Is.EqualTo(SonarrEpisode[0].episodeFileId));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].HasFile, Is.EqualTo(SonarrEpisode[0].hasFile));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].ID, Is.EqualTo(SonarrEpisode[0].id));
+            Assert.That(model.EpisodeViewModels[SonarrEpisode[0].seasonNumber][0].SeasonNumber, Is.EqualTo(SonarrEpisode[0].seasonNumber));
 
 
             ServiceMock.Verify(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()), Times.Once);
@@ -167,7 +168,7 @@ namespace NZBDash.UI.Test.Controllers
             ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
             _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
 
-            var series = (PartialViewResult)_controller.GetEpisodes(1);
+            var series = (PartialViewResult)_controller.GetEpisodes(1, "title");
             var model = series.ViewBag;
 
             Assert.That(model.Error, Is.Not.Null);

@@ -25,10 +25,11 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Collections.Generic;
 
 namespace NZBDash.UI.Models.ViewModels.Sonarr
 {
-    public class SonarrEpisodeViewModel
+    public class EpisodeViewModel
     {
         public int SeriesId { get; set; }
         public int EpisodeFileId { get; set; }
@@ -46,5 +47,11 @@ namespace NZBDash.UI.Models.ViewModels.Sonarr
         public int AbsoluteEpisodeNumber { get; set; }
         public bool Downloading { get; set; }
         public int ID { get; set; }
+    }
+
+    public class SonarrEpisodeViewModel
+    {
+        public string SeasonTitle { get; set; }
+        public Dictionary<int, List<EpisodeViewModel>> EpisodeViewModels { get; set; }
     }
 }
