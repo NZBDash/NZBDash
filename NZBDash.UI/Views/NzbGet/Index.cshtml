@@ -1,5 +1,6 @@
 ﻿@using NZBDash.Resources
 @using NZBDash.UI.Helpers
+@model NZBDash.UI.Models.ViewModels.NzbGetHistoryGrid
 @{
     ViewBag.Title = @Resources.Applications_NzbGet_Title;
 }
@@ -19,7 +20,7 @@
     @Html.AjaxPanel()
 </div>
 <div id="HistoryArea" class="area" hidden="hidden">
-    @Html.AjaxPanel()
+    @Html.Partial("Partial/History", Model.Grid)
 </div>
 
 <div id="LogsArea" class="area" hidden="hidden">
@@ -31,7 +32,7 @@
 
 @section scripts
 {
-
+    @Scripts.Render("~/bundles/gridmvc")
     <script>
         function enableTab(elementToEnable, tabToEnable) {
             $('.area').hide();
@@ -46,32 +47,36 @@
                 $("#DownloadArea").html(view);
             });
 
-
             $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
                 $('#status').html(data.Status);
             });
 
-
             setInterval(function () {
-
                 $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
                     $("#DownloadArea").html(view);
                 });
-
 
                 $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
                     $('#status').html(data.Status);
                 });
             }, 2000);
 
+            //////// Ajax History Grid ////////
             $('#History').click(function () {
-                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function (view) {
-                    $('#HistoryArea').html(view);
-                    $('#HomeTab').removeClass("active");
-                    $('#HistoryTab').addClass("active");
-                    enableTab($('#HistoryArea'), $('#HistoryTab'));
+                $(".grid-mvc").gridmvc().ajaxify(
+                {
+                    getPagedData: "@Url.Action("AjaxHistoryPaged")",
+                    getData: "@Url.Action("AjaxHistory")"
                 });
+
+                $(".grid-mvc")
+                    .gridmvc()
+                    .refreshFullGrid();
+                $('#HomeTab').removeClass("active");
+                $('#HistoryTab').addClass("active");
+                enableTab($('#HistoryArea'), $('#HistoryTab'));
             });
+            ///////////////////////////////////
 
             $('#Home').click(function () {
                 $('#HomeTab').addClass("active");
@@ -87,5 +92,4 @@
             });
         });
     </script>
-
 }

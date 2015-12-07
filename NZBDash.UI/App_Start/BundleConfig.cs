@@ -37,6 +37,15 @@ namespace NZBDash.UI
                       "~/Content/font-awesome.css",
                       "~/Content/web/kendo.common-bootstrap.core.css",
                       "~/Content/web/kendo.default.css"));
+
+            var ajaxGrid = new ScriptBundle("~/bundles/gridmvc").Include(
+                "~/Scripts/URI.js",
+                "~/Scripts/gridmvc.js",
+                "~/Scripts/gridmvc-ext.js",
+                "~/Scripts/ladda-bootstrap/ladda.min.js",
+                "~/Scripts/ladda-bootstrap/spin.min.js");
+            bundles.Add(ajaxGrid);
+
         }
     }
 }

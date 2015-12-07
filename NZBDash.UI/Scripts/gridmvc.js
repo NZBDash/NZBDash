@@ -205,11 +205,11 @@ GridMvc = (function ($) {
             return;
         }
         var dropWidth = drop.width();
-        var offsetRight = $(window).width() - (dropLeft + dropWidth);
+        var offsetRight = $(window).width() + $(window).scrollLeft() - (dropLeft + dropWidth);
         if (offsetRight < 0) {
             var info = getInfo();
-            info.arrow.css({ left: (info.currentArrowLeft - offsetRight + 10) + "px" });
-            drop.css({ left: (info.currentDropLeft + offsetRight - 10) + "px" });
+            info.arrow.css({ left: (info.currentArrowLeft - offsetRight + 5) + "px" });
+            drop.css({ left: (info.currentDropLeft + offsetRight - 5) + "px" });
         }
     };
     /***
@@ -392,7 +392,9 @@ GridMvc.lang.en = {
         Contains: "Contains",
         EndsWith: "EndsWith",
         GreaterThan: "Greater than",
-        LessThan: "Less than"
+        LessThan: "Less than",
+        GreaterThanOrEquals: "Greater than or equals",
+        LessThanOrEquals: "Less than or equals"
     },
     code: 'en',
     boolTrueLabel: "Yes",
@@ -510,12 +512,12 @@ NumberFilterWidget = (function ($) {
     numberFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
     numberFilterWidget.prototype.getAssociatedTypes = function () {
-        return ["System.Int32", "System.Double", "System.Decimal", "System.Byte", "System.Single", "System.Float", "System.Int64"];
+        return ["System.Int32", "System.Double", "System.Decimal", "System.Byte", "System.Single", "System.Float", "System.Int64", "System.Int16", "System.UInt64", "System.UInt32", "System.UInt16"];
     };
 
     numberFilterWidget.prototype.onShow = function () {
         var textBox = this.container.find(".grid-filter-input");
-        if (textBox.length <= 0) return;
+        if (textBox.length <= 0) return; 
         textBox.focus();
     };
 
@@ -576,6 +578,8 @@ NumberFilterWidget = (function ($) {
             case "System.Byte":
             case "System.Int32":
             case "System.Int64":
+            case "System.UInt32":
+            case "System.UInt64":
                 regex = /[0-9]/;
                 break;
             default:
@@ -599,7 +603,7 @@ DateTimeFilterWidget = (function ($) {
 
     function dateTimeFilterWidget() { }
 
-    dateTimeFilterWidget.prototype.getAssociatedTypes = function () { return ["System.DateTime"]; };
+    dateTimeFilterWidget.prototype.getAssociatedTypes = function () { return ["System.DateTime", "System.Date", "System.DateTimeOffset"]; };
 
     dateTimeFilterWidget.prototype.showClearFilterButton = function () { return true; };
 
@@ -607,6 +611,7 @@ DateTimeFilterWidget = (function ($) {
         this.datePickerIncluded = typeof ($.fn.datepicker) != 'undefined';
         this.cb = applycb;
         this.data = data;
+        this.typeName = typeName;
         this.container = container;
         this.lang = lang;
         this.value = values.length > 0 ? values[0] : { filterType: 1, filterValue: "" };//support only one filter value
@@ -644,7 +649,14 @@ DateTimeFilterWidget = (function ($) {
             var dateContainer = this.container.find(".grid-filter-datepicker");
             dateContainer.datepicker(datePickerOptions).on('changeDate', function (ev) {
                 var type = $context.container.find(".grid-filter-type").val();
-                var filterValues = [{ filterType: type, filterValue: ev.format() }];
+                //if (type == "1") {
+                //    var tomorrow = new Date(ev.getTime());
+                //    tomorrow.setDate(ev.getDate() + 1);
+                //    var filterValues = [{ filterType: type, filterValue: ev.format() }];
+                //}
+                //else{
+                    var filterValues = [{ filterType: type, filterValue: ev.format() }];
+                //}
                 $context.cb(filterValues);
             });
             if (this.value.filterValue)
@@ -701,7 +713,7 @@ BooleanFilterWidget = (function ($) {
         this.container.append(html);
     };
 
-    booleanFilterWidget.prototype.registerEvents = function () {
+    booleanFilterWidget.prototype.registerEvents = function () { 
         var $context = this;
         var applyBtn = this.container.find(".grid-filter-choose");
         applyBtn.click(function () {

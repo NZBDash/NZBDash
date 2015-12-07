@@ -1,16 +1,15 @@
 ﻿@using GridMvc.Html
-@model IEnumerable<NZBDash.UI.Models.ViewModels.NzbGet.NzbGetHistoryViewModel>
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<NZBDash.UI.Models.ViewModels.NzbGet.NzbGetHistoryViewModel>
 
+@*//TODO : Resource*@
 
-<div class="col-md-12">
-
-    @Html.Grid(Model).Named("NzbGetHistoryGrid").Columns(columns =>
+@Html.Grid(Model).Columns(columns =>
 {
     columns.Add(x => x.Name)
-        .Titled("Name")
-        .Encoded(false)
-        .Sanitized(false)
-        .SetWidth(300);
+       .Titled("Name")
+       .Encoded(false)
+       .Sanitized(false)
+       .SetWidth(300);
 
     columns.Add(x => x.Status)
         .Titled("Status");
@@ -20,7 +19,4 @@
         .Titled("Category");
 
     columns.Add(x => x.FileSize);
-
-});
-
-</div>
+}).WithPaging(10).Filterable().WithMultipleFilters()
