@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: NzbGetController.cs
+//  File: SabNzbdController.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.WebParts;
 
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
@@ -48,55 +49,55 @@ using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
-	public class SabNzbdController : BaseController
-	{
+    public class SabNzbdController : BaseController
+    {
         public SabNzbdController(ISettingsService<SabNzbdSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
-		{
-			SettingsService = settingsService;
-			Api = api;
-			Logger = logger;
-		    Settings = SettingsService.GetSettings();
-		}
+        {
+            SettingsService = settingsService;
+            Api = api;
+            Logger = logger;
+            Settings = SettingsService.GetSettings();
+        }
 
         private ISettingsService<SabNzbdSettingsDto> SettingsService { get; set; }
         private SabNzbdSettingsDto Settings { get; set; }
-		private IThirdPartyService Api { get; set; }
+        private IThirdPartyService Api { get; set; }
 
-		[HttpGet]
-		public ActionResult Index()
-		{
-			return View();
-		}
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
 
-		[HttpGet]
-		public ActionResult GetSabNzbStatus()
-		{
+        [HttpGet]
+        public ActionResult GetSabNzbStatus()
+        {
             if (!Settings.HasSettings)
             {
                 return new EmptyResult();
             }
 
-			Logger.Trace("Getting Config");
+            Logger.Trace("Getting Config");
             var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
-			try
-			{
+            try
+            {
                 Logger.Trace("Getting GetSabNzbdQueue");
                 var queueInfo = Api.GetSabNzbdQueue(formattedUri, Settings.ApiKey);
 
-				var sabNzbdModel = new SabNzbdStatusViewModel
-				{
+                var sabNzbdModel = new SabNzbdStatusViewModel
+                {
                     Status = queueInfo.paused ? "Paused" : "Running",
-				};
+                };
 
-				Logger.Trace("Returning Model");
-				return Json(sabNzbdModel, JsonRequestBehavior.AllowGet);
-			}
-			catch (Exception e)
-			{
-				Logger.Error(e.Message, e);
-				return Json("Error", JsonRequestBehavior.AllowGet);
-			}
-		}
+                Logger.Trace("Returning Model");
+                return Json(sabNzbdModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+        }
 
         [HttpGet]
         public ActionResult GetSabNzbdDownloadInformation()
@@ -152,7 +153,7 @@ namespace NZBDash.UI.Controllers.Application
                         DownloadingName = result.filename,
                         Status = status,
                         NzbId = nzbId,
-                        ProgressBarClass = "progress-bar-success"
+                        ProgressBarClass = progressBar
                     });
                 }
 
@@ -166,44 +167,45 @@ namespace NZBDash.UI.Controllers.Application
             }
         }
 
-        //[HttpGet]
-        //public ActionResult GetNzbGetDownloadHistory()
-        //{
-        //    try
-        //    {
-        //        if (!Settings.HasSettings)
-        //        {
-        //            ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
-        //            return PartialView("DashletError");
-        //        }
+        [HttpGet]
+        public ActionResult GetSabnzbdDownloadHistory()
+        {
+            try
+            {
+                if (!Settings.HasSettings)
+                {
+                    ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                    return PartialView("DashletError");
+                }
 
-        //        var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
-        //        var history = Api.GetNzbGetHistory(formattedUri, Settings.Username, Settings.Password);
+                //var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+                //var history = Api.GetSabNzbdHistory(formattedUri, Settings.ApiKey);
 
-        //        var items = new List<NzbGetHistoryViewModel>();
-        //        foreach (var result in history.result)
-        //        {
-        //            var singleItem = new NzbGetHistoryViewModel();
-        //            var mappedResult = (NzbGetHistoryViewModel)singleItem.InjectFrom(new NzbGetHistoryMapper(), result);
-        //            if (!string.IsNullOrEmpty(mappedResult.FileSize))
-        //            {
-        //                long newFileSize;
-        //                long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
-        //                mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
-        //            }
-        //            items.Add(mappedResult);
-        //        }
+                //    var items = new List<SabNzbdHistoryViewModel>();
+                //    foreach (var result in history)
+                //    {
+                //        var singleItem = new SabNzbdHistoryViewModel();
+                //        var mappedResult = (SabNzbdHistoryViewModel)singleItem.InjectFrom(new SabNzbdHistoryMapper(), result);
+                //        if (!string.IsNullOrEmpty(mappedResult.FileSize))
+                //        {
+                //            long newFileSize;
+                //            long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
+                //            mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
+                //        }
+                //        items.Add(mappedResult);
+                //    }
 
-        //        // Order by Id desc and get the last 30 downloads
-        //        var model = items.OrderByDescending(x => x.Id).Take(30).ToList();
-        //        return PartialView("Partial/History", model);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.Error(e.Message, e);
-        //        return PartialView("DashletError");
-        //    }
-        //}
+                //    // Order by Id desc and get the last 30 downloads
+                //    var model = items.OrderByDescending(x => x.Id).Take(30).ToList();
+                //    return PartialView("Partial/History", model);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e.Message, e);
+                    return PartialView("DashletError");
+                }
+            return View();
+        }
 
         //[HttpGet]
         //public ActionResult Logs()
@@ -227,5 +229,5 @@ namespace NZBDash.UI.Controllers.Application
 
         //    return PartialView("Partial/Logs",model);
         //}
-	}
+    }
 }

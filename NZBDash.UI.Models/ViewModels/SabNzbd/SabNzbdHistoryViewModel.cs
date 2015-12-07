@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: MemorySizeConverterTest.cs
+//  File: SabNzbdHistoryViewModel.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,48 +24,23 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
+using System.ComponentModel.DataAnnotations;
 
-using NUnit.Framework;
-
-using NZBDash.Common.Helpers;
-
-namespace NZBDash.Common.Tests.Helpers
+namespace NZBDash.UI.Models.ViewModels.SabNzbd
 {
-    [TestFixture]
-    public class MemorySizeConverterTest
+    public class SabNzbdHistoryViewModel
     {
-        [TestCase(1, "1 KB")]
-        [TestCase(1024, "1 MB")]
-        [TestCase(2048, "2 MB")]
-        [TestCase(4879456, "4.7 GB")]
-        [TestCase(10485760, "10 GB")]
-        [TestCase(104857600000, "97.7 TB")]
-        public void SizeSuffix(Int64 input, string expected)
-        {
-            var result = MemorySizeConverter.SizeSuffix(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
-
-        [TestCase(1024, "1 GB")]
-        [TestCase(3817, "3.7 GB")]
-        [TestCase(2048, "2 GB")]
-        [TestCase(4879456, "4.7 TB")]
-        [TestCase(10485760, "10 TB")]
-        [TestCase(104857600000, "97.7 PB")]
-        public void SizeSuffixMb(Int64 input, string expected)
-        {
-            var result = MemorySizeConverter.SizeSuffixMb(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
-
-        [TestCase("10.0 MB", 10)]
-        [TestCase("1 GB", 1024)]
-        [TestCase("5.3 GB", 5427.2)]
-        public void ConvertToMbTest(string input, double expected)
-        {
-            var result = MemorySizeConverter.ConvertToMb(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
+        //TODO: Resource
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Status { get; set; }
+        [Display(Name = "Nzb Name")]
+        public string NzbName { get; set; }
+        public string Category { get; set; }
+        [Display(Name = "File Size")]
+        public string FileSize { get; set; }
+        public int Health { get; set; }
+        [Display(Name = "Time")]
+        public int HistoryTime { get; set; }
     }
 }

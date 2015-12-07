@@ -31,6 +31,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Windows|AnyCPU'">
+    <OutputPath>bin\Windows\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Linux|AnyCPU'">
+    <OutputPath>bin\Linux\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -51,7 +69,8 @@
     <Compile Include="Api\NzbGetLogs.cs" />
     <Compile Include="Api\NzbGetStatus.cs" />
     <Compile Include="Api\PlexServers.cs" />
-    <Compile Include="Api\SabNzbModels.cs" />
+    <Compile Include="Api\SabNzbd\SabNzbdHistory.cs" />
+    <Compile Include="Api\SabNzbd\SabNzbModels.cs" />
     <Compile Include="Api\ServerStatus.cs" />
     <Compile Include="Api\Sonarr\SoanrrSeries.cs" />
     <Compile Include="Api\Sonarr\SonarrSystemStatus.cs" />

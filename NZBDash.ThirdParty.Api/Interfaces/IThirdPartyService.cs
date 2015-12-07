@@ -29,6 +29,7 @@ using NZBDash.ThirdParty.Api.Models.Api;
 
 using System.Collections.Generic;
 
+using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
 namespace NZBDash.ThirdParty.Api.Interfaces

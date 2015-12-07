@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: MemorySizeConverterTest.cs
+//  File: SabNzbdHistoryMapperTest.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,48 +24,41 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
+using System.Globalization;
 
 using NUnit.Framework;
 
 using NZBDash.Common.Helpers;
+using NZBDash.Common.Mapping;
+using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
+using NZBDash.UI.Models.ViewModels.NzbGet;
 
-namespace NZBDash.Common.Tests.Helpers
+using Omu.ValueInjecter;
+
+using Ploeh.AutoFixture;
+
+namespace NZBDash.Common.Tests.Mapping
 {
     [TestFixture]
-    public class MemorySizeConverterTest
+    public class SabNzbdHistoryMapperTest
     {
-        [TestCase(1, "1 KB")]
-        [TestCase(1024, "1 MB")]
-        [TestCase(2048, "2 MB")]
-        [TestCase(4879456, "4.7 GB")]
-        [TestCase(10485760, "10 GB")]
-        [TestCase(104857600000, "97.7 TB")]
-        public void SizeSuffix(Int64 input, string expected)
+        [Test]
+        public void SabNzbdHistoryMapper()
         {
-            var result = MemorySizeConverter.SizeSuffix(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
+            var f = new Fixture();
+            var source = f.Build<Slot>().With(x => x.size, "20 MB").Create();
+            var target = new NzbGetHistoryViewModel();
+            target.InjectFrom(new SabNzbdHistoryMapper(), source);
 
-        [TestCase(1024, "1 GB")]
-        [TestCase(3817, "3.7 GB")]
-        [TestCase(2048, "2 GB")]
-        [TestCase(4879456, "4.7 TB")]
-        [TestCase(10485760, "10 TB")]
-        [TestCase(104857600000, "97.7 PB")]
-        public void SizeSuffixMb(Int64 input, string expected)
-        {
-            var result = MemorySizeConverter.SizeSuffixMb(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
+            Assert.That(target.Id, Is.EqualTo(source.id));
+            Assert.That(target.NzbName, Is.EqualTo(source.nzb_name));
+            Assert.That(target.Status, Is.EqualTo(source.status));
+            Assert.That(target.FileSize, Is.EqualTo(MemorySizeConverter.ConvertToMb(source.size).ToString(CultureInfo.CurrentUICulture)));
 
-        [TestCase("10.0 MB", 10)]
-        [TestCase("1 GB", 1024)]
-        [TestCase("5.3 GB", 5427.2)]
-        public void ConvertToMbTest(string input, double expected)
-        {
-            var result = MemorySizeConverter.ConvertToMb(input);
-            Assert.That(result, Is.EqualTo(expected));
+            Assert.That(target.Id, Is.EqualTo(source.id));
+            Assert.That(target.Category, Is.EqualTo(source.category));
+            Assert.That(target.Category, Is.EqualTo(source.category));
+
         }
     }
 }

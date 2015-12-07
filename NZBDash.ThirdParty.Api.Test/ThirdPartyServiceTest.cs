@@ -34,6 +34,7 @@ using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.ThirdParty.Api.Service;
 
@@ -147,7 +148,7 @@ namespace NZBDash.ThirdParty.Api.Test
         {
             var result = Service.GetSabNzbdHistory("a", "api");
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.History, Is.EqualTo(SabNzbdHistory.History));
+            Assert.That(result, Is.EqualTo(SabNzbdHistory));
         }
 
         [Test]

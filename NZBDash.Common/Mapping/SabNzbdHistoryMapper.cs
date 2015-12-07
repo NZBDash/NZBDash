@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: MemorySizeConverterTest.cs
+//  File: SabNzbdHistoryMapper.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,48 +24,34 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
-
-using NUnit.Framework;
+using System.Globalization;
+using System.Reflection;
 
 using NZBDash.Common.Helpers;
+using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 
-namespace NZBDash.Common.Tests.Helpers
+using Omu.ValueInjecter.Injections;
+
+namespace NZBDash.Common.Mapping
 {
-    [TestFixture]
-    public class MemorySizeConverterTest
+    public class SabNzbdHistoryMapper : KnownSourceInjection<Slot>
     {
-        [TestCase(1, "1 KB")]
-        [TestCase(1024, "1 MB")]
-        [TestCase(2048, "2 MB")]
-        [TestCase(4879456, "4.7 GB")]
-        [TestCase(10485760, "10 GB")]
-        [TestCase(104857600000, "97.7 TB")]
-        public void SizeSuffix(Int64 input, string expected)
+        protected override void Inject(Slot source, object target)
         {
-            var result = MemorySizeConverter.SizeSuffix(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
+            MappingHelper.MapMatchingProperties(target, source);
 
-        [TestCase(1024, "1 GB")]
-        [TestCase(3817, "3.7 GB")]
-        [TestCase(2048, "2 GB")]
-        [TestCase(4879456, "4.7 TB")]
-        [TestCase(10485760, "10 TB")]
-        [TestCase(104857600000, "97.7 PB")]
-        public void SizeSuffixMb(Int64 input, string expected)
-        {
-            var result = MemorySizeConverter.SizeSuffixMb(input);
-            Assert.That(result, Is.EqualTo(expected));
-        }
+            var fileSize = target.GetType().GetProperty("FileSize", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var nzbName = target.GetType().GetProperty("NzbName", BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-        [TestCase("10.0 MB", 10)]
-        [TestCase("1 GB", 1024)]
-        [TestCase("5.3 GB", 5427.2)]
-        public void ConvertToMbTest(string input, double expected)
-        {
-            var result = MemorySizeConverter.ConvertToMb(input);
-            Assert.That(result, Is.EqualTo(expected));
+            if (fileSize == null) return;
+            if (nzbName == null) return;
+
+            var fileSizeVal = MemorySizeConverter.ConvertToMb(source.size);
+            if (fileSizeVal == default(double)) return;
+
+
+            fileSize.SetValue(target, fileSizeVal.ToString(CultureInfo.CurrentUICulture));
+            nzbName.SetValue(target, source.nzb_name);
         }
     }
 }

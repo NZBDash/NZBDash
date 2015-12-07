@@ -101,6 +101,9 @@
       <HintPath>..\packages\valueinjecter.3.1.1\lib\net40\Omu.ValueInjecter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.36.11\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -120,6 +123,7 @@
     </Compile>
     <Compile Include="Helpers\UrlHelperTests.cs" />
     <Compile Include="Mapping\MappingHelperTests.cs" />
+    <Compile Include="Mapping\SabNzbdHistoryMapperTest.cs" />
     <Compile Include="Mapping\SonarrEpisodeMapperTest.cs" />
     <Compile Include="Mapping\NzbGetLogMapperTest.cs" />
     <Compile Include="Mapping\NzbGetHistoryMapperTest.cs" />

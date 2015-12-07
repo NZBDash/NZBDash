@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
 namespace NZBDash.ThirdParty.Api.Service
