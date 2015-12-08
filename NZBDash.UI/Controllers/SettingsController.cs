@@ -28,7 +28,10 @@ using System.Web.Mvc;
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Settings;
+
+using Omu.ValueInjecter;
 
 namespace NZBDash.UI.Controllers
 {
@@ -64,16 +67,8 @@ namespace NZBDash.UI.Controllers
             var dto = NzbGetSettingsServiceSettingsService.GetSettings();
 
             Logger.Trace("Converting settings into ViewModel");
-            var model = new NzbGetSettingsViewModel
-            {
-                Password = dto.Password,
-                Port = dto.Port,
-                Username = dto.Username,
-                Enabled = dto.Enabled,
-                Id = dto.Id,
-                IpAddress = dto.IpAddress,
-                ShowOnDashboard = dto.ShowOnDashboard
-            };
+            var model = new NzbGetSettingsViewModel();
+            model.InjectFrom(dto);
 
             Logger.Trace("returning ViewModel");
             return View(model);
@@ -87,20 +82,13 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new NzbGetSettingsDto
-            {
-                IpAddress = viewModel.IpAddress,
-                Password = viewModel.Password,
-                Port = viewModel.Port,
-                Username = viewModel.Username,
-                Enabled = viewModel.Enabled,
-                Id = viewModel.Id,
-                ShowOnDashboard = viewModel.ShowOnDashboard
-            };
+            var dto = new NzbGetSettingsDto();
+            dto.InjectFrom(viewModel);
 
             var result = NzbGetSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
+                KillCache(NavBarHelper.NzbGetKey);
                 return RedirectToAction("NzbGetSettings");
             }
 
@@ -111,15 +99,8 @@ namespace NZBDash.UI.Controllers
         public ActionResult SabNzbSettings()
         {
             var dto = SabNzbSettingsServiceSettingsService.GetSettings();
-            var model = new SabNzbSettingsViewModel
-            {
-                ApiKey = dto.ApiKey,
-                Port = dto.Port,
-                Enabled = dto.Enabled,
-                Id = dto.Id,
-                IpAddress = dto.IpAddress,
-                ShowOnDashboard = dto.ShowOnDashboard
-            };
+            var model = new SabNzbSettingsViewModel();
+            model.InjectFrom(dto);
 
             return View(model);
         }
@@ -133,19 +114,13 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new SabNzbdSettingsDto
-            {
-                IpAddress = viewModel.IpAddress,
-                Port = viewModel.Port,
-                Enabled = viewModel.Enabled,
-                Id = viewModel.Id,
-                ApiKey = viewModel.ApiKey,
-                ShowOnDashboard = viewModel.ShowOnDashboard
-            };
+            var dto = new SabNzbdSettingsDto();
+            dto.InjectFrom(viewModel);
 
             var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
+                KillCache(NavBarHelper.SabKey);
                 return RedirectToAction("SabNzbSettings");
             }
 
@@ -156,15 +131,8 @@ namespace NZBDash.UI.Controllers
         public ActionResult SonarrSettings()
         {
             var dto = SonarrSettingsServiceSettingsService.GetSettings();
-            var model = new SonarrSettingsViewModel
-            {
-                Port = dto.Port,
-                Enabled = dto.Enabled,
-                Id = dto.Id,
-                IpAddress = dto.IpAddress,
-                ApiKey = dto.ApiKey,
-                ShowOnDashboard = dto.ShowOnDashboard
-            };
+            var model = new SonarrSettingsViewModel();
+            model.InjectFrom(dto);
 
             return View(model);
         }
@@ -177,19 +145,13 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new SonarrSettingsViewModelDto
-            {
-                IpAddress = viewModel.IpAddress,
-                Port = viewModel.Port,
-                Enabled = viewModel.Enabled,
-                Id = viewModel.Id,
-                ApiKey = viewModel.ApiKey,
-                ShowOnDashboard = viewModel.ShowOnDashboard
-            };
+            var dto = new SonarrSettingsViewModelDto();
+            dto.InjectFrom(viewModel);
 
             var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
+                KillCache(NavBarHelper.SonarrKey);
                 return RedirectToAction("SonarrSettings");
             }
 
@@ -200,18 +162,9 @@ namespace NZBDash.UI.Controllers
         public ActionResult CouchPotatoSettings()
         {
             var dto = CpSettingsService.GetSettings();
-            var model = new CouchPotatoSettingsViewModel
-            {
-                Port = dto.Port,
-                Enabled = dto.Enabled,
-                Id = dto.Id,
-                IpAddress = dto.IpAddress,
-                ApiKey = dto.ApiKey,
-                ShowOnDashboard = dto.ShowOnDashboard,
-                Username = dto.Username,
-                Password = dto.Password
-            };
-
+            var model = new CouchPotatoSettingsViewModel();
+            model.InjectFrom(dto);
+            
             return View(model);
         }
 
@@ -223,21 +176,13 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new CouchPotatoSettingsDto
-            {
-                IpAddress = viewModel.IpAddress,
-                Port = viewModel.Port,
-                Enabled = viewModel.Enabled,
-                Id = viewModel.Id,
-                ApiKey = viewModel.ApiKey,
-                ShowOnDashboard = viewModel.ShowOnDashboard,
-                Username = viewModel.Username,
-                Password = viewModel.Password
-            };
+            var dto = new CouchPotatoSettingsDto();
+            dto.InjectFrom(viewModel);
 
             var result = CpSettingsService.SaveSettings(dto);
             if (result)
             {
+                KillCache(NavBarHelper.CouchPotatoKey);
                 return RedirectToAction("CouchPotatoSettings");
             }
 
@@ -248,16 +193,8 @@ namespace NZBDash.UI.Controllers
         public ActionResult PlexSettings()
         {
             var dto = PlexSettingsServiceSettingsService.GetSettings();
-            var model = new PlexSettingsViewModel
-            {
-                Port = dto.Port,
-                Enabled = dto.Enabled,
-                Id = dto.Id,
-                IpAddress = dto.IpAddress,
-                ShowOnDashboard = dto.ShowOnDashboard,
-                Username = dto.Username,
-                Password = dto.Password
-            };
+            var model = new PlexSettingsViewModel();
+            model.InjectFrom(dto);
 
             return View(model);
         }
@@ -270,24 +207,23 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new PlexSettingsDto
-            {
-                IpAddress = viewModel.IpAddress,
-                Port = viewModel.Port,
-                Enabled = viewModel.Enabled,
-                Id = viewModel.Id,
-                ShowOnDashboard = viewModel.ShowOnDashboard,
-                Username = viewModel.Username,
-                Password = viewModel.Password
-            };
+            var dto = new PlexSettingsDto();
+            dto.InjectFrom(viewModel);
 
             var result = PlexSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
+                KillCache(NavBarHelper.PlexKey);
                 return RedirectToAction("PlexSettings");
             }
 
             return View("Error");
+        }
+
+        private void KillCache(string key)
+        {
+            var cache = new InMemoryCache();
+            cache.Destroy(key);
         }
     }
 }

@@ -29,7 +29,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls.WebParts;
+
+using Grid.Mvc.Ajax.GridExtensions;
 
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
@@ -40,7 +41,7 @@ using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
-using NZBDash.UI.Models.ViewModels.NzbGet;
+using NZBDash.UI.Models.ViewModels;
 using NZBDash.UI.Models.ViewModels.SabNzbd;
 
 using Omu.ValueInjecter;
@@ -66,7 +67,10 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var history = new List<SabNzbdHistoryViewModel>().AsQueryable();
+            var grid = (AjaxGrid<SabNzbdHistoryViewModel>)new AjaxGridFactory().CreateAjaxGrid(history, 1, false);
+
+            return View(new SabNzbdHistoryGrid { Grid = grid });
         }
 
         [HttpGet]
@@ -167,44 +171,53 @@ namespace NZBDash.UI.Controllers.Application
             }
         }
 
-        [HttpGet]
-        public ActionResult GetSabnzbdDownloadHistory()
+        public JsonResult AjaxHistory()
+        {
+            var vm = GetHistory();
+
+            var ajaxGridFactory = new AjaxGridFactory();
+            var grid = ajaxGridFactory.CreateAjaxGrid(vm, 1, false);
+
+            return Json(new { Html = grid.ToJson("Partial/History", this), grid.HasItems }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AjaxHistoryPaged(int? page)
+        {
+            var vm = GetHistory();
+
+            var grid = new AjaxGridFactory().CreateAjaxGrid(vm, page ?? 1, page.HasValue);
+
+            return Json(new { Html = grid.ToJson("Partial/History", this), grid.HasItems }, JsonRequestBehavior.AllowGet);
+        }
+
+        private IQueryable<SabNzbdHistoryViewModel> GetHistory()
         {
             try
             {
-                if (!Settings.HasSettings)
+                var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+                var history = Api.GetSabNzbdHistory(formattedUri, Settings.ApiKey);
+
+                var items = new List<SabNzbdHistoryViewModel>();
+                foreach (var result in history.slots)
                 {
-                    ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
-                    return PartialView("DashletError");
+                    var singleItem = new SabNzbdHistoryViewModel();
+                    var mappedResult = (SabNzbdHistoryViewModel)singleItem.InjectFrom(new SabNzbdHistoryMapper(), result);
+                    if (!string.IsNullOrEmpty(mappedResult.FileSize))
+                    {
+                        long newFileSize;
+                        long.TryParse(mappedResult.FileSize, out newFileSize);
+                        mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
+                    }
+                    items.Add(mappedResult);
                 }
 
-                //var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
-                //var history = Api.GetSabNzbdHistory(formattedUri, Settings.ApiKey);
-
-                //    var items = new List<SabNzbdHistoryViewModel>();
-                //    foreach (var result in history)
-                //    {
-                //        var singleItem = new SabNzbdHistoryViewModel();
-                //        var mappedResult = (SabNzbdHistoryViewModel)singleItem.InjectFrom(new SabNzbdHistoryMapper(), result);
-                //        if (!string.IsNullOrEmpty(mappedResult.FileSize))
-                //        {
-                //            long newFileSize;
-                //            long.TryParse(mappedResult.FileSize.ToString(), out newFileSize);
-                //            mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
-                //        }
-                //        items.Add(mappedResult);
-                //    }
-
-                //    // Order by Id desc and get the last 30 downloads
-                //    var model = items.OrderByDescending(x => x.Id).Take(30).ToList();
-                //    return PartialView("Partial/History", model);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e.Message, e);
-                    return PartialView("DashletError");
-                }
-            return View();
+                return items.AsQueryable();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message, e);
+                return new List<SabNzbdHistoryViewModel>().AsQueryable();
+            }
         }
 
         //[HttpGet]

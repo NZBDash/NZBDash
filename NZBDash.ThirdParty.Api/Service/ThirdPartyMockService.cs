@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: ThirdPartyService.cs
+//  File: ThirdPartyMockService.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -37,83 +37,76 @@ using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
 namespace NZBDash.ThirdParty.Api.Service
 {
-    public class ThirdPartyService : IThirdPartyService
+    public class ThirdPartyMockService : IThirdPartyService
     {
         private ISerializer Serializer { get; set; }
 
-        private const string SabNzbdQueueApiAddress = "api?mode=qstatus&output=json&apikey=";
-        private const string SabNzbdHistoryApiAddress = "api?mode=history&start=0&limit=10&output=json&apikey=";
-        private const string SonarrApiAddress = "api/system/status?apikey=";
-        private const string NzbGetApiAddress = "/jsonrpc/";
 
-        public ThirdPartyService(ISerializer serializer)
+        public ThirdPartyMockService(ISerializer serializer)
         {
             Serializer = serializer;
         }
 
         public void GetCouchPotatoMovies(string uri, string api)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException();
         }
 
         public PlexServers GetPlexServers(string uri)
         {
-            return Serializer.SerializeXmlData<PlexServers>(uri + "servers");
+            throw new NotImplementedException();
         }
 
         public SonarrSystemStatus GetSonarrSystemStatus(string uri, string api)
         {
-            return Serializer.SerializedJsonData<SonarrSystemStatus>(uri + SonarrApiAddress + api);
+            throw new NotImplementedException();
         }
 
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-            return Serializer.SerializedJsonData<List<SonarrSeries>>(uri + "api/series?apikey=" + api);
+            throw new NotImplementedException();
         }
 
         public List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId)
         {
-            return Serializer.SerializedJsonData<List<SonarrEpisode>>(string.Format("{0}api/episode?seriesId={1}&apikey={2}", uri, seriesId, api));
+            throw new NotImplementedException();
         }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)
         {
-            return Serializer.SerializedJsonData<CouchPotatoStatus>(uri + "api/" + api + "/app.available/");
+            throw new NotImplementedException();
         }
 
         public NzbGetHistory GetNzbGetHistory(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetHistory>(string.Format("{0}{1}:{2}{3}history", url, username, password, NzbGetApiAddress));
+            throw new NotImplementedException();
         }
 
         public NzbGetList GetNzbGetList(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetList>(string.Format("{0}{1}:{2}{3}listgroups", url, username, password, NzbGetApiAddress));
+            throw new NotImplementedException();
         }
 
         public NzbGetStatus GetNzbGetStatus(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetStatus>(string.Format("{0}{1}:{2}{3}status", url, username, password, NzbGetApiAddress));
+            throw new NotImplementedException();
         }
 
         public NzbGetLogs GetNzbGetLogs(string url, string username, string password)
         {
-            return Serializer.SerializedJsonData<NzbGetLogs>(string.Format("{0}{1}:{2}{3}/log?IDFrom=0&NumberOfEntries=1000", url, username, password, NzbGetApiAddress));
+            throw new NotImplementedException();
         }
 
         public SabNzbdHistory GetSabNzbdHistory(string url, string apiKey)
         {
-            //var jsonData = Resources.MockData.Sabnzbd_History;
-            //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdHistory>(jsonData) : new SabNzbdHistory();
-            return Serializer.SerializedJsonData<SabNzbdHistory>(url + SabNzbdHistoryApiAddress + apiKey);
+            var jsonData = Resources.MockData.Sabnzbd_History;
+            return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdHistory>(jsonData) : new SabNzbdHistory();
         }
 
         public SabNzbdQueue GetSabNzbdQueue(string url, string apiKey)
         {
-            //var jsonData = Resources.MockData.Sabnzbd_Queue;
-            //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdQueue>(jsonData) : new SabNzbdQueue();
-
-            return Serializer.SerializedJsonData<SabNzbdQueue>(url + SabNzbdQueueApiAddress + apiKey);
+            var jsonData = Resources.MockData.Sabnzbd_Queue;
+            return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdQueue>(jsonData) : new SabNzbdQueue();
         }
     }
 }

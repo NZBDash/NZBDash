@@ -1,9 +1,9 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: BaseController.cs
+//  File: InMemoryCache.cs
 //  Created By: Jamie Rees
-//
+// 
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//
+// 
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//
+// 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,47 +25,30 @@
 //  ***********************************************************************
 #endregion
 using System;
-using System.Web.Mvc;
+using System.Runtime.Caching;
 
-using NZBDash.Common;
-using NZBDash.Common.Interfaces;
-
-namespace NZBDash.UI.Controllers
+namespace NZBDash.UI.Helpers
 {
-    public class BaseController : Controller
+    public class InMemoryCache : ICacheService
     {
-        public ILogger Logger { get; set; }
-
-        public BaseController() { }
-
-        public BaseController(Type classType)
+        public T GetOrSet<T>(string cacheKey, Func<T> getItemCallback) where T : class
         {
-            Logger = new NLogLogger(classType);
+            var item = MemoryCache.Default.Get(cacheKey) as T;
+            if (item == null)
+            {
+                item = getItemCallback();
+                MemoryCache.Default.Add(cacheKey, item, DateTime.Now.AddMinutes(5));
+            }
+            return item;
         }
 
-        public BaseController(ILogger classType)
+        public void Destroy(string cacheKey)
         {
-            Logger = classType;
-        }
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            var exception = filterContext.Exception;
-            Logger.Fatal(exception);
-            base.OnException(filterContext);
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            var actionName = filterContext.ActionDescriptor.ActionName;
-            var controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            Logger.Trace(string.Format("Executing action: {0}, Controller: {1}", actionName, controller));
-            base.OnActionExecuting(filterContext);
-        }
-
-        private void GetApplicationSettings()
-        {
-            
+            var item = MemoryCache.Default.Get(cacheKey);
+            if (item != null)
+            {
+                MemoryCache.Default.Remove(cacheKey);
+            }
         }
     }
 }

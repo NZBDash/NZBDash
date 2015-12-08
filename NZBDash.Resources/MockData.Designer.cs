@@ -62,6 +62,36 @@ namespace NZBDash.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;total_size&quot;: &quot;40.30 GB&quot;,    
+        ///    &quot;month_size&quot;: &quot;20.23 GB&quot;,  
+        ///    &quot;week_size&quot;: &quot;5.12 GB&quot;, 
+        ///    &quot;cache_limit&quot;:&quot;-1&quot;,
+        ///    &quot;paused&quot;:true,
+        ///    &quot;new_rel_url&quot;:&quot;&quot;,
+        ///    &quot;restart_req&quot;:false,
+        ///    &quot;slots&quot;:[
+        ///    {
+        ///        &quot;action_line&quot;:&quot;&quot;,
+        ///        &quot;show_details&quot;:&quot;True&quot;,
+        ///        &quot;script_log&quot;:&quot;&quot;,
+        ///        &quot;meta&quot;:null,
+        ///        &quot;fail_message&quot;:&quot;&quot;,
+        ///        &quot;loaded&quot;:false,
+        ///        &quot;id&quot;:605,
+        ///        &quot;size&quot;:&quot;778.1 MB&quot;,
+        ///        &quot;category&quot;:&quot;Apps&quot;,
+        ///        &quot;pp&quot;:&quot;D&quot;,
+        ///        &quot;completeness&quot;:0,
+        ///        &quot;scrip [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Sabnzbd_History {
+            get {
+                return ResourceManager.GetString("Sabnzbd_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///    &quot;timeleft&quot;:&quot;0:00:00&quot;,
         ///    &quot;mb&quot;:854.697841,
         ///    &quot;noofslots&quot;:1,

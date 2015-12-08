@@ -105,6 +105,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -233,6 +234,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ICacheService.cs" />
+    <Compile Include="Helpers\InMemoryCache.cs" />
+    <Compile Include="Helpers\NavBarHelper.cs" />
     <Compile Include="Helpers\CustomHtmlHelpers.cs" />
     <Compile Include="Helpers\EndpointTester.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using NZBDash.Common
+@using NZBDash.UI.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,16 +24,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("NZBDash", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
-
-                    <li>@Html.ActionLink("NzbGet", "Index", "NzbGet")</li>
-
-                    <li>@Html.ActionLink("Plex", "Index", "Plex")</li>
-
+                        @Html.ShowApplications()
                     <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
                 </ul>
             </div>

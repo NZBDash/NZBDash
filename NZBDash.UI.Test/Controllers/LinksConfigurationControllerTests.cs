@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: BaseController.cs
+//  File: LinksConfigurationControllerTests.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,48 +24,49 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
-using System.Web.Mvc;
+using System.Collections.Generic;
 
-using NZBDash.Common;
-using NZBDash.Common.Interfaces;
+using Moq;
 
-namespace NZBDash.UI.Controllers
+using NUnit.Framework;
+
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.DTO;
+using NZBDash.UI.Controllers;
+
+using Ploeh.AutoFixture;
+
+
+namespace NZBDash.UI.Test.Controllers
 {
-    public class BaseController : Controller
+    [TestFixture]
+    public class LinksConfigurationControllerTests
     {
-        public ILogger Logger { get; set; }
+        private LinksConfigurationController _controller;
+        private LinksConfigurationDto _dto;
+        private IEnumerable<LinksConfigurationDto> _dtos;
 
-        public BaseController() { }
-
-        public BaseController(Type classType)
+        [SetUp]
+        public void MockSetup()
         {
-            Logger = new NLogLogger(classType);
+            var f = new Fixture();
+            var mockLinks = new Mock<ILinksConfiguration>();
+            _dto = f.Create<LinksConfigurationDto>();
+            _dtos = f.Build<LinksConfigurationDto>().With(x => x.LinkEndpoint, "http://www.google.com").CreateMany();
+
+            mockLinks.Setup(x => x.AddLink(It.IsAny<LinksConfigurationDto>())).Returns(_dto);
+            mockLinks.Setup(x => x.GetLinks()).Returns(_dtos);
+            mockLinks.Setup(x => x.RemoveLink(It.IsAny<int>()));
+            mockLinks.Setup(x => x.UpdateLink(It.IsAny<LinksConfigurationDto>())).Returns(true);
+
+            _controller = new LinksConfigurationController(mockLinks.Object);
         }
 
-        public BaseController(ILogger classType)
+        [Test]
+        public void Index()
         {
-            Logger = classType;
-        }
+            var result = _controller.Index();
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            var exception = filterContext.Exception;
-            Logger.Fatal(exception);
-            base.OnException(filterContext);
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            var actionName = filterContext.ActionDescriptor.ActionName;
-            var controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            Logger.Trace(string.Format("Executing action: {0}, Controller: {1}", actionName, controller));
-            base.OnActionExecuting(filterContext);
-        }
-
-        private void GetApplicationSettings()
-        {
-            
         }
     }
 }
