@@ -68,6 +68,7 @@
     <Compile Include="Hardware\RamModel.cs" />
     <Compile Include="Hardware\ServerInformationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\LayoutModel.cs" />
     <Compile Include="ViewModels\SabNzbdHistoryGrid.cs" />
     <Compile Include="ViewModels\NzbGetHistoryGrid.cs" />
     <Compile Include="ViewModels\NzbGet\NzbGetHistoryViewModel.cs" />

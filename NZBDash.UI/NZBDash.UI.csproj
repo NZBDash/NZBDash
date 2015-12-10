@@ -226,6 +226,7 @@
     <Compile Include="Controllers\Application\SonarrController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -234,14 +235,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ICacheService.cs" />
-    <Compile Include="Helpers\InMemoryCache.cs" />
-    <Compile Include="Helpers\NavBarHelper.cs" />
+    <Compile Include="Helpers\CacheKeys.cs" />
     <Compile Include="Helpers\CustomHtmlHelpers.cs" />
     <Compile Include="Helpers\EndpointTester.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\IconHelper.cs" />
-    <Compile Include="Helpers\IPrincipleExtensions.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
@@ -402,6 +400,7 @@
     <Content Include="Views\SabNzbd\Partial\Logs.cshtml" />
     <Content Include="Views\Shared\_AjaxGridPager.cshtml" />
     <Content Include="Views\NzbGet\Partial\History.cshtml" />
+    <Content Include="Views\Layout\NavBarItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

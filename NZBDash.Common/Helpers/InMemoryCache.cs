@@ -1,7 +1,7 @@
-#region Copyright
+﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: ICacheService.cs
+//  File: InMemoryCache.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -25,12 +25,32 @@
 //  ***********************************************************************
 #endregion
 using System;
+using System.Runtime.Caching;
 
-namespace NZBDash.UI.Helpers
+using NZBDash.Common.Interfaces;
+
+namespace NZBDash.Common.Helpers
 {
-    interface ICacheService
+    public class InMemoryCache : ICacheService
     {
-        T GetOrSet<T>(string cacheKey, Func<T> getItemCallback) where T : class;
-        void Destroy(string cacheKey);
+        public T GetOrSet<T>(string cacheKey, Func<T> getItemCallback) where T : class
+        {
+            var item = MemoryCache.Default.Get(cacheKey) as T;
+            if (item == null)
+            {
+                item = getItemCallback();
+                MemoryCache.Default.Add(cacheKey, item, DateTime.Now.AddMinutes(5));
+            }
+            return item;
+        }
+
+        public void Destroy(string cacheKey)
+        {
+            var item = MemoryCache.Default.Get(cacheKey);
+            if (item != null)
+            {
+                MemoryCache.Default.Remove(cacheKey);
+            }
+        }
     }
 }

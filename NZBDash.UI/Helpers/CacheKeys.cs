@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: InMemoryCache.cs
+//  File: CacheKeys.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,31 +24,14 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
-using System.Runtime.Caching;
-
 namespace NZBDash.UI.Helpers
 {
-    public class InMemoryCache : ICacheService
+    public class CacheKeys
     {
-        public T GetOrSet<T>(string cacheKey, Func<T> getItemCallback) where T : class
-        {
-            var item = MemoryCache.Default.Get(cacheKey) as T;
-            if (item == null)
-            {
-                item = getItemCallback();
-                MemoryCache.Default.Add(cacheKey, item, DateTime.Now.AddMinutes(5));
-            }
-            return item;
-        }
-
-        public void Destroy(string cacheKey)
-        {
-            var item = MemoryCache.Default.Get(cacheKey);
-            if (item != null)
-            {
-                MemoryCache.Default.Remove(cacheKey);
-            }
-        }
+        public const string SabKey = "SabNzdb";
+        public const string CouchPotatoKey = "CouchPotato";
+        public const string SonarrKey = "Sonarr";
+        public const string PlexKey = "Plex";
+        public const string NzbGetKey = "NzbGet";
     }
 }

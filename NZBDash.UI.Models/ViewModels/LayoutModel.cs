@@ -1,9 +1,9 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: CustomDependencyResolver.cs
+//  File: LayoutModel.cs
 //  Created By: Jamie Rees
-//
+// 
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
 //  "Software"), to deal in the Software without restriction, including
@@ -11,10 +11,10 @@
 //  distribute, sublicense, and/or sell copies of the Software, and to
 //  permit persons to whom the Software is furnished to do so, subject to
 //  the following conditions:
-//
+// 
 //  The above copyright notice and this permission notice shall be
 //  included in all copies or substantial portions of the Software.
-//
+// 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 //  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 //  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,31 +24,15 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject.Modules;
-
-using NZBDash.DependencyResolver.Modules;
-
-namespace NZBDash.DependencyResolver
+namespace NZBDash.UI.Models.ViewModels
 {
-    public class CustomDependencyResolver : IDependencyResolver
+    public class LayoutModel
     {
-        /// <summary>
-        /// Gets the Ninject modules to pass into the Kernel.
-        /// </summary>
-        public INinjectModule[] GetModules()
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Html
         {
-            var modules = new INinjectModule[]
-            {
-                new ServiceModule(),
-                new ApplicationSettingsModule(),
-                new SerializerModule(),
-                new LoggerModule(),
-				new SqliteModule(),
-                new SetupModule(), 
-                new CacheModule(), 
-            };
-
-            return modules;
+            get { return string.Format("<li><a href=\"{0}\">{1}</a></li>",Url,Name); }
         }
     }
 }

@@ -121,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CacheModule.cs" />
     <Compile Include="SerializerModule.cs" />
     <Compile Include="ApplicationSettingsModule.cs" />
     <Compile Include="LoggerModule.cs" />

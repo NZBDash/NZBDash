@@ -26,6 +26,7 @@
 #endregion
 using System.Web.Mvc;
 
+using NZBDash.Common.Helpers;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Helpers;
@@ -88,7 +89,7 @@ namespace NZBDash.UI.Controllers
             var result = NzbGetSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(NavBarHelper.NzbGetKey);
+                KillCache(CacheKeys.NzbGetKey);
                 return RedirectToAction("NzbGetSettings");
             }
 
@@ -120,7 +121,7 @@ namespace NZBDash.UI.Controllers
             var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(NavBarHelper.SabKey);
+                KillCache(CacheKeys.SabKey);
                 return RedirectToAction("SabNzbSettings");
             }
 
@@ -151,7 +152,7 @@ namespace NZBDash.UI.Controllers
             var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(NavBarHelper.SonarrKey);
+                KillCache(CacheKeys.SonarrKey);
                 return RedirectToAction("SonarrSettings");
             }
 
@@ -182,7 +183,7 @@ namespace NZBDash.UI.Controllers
             var result = CpSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(NavBarHelper.CouchPotatoKey);
+                KillCache(CacheKeys.CouchPotatoKey);
                 return RedirectToAction("CouchPotatoSettings");
             }
 
@@ -213,7 +214,7 @@ namespace NZBDash.UI.Controllers
             var result = PlexSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(NavBarHelper.PlexKey);
+                KillCache(CacheKeys.PlexKey);
                 return RedirectToAction("PlexSettings");
             }
 
