@@ -137,14 +137,14 @@ namespace NZBDash.UI.Controllers.Application
                     Logger.Trace(string.Format("Percentage : {0}", percentage));
 
                     var status = EnumHelper<DownloadStatus>.Parse(statusInfo.paused ? "PAUSED" : "DOWNLOADING");
-                    var progressBar = "progress-bar-danger";
+                    var progressBar = Bootstrap.ProgressBarDanger;
                     if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
                     {
-                        progressBar = "progress-bar-warning";
+                        progressBar = Bootstrap.ProgressBarWarning;
                     }
                     if (status == DownloadStatus.DOWNLOADING)
                     {
-                        progressBar = "progress-bar-success";
+                        progressBar = Bootstrap.ProgressBarSuccess;
                     }
 
                     int nzbId;
