@@ -204,8 +204,8 @@ namespace NZBDash.UI.Controllers.Application
                     var mappedResult = (SabNzbdHistoryViewModel)singleItem.InjectFrom(new SabNzbdHistoryMapper(), result);
                     if (!string.IsNullOrEmpty(mappedResult.FileSize))
                     {
-                        long newFileSize;
-                        long.TryParse(mappedResult.FileSize, out newFileSize);
+                        double newFileSize;
+                        double.TryParse(mappedResult.FileSize, out newFileSize);
                         mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
                     }
                     items.Add(mappedResult);

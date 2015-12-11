@@ -46,6 +46,14 @@ namespace NZBDash.Common.Helpers
             return String.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }
 
+
+        public static string SizeSuffixMb(double value)
+        {
+            var bytes = ByteSize.FromMegaBytes(value);
+
+            return String.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
+        }
+
         public static double ConvertToMb(string text)
         {
             ByteSize outPut;

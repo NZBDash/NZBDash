@@ -67,5 +67,29 @@ namespace NZBDash.Common.Tests.Helpers
             var result = MemorySizeConverter.ConvertToMb(input);
             Assert.That(result, Is.EqualTo(expected));
         }
+
+        [TestCase(1024, "1 GB")]
+        [TestCase(3817, "3.7 GB")]
+        [TestCase(2048, "2 GB")]
+        [TestCase(4879456, "4.7 TB")]
+        [TestCase(10485760, "10 TB")]
+        [TestCase(104857600000, "97.7 PB")]
+        public void SizeSuffixMb(double input, string expected)
+        {
+            var result = MemorySizeConverter.SizeSuffixMb(input);
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase(1, "1 KB")]
+        [TestCase(1024, "1 MB")]
+        [TestCase(2048, "2 MB")]
+        [TestCase(4879456, "4.7 GB")]
+        [TestCase(10485760, "10 GB")]
+        [TestCase(104857600000, "97.7 TB")]
+        public void SizeSuffixLong(long input, string expected)
+        {
+            var result = MemorySizeConverter.SizeSuffix(input);
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }

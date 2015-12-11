@@ -2,10 +2,8 @@
 @model NZBDash.UI.Models.Dashboard.DownloaderViewModel
 
 <div class="panel panel-default">
-    <div class="panel-heading">
-        @Model.Application
+    <div class="panel-heading panel-grid">
         <span id="DlSpeed" style="float:right">@Model.DownloadSpeed</span>
-
     </div>
     <div class="panel-body">
         @if (Model.DownloadItem.Any())
