@@ -103,3 +103,15 @@ footer {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 }
+ .panel-grid{
+     padding-bottom: 25px !important;
+ }
+ .divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  margin-bottom: 15px
+}

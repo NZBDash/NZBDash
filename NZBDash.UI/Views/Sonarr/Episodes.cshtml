@@ -6,16 +6,26 @@
 <div class="modal-body">
     @foreach (var kvp in Model.EpisodeViewModels)
     {
+        <div class="panel panel-default">
+            <div class="panel-heading panel-grid">
+                @*<h4 class="panel-title">Season @kvp.Key</h4>*@
 
-        <div class="modal-title">Season @kvp.Key</div>
-        <div class="modal-body">
-            <div class="col-md-4">@kvp.Value.Select(c => c.Title).FirstOrDefault()</div>
-            <div class="col-md-1">@kvp.Value.Select(c => c.EpisodeNumber).FirstOrDefault()</div>
-            <div class="col-md-1">@kvp.Value.Select(c => c.HasFile).FirstOrDefault()</div>
+                <h4 class="col-md-4 panel-title">Episode Number</h4>
+                <h4 class="col-md-4 panel-title">Title</h4>
+                <h4 class="col-md-4 panel-title">Downloaded</h4>
 
- 
+            </div>
+            <div class="panel-body">
+                <small>Season @kvp.Key</small>
+                <div class="divider"></div>
+                <div class="col-md-4">@kvp.Value.Select(c => c.EpisodeNumber).FirstOrDefault()</div>
+                <div class="col-md-4">@kvp.Value.Select(c => c.Title).FirstOrDefault()</div>
+                <div class="col-md-4">@kvp.Value.Select(c => c.HasFile).FirstOrDefault()</div>
+
+            </div>
         </div>
     }
+
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

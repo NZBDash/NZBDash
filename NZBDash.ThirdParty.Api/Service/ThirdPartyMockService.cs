@@ -64,12 +64,14 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-            throw new NotImplementedException();
+            var jsonData = Resources.MockData.Sonarr_Series;
+            return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData) : new List<SonarrSeries>();
         }
 
         public List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId)
         {
-            throw new NotImplementedException();
+            var jsonData = Resources.MockData.Sonarr_Episode;
+            return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrEpisode>>(jsonData) : new List<SonarrEpisode>();
         }
 
         public CouchPotatoStatus GetCouchPotatoStatus(string uri, string api)

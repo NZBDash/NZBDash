@@ -24,6 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -78,11 +79,15 @@ namespace NZBDash.UI.Test.Controllers
             var series = (PartialViewResult)_controller.GetSeries();
             var model = (List<SonarrSeriesViewModel>)series.Model;
 
+            DateTime newDate;
+            DateTime.TryParse(SonarrSeries[0].firstAired, out newDate);
+   
+
             Assert.That(model.Count, Is.GreaterThan(0));
             Assert.That(model[0].Id, Is.EqualTo(SonarrSeries[0].id));
             Assert.That(model[0].ImdbId, Is.EqualTo(SonarrSeries[0].imdbId));
             Assert.That(model[0].Monitored, Is.EqualTo(SonarrSeries[0].monitored));
-            Assert.That(model[0].FirstAired, Is.EqualTo(SonarrSeries[0].firstAired));
+            Assert.That(model[0].FirstAired, Is.EqualTo(newDate.ToString("D")));
             Assert.That(model[0].EpisodeCount, Is.EqualTo(SonarrSeries[0].episodeCount));
             Assert.That(model[0].CleanTitle, Is.EqualTo(SonarrSeries[0].cleanTitle));
             Assert.That(model[0].AirTime, Is.EqualTo(SonarrSeries[0].airTime));

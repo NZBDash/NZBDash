@@ -24,6 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -79,6 +80,11 @@ namespace NZBDash.UI.Controllers.Application
                 var seriesViewModel = new SonarrSeriesViewModel();
                 var mappedResult = (SonarrSeriesViewModel)seriesViewModel
                     .InjectFrom(new JsonSerializerTargetMapper<SonarrSeriesViewModel>(), s);
+
+                DateTime convertedDate;
+                DateTime.TryParse(mappedResult.FirstAired, out convertedDate);
+
+                mappedResult.FirstAired = convertedDate.ToString("D");
 
                 var images = s.images.Select(x => x.url);
                 if (images.Any())

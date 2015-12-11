@@ -21,7 +21,7 @@
         @foreach (var series in Model)
         {
             <div class="col-md-12 row grid-row">
-                <div class="col-md-2 title"><a data-toggle="modal" id="@series.Id" href="@Url.Action("GetEpisodes")?id=@series.Id&title=@(Url.Encode(series.Title))" data-target="#myModal">@series.CleanTitle</a>
+                <div class="col-md-2 title"><a data-toggle="modal" id="@series.Id" href="@Url.Action("GetEpisodes")?id=@series.Id&title=@(Url.Encode(series.Title))" data-target="#myModal">@series.Title</a>
                 </div>
                 <div class="col-md-2">@series.Status</div>
                 <div class="col-md-4">@series.Overview</div>
@@ -40,7 +40,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body">
                 @Html.LoadingSpinner()
