@@ -38,12 +38,6 @@ namespace NZBDash.DataAccessLayer.Configuration
         {
         }
 
-        /// <summary>
-        /// Gets the database file.
-        /// </summary>
-        /// <value>
-        /// The database file.
-        /// </value>
         public override string DbFile()
         {
             return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\" + @"\\NZBDash.sqlite";

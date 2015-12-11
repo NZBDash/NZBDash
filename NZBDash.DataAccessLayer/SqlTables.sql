@@ -1,4 +1,7 @@
-﻿CREATE TABLE IF NOT EXISTS LinksConfigurations
+﻿--Any DB changes need to be made in this file.
+
+
+CREATE TABLE IF NOT EXISTS LinksConfigurations
 (
     ID                                   INTEGER PRIMARY KEY AUTOINCREMENT,
     LinkName                             VARCHAR(100)  NOT NULL,

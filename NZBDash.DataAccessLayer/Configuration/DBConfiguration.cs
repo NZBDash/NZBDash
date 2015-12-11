@@ -47,31 +47,34 @@ namespace NZBDash.DataAccessLayer.Configuration
 
         public virtual void CheckDb()
         {
-            Logger.Trace("Checking if DB exists");
             if (!File.Exists(DbFile()))
             {
                 Logger.Trace("Could not find the DB, so we will create it.");
                 CreateDatabase();
-                return;
             }
-            Logger.Trace("Db exists");
         }
-
-
 
         public abstract string DbFile();
 
+        /// <summary>
+        /// Gets the database connection.
+        /// </summary>
+        /// <returns><see cref="IDbConnection"/></returns>
+        /// <exception cref="System.Exception">Factory returned null</exception>
         public virtual IDbConnection DbConnection()
         {
             var fact = Factory.CreateConnection();
-            if (fact != null)
+            if (fact == null)
             {
-                fact.ConnectionString = "Data Source=" + DbFile();
-                return fact;
+                throw new Exception("Factory returned null");
             }
-            throw new Exception("Factory returned null");
+            fact.ConnectionString = "Data Source=" + DbFile();
+            return fact;
         }
 
+        /// <summary>
+        /// Create the database file.
+        /// </summary>
         public virtual void CreateDatabase()
         {
             try

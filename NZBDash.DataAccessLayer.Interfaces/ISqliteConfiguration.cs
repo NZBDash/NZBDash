@@ -32,7 +32,7 @@ namespace NZBDash.DataAccessLayer.Interfaces
 	{
 		void CheckDb();
 		string DbFile();
-		IDbConnection DbConnection ();
+		IDbConnection DbConnection();
 		void CreateDatabase();
 	}
 }
