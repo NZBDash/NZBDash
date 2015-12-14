@@ -21,7 +21,9 @@
 
                 <div class="form-horizontal">
                     <h4>@ViewBag.Title</h4>
-                    <hr />
+                    <hr/>
+                    You can get your API key by visiting the documentation page: http://CouchPotatoIP:port/docs.
+                    <p>It looks like the following in bold: /api/<strong>f9992811232402182c44d24b1f3e845</strong>/</p>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 

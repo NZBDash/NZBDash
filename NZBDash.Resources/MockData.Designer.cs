@@ -61,6 +61,15 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;movies&quot;: [{&quot;status&quot;: &quot;done&quot;, &quot;info&quot;: {&quot;rating&quot;: {&quot;imdb&quot;: [7.6, 261894]}, &quot;genres&quot;: [&quot;Adventure&quot;, &quot;Drama&quot;, &quot;Thriller&quot;, &quot;Biography&quot;], &quot;tmdb_id&quot;: 44115, &quot;plot&quot;: &quot;127 Hours is the true story of mountain climber Aron Ralston&apos;s remarkable adventure to save himself after a fallen boulder crashes on his arm and traps him in an isolated canyon in Utah. Over the next five days Ralston examines his life and survives the elements to finally discover he has the courage and the wherewithal to extricate himself by any m [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string CouchPotato_MediaList {
+            get {
+                return ResourceManager.GetString("CouchPotato_MediaList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;total_size&quot;: &quot;40.30 GB&quot;,    
         ///    &quot;month_size&quot;: &quot;20.23 GB&quot;,  

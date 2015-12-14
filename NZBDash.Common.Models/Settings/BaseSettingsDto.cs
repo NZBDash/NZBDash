@@ -24,6 +24,10 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
+
+using NZBDash.Common.Helpers;
+
 namespace NZBDash.Common.Models.Settings
 {
     public class BaseSettingsDto
@@ -36,6 +40,14 @@ namespace NZBDash.Common.Models.Settings
         public bool HasSettings
         {
             get { return !string.IsNullOrEmpty(IpAddress); }
+        }
+
+        public Uri Uri
+        {
+            get
+            {
+                return UrlHelper.ReturnUri(IpAddress, Port);
+            }
         }
     }
 }

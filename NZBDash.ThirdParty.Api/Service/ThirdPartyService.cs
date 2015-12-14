@@ -32,6 +32,7 @@ using Newtonsoft.Json;
 using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
@@ -51,9 +52,9 @@ namespace NZBDash.ThirdParty.Api.Service
             Serializer = serializer;
         }
 
-        public void GetCouchPotatoMovies(string uri, string api)
+        public CouchPotatoMediaList GetCouchPotatoMovies(string uri, string api)
         {
-            throw new NotImplementedException("TODO");
+            return Serializer.SerializedJsonData<CouchPotatoMediaList>(uri + "api/" + api + "/app.available/");
         }
 
         public PlexServers GetPlexServers(string uri)

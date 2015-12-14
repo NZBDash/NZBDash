@@ -30,8 +30,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.Resources;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
@@ -47,9 +49,11 @@ namespace NZBDash.ThirdParty.Api.Service
             Serializer = serializer;
         }
 
-        public void GetCouchPotatoMovies(string uri, string api)
+        public CouchPotatoMediaList GetCouchPotatoMovies(string uri, string api)
         {
-            throw new NotImplementedException();
+            var jsonData = MockData.CouchPotato_MediaList;
+            return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<CouchPotatoMediaList>(jsonData) : new CouchPotatoMediaList();
+ 
         }
 
         public PlexServers GetPlexServers(string uri)
@@ -64,13 +68,13 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public List<SonarrSeries> GetSonarrSeries(string uri, string api)
         {
-            var jsonData = Resources.MockData.Sonarr_Series;
+            var jsonData = MockData.Sonarr_Series;
             return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrSeries>>(jsonData) : new List<SonarrSeries>();
         }
 
         public List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId)
         {
-            var jsonData = Resources.MockData.Sonarr_Episode;
+            var jsonData = MockData.Sonarr_Episode;
             return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<List<SonarrEpisode>>(jsonData) : new List<SonarrEpisode>();
         }
 
@@ -101,13 +105,13 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public SabNzbdHistory GetSabNzbdHistory(string url, string apiKey)
         {
-            var jsonData = Resources.MockData.Sabnzbd_History;
+            var jsonData = MockData.Sabnzbd_History;
             return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdHistory>(jsonData) : new SabNzbdHistory();
         }
 
         public SabNzbdQueue GetSabNzbdQueue(string url, string apiKey)
         {
-            var jsonData = Resources.MockData.Sabnzbd_Queue;
+            var jsonData = MockData.Sabnzbd_Queue;
             return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdQueue>(jsonData) : new SabNzbdQueue();
         }
     }

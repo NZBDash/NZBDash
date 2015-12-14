@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.UI", "NZBDash.UI\NZBDash.UI.csproj", "{30ED7E20-5C5B-4643-B3A6-7D10BE172241}"
 EndProject
@@ -51,6 +51,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.ThirdParty.Api.Models", "NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj", "{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B163AFD4-7499-41D0-8B89-B6DD60970A7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Common.Helpers", "NZBDash.Common.Helpers\NZBDash.Common.Helpers.csproj", "{D94C96BB-D3B6-492F-B594-42920088BD87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -682,6 +684,30 @@ Global
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|x64.ActiveCfg = Release|Any CPU
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}.Windows|x86.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|Any CPU.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|Mixed Platforms.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|x64.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Linux|x86.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|x64.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Release|x86.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|x64.ActiveCfg = Release|Any CPU
+		{D94C96BB-D3B6-492F-B594-42920088BD87}.Windows|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

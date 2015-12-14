@@ -29,6 +29,7 @@ using NZBDash.ThirdParty.Api.Models.Api;
 
 using System.Collections.Generic;
 
+using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
@@ -36,7 +37,7 @@ namespace NZBDash.ThirdParty.Api.Interfaces
 {
     public interface IThirdPartyService
     {
-        void GetCouchPotatoMovies(string uri, string api);
+        CouchPotatoMediaList GetCouchPotatoMovies(string uri, string api);
         PlexServers GetPlexServers(string uri);
         List<SonarrSeries> GetSonarrSeries(string uri, string api);
         List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId);

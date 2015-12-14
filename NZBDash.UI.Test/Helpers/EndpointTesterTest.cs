@@ -33,6 +33,7 @@ using NUnit.Framework;
 using NZBDash.Common;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.UI.Helpers;
