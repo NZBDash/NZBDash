@@ -181,12 +181,18 @@ namespace NZBDash.UI.Controllers.Application
 
             var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
             var logs = Api.GetNzbGetLogs(formattedUri, Settings.Username, Settings.Password);
+            if (logs.result != null)
+            {
+                var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
 
-            var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
+                var model = orderdLogs.Select(log => (NzbGetLogViewModel)new NzbGetLogViewModel().InjectFrom(new NzbGetLogMapper(), log)).Take(50).ToList();
 
-            var model = orderdLogs.Select(log => (NzbGetLogViewModel)new NzbGetLogViewModel().InjectFrom(new NzbGetLogMapper(), log)).Take(50).ToList();
-
-            return PartialView("Partial/Logs", model);
+                return PartialView("Partial/Logs", model);
+            }
+            else
+            {
+                return PartialView("Partial/Logs", new NzbGetLogViewModel());
+            }
         }
 
         public JsonResult AjaxHistory()
