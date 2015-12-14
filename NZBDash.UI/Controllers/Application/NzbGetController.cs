@@ -189,10 +189,8 @@ namespace NZBDash.UI.Controllers.Application
 
                 return PartialView("Partial/Logs", model);
             }
-            else
-            {
-                return PartialView("Partial/Logs", new NzbGetLogViewModel());
-            }
+            
+            return PartialView("Partial/Logs", new List<NzbGetLogViewModel>());
         }
 
         public JsonResult AjaxHistory()

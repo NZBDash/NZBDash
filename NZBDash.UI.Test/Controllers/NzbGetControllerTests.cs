@@ -136,6 +136,30 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
+        public void GetNzbGetLogsNullResultTest()
+        {
+            var expected = new NzbGetLogs
+            {
+                result = null,
+            };
+
+            var mockSettings = new Mock<ISettingsService<NzbGetSettingsDto>>();
+            var mockApi = new Mock<IThirdPartyService>();
+            var mockLogger = new Mock<ILogger>();
+
+            mockSettings.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
+            mockApi.Setup(x => x.GetNzbGetLogs(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(expected);
+
+
+            var controller = new NzbGetController(mockSettings.Object, mockApi.Object, mockLogger.Object);
+            var result = (PartialViewResult)controller.Logs();
+            var model = (List<NzbGetLogViewModel>)result.Model;
+
+
+            Assert.That(model.Count, Is.EqualTo(0));
+        }
+
+        [Test]
         public void GetNzbGetLogsNoConfigTest()
         {
             var expectedSettings = new NzbGetSettingsDto();
@@ -175,8 +199,8 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(result.Model, Is.TypeOf<DownloaderViewModel>());
             Assert.That(model.Application, Is.EqualTo(Applications.NzbGet));
             Assert.That(model.DownloadItem[0].DownloadingName, Is.EqualTo(expectedApi.result[0].NZBName));
-            Assert.That(model.DownloadItem[0].NzbId, Is.EqualTo(expectedApi.result[0].NZBID)); 
-       }
+            Assert.That(model.DownloadItem[0].NzbId, Is.EqualTo(expectedApi.result[0].NZBID));
+        }
 
         [Test]
         public void GetNzbGetDownloadInformationNoConfig()
