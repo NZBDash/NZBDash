@@ -1,7 +1,9 @@
 ﻿@model NZBDash.UI.Models.ViewModels.Sonarr.SonarrEpisodeViewModel
+
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">@Model.SeasonTitle</h4>
+    <h4 class="modal-title" id="episodeModal">@Model.SeasonTitle</h4>
 </div>
 <div class="modal-body">
     @foreach (var kvp in Model.EpisodeViewModels)
@@ -10,18 +12,24 @@
             <div class="panel-heading panel-grid">
                 @*<h4 class="panel-title">Season @kvp.Key</h4>*@
 
-                <h4 class="col-md-4 panel-title">Episode Number</h4>
-                <h4 class="col-md-4 panel-title">Title</h4>
-                <h4 class="col-md-4 panel-title">Downloaded</h4>
+                <h4 class="col-md-2 panel-title-small text-center">Episode Number</h4>
+                <h4 class="col-md-6 panel-title-small text-center">Title</h4>
+                <h4 class="col-md-2 panel-title-small text-center">Downloaded</h4>
+                <h4 class="col-md-2 panel-title-small text-center">Air Date</h4>
 
             </div>
             <div class="panel-body">
                 <small>Season @kvp.Key</small>
                 <div class="divider"></div>
-                <div class="col-md-4">@kvp.Value.Select(c => c.EpisodeNumber).FirstOrDefault()</div>
-                <div class="col-md-4">@kvp.Value.Select(c => c.Title).FirstOrDefault()</div>
-                <div class="col-md-4">@kvp.Value.Select(c => c.HasFile).FirstOrDefault()</div>
-
+                @foreach (var ep in kvp.Value)
+                {
+                    <div class="row">
+                        <div class="col-md-2 text-center">@ep.EpisodeNumber</div>
+                        <div class="col-md-6">@ep.Title</div>
+                        <div class="col-md-2">@ep.HasFile</div>
+                        <div class="col-md-2">@ep.AirDate.ToShortDateString()</div>
+                    </div>
+                }
             </div>
         </div>
     }

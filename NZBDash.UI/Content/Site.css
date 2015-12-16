@@ -115,3 +115,14 @@ footer {
   background-color: #e5e5e5;
   margin-bottom: 15px
 }
+
+ .modal-lg {
+    width: 200px;
+    height: 900px; /* control height here */
+}
+
+ .panel-title-small {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+}

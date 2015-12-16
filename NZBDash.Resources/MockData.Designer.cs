@@ -129,12 +129,14 @@ namespace NZBDash.Resources {
         ///  {
         ///    &quot;seriesId&quot;: 1,
         ///    &quot;episodeFileId&quot;: 0,
-        ///    &quot;seasonNumber&quot;: 1,
+        ///    &quot;seasonNumber&quot;: 0,
         ///    &quot;episodeNumber&quot;: 1,
-        ///    &quot;title&quot;: &quot;Mole Hunt&quot;,
-        ///    &quot;airDate&quot;: &quot;2009-09-17&quot;,
-        ///    &quot;airDateUtc&quot;: &quot;2009-09-18T02:00:00Z&quot;,
-        ///    &quot;overview&quot;: &quot;Archer is in trouble with his Mother and the Comptroller because his expense account is way out of proportion to his actual expenses. So he creates the idea that a Mole has breached ISIS and he needs to get into the mainframe to hunt him down (so he can cover his tracks!). All this leads to a [rest of string was truncated]&quot;;.
+        ///    &quot;title&quot;: &quot;Stewie Griffin: The Untold Story (Feature Movie)&quot;,
+        ///    &quot;airDate&quot;: &quot;2006-05-21&quot;,
+        ///    &quot;airDateUtc&quot;: &quot;2006-05-22T01:00:00Z&quot;,
+        ///    &quot;overview&quot;: &quot;When Stewie sees a man who looks just like him on TV, he&apos;s convinced that he must be his real father. Stewie sets off on a cross-country road trip to find him, but his incredible journey leads to outrageous discoveries.&quot;,
+        ///    &quot;hasFile&quot;: false,
+        ///    &quot;mon [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sonarr_Episode {
             get {
@@ -145,12 +147,16 @@ namespace NZBDash.Resources {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;title&quot;: &quot;Archer (2009)&quot;,
-        ///    &quot;seasonCount&quot;: 5,
-        ///    &quot;episodeCount&quot;: 47,
-        ///    &quot;episodeFileCount&quot;: 47,
+        ///    &quot;title&quot;: &quot;Family Guy&quot;,
+        ///    &quot;alternateTitles&quot;: [],
+        ///    &quot;sortTitle&quot;: &quot;family guy&quot;,
+        ///    &quot;seasonCount&quot;: 14,
+        ///    &quot;totalEpisodeCount&quot;: 278,
+        ///    &quot;episodeCount&quot;: 27,
+        ///    &quot;episodeFileCount&quot;: 21,
+        ///    &quot;sizeOnDisk&quot;: 7571641511,
         ///    &quot;status&quot;: &quot;continuing&quot;,
-        ///    &quot;overview&quot;: &quot;At ISIS, an international spy agency, global crises are merely opportunities for its highly trained employees to confuse, undermine, betray and royally screw each other. At the center of it all is suave master spy Sterling Archer, whose less-than-masculine code name is \&quot;Duchess.\&quot; Archer works with his domineering mother Malory, who is also his bo [rest of string was truncated]&quot;;.
+        ///    &quot;overview&quot;: &quot;Sick, twisted, politically incorrect and Freakin&apos; Sweet animated series featuring the adventures of the dysfunctional Griffin family. Bumbling Peter and long-suffering Lois have three kids. Stewie (a brilliant but sadistic baby be [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sonarr_Series {
             get {
