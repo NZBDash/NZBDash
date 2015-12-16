@@ -26,7 +26,7 @@
 #endregion
 using Ninject.Modules;
 
-using NZBDash.Common.Helpers;
+using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 
 namespace NZBDash.DependencyResolver.Modules
@@ -35,7 +35,7 @@ namespace NZBDash.DependencyResolver.Modules
     {
         public override void Load()
         {
-            Bind<ICacheService>().To<InMemoryCache>();
+            Bind<ICacheProvider>().To<MemoryCacheProvider>();
         }
     }
 }

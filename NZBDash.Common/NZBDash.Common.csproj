@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="Mapping\SonarrEpisodeMapper.cs" />
     <Compile Include="Mapping\NzbGetLogMapper.cs" />
+    <Compile Include="MemoryCacheProvider.cs" />
     <Compile Include="NLogLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

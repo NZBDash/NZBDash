@@ -38,16 +38,21 @@ namespace NZBDash.DataAccessLayer.Repository
     {
         private ISqliteConfiguration Config { get; set; }
         private ILogger Logger { get; set; }
+        private ICacheProvider Cache { get; set; }
+        private string TypeName { get; set; }
 
-        public GenericRepository(ILogger logger, ISqliteConfiguration config)
+        public GenericRepository(ILogger logger, ISqliteConfiguration config, ICacheProvider cacheProvider)
         {
             Config = config;
             Logger = logger;
             Logger.Trace(string.Format("Started GenericRepository<{0}>", typeof(T)));
+            Cache = cacheProvider;
+            TypeName = typeof(T).Name;
         }
 
         public long Insert(T entity)
         {
+            ResetCache();
             using (var cnn = Config.DbConnection())
             {
                 cnn.Open();
@@ -57,26 +62,40 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public IEnumerable<T> GetAll()
         {
-            using (var db = Config.DbConnection())
-            {
-                db.Open();
-                var result = db.GetAll<T>();
-                return result;
-            }
+            var key = TypeName + "GetAll";
+
+            var item = Cache.GetOrSet(key, () =>
+                {
+                    using (var db = Config.DbConnection())
+                    {
+                        db.Open();
+                        var result = db.GetAll<T>();
+                        return result;
+                    }
+                }, 5);
+            return item;
+
         }
 
         public T Get(long id)
         {
-            using (var db = Config.DbConnection())
-            {
-                db.Open();
-                var result = db.Get<T>(id);
-                return result;
-            }
+            var key = TypeName + "Get";
+            var item = Cache.GetOrSet(key, () =>
+                {
+                    using (var db = Config.DbConnection())
+                    {
+                        db.Open();
+                        var result = db.Get<T>(id);
+                        return result;
+                    }
+                }, 5);
+
+            return item;
         }
 
         public void Delete(T entity)
         {
+            ResetCache();
             using (var db = Config.DbConnection())
             {
                 db.Open();
@@ -86,11 +105,18 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(T entity)
         {
+            ResetCache();
             using (var db = Config.DbConnection())
             {
                 db.Open();
                 return db.Update(entity);
             }
+        }
+
+        private void ResetCache()
+        {
+            Cache.Remove(TypeName + "Get");
+            Cache.Remove(TypeName + "GetAll");
         }
     }
 }

@@ -29,10 +29,8 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 using NZBDash.Common;
-using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.ViewModels;
 
 namespace NZBDash.UI.Controllers
@@ -40,14 +38,13 @@ namespace NZBDash.UI.Controllers
     public class LayoutController : Controller
     {
         public LayoutController(ISettingsService<SabNzbdSettingsDto> sab, ISettingsService<CouchPotatoSettingsDto> cp,
-            ISettingsService<SonarrSettingsViewModelDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget, ICacheService cache)
+            ISettingsService<SonarrSettingsViewModelDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget)
         {
             SabService = sab;
             CpService = cp;
             SonarrService = sonarr;
             PlexService = plex;
             NzbService = nzbget;
-            Cache = cache;
         }
 
         private ISettingsService<SabNzbdSettingsDto> SabService { get; set; }
@@ -55,7 +52,6 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<PlexSettingsDto> PlexService { get; set; }
         private ISettingsService<NzbGetSettingsDto> NzbService { get; set; }
         private ISettingsService<SonarrSettingsViewModelDto> SonarrService { get; set; }
-        private ICacheService Cache { get; set; }
 
         // GET: Layout
         public ActionResult ApplicationMenu()
@@ -66,7 +62,7 @@ namespace NZBDash.UI.Controllers
                 switch ((Applications)app)
                 {
                     case Applications.SabNZBD:
-                        var sabService = Cache.GetOrSet(CacheKeys.SabKey, () => SabService.GetSettings());
+                        var sabService = SabService.GetSettings();
                         if (sabService.Enabled)
                         {
                             model.Add(
@@ -76,7 +72,7 @@ namespace NZBDash.UI.Controllers
                     case Applications.Sickbeard: break;
 
                     case Applications.CouchPotato:
-                        var cpService = Cache.GetOrSet(CacheKeys.CouchPotatoKey, () => CpService.GetSettings());
+                        var cpService =CpService.GetSettings();
                         if (cpService.Enabled)
                         {
                             model.Add(
@@ -86,7 +82,7 @@ namespace NZBDash.UI.Controllers
                     case Applications.Kodi: break;
 
                     case Applications.Sonarr:
-                        var sonarrService = Cache.GetOrSet(CacheKeys.SonarrKey, () => SonarrService.GetSettings());
+                        var sonarrService = SonarrService.GetSettings();
                         if (sonarrService.Enabled)
                         {
                             model.Add(
@@ -95,7 +91,7 @@ namespace NZBDash.UI.Controllers
                         break;
 
                     case Applications.Plex:
-                        var plexService = Cache.GetOrSet(CacheKeys.PlexKey, () => PlexService.GetSettings());
+                        var plexService = PlexService.GetSettings();
                         if (plexService.Enabled)
                         {
                             model.Add(
@@ -104,7 +100,7 @@ namespace NZBDash.UI.Controllers
                         break;
 
                     case Applications.NzbGet:
-                        var nzbgetService = Cache.GetOrSet(CacheKeys.NzbGetKey, () => NzbService.GetSettings());
+                        var nzbgetService = NzbService.GetSettings();
                         if (nzbgetService.Enabled)
                         {
                             model.Add(

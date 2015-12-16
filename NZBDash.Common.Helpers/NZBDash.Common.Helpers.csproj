@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="AssemblyDirectoryHelper.cs" />
     <Compile Include="CustomWebClient.cs" />
-    <Compile Include="InMemoryCache.cs" />
     <Compile Include="MemorySizeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThirdPartySerializer.cs" />

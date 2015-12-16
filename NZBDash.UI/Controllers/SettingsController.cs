@@ -26,10 +26,8 @@
 #endregion
 using System.Web.Mvc;
 
-using NZBDash.Common.Helpers;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
-using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Settings;
 
 using Omu.ValueInjecter;
@@ -89,7 +87,6 @@ namespace NZBDash.UI.Controllers
             var result = NzbGetSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(CacheKeys.NzbGetKey);
                 return RedirectToAction("NzbGetSettings");
             }
 
@@ -121,7 +118,6 @@ namespace NZBDash.UI.Controllers
             var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(CacheKeys.SabKey);
                 return RedirectToAction("SabNzbSettings");
             }
 
@@ -152,7 +148,6 @@ namespace NZBDash.UI.Controllers
             var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(CacheKeys.SonarrKey);
                 return RedirectToAction("SonarrSettings");
             }
 
@@ -183,7 +178,6 @@ namespace NZBDash.UI.Controllers
             var result = CpSettingsService.SaveSettings(dto);
             if (result)
             {
-                KillCache(CacheKeys.CouchPotatoKey);
                 return RedirectToAction("CouchPotatoSettings");
             }
 
@@ -213,18 +207,11 @@ namespace NZBDash.UI.Controllers
 
             var result = PlexSettingsServiceSettingsService.SaveSettings(dto);
             if (result)
-            {
-                KillCache(CacheKeys.PlexKey);
+            {   
                 return RedirectToAction("PlexSettings");
             }
 
             return View("Error");
-        }
-
-        private void KillCache(string key)
-        {
-            var cache = new InMemoryCache();
-            cache.Destroy(key);
         }
     }
 }

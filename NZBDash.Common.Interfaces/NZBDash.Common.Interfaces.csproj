@@ -91,7 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICacheService.cs" />
+    <Compile Include="ICacheProvider.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IWebClient.cs" />

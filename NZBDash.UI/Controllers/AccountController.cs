@@ -18,6 +18,7 @@ namespace NZBDash.UI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+
         public AccountController() : base(typeof(AccountController))
         {
         }
