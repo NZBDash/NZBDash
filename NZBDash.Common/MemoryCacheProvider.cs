@@ -52,8 +52,10 @@ namespace NZBDash.Common
             if (item == null)
             {
                 item = itemCallback();
-
-                Set(key, item, cacheTime);
+                if (item != null)
+                {
+                    Set(key, item, cacheTime);
+                }
             }
             return item;
         }

@@ -22,9 +22,7 @@ namespace NZBDash.UI
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/kendo/kendo.all.min.js",
-                      "~/Scripts/kendo/angular.min.js",
-                      "~/Scripts/kendo/jszip.min.js"
+                        "~/Scripts/bootstrap-switch.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/gridster").Include("~/Scripts/jquery.gridster.js"));
@@ -35,8 +33,7 @@ namespace NZBDash.UI
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/font-awesome.css",
-                      "~/Content/web/kendo.common-bootstrap.core.css",
-                      "~/Content/web/kendo.default.css"));
+                      "~/Content/bootstrap-switch.css"));
 
             var ajaxGrid = new ScriptBundle("~/bundles/gridmvc").Include(
                 "~/Scripts/URI.js",

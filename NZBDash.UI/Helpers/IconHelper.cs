@@ -26,6 +26,7 @@
 #endregion
 using System;
 
+using NZBDash.UI.Models;
 using NZBDash.UI.Models.Dashboard;
 
 namespace NZBDash.UI.Helpers

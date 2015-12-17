@@ -40,6 +40,7 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
+using NZBDash.UI.Models;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.ViewModels;
 using NZBDash.UI.Models.ViewModels.SabNzbd;

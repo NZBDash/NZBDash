@@ -57,13 +57,20 @@ namespace NZBDash.Common.Tests
         }
 
         [Test]
-        public void GetOrSeNewItem()
+        public void GetOrSetNewItem()
         {
             AddToCache();
 
             var item = Cache.GetOrSet<object>("NewKey", () => string.Empty, 5);
             Assert.That(item, Is.Not.Null);
             Assert.That(item, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void GetOrSetNewItemWithNullLookup()
+        {
+            var item = Cache.GetOrSet<object>("NewKey", () => null, 5);
+            Assert.That(item, Is.Null);
         }
 
         [Test]

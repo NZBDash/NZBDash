@@ -24,7 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-namespace NZBDash.UI.Helpers
+namespace NZBDash.UI.Models
 {
     public class FontAwesome
     {
@@ -34,5 +34,7 @@ namespace NZBDash.UI.Helpers
         public const string LoadingSpinner = "fa-spinner";
         public const string ArrowRight = "fa-arrow-right";
         public const string QuestionMark = "fa-question";
+        public const string Check = "fa-check";
+        public const string Cross = "fa-times";
     }
 }

@@ -40,6 +40,13 @@ namespace NZBDash.UI.Models.ViewModels.Sonarr
         public DateTime AirDateUtc { get; set; }
         public string Overview { get; set; }
         public bool HasFile { get; set; }
+        public string HasFileIcon
+        {
+            get
+            {
+                return string.Format("<i class=\"fa {0}\"></i>", HasFile ? FontAwesome.Check : FontAwesome.Cross);
+            }
+        }
         public bool Monitored { get; set; }
         public int SceneEpisodeNumber { get; set; }
         public int SceneSeasonNumber { get; set; }

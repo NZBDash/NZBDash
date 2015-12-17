@@ -26,8 +26,8 @@
                     <div class="row">
                         <div class="col-md-2 text-center">@ep.EpisodeNumber</div>
                         <div class="col-md-6">@ep.Title</div>
-                        <div class="col-md-2">@ep.HasFile</div>
-                        <div class="col-md-2">@ep.AirDate.ToShortDateString()</div>
+                        <div class="col-md-2 text-center">@Html.Raw(ep.HasFileIcon)</div>
+                        <div class="col-md-2 text-center">@ep.AirDate.ToShortDateString()</div>
                     </div>
                 }
             </div>
