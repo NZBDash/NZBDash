@@ -36,5 +36,6 @@ namespace NZBDash.UI.Models
         public const string QuestionMark = "fa-question";
         public const string Check = "fa-check";
         public const string Cross = "fa-times";
+        public const string Search = "fa-search";
     }
 }

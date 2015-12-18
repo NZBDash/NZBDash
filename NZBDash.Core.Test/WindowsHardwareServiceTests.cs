@@ -83,7 +83,7 @@ namespace NZBDash.Core.Test
             var process = Service.GetCpuPercentage();
 
             Assert.That(process, Is.Not.Null);
-            Assert.That(process, Is.GreaterThan(0));
+            Assert.That(process, Is.GreaterThan(-1));
         }
 
         [Test]

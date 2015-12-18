@@ -243,6 +243,7 @@
     <Compile Include="Helpers\IconHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
+    <Compile Include="Hubs\DasboardHub.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
     <Compile Include="Hubs\LinksConfigurationHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
@@ -66,6 +67,12 @@ namespace NZBDash.UI.Controllers
 
 
             return PartialView("Partial/_ServerInformation", model);
+        }
+
+        public ActionResult UpdateGrid(GridsterModel[] s)
+        {
+            var j = s;
+            return Json("",JsonRequestBehavior.AllowGet);
         }
     }
 }
