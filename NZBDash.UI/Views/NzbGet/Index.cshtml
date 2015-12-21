@@ -1,75 +1,95 @@
-﻿
+﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
+@model NZBDash.UI.Models.ViewModels.NzbGetHistoryGrid
 @{
-    ViewBag.Title = "NzbGet";
+    ViewBag.Title = @Resources.Applications_NzbGet_Title;
 }
-<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css">
-<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.rtl.min.css">
-<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.default.min.css">
-<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.mobile.all.min.css">
-
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/angular.min.js"></script>
-<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/jszip.min.js"></script>
-<script src="http://kendo.cdn.telerik.com/2015.3.1111/js/kendo.all.min.js"></script>
 
 <h2>@ViewBag.Title</h2>
 <h3 id="status"></h3>
 
 
 <ul class="nav nav-tabs">
-    <li id="HomeTab" role="presentation" class="active"><a id="Home" href="#">Home</a></li>
-    <li id="HistoryTab" role="presentation"><a id="History" href="#">History</a></li>
-    @*<li role="presentation"><a href="#">Messages</a></li>*@
+    <li id="HomeTab" name="tab" role="presentation" class="active"><a id="Home" href="#">@Resources.Applications_NzbGet_Tab_Home</a></li>
+    <li id="HistoryTab" name="tab" role="presentation"><a id="History" href="#">@Resources.Applications_NzbGet_Tab_History</a></li>
+    <li id="LogTab" name="tab" role="presentation"><a id="Logs" href="#">@Resources.Applications_NzbGet_Tab_Logs</a></li>
 </ul>
 
-<div id="DownloadArea"></div>
-<div id="HistoryArea"></div>
+
+<div id="DownloadArea" class="area">
+    @Html.AjaxPanel()
+</div>
+<div id="HistoryArea" class="area" hidden="hidden">
+    @Html.Partial("Partial/History", Model.Grid)
+</div>
+
+<div id="LogsArea" class="area" hidden="hidden">
+    @Html.AjaxPanel()
+</div>
+
+
+
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/gridster")
-    @Styles.Render("~/Content/gridster")
-
-    <script src="~/Scripts/Highcharts.js"></script>
-    <script src="~/Scripts/Dashboard.js"></script>
-    <script src="http://code.highcharts.com/modules/data.js"></script>
-    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-
+    @Scripts.Render("~/bundles/gridmvc")
     <script>
+        function enableTab(elementToEnable, tabToEnable) {
+            $('.area').hide();
+            $("li[name=tab]").removeClass("active");
+            $(elementToEnable).show();
+            $(tabToEnable).addClass("active");
+
+        }
         $(function () {
+
+            $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
+                $("#DownloadArea").html(view);
+            });
+
+            $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
+                $('#status').html(data.Status);
+            });
+
             setInterval(function () {
-
                 $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
-                    $('#DownloadArea').html(view);
+                    $("#DownloadArea").html(view);
                 });
-
 
                 $.ajax("@Url.Action("GetNzbGetStatus")").success(function (data) {
                     $('#status').html(data.Status);
                 });
             }, 2000);
 
+            //////// Ajax History Grid ////////
             $('#History').click(function () {
-                $.ajax("@Url.Action("GetNzbGetDownloadHistory")").success(function (view) {
-                    $('#HistoryArea').html(view);
-                    $('#HomeTab').removeClass("active");
-                    $('#HistoryTab').addClass("active");
-                    $('#DownloadArea').hide();
-                    $('#HistoryArea').show();
+                $(".grid-mvc").gridmvc().ajaxify(
+                {
+                    getPagedData: "@Url.Action("AjaxHistoryPaged")",
+                    getData: "@Url.Action("AjaxHistory")"
                 });
+
+                $(".grid-mvc")
+                    .gridmvc()
+                    .refreshFullGrid();
+                $('#HomeTab').removeClass("active");
+                $('#HistoryTab').addClass("active");
+                enableTab($('#HistoryArea'), $('#HistoryTab'));
             });
+            ///////////////////////////////////
 
             $('#Home').click(function () {
-                $.ajax("@Url.Action("GetNzbGetDownloadInformation")").success(function (view) {
-                    $('#ContentArea').html(view);
-                    $('#HomeTab').addClass("active");
-                    $('#HistoryTab').removeClass("active");
-                    $('#DownloadArea').show();
-                    $('#HistoryArea').hide();
-                });
+                $('#HomeTab').addClass("active");
+                $('#HistoryTab').removeClass("active");
+                enableTab($('#DownloadArea'), $('#HomeTab'));
             });
+        });
 
+        $('#Logs').click(function () {
+            $.ajax("@Url.Action("Logs")").success(function (view) {
+                $('#LogsArea').html(view);
+                enableTab($('#LogsArea'), $('#LogTab'));
+            });
         });
     </script>
 }
-

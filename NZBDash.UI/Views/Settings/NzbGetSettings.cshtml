@@ -1,14 +1,14 @@
-﻿@model NZBDash.UI.Models.Settings.NzbGetSettingsViewModel
+﻿@using NZBDash.Resources
+@model NZBDash.UI.Models.Settings.NzbGetSettingsViewModel
 
 @{
-    ViewBag.Title = "NzbGetSettings";
+    ViewBag.Title = @Resources.Settings_NzbGet_Title;
 }
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
 
         <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
-
             @Html.Partial("_Sidebar")
         </div>
         <div class="col-sm-9 col-md-10 main">
@@ -19,7 +19,6 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>NzbGetSettingsViewModel</h4>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
@@ -27,20 +26,16 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Enabled, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.Enabled)
+                                @Html.CheckBoxFor(model => model.Enabled)
                                 @Html.ValidationMessageFor(model => model.Enabled, "", new { @class = "text-danger" })
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ShowOnDashboard, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.ShowOnDashboard)
+                                @Html.CheckBoxFor(model => model.ShowOnDashboard)
                                 @Html.ValidationMessageFor(model => model.ShowOnDashboard, "", new { @class = "text-danger" })
-                            </div>
                         </div>
                     </div>
 
@@ -96,4 +91,11 @@
     <script src="~/Scripts/ApplicationConfigurationSignalR.js"></script>
     <script src="~/Scripts/bootstrap-notify.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(function () {
+        $('#Enabled').bootstrapSwitch();
+        $('#ShowOnDashboard').bootstrapSwitch();
+    });
+
+</script>
 }

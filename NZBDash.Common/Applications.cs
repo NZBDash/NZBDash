@@ -4,8 +4,8 @@ namespace NZBDash.Common
 {
     public enum Applications
     {
-        [Display(Name = "SabNZB")]
-        SabNZB = 0,
+        [Display(Name = "SabNZBD")]
+        SabNZBD = 0,
         [Display(Name = "Sickbeard")]
         Sickbeard = 1,
         [Display(Name = "CouchPotato")]

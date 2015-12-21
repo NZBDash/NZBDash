@@ -77,4 +77,52 @@ footer {
   margin-top: 0;
 }
 
- 
+ .k-listview {
+    padding: 0;
+    border: none;
+}
+ .k-widget {
+    padding: 0;
+    border: none;
+}
+
+ .tabstrip_ts_active {
+     border: none;
+ }
+ @media screen and (min-width: 768px) {
+  .modal-dialog-middle {
+    right: auto;
+      left: 0;
+    width: 600px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+      position: static;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+}
+ .panel-grid{
+     padding-bottom: 25px !important;
+ }
+ .divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  margin-bottom: 15px
+}
+
+ .modal-lg {
+    width: 200px;
+    height: 900px; /* control height here */
+}
+
+ .panel-title-small {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+}

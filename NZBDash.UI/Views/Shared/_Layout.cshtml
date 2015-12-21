@@ -12,11 +12,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script language="Javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="STYLESHEET"/>
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css">
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.rtl.min.css">
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.default.min.css">
-    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.mobile.all.min.css">
+    <link media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="STYLESHEET" />
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,19 +24,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("NZBDash", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
-                    @if (User.IsApplicationEnabled(Applications.NzbGet))
-                    {
-                        <li>@Html.ActionLink("NzbGet", "Index", "NzbGet")</li>
-                    }
-                    @if (User.IsApplicationEnabled(Applications.Plex))
-                    {
-                        <li>@Html.ActionLink("Plex", "Index", "Plex")</li>
-                    }
+                    @*@Html.ShowApplications()*@
+
+                    @{ Html.RenderAction("ApplicationMenu", "Layout"); }
                     <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
                 </ul>
             </div>

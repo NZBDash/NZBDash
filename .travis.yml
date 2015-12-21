@@ -1,0 +1,7 @@
+language: csharp
+solution: NZBDash.sln
+install:
+ - nuget restore NZBDash.sln
+ - nuget install NUnit.Runners -OutputDirectory testrunner  
+script:
+ - xbuild /p:Configuration=Linux NZBDash.sln

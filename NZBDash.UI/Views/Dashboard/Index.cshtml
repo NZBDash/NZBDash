@@ -17,12 +17,6 @@
             <div id="Drives"></div>
         </li>
 
-        <li data-row="1" data-col="2" data-sizex="auto" data-sizey="1">
-            <div id="Download">
-
-            </div>
-        </li>
-
         <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
             <div id="Links">
             </div>
@@ -54,9 +48,6 @@
     <script src="http://code.highcharts.com/modules/drilldown.js"></script>
 
     <script>
-        $.ajax("@Url.Action("GetDownloadInformation")").success(function (view) {
-            $('#Download').html(view);
-        });
 
         $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
             $('#Drives').html(view);
@@ -66,9 +57,9 @@
             $('#Links').html(view);
         });
 
-        $.ajax("@Url.Action("GetRam")").success(function (view) {
-            $('#Ram').html(view);
-        });
+            $.ajax("@Url.Action("GetRam")").success(function (view) {
+                $('#Ram').html(view);
+            });
 
         $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
             $('#Server').html(view);

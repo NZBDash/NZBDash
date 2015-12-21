@@ -1,27 +1,15 @@
-﻿@using System.Globalization
-@using GridMvc.Html 
-@model IEnumerable<NZBDash.UI.Models.NzbGet.NzbGetHistoryViewModel>
+﻿@using GridMvc.Html
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<NZBDash.UI.Models.ViewModels.NzbGet.NzbGetHistoryViewModel>
 
+@*//TODO : Resource*@
 
-<div class="col-md-12">
-
-
-    @Html.Grid(Model).Named("NzbGetHistoryGrid").Columns(columns =>
+@Html.Grid(Model).Columns(columns =>
 {
     columns.Add(x => x.Name)
-        .Titled("Name")
-        .Encoded(false)
-        .Sanitized(false)
-        .SetWidth(300);
-
-    //columns.Add(x => x.Status).RenderValueAs(x =>
-    //{
-    //    DateTime date;
-    //    DateTime.TryParse(x.ReleaseDate, out date);
-    //    return date.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
-    //}
-    //    ).Titled(Resources.Release_Date);
-
+       .Titled("Name")
+       .Encoded(false)
+       .Sanitized(false)
+       .SetWidth(300);
 
     columns.Add(x => x.Status)
         .Titled("Status");
@@ -31,7 +19,4 @@
         .Titled("Category");
 
     columns.Add(x => x.FileSize);
-
-}).Sortable().Filterable().WithMultipleFilters().WithPaging(15)
-
-</div>
+}).WithPaging(10).Filterable().WithMultipleFilters()

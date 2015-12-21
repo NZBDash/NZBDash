@@ -1,7 +1,8 @@
-﻿@model NZBDash.UI.Models.Settings.CouchPotatoSettingsViewModel
+﻿@using NZBDash.Resources
+@model NZBDash.UI.Models.Settings.CouchPotatoSettingsViewModel
 
 @{
-    ViewBag.Title = "CouchPotato Settings";
+    ViewBag.Title = @Resources.Settings_CouchPotato_Title;
 }
 <div class="container-fluid">
 
@@ -20,27 +21,27 @@
 
                 <div class="form-horizontal">
                     <h4>@ViewBag.Title</h4>
-                    <hr />
+                    <hr/>
+                    You can get your API key by visiting the documentation page: http://CouchPotatoIP:port/docs.
+                    <p>It looks like the following in bold: /api/<strong>f9992811232402182c44d24b1f3e845</strong>/</p>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Enabled, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.Enabled)
+                                @Html.CheckBoxFor(model => model.Enabled)
                                 @Html.ValidationMessageFor(model => model.Enabled, "", new { @class = "text-danger" })
-                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.ShowOnDashboard, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.ShowOnDashboard)
+   
+                                @Html.CheckBoxFor(model => model.ShowOnDashboard)
                                 @Html.ValidationMessageFor(model => model.ShowOnDashboard, "", new { @class = "text-danger" })
-                            </div>
+
                         </div>
                     </div>
 
@@ -98,4 +99,8 @@
             </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>    $(function () {
+        $('#Enabled').bootstrapSwitch();
+        $('#ShowOnDashboard').bootstrapSwitch();
+    });</script>
 }

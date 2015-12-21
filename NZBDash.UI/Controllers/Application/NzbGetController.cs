@@ -1,57 +1,95 @@
-﻿using System;
+﻿#region Copyright
+//  ***********************************************************************
+//  Copyright (c) 2015 Jamie Rees
+//  File: NzbGetController.cs
+//  Created By: Jamie Rees
+//
+//  Permission is hereby granted, free of charge, to any person obtaining
+//  a copy of this software and associated documentation files (the
+//  "Software"), to deal in the Software without restriction, including
+//  without limitation the rights to use, copy, modify, merge, publish,
+//  distribute, sublicense, and/or sell copies of the Software, and to
+//  permit persons to whom the Software is furnished to do so, subject to
+//  the following conditions:
+//
+//  The above copyright notice and this permission notice shall be
+//  included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  ***********************************************************************
+#endregion
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 
-using NZBDash.Api.Controllers;
+using Grid.Mvc.Ajax.GridExtensions;
+
 using NZBDash.Common;
+using NZBDash.Common.Helpers;
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
-using NZBDash.Common.Models.NzbGet;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
-using NZBDash.UI.Models.NzbGet;
+using NZBDash.UI.Models.ViewModels;
+using NZBDash.UI.Models.ViewModels.NzbGet;
 
 using Omu.ValueInjecter;
 
-using UrlHelper = NZBDash.UI.Helpers.UrlHelper;
+using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers.Application
 {
     public class NzbGetController : BaseController
     {
-        public NzbGetController(ISettings<NzbGetSettingsDto> settings, IStatusApi api)
-            : base(typeof(NzbGetController))
+        public NzbGetController(ISettingsService<NzbGetSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
         {
-            Settings = settings;
+            SettingsService = settingsService;
             Api = api;
+            Logger = logger;
+            Settings = SettingsService.GetSettings();
         }
 
-        private ISettings<NzbGetSettingsDto> Settings { get; set; }
-        private IStatusApi Api { get; set; }
+        private ISettingsService<NzbGetSettingsDto> SettingsService { get; set; }
+        private NzbGetSettingsDto Settings { get; set; }
+        private IThirdPartyService Api { get; set; }
 
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var history = new List<NzbGetHistoryViewModel>().AsQueryable();
+            var grid = (AjaxGrid<NzbGetHistoryViewModel>)new AjaxGridFactory().CreateAjaxGrid(history, 1, false);
+
+            return View(new NzbGetHistoryGrid() { Grid = grid });
         }
 
         [HttpGet]
-        public JsonResult GetNzbGetStatus()
+        public ActionResult GetNzbGetStatus()
         {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
             Logger.Trace("Getting Config");
-            var config = Settings.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
             try
             {
                 Logger.Trace("Getting NzbGetStatus");
-                var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
+                var statusInfo = Api.GetNzbGetStatus(formattedUri, Settings.Username, Settings.Password);
 
-                var nzbModel = new NzbGetViewModel
-                {
-                    Status = statusInfo.Result.ServerPaused ? "Paused" : "Running",
-                };
+                var nzbModel = new NzbGetViewModel { Status = statusInfo.Result.ServerPaused ? "Paused" : "Running", };
 
                 Logger.Trace("Returning Model");
                 return Json(nzbModel, JsonRequestBehavior.AllowGet);
@@ -66,16 +104,21 @@ namespace NZBDash.UI.Controllers.Application
         [HttpGet]
         public ActionResult GetNzbGetDownloadInformation()
         {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
             Logger.Trace("Getting Config");
-            var config = Settings.GetSettings();
-            var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
             try
             {
                 Logger.Trace("Getting NzbGetStatus");
-                var statusInfo = Api.GetNzbGetStatus(formattedUri, config.Username, config.Password);
+                var statusInfo = Api.GetNzbGetStatus(formattedUri, Settings.Username, Settings.Password);
 
                 Logger.Trace("Getting Current NZBGetlist");
-                var downloadInfo = Api.GetNzbGetList(formattedUri, config.Username, config.Password);
+                var downloadInfo = Api.GetNzbGetList(formattedUri, Settings.Username, Settings.Password);
 
                 var downloadSpeed = statusInfo.Result.DownloadRate / 1024;
 
@@ -104,17 +147,17 @@ namespace NZBDash.UI.Controllers.Application
                     {
                         progressBar = "progress-bar-success";
                     }
-                    
 
-                    model.DownloadItem.Add(new DownloadItem
-                    {
-                        FontAwesomeIcon = IconHelper.ChooseIcon(EnumHelper<DownloadStatus>.Parse(result.Status)),
-                        DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.CurrentUICulture),
-                        DownloadingName = result.NZBName,
-                        Status = status,
-                        NzbId = result.NZBID,
-                        ProgressBarClass = progressBar
-                    });
+                    model.DownloadItem.Add(
+                        new DownloadItem
+                        {
+                            FontAwesomeIcon = IconHelper.ChooseIcon(status),
+                            DownloadPercentage = Math.Ceiling(percentage).ToString(CultureInfo.CurrentUICulture),
+                            DownloadingName = result.NZBName,
+                            Status = status,
+                            NzbId = result.NZBID,
+                            ProgressBarClass = progressBar
+                        });
                 }
 
                 return PartialView("Partial/_Download", model);
@@ -128,29 +171,74 @@ namespace NZBDash.UI.Controllers.Application
         }
 
         [HttpGet]
-        public ActionResult GetNzbGetDownloadHistory()
+        public ActionResult Logs()
+        {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_NzbGet;
+                return PartialView("DashletError");
+            }
+
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+            var logs = Api.GetNzbGetLogs(formattedUri, Settings.Username, Settings.Password);
+            if (logs.result != null)
+            {
+                var orderdLogs = logs.result.OrderByDescending(x => x.ID).ToList();
+
+                var model = orderdLogs.Select(log => (NzbGetLogViewModel)new NzbGetLogViewModel().InjectFrom(new NzbGetLogMapper(), log)).Take(50).ToList();
+
+                return PartialView("Partial/Logs", model);
+            }
+            
+            return PartialView("Partial/Logs", new List<NzbGetLogViewModel>());
+        }
+
+        public JsonResult AjaxHistory()
+        {
+            var vm = GetHistory();
+
+            var ajaxGridFactory = new AjaxGridFactory();
+            var grid = ajaxGridFactory.CreateAjaxGrid(vm, 1, false);
+
+            return Json(new { Html = grid.ToJson("Partial/History", this), grid.HasItems }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AjaxHistoryPaged(int? page)
+        {
+            var vm = GetHistory();
+
+            var grid = new AjaxGridFactory().CreateAjaxGrid(vm, page ?? 1, page.HasValue);
+
+            return Json(new { Html = grid.ToJson("Partial/History", this), grid.HasItems }, JsonRequestBehavior.AllowGet);
+        }
+
+        private IQueryable<NzbGetHistoryViewModel> GetHistory()
         {
             try
             {
-                var config = Settings.GetSettings();
-                var formattedUri = UrlHelper.ReturnUri(config.IpAddress, config.Port).ToString();
-                var history = Api.GetNzbGetHistory(formattedUri, config.Username, config.Password);
+                var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+                var history = Api.GetNzbGetHistory(formattedUri, Settings.Username, Settings.Password);
 
-                var model = new List<NzbGetHistoryViewModel>();
-
+                var items = new List<NzbGetHistoryViewModel>();
                 foreach (var result in history.result)
                 {
                     var singleItem = new NzbGetHistoryViewModel();
                     var mappedResult = (NzbGetHistoryViewModel)singleItem.InjectFrom(new NzbGetHistoryMapper(), result);
-                    model.Add(mappedResult);
+                    if (!string.IsNullOrEmpty(mappedResult.FileSize))
+                    {
+                        long newFileSize;
+                        long.TryParse(mappedResult.FileSize, out newFileSize);
+                        mappedResult.FileSize = MemorySizeConverter.SizeSuffixMb(newFileSize);
+                    }
+                    items.Add(mappedResult);
                 }
 
-                return PartialView("Partial/History", model);
+                return items.AsQueryable();
             }
             catch (Exception e)
             {
                 Logger.Error(e.Message, e);
-                return PartialView("DashletError");
+                return new List<NzbGetHistoryViewModel>().AsQueryable();
             }
         }
     }

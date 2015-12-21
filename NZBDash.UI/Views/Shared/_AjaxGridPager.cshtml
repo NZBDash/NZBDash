@@ -1,0 +1,38 @@
+﻿@model Grid.Mvc.Ajax.GridExtensions.AjaxGridPager
+@if (Model.Pages < 2)
+{
+    return;
+}
+
+<div class="grid-footer">
+    <div class="grid-pager">
+        <ul class="pagination">
+            <li><a href="#" class="grid-prev-page" title="Previous Page" style="display: none"><span class="fa fa-backward"></span></a></li>
+            @{if (Model.Pages > Model.PagePartitionSize + 2 &&
+                  Model.PagePartitionSize > 0)
+            {
+                <li class="active"><a class="grid-page-link" data-page="1">1</a></li>
+                <li><a href="#" class="grid-pageSetLink prev" style="display: none;" data-pageset='1' data-partitionsize="@Model.PagePartitionSize">...</a></li>
+                for (int i = 1; i < Model.PagePartitionSize + 1; i++)
+                {
+                    var currentPage = i + 1;
+                    <li><a href="#" class="grid-page-link" data-page='@currentPage'>@currentPage</a></li>
+                }
+
+                <li><a href="#" class="grid-pageSetLink next" data-pageset='2' data-partitionsize="@Model.PagePartitionSize">...</a></li>
+                <li><a href="#" class="grid-page-link" data-page='@Model.Pages'>@Model.Pages</a></li>
+            }
+            else
+            {
+                <li class="active"><a class="grid-page-link" data-page="1">1</a></li>
+                for (int i = 1; i < Model.Pages; i++)
+                {
+                    var currentPage = i + 1;
+                    <li><a href="#" class="grid-page-link" data-page='@currentPage'>@currentPage</a></li>
+                }
+            }
+            }
+            <li><a href="#" title="Next Page" class="grid-next-page"><span class="fa fa-forward"></span></a></li>
+        </ul>
+    </div>
+</div>

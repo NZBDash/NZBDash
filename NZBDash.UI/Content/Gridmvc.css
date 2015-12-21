@@ -9,8 +9,8 @@ table.grid-table { margin: 0; }
 
     /* Grid headers */
     table.grid-table .grid-header { position: relative; }
-        table.grid-table .grid-header .sorted-asc .grid-sort-arrow:after { content: " \2193"; }
-        table.grid-table .grid-header .sorted-desc .grid-sort-arrow:after { content: " \2191"; }
+        table.grid-table .grid-header .sorted-asc .grid-sort-arrow:after { content: " \2191"; }
+        table.grid-table .grid-header .sorted-desc .grid-sort-arrow:after { content: " \2193"; }
         table.grid-table .grid-header > .grid-header-title { width: 100%; margin-right: 15px; white-space: nowrap; }
 
     /* Grid body */
