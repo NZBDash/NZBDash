@@ -187,5 +187,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+<<<<<<< HEAD
 NZBDash.userprefs
 *.ncrunchproject
+=======
+.vs/config/applicationhost.config
+>>>>>>> refs/remotes/origin/master
