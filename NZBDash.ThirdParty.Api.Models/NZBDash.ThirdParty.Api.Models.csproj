@@ -7,13 +7,10 @@
     <ProjectGuid>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-<<<<<<< HEAD:NZBDash.ThirdParty.Api.Models/NZBDash.ThirdParty.Api.Models.csproj
     <RootNamespace>NZBDash.ThirdParty.Api.Models</RootNamespace>
     <AssemblyName>NZBDash.ThirdParty.Api.Models</AssemblyName>
-=======
     <RootNamespace>NZBDash.DataAccess</RootNamespace>
     <AssemblyName>NZBDash.DataAccess</AssemblyName>
->>>>>>> refs/remotes/origin/master:NZBDash.DataAccess/NZBDash.DataAccess.csproj
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
