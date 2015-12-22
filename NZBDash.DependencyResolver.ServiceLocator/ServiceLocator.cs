@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // ************************************************************************
 //   Copyright (c) 2015 
-//   File: IDependencyResolver.cs
+//   File: ServiceLocator.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,12 +24,20 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-using Ninject.Modules;
+using Ninject;
 
-namespace NZBDash.DependencyResolver
+
+namespace NZBDash.DependencyResolver.ServiceLocator
 {
-    public interface IDependencyResolver
+    public static class ServiceLocator
     {
-        INinjectModule[] GetModules();
+        public static IKernel Kernel { private get; set; }
+
+        // Unfortunately this is an anti-pattern that we need to use since the Asp Membership provider does not support
+        // Constructors with parameters
+        public static T GetService<T>()
+        {
+            return Kernel.Get<T>();
+        }
     }
 }

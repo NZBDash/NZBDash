@@ -84,6 +84,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +95,7 @@
     <Compile Include="IApplicationTester.cs" />
     <Compile Include="IHardwareService.cs" />
     <Compile Include="ILinksConfiguration.cs" />
+    <Compile Include="IMembershipProvider.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

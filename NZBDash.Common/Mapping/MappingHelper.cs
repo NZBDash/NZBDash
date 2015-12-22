@@ -29,6 +29,9 @@ using System.Linq;
 
 namespace NZBDash.Common.Mapping
 {
+    // TODO: Rework the MapMatchingProperties method, 
+    // it's not really mapping anything other than value types,
+    // any reference types get a default value
     public static class MappingHelper
     {
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // ************************************************************************
 //   Copyright (c) 2015 
-//   File: IDependencyResolver.cs
+//   File: IMembershipProvider.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,12 +24,22 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-using Ninject.Modules;
+using System.Web.Security;
 
-namespace NZBDash.DependencyResolver
+namespace NZBDash.Core.Interfaces
 {
-    public interface IDependencyResolver
+    public interface IMembershipProvider
     {
-        INinjectModule[] GetModules();
+        MembershipUser CreateUser(string username,
+                                  string password,
+                                  string email,
+                                  string passwordQuestion,
+                                  string passwordAnswer,
+                                  bool isApproved,
+                                  object providerUserKey,
+                                  out MembershipCreateStatus status);
+
+        MembershipUser GetUser(string username, bool userIsOnline);
+        bool ValidateUser(string username, string password);
     }
 }

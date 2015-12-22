@@ -230,6 +230,7 @@
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Application\NzbGetController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -403,11 +404,13 @@
     <Content Include="Views\Shared\_AjaxGridPager.cshtml" />
     <Content Include="Views\NzbGet\Partial\History.cshtml" />
     <Content Include="Views\Layout\NavBarItems.cshtml" />
+    <Content Include="Views\Shared\_NavUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CouchPotato\" />
+    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -440,6 +443,22 @@
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Interfaces\NZBDash.DataAccessLayer.Interfaces.csproj">
+      <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
+      <Name>NZBDash.DataAccessLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
+      <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
+      <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
+      <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
+      <Name>NZBDash.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DependencyResolver.ServiceLocator\NZBDash.DependencyResolver.ServiceLocator.csproj">
+      <Project>{BC304B86-E724-4953-AEA9-9541D175E51D}</Project>
+      <Name>NZBDash.DependencyResolver.ServiceLocator</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>

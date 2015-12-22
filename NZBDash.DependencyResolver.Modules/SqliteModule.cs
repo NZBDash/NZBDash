@@ -55,7 +55,6 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
 
 
-
 #if WINDOWS || DEBUG
             Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
             Bind<DbProviderFactory>().To<SQLiteFactory>();

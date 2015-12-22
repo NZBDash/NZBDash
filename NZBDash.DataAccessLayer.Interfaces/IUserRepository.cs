@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // ************************************************************************
 //   Copyright (c) 2015 
-//   File: IDependencyResolver.cs
+//   File: IUserRepository.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,12 +24,17 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-using Ninject.Modules;
+using System.Collections.Generic;
 
-namespace NZBDash.DependencyResolver
+using NZBDash.DataAccessLayer.Models;
+
+namespace NZBDash.DataAccessLayer.Interfaces
 {
-    public interface IDependencyResolver
+    public interface IUserRepository
     {
-        INinjectModule[] GetModules();
+        IEnumerable<User> GetAllUsers();
+        User GetUserByUserName(string userName, string password);
+        User GetUserByUserName(string userName);
+        long RegisterUser(User user);
     }
 }

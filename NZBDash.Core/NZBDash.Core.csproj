@@ -115,7 +115,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -163,6 +165,10 @@
       <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
       <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
+      <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
+      <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
       <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
       <Name>NZBDash.DataAccessLayer</Name>
@@ -170,6 +176,10 @@
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Interfaces\NZBDash.DataAccessLayer.Interfaces.csproj">
       <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
       <Name>NZBDash.DataAccessLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DependencyResolver.ServiceLocator\NZBDash.DependencyResolver.ServiceLocator.csproj">
+      <Project>{BC304B86-E724-4953-AEA9-9541D175E51D}</Project>
+      <Name>NZBDash.DependencyResolver.ServiceLocator</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
       <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>

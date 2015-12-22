@@ -28,12 +28,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*@Html.ShowApplications()*@
 
                     @{ Html.RenderAction("ApplicationMenu", "Layout"); }
                     <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
                 </ul>
+                @Html.Partial("_NavUser")
             </div>
+
         </div>
     </div>
     <div class="container body-content">

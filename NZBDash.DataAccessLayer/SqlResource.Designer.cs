@@ -63,19 +63,19 @@ namespace NZBDash.DataAccessLayer {
         /// <summary>
         ///   Looks up a localized string similar to --Any DB changes need to be made in this file.
         ///
+        ///CREATE TABLE IF NOT EXISTS Users 
+        ///(
+        ///    UserID								INTEGER PRIMARY KEY AUTOINCREMENT,
+        ///    UserName							varchar(50) NOT NULL,
+        ///    Password							varchar(50) NOT NULL,
+        ///    UserEmailAddress					varchar(50) NOT NULL
+        ///}
         ///
         ///CREATE TABLE IF NOT EXISTS LinksConfigurations
         ///(
         ///    ID                                   INTEGER PRIMARY KEY AUTOINCREMENT,
         ///    LinkName                             VARCHAR(100)  NOT NULL,
-        ///    LinkEndpoint                         VARCHAR(100)  NOT NULL
-        ///);
-        ///
-        ///CREATE TABLE IF NOT EXISTS NzbGetSettings
-        ///(
-        ///    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-        ///    IpAddress                           VARCHAR(100)  NOT NULL,
-        ///    Port [rest of string was truncated]&quot;;.
+        ///    LinkEndpoint                         [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SqlTables {
             get {
