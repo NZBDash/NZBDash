@@ -28,7 +28,7 @@ using NUnit.Framework;
 
 using NZBDash.UI.Models.Hardware;
 
-namespace NZBDash.Common.Models.UnitTests
+namespace NZBDash.Common.Models.Test
 {
     [TestFixture]
     public class DriveModelTest
