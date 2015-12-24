@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: NzbDashSettingsDto.cs
+//   File: Setting.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,10 +24,10 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.Common.Models.Settings
 {
-    public class NzbDashSettingsDto : Common.Models.Settings.Setting
+    public class Setting
     {
-        public bool Authenticate { get; set; }
+        public int Id { get; set; }
     }
 }

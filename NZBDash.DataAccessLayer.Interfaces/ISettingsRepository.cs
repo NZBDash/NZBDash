@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: NzbDashSettingsDto.cs
+//   File: ISettingsRepository.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,10 +24,45 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Core.Model.Settings
+using System.Collections.Generic;
+
+using NZBDash.DataAccessLayer.Models.Settings;
+
+namespace NZBDash.DataAccessLayer.Interfaces
 {
-    public class NzbDashSettingsDto : Common.Models.Settings.Setting
+    public interface ISettingsRepository
     {
-        public bool Authenticate { get; set; }
+        /// <summary>
+        /// Inserts the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        long Insert(GlobalSettings entity);
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<GlobalSettings> GetAll();
+
+        /// <summary>
+        /// Gets the specified identifier.
+        /// </summary>
+        /// <param name="settingsName">Name of the settings.</param>
+        /// <returns></returns>
+        GlobalSettings Get(string settingsName);
+
+        /// <summary>
+        /// Deletes the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        bool Delete(GlobalSettings entity);
+
+        /// <summary>
+        /// Updates the specified entity.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        bool Update(GlobalSettings entity);
     }
 }

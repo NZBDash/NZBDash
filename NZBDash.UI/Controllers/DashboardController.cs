@@ -1,12 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Web.Mvc;
 
+using NZBDash.Common;
 using NZBDash.Common.Mapping;
 using NZBDash.Core;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Services;
+using NZBDash.Core.SettingsService;
+using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Models;
+using NZBDash.DataAccessLayer.Models.Settings;
+using NZBDash.DataAccessLayer.Repository;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.Hardware;
@@ -31,6 +38,8 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult Index()
         {
+            var s = new SettingsService<CouchPotatoSettings, CouchPotatoSettingsDto>(new JsonRepository(new WindowsSqliteConfiguration(new NLogLogger(typeof(string)), new SQLiteFactory())), new NLogLogger(typeof(int)));
+
             return View();
         }
 

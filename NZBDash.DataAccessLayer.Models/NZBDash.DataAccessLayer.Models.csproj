@@ -59,6 +59,7 @@
     <Compile Include="LinksConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\CouchPotatoSettings.cs" />
+    <Compile Include="Settings\GlobalSettings.cs" />
     <Compile Include="Settings\NzbDashSettings.cs" />
     <Compile Include="Settings\NzbGetSettings.cs" />
     <Compile Include="Settings\PlexSettings.cs" />

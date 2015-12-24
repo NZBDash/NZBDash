@@ -41,6 +41,8 @@ namespace NZBDash.DataAccessLayer.Repository
         private ICacheProvider Cache { get; set; }
         private string TypeName { get; set; }
 
+
+
         public GenericRepository(ILogger logger, ISqliteConfiguration config, ICacheProvider cacheProvider)
         {
             Config = config;

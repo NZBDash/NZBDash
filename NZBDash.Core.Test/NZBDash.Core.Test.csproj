@@ -95,7 +95,14 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.36.11\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.98.1\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -106,12 +113,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Services\SabNzbSettingsServiceTest.cs" />
-    <Compile Include="Services\SonarrSettingsServiceTest.cs" />
-    <Compile Include="Services\PlexSettingsServiceTest.cs" />
-    <Compile Include="Services\NzbGetSettingsServiceTest.cs" />
-    <Compile Include="Services\CouchPotatoSettingsServiceTest.cs" />
-    <Compile Include="Services\LinksConfigurationServiceTest.cs" />
+    <Compile Include="Services\SettingsServiceTest.cs" />
     <Compile Include="NLogLoggerTests.cs" />
     <Compile Include="WindowsHardwareServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +149,10 @@
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
       <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
       <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
+      <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
+      <Name>NZBDash.DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
       <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>

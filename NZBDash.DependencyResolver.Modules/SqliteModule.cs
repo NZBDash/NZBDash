@@ -48,14 +48,8 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-            Bind<ISqlRepository<SonarrSettings>>().To<GenericRepository<SonarrSettings>>();
-            Bind<ISqlRepository<PlexSettings>>().To<GenericRepository<PlexSettings>>();
-            Bind<ISqlRepository<NzbGetSettings>>().To<GenericRepository<NzbGetSettings>>();
-            Bind<ISqlRepository<CouchPotatoSettings>>().To<GenericRepository<CouchPotatoSettings>>();
-            Bind<ISqlRepository<SabNzbSettings>>().To<GenericRepository<SabNzbSettings>>();
             Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
-            Bind<ISqlRepository<NzbDashSettings>>().To<GenericRepository<NzbDashSettings>>();
-
+		    Bind<ISettingsRepository>().To<JsonRepository>();
 
 #if WINDOWS || DEBUG
             Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();

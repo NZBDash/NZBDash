@@ -38,7 +38,7 @@ namespace NZBDash.UI.Controllers
     {
         public SettingsController(ISettingsService<NzbGetSettingsDto> nzbGetSettingsService,
                                   ISettingsService<SabNzbdSettingsDto> sabNzbSettingsService,
-                                  ISettingsService<SonarrSettingsViewModelDto> sonarSettingsService,
+                                  ISettingsService<SonarrSettingsDto> sonarSettingsService,
                                   ISettingsService<CouchPotatoSettingsDto> cpSettingsService,
                                   ISettingsService<PlexSettingsDto> plexSettingsService,
                                   ISettingsService<NzbDashSettingsDto> nzbDash) : base(typeof(SettingsController))
@@ -56,7 +56,7 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<NzbGetSettingsDto> NzbGetSettingsServiceSettingsService { get; set; }
         private ISettingsService<PlexSettingsDto> PlexSettingsServiceSettingsService { get; set; }
         private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
-        private ISettingsService<SonarrSettingsViewModelDto> SonarrSettingsServiceSettingsService { get; set; }
+        private ISettingsService<SonarrSettingsDto> SonarrSettingsServiceSettingsService { get; set; }
 
         [HttpGet]
         public ActionResult CouchPotatoSettings()
@@ -239,7 +239,7 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new SonarrSettingsViewModelDto();
+            var dto = new SonarrSettingsDto();
             dto.InjectFrom(viewModel);
 
             var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);

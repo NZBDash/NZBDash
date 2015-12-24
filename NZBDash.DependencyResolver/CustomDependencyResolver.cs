@@ -45,8 +45,7 @@ namespace NZBDash.DependencyResolver
             var result = Assembly.LoadFrom(path).GetTypes()
                .Where(a => 
                    a.IsClass &&
-                   a.BaseType == typeof(NinjectModule))
-                   .ToArray();
+                   a.BaseType == typeof(NinjectModule));
 
 		    return result.Select(r => Activator.CreateInstance(r) as NinjectModule).ToArray();
 		}

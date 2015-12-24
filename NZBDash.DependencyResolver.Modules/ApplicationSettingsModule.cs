@@ -33,6 +33,7 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models.Settings;
 
 namespace NZBDash.DependencyResolver.Modules
 {
@@ -43,14 +44,15 @@ namespace NZBDash.DependencyResolver.Modules
         /// </summary>
         public override void Load()
         {
-            Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
-            Bind<ISettingsService<SabNzbdSettingsDto>>().To<SabNzbSettingsService>();
-            Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
-            Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
-            Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
-            Bind<ISettingsService<NzbDashSettingsDto>>().To<NzbDashSettingsService>();
+            Bind<ISettingsService<NzbGetSettingsDto>>().To<SettingsService<NzbGetSettings, NzbGetSettingsDto>>();
+            Bind<ISettingsService<SabNzbdSettingsDto>>().To<SettingsService<SabNzbSettings, SabNzbdSettingsDto>>();
+            Bind<ISettingsService<SonarrSettingsDto>>().To<SettingsService<SonarrSettings, SonarrSettingsDto>>();
+            Bind<ISettingsService<CouchPotatoSettingsDto>>().To<SettingsService<CouchPotatoSettings, CouchPotatoSettingsDto>>();
+            Bind<ISettingsService<PlexSettingsDto>>().To<SettingsService<PlexSettings, PlexSettingsDto>>();
+            Bind<ISettingsService<NzbDashSettingsDto>>().To<SettingsService<NzbDashSettings, NzbDashSettingsDto>>();
 
             Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<ISqlRepository<LinksConfiguration>>());
         }
+
     }
 }

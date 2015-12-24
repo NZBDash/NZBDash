@@ -2,7 +2,7 @@
 //  ***********************************************************************
 //  Created By: Jamie Rees at 2015/11/19 11:03
 //  Copyright (c) 2015 Jamie Rees
-//  File: SonarrSettingsViewModelDto.cs
+//  File: SonarrSettingsDto.cs
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
 //  a copy of this software and associated documentation files (the
@@ -28,7 +28,7 @@ using NZBDash.Common.Models.Settings;
 
 namespace NZBDash.Core.Model.Settings
 {
-    public class SonarrSettingsViewModelDto : BaseSettingsDto
+    public class SonarrSettingsDto : BaseSettingsDto
     {
         public string ApiKey { get; set; }
     }

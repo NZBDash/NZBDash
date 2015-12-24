@@ -8,12 +8,11 @@ CREATE TABLE IF NOT EXISTS Users
     SecurityStamp						varchar(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Users
+CREATE TABLE IF NOT EXISTS GlobalSettings
 (
-    UserID								INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserName							varchar(50) NOT NULL,
-    PasswordHash						varchar(100) NOT NULL,
-    SecurityStamp						varchar(100) NOT NULL
+    Id									INTEGER PRIMARY KEY AUTOINCREMENT,
+    SettingsName						varchar(50) NOT NULL,
+    Content								varchar(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS NzbDashSettings
