@@ -29,8 +29,8 @@ using System.Collections.Generic;
 using Dapper.Contrib.Extensions;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Data;
 using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models.Settings;
 
 namespace NZBDash.DataAccessLayer.Repository
 {

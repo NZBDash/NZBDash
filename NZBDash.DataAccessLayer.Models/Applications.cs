@@ -1,4 +1,4 @@
-﻿using NZBDash.Common.Models.Data.Models.Settings;
+﻿using NZBDash.DataAccessLayer.Models.Settings;
 
 namespace NZBDash.Common.Models.Data.Models
 {

@@ -30,10 +30,10 @@ using Moq;
 
 using NUnit.Framework;
 
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models.Settings;
 
 namespace NZBDash.Core.Test.Services
 {

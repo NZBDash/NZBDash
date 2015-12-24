@@ -207,4 +207,10 @@
   <data name="Applications_SabNzbd_Tab_History" xml:space="preserve">
     <value>History</value>
   </data>
+  <data name="Settings_NzbDash_Authenticate" xml:space="preserve">
+    <value>Enable Authentication</value>
+  </data>
+  <data name="Settings_NzbDash_Title" xml:space="preserve">
+    <value>NZBDash Settings</value>
+  </data>
 </root>

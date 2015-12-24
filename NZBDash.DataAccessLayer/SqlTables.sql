@@ -8,11 +8,18 @@ CREATE TABLE IF NOT EXISTS Users
     SecurityStamp						varchar(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS LinksConfigurations
+CREATE TABLE IF NOT EXISTS Users
 (
-    ID                                   INTEGER PRIMARY KEY AUTOINCREMENT,
-    LinkName                             VARCHAR(100)  NOT NULL,
-    LinkEndpoint                         VARCHAR(100)  NOT NULL
+    UserID								INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserName							varchar(50) NOT NULL,
+    PasswordHash						varchar(100) NOT NULL,
+    SecurityStamp						varchar(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS NzbDashSettings
+(
+    Id                                   INTEGER PRIMARY KEY AUTOINCREMENT,
+    Authenticate                         INTEGER  NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS NzbGetSettings

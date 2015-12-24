@@ -1,13 +1,12 @@
-﻿
-            <ul class="nav nav-sidebar">
-                <li><a href="@Url.Action("NzbGetSettings","Settings")">NZBGet</a></li>
-                <li><a href="@Url.Action("SabNzbSettings","Settings")">SabNZBD</a></li>
-                <li><a href="@Url.Action("SonarrSettings", "Settings")">Sonarr</a></li>
-                <li><a href="@Url.Action("CouchPotatoSettings", "Settings")">CouchPotato</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="@Url.Action("PlexSettings","Settings")">Plex</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-            </ul>
+﻿@using NZBDash.Resources
+
+<ul class="nav nav-sidebar">
+    <li><a href="@Url.Action("NzbDashSettings","Settings")">@Resources.Settings_NzbDash_Title</a></li>
+    <li><a href="@Url.Action("NzbGetSettings", "Settings")">@Resources.Settings_NzbGet_Title</a></li>
+    <li><a href="@Url.Action("SabNzbSettings", "Settings")">@Resources.Settings_SabNzb_Title</a></li>
+    <li><a href="@Url.Action("SonarrSettings", "Settings")">@Resources.Settings_Sonarr_Title</a></li>
+    <li><a href="@Url.Action("CouchPotatoSettings", "Settings")">@Resources.Settings_CouchPotato_Title</a></li>
+    <li><a href="@Url.Action("PlexSettings","Settings")">@Resources.Settings_Plex_Title</a></li>
+</ul>
+
 

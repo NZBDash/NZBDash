@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: NzbGetSettingsViewModel.cs
+//  File: PlexSettingsViewModel.cs
 //  Created By: Jamie Rees
 //
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -26,12 +26,11 @@
 #endregion
 using System.ComponentModel.DataAnnotations;
 
-namespace NZBDash.UI.Models.Settings
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
-    public class NzbGetSettingsViewModel : BaseSettingsViewModel
+    public class PlexSettingsViewModel : BaseSettingsViewModel
     {
         [Required]
-        [DataType(DataType.Text)]
         [Display(Name = "Settings_Username", ResourceType = typeof(Resources.Resources))]
         public string Username { get; set; }
         [Required]

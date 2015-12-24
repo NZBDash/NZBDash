@@ -27,7 +27,6 @@
 using System;
 using System.Linq;
 
-using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
@@ -38,33 +37,33 @@ using Omu.ValueInjecter;
 
 namespace NZBDash.Core.SettingsService
 {
-	public class NzbGetSettingsService : ISettingsService<NzbGetSettingsDto>
+    public class NzbDashSettingsService : ISettingsService<NzbDashSettingsDto>
 	{
-		private ISqlRepository<NzbGetSettings> Repo { get; set; }
-		public NzbGetSettingsService(ISqlRepository<NzbGetSettings> repo)
-		{
+		private ISqlRepository<NzbDashSettings> Repo { get; set; }
+        public NzbDashSettingsService(ISqlRepository<NzbDashSettings> repo, ILogger logger)
+        {
+            _logger = logger;
 			Repo = repo;
-			_logger = new NLogLogger(typeof(NzbGetSettingsService));
+            _logger.Trace("Started NzbDashSettingsService");
 		}
 
 		private ILogger _logger { get; set; }
 
-		public NzbGetSettingsDto GetSettings()
+        public NzbDashSettingsDto GetSettings()
 		{
-			_logger.Trace("Started NzbGetRepository");
 			try
 			{
-				_logger.Trace("Getting all items from NzbGetRepository");
+                _logger.Trace("Getting all items from NzbDashSettingsService");
 				var result = Repo.GetAll();
 				var setting = result.FirstOrDefault();
 				if (setting == null)
 				{
-					_logger.Trace("There are no items returned from NzbGetRepository. Returning new empty DTO");
-					return new NzbGetSettingsDto();
+					_logger.Trace("There are no items returned from NzbDashRepository. Returning new empty DTO");
+				    return new NzbDashSettingsDto();
 				}
 
-				_logger.Trace("Creating dto from the results from NzbGetRepository");
-				var model = new NzbGetSettingsDto();
+                _logger.Trace("Creating dto from the results from NzbDashRepository");
+                var model = new NzbDashSettingsDto();
 				model.InjectFrom(setting);
 
 				return model;
@@ -76,17 +75,15 @@ namespace NZBDash.Core.SettingsService
 			}
 		}
 
-		public bool SaveSettings(NzbGetSettingsDto model)
+        public bool SaveSettings(NzbDashSettingsDto model)
 		{
-			_logger.Trace("Started NzbGetRepository");
-
-			_logger.Trace(string.Format("Looking for id {0} in the NzbGetRepository", model.Id));
+            _logger.Trace(string.Format("Looking for id {0} in the NzbDashRepository", model.Id));
 			var entity = Repo.Get(model.Id);
 
 			if (entity == null)
 			{
 				_logger.Trace("Our entity is null so we are going to insert one");
-				var newEntity = new NzbGetSettings();
+				var newEntity = new NzbDashSettings();
 				newEntity.InjectFrom(model);
 
 				_logger.Trace("Inserting now");
@@ -97,12 +94,7 @@ namespace NZBDash.Core.SettingsService
 			}
 
 			_logger.Trace("We found an entity so we are going to modify the existing one");
-			entity.Enabled = model.Enabled;
-			entity.IpAddress = model.IpAddress;
-			entity.Password = model.Password;
-			entity.Port = model.Port;
-			entity.Username = model.Username;
-			entity.ShowOnDashboard = model.ShowOnDashboard;
+			entity.Authenticate = model.Authenticate;
 
 			_logger.Trace("Updating modified record");
 			var result = Repo.Update(entity);

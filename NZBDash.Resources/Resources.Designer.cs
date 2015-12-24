@@ -259,6 +259,24 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Authentication.
+        /// </summary>
+        public static string Settings_NzbDash_Authenticate {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_Authenticate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NZBDash Settings.
+        /// </summary>
+        public static string Settings_NzbDash_Title {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NzbGet Settings.
         /// </summary>
         public static string Settings_NzbGet_Title {

@@ -53,7 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications.cs" />
+    <Compile Include="DashboardGrid.cs" />
+    <Compile Include="Settings\Entity.cs" />
+    <Compile Include="LinksConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\CouchPotatoSettings.cs" />
+    <Compile Include="Settings\NzbDashSettings.cs" />
+    <Compile Include="Settings\NzbGetSettings.cs" />
+    <Compile Include="Settings\PlexSettings.cs" />
+    <Compile Include="Settings\SabNzbSettings.cs" />
+    <Compile Include="Settings\SettingsEntity.cs" />
+    <Compile Include="Settings\SonarrSettings.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>

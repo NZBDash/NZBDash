@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\LinksConfigurationService.cs" />
+    <Compile Include="Model\Settings\NzbDashSettingsDto.cs" />
     <Compile Include="Model\Settings\PlexSettingsDto.cs" />
     <Compile Include="Model\Settings\CouchPotatoSettingsDto.cs" />
     <Compile Include="Model\Settings\EnabledDashletsDto.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MonoHardwareService.cs" />
     <Compile Include="Services\WindowsHardwareService.cs" />
+    <Compile Include="SettingsService\NzbDashSettingsService.cs" />
     <Compile Include="SettingsService\PlexSettingsService.cs" />
     <Compile Include="SettingsService\SabNzbSettingsService.cs" />
     <Compile Include="SettingsService\CouchPotatoSettingsService.cs" />

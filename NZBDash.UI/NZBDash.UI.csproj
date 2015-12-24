@@ -230,13 +230,13 @@
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Application\NzbGetController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\CacheKeys.cs" />
     <Compile Include="Helpers\CustomHtmlHelpers.cs" />
     <Compile Include="Helpers\EndpointTester.cs" />
@@ -258,12 +258,6 @@
     <Compile Include="Models\LoggingLevel.cs" />
     <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\PlexSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\SabNzbSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -405,9 +399,11 @@
     <Content Include="Views\NzbGet\Partial\History.cshtml" />
     <Content Include="Views\Layout\NavBarItems.cshtml" />
     <Content Include="Views\Shared\_NavUser.cshtml" />
+    <Content Include="Views\Settings\NzbDashSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Settings\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\CouchPotato\" />
     <Folder Include="Views\Login\" />

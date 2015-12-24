@@ -83,6 +83,13 @@
     <Compile Include="ViewModels\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="ViewModels\SabNzbd\SabNzbdHistoryViewModel.cs" />
     <Compile Include="ViewModels\SabNzbd\SabNzbdStatusViewModel.cs" />
+    <Compile Include="ViewModels\Settings\BaseSettingsViewmodel.cs" />
+    <Compile Include="ViewModels\Settings\CouchPotatoSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\NzbGetSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\PlexSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SabNzbSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\NzbDashSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="ViewModels\Sonarr\EpisodeViewModel.cs" />
     <Compile Include="ViewModels\Sonarr\SonarrSeriesViewModel.cs" />
   </ItemGroup>
@@ -110,6 +117,16 @@
     <Content Include="Scripts\ladda-bootstrap\ladda.min.js" />
     <Content Include="Scripts\ladda-bootstrap\spin.min.js" />
     <Content Include="Scripts\URI.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Common.Helpers\NZBDash.Common.Helpers.csproj">
+      <Project>{D94C96BB-D3B6-492F-B594-42920088BD87}</Project>
+      <Name>NZBDash.Common.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Resources\NZBDash.Resources.csproj">
+      <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
+      <Name>NZBDash.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

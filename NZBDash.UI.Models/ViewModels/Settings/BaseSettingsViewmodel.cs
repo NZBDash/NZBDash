@@ -28,9 +28,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 using NZBDash.Common.Helpers;
-using NZBDash.UI.Helpers;
 
-namespace NZBDash.UI.Models.Settings
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
     public class BaseSettingsViewModel
     {

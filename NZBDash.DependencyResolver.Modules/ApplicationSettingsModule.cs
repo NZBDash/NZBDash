@@ -43,13 +43,14 @@ namespace NZBDash.DependencyResolver.Modules
         /// </summary>
         public override void Load()
         {
-           Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
-           Bind<ISettingsService<SabNzbdSettingsDto>>().To<SabNzbSettingsService>();
-           Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
-           Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
-           Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
+            Bind<ISettingsService<NzbGetSettingsDto>>().To<NzbGetSettingsService>();
+            Bind<ISettingsService<SabNzbdSettingsDto>>().To<SabNzbSettingsService>();
+            Bind<ISettingsService<SonarrSettingsViewModelDto>>().To<SonarrSettingsService>();
+            Bind<ISettingsService<CouchPotatoSettingsDto>>().To<CouchPotatoSettingsService>();
+            Bind<ISettingsService<PlexSettingsDto>>().To<PlexSettingsService>();
+            Bind<ISettingsService<NzbDashSettingsDto>>().To<NzbDashSettingsService>();
 
-           Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<ISqlRepository<LinksConfiguration>>());
+            Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<ISqlRepository<LinksConfiguration>>());
         }
     }
 }

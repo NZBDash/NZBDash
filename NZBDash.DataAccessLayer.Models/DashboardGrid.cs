@@ -1,4 +1,6 @@
-﻿namespace NZBDash.Common.Models.Data.Models
+﻿using NZBDash.DataAccessLayer.Models.Settings;
+
+namespace NZBDash.Common.Models.Data.Models
 {
     public class DashboardGrid : Entity
     {

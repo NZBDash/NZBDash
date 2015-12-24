@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: PlexSettingsDto.cs
+//   File: SettingsEntity.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,13 +24,13 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Common.Models.Settings;
-
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.DataAccessLayer.Models.Settings
 {
-    public class PlexSettingsDto : BaseSettingsDto
+    public abstract class SettingsEntity : Entity
     {
-        public string Password { get; set; }
-        public string Username { get; set; }
+        public bool Enabled { get; set; }
+        public string IpAddress { get; set; }
+        public int Port { get; set; }
+        public bool ShowOnDashboard { get; set; }
     }
 }

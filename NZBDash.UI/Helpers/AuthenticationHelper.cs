@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: PlexSettingsDto.cs
+//   File: AuthenticationHelper.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,13 +24,24 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Common.Models.Settings;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.UI.Helpers
 {
-    public class PlexSettingsDto : BaseSettingsDto
+    public class AuthenticationHelper
     {
-        public string Password { get; set; }
-        public string Username { get; set; }
+        public AuthenticationHelper(ISettingsService<NzbDashSettingsDto> service)
+        {
+            Service = service;
+        }
+
+        private ISettingsService<NzbDashSettingsDto> Service { get; set; }
+
+        public bool IsAuthenticated()
+        {
+            var settings = Service.GetSettings();
+            return settings.Authenticate;
+        }
     }
 }

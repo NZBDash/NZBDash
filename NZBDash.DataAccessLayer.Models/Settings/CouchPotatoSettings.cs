@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: PlexSettingsDto.cs
+//   File: CouchPotatoSettings.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,12 +24,14 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Common.Models.Settings;
+using Dapper.Contrib.Extensions;
 
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.DataAccessLayer.Models.Settings
 {
-    public class PlexSettingsDto : BaseSettingsDto
+    [Table("CouchPotatoSettings")]
+    public class CouchPotatoSettings : SettingsEntity
     {
+        public string ApiKey { get; set; }
         public string Password { get; set; }
         public string Username { get; set; }
     }

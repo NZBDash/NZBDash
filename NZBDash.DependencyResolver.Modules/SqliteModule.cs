@@ -24,12 +24,13 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using NZBDash.DataAccessLayer.Models.Settings;
+
 using System.Data.Common;
 
 using Ninject.Modules;
 
 using NZBDash.Common.Models.Data.Models;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Repository;
@@ -53,6 +54,7 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISqlRepository<CouchPotatoSettings>>().To<GenericRepository<CouchPotatoSettings>>();
             Bind<ISqlRepository<SabNzbSettings>>().To<GenericRepository<SabNzbSettings>>();
             Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
+            Bind<ISqlRepository<NzbDashSettings>>().To<GenericRepository<NzbDashSettings>>();
 
 
 #if WINDOWS || DEBUG

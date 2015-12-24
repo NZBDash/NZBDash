@@ -26,10 +26,10 @@
 #endregion
 using System.Linq;
 
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models.Settings;
 
 using Omu.ValueInjecter;
 

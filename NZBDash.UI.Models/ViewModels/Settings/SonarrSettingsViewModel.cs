@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NZBDash.UI.Models.Settings
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
     public class SonarrSettingsViewModel : BaseSettingsViewModel
     {
