@@ -7,7 +7,6 @@ using Ninject;
 using Ninject.Web.Common;
 
 using NZBDash.DependencyResolver;
-using NZBDash.DependencyResolver.ServiceLocator;
 using NZBDash.UI.App_Start;
 
 using WebActivatorEx;
@@ -58,9 +57,6 @@ namespace NZBDash.UI.App_Start
             var newKernal = modules.GetModules();
 
             var kernel = new StandardKernel(newKernal);
-
-            // Set Kernel for the Membership provider
-            ServiceLocator.Kernel = kernel;
 
             try
             {

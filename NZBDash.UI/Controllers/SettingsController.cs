@@ -114,7 +114,7 @@ namespace NZBDash.UI.Controllers
             {
                 return View(model);
             }
-
+            
             var dto = new NzbDashSettingsDto();
             dto.InjectFrom(model);
 

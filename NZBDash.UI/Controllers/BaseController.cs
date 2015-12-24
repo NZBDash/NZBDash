@@ -72,9 +72,7 @@ namespace NZBDash.UI.Controllers
 
             if (!User.Identity.IsAuthenticated && shouldBeAuth)
             {
-                var redirect = RedirectToAction("Login", "Account");
-                var url = Url.RouteUrl(redirect.RouteName, redirect.RouteValues);
-                filterContext.Result = new RedirectResult(url);
+                filterContext.Result = RedirectToAction("Login", "Account");
                 return;
             }
 

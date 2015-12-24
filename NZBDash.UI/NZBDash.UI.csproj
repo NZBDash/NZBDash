@@ -452,10 +452,6 @@
       <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
       <Name>NZBDash.DataAccessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.DependencyResolver.ServiceLocator\NZBDash.DependencyResolver.ServiceLocator.csproj">
-      <Project>{BC304B86-E724-4953-AEA9-9541D175E51D}</Project>
-      <Name>NZBDash.DependencyResolver.ServiceLocator</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>
       <Name>NZBDash.DependencyResolver</Name>

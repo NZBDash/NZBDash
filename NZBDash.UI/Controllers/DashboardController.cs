@@ -3,7 +3,10 @@ using System.Linq;
 using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
+using NZBDash.Core;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Services;
+using NZBDash.DataAccessLayer.Models;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.Hardware;

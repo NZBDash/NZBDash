@@ -1,7 +1,7 @@
 ﻿#region Copyright
-// ************************************************************************
-//   Copyright (c) 2015 
-//   File: IDependencyResolver.cs
+// /************************************************************************
+//   Copyright (c) 2015 Jamie Rees
+//   File: AuthenticationService.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -22,14 +22,35 @@
 //   LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 //   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// ************************************************************************
+// ************************************************************************/
 #endregion
-using Ninject.Modules;
+using Microsoft.AspNet.Identity;
 
-namespace NZBDash.DependencyResolver
+using NZBDash.Common.Interfaces;
+using NZBDash.Core.Interfaces;
+using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models;
+using NZBDash.DataAccessLayer.Store;
+
+namespace NZBDash.Core.Services
 {
-    public interface IDependencyResolver
+    public class AuthenticationService : IAuthenticationService
     {
-        NinjectModule[] GetModules();
+        public AuthenticationService(ILogger logger, ISqliteConfiguration config)
+            : this(new UserManager<User>(new UserStore(logger, config)))
+        {
+        }
+
+        public AuthenticationService(UserManager<User> userManager)
+        {
+            UserManager = userManager;
+        }
+
+        private UserManager<User> UserManager { get; set; }
+
+        public User GetUser(string userName)
+        {
+            return UserManager.FindByName(userName);
+        }
     }
 }

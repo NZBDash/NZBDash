@@ -1,7 +1,7 @@
 ﻿#region Copyright
-// ************************************************************************
-//   Copyright (c) 2015 
-//   File: IDependencyResolver.cs
+// /************************************************************************
+//   Copyright (c) 2015 Jamie Rees
+//   File: IAuthenticationService.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -22,14 +22,14 @@
 //   LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 //   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// ************************************************************************
+// ************************************************************************/
 #endregion
-using Ninject.Modules;
+using NZBDash.DataAccessLayer.Models;
 
-namespace NZBDash.DependencyResolver
+namespace NZBDash.Core.Interfaces
 {
-    public interface IDependencyResolver
+    public interface IAuthenticationService
     {
-        NinjectModule[] GetModules();
+        User GetUser(string userName);
     }
 }

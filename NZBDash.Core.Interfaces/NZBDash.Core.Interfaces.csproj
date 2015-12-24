@@ -83,6 +83,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
@@ -93,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IApplicationTester.cs" />
+    <Compile Include="IAuthenticationService.cs" />
     <Compile Include="IHardwareService.cs" />
     <Compile Include="ILinksConfiguration.cs" />
     <Compile Include="IMembershipProvider.cs" />
@@ -103,6 +107,10 @@
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
+      <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
+      <Name>NZBDash.DataAccessLayer.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
       <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
