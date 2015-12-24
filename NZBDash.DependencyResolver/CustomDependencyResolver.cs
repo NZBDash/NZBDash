@@ -30,6 +30,8 @@ using System.Reflection;
 
 using Ninject.Modules;
 
+using NZBDash.DependencyResolver.Modules;
+
 namespace NZBDash.DependencyResolver
 {
 	public class CustomDependencyResolver : IDependencyResolver
@@ -38,8 +40,9 @@ namespace NZBDash.DependencyResolver
 	    /// Gets the Ninject modules to pass into the Kernel.
 	    /// </summary>
 	    public NinjectModule[] GetModules()
-		{
-           var result = Assembly.Load("NZBDash.DependencyResolver.Modules").GetTypes()
+	    {
+	        var path = Assembly.GetAssembly(typeof(CacheModule)).Location;
+            var result = Assembly.LoadFrom(path).GetTypes()
                .Where(a => 
                    a.IsClass &&
                    a.BaseType == typeof(NinjectModule))

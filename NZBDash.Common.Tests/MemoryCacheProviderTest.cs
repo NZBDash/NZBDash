@@ -67,18 +67,6 @@ namespace NZBDash.Common.Tests
         }
 
         [Test]
-        public void GetOrSetNewItemWithNullLookup()
-        {
-            var item = Cache.GetOrSet<object>("NewKey", NullReturn, 5);
-            Assert.That(item, Is.EqualTo(null));
-        }
-
-        private string NullReturn()
-        {
-            return null;
-        }
-
-        [Test]
         public void GetOrSetExistingItem()
         {
             AddToCache();
