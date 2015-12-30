@@ -75,6 +75,7 @@
     <Compile Include="Hardware\RamModel.cs" />
     <Compile Include="Hardware\ServerInformationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CouchPotato\CouchPotatoMoviesViewModel.cs" />
     <Compile Include="ViewModels\LayoutModel.cs" />
     <Compile Include="ViewModels\SabNzbdHistoryGrid.cs" />
     <Compile Include="ViewModels\NzbGetHistoryGrid.cs" />
@@ -124,7 +125,7 @@
       <Name>NZBDash.Common.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Resources\NZBDash.Resources.csproj">
-      <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
+      <Project>{900a9447-bd0f-4d92-a92d-554fa8e7a00c}</Project>
       <Name>NZBDash.Resources</Name>
     </ProjectReference>
   </ItemGroup>

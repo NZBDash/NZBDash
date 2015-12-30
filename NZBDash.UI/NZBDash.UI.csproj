@@ -404,12 +404,13 @@
     <Content Include="Views\Layout\NavBarItems.cshtml" />
     <Content Include="Views\Shared\_NavUser.cshtml" />
     <Content Include="Views\Settings\NzbDashSettings.cshtml" />
+    <Content Include="Views\CouchPotato\Index.cshtml" />
+    <Content Include="Views\CouchPotato\Movies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Settings\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\CouchPotato\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>

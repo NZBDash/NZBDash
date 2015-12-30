@@ -24,12 +24,10 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
+
 using System.Collections.Generic;
-
-using Newtonsoft.Json;
-
 using NZBDash.Common.Interfaces;
+using NZBDash.DataAccess.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
@@ -54,7 +52,7 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public CouchPotatoMediaList GetCouchPotatoMovies(string uri, string api)
         {
-            return Serializer.SerializedJsonData<CouchPotatoMediaList>(uri + "api/" + api + "/app.available/");
+            return Serializer.SerializedJsonData<CouchPotatoMediaList>(uri + "api/" + api + "/media.list/");
         }
 
         public PlexServers GetPlexServers(string uri)

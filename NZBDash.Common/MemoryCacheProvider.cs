@@ -46,7 +46,7 @@ namespace NZBDash.Common
         /// </param>
         /// <param name="cacheTime">The amount of time we want to cache the object</param>
         /// <returns></returns>
-        public T GetOrSet<T>(string key, Func<T> itemCallback, int cacheTime) where T : class
+        public T GetOrSet<T>(string key, Func<T> itemCallback, int cacheTime = 20) where T : class
         {
             var item = Get<T>(key);
             if (item == null)
