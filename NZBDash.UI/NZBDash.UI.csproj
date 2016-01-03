@@ -329,9 +329,6 @@
     <Content Include="Scripts\ServerStatus.js" />
     <Content Include="Scripts\URI.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="Styles\ServerStatus.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

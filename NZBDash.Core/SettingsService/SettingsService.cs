@@ -90,7 +90,7 @@ namespace NZBDash.Core.SettingsService
 
         public bool SaveSettings(U model)
         {
-            Logger.Trace(string.Format("Looking for id {0} in the {1}", model.Id, typeof(U).Name));
+            Logger.Trace(string.Format("Looking for id {0} in the {1}", model.Id, EntityName));
             var entity = Repo.Get(EntityName);
 
             if (entity == null)
@@ -100,9 +100,9 @@ namespace NZBDash.Core.SettingsService
                 newEntity.InjectFrom(model);
 
                 Logger.Trace("Inserting now");
-                var a = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings) };
+                var settings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings) };
 
-                var insertResult = Repo.Insert(a);
+                var insertResult = Repo.Insert(settings);
 
                 Logger.Trace(string.Format("Our insert was {0}", insertResult != long.MinValue));
                 return insertResult != long.MinValue;
@@ -110,9 +110,11 @@ namespace NZBDash.Core.SettingsService
 
             var modified = new T();
             modified.InjectFrom(model);
-            var b = new GlobalSettings { SettingsName = typeof(U).Name, Content = JsonConvert.SerializeObject(modified, SerializerSettings) };
+            modified.Id = entity.Id;
 
-            var result = Repo.Update(b);
+            var globalSettings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(modified, SerializerSettings), Id = entity.Id };
+
+            var result = Repo.Update(globalSettings);
 
             Logger.Trace(string.Format("Our modify was {0}", result));
             return result;
