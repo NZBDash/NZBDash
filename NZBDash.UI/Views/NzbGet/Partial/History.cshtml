@@ -3,7 +3,7 @@
 
 @*//TODO : Resource*@
 
-@Html.Grid(Model).Columns(columns =>
+@Html.Grid(Model).Named("HistoryGrid").Columns(columns =>
 {
     columns.Add(x => x.Name)
        .Titled("Name")

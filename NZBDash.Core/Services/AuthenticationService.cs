@@ -24,6 +24,9 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 
 using NZBDash.Common.Interfaces;
@@ -51,6 +54,11 @@ namespace NZBDash.Core.Services
         public User GetUser(string userName)
         {
             return UserManager.FindByName(userName);
+        }
+
+        public IQueryable<User> GetAllUsers()
+        {
+            return UserManager.Users;
         }
     }
 }

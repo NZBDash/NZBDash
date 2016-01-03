@@ -47,6 +47,7 @@ namespace NZBDash.DataAccessLayer.Configuration
 
         public virtual void CheckDb()
         {
+            CheckDirectory();
             if (!File.Exists(DbFile()))
             {
                 Logger.Trace("Could not find the DB, so we will create it.");
@@ -54,7 +55,21 @@ namespace NZBDash.DataAccessLayer.Configuration
             }
         }
 
+
+        /// <summary>
+        /// Checks to see if the directory exists, if it doesn't it will create it.
+        /// </summary>
+        private void CheckDirectory()
+        {
+            if (!Directory.Exists(ApplicationDataLocation()))
+            {
+                Directory.CreateDirectory(ApplicationDataLocation());
+            }
+        }
+
         public abstract string DbFile();
+
+        public abstract string ApplicationDataLocation();
 
         /// <summary>
         /// Gets the database connection.

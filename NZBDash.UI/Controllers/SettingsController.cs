@@ -24,8 +24,10 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Web.Mvc;
 
+using System.Linq;
+using System.Web.Mvc;
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Models.ViewModels.Settings;
@@ -41,7 +43,9 @@ namespace NZBDash.UI.Controllers
                                   ISettingsService<SonarrSettingsDto> sonarSettingsService,
                                   ISettingsService<CouchPotatoSettingsDto> cpSettingsService,
                                   ISettingsService<PlexSettingsDto> plexSettingsService,
-                                  ISettingsService<NzbDashSettingsDto> nzbDash) : base(typeof(SettingsController))
+                                  ISettingsService<NzbDashSettingsDto> nzbDash,
+                                  IAuthenticationService auth,
+                                  ILogger logger) : base(logger)
         {
             NzbGetSettingsServiceSettingsService = nzbGetSettingsService;
             SabNzbSettingsServiceSettingsService = sabNzbSettingsService;
@@ -49,6 +53,7 @@ namespace NZBDash.UI.Controllers
             CpSettingsService = cpSettingsService;
             PlexSettingsServiceSettingsService = plexSettingsService;
             NzbDashServiceSettingsService = nzbDash;
+            Auth = auth;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
@@ -57,6 +62,7 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<PlexSettingsDto> PlexSettingsServiceSettingsService { get; set; }
         private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
         private ISettingsService<SonarrSettingsDto> SonarrSettingsServiceSettingsService { get; set; }
+        private IAuthenticationService Auth { get; set; }
 
         [HttpGet]
         public ActionResult CouchPotatoSettings()
@@ -102,6 +108,10 @@ namespace NZBDash.UI.Controllers
             Logger.Trace("Converting settings into ViewModel");
             var model = new NzbDashSettingsViewModel();
             model.InjectFrom(dto);
+
+            var users = Auth.GetAllUsers();
+            model.UserExist = users.Any();
+
 
             Logger.Trace("returning ViewModel");
             return View(model);

@@ -24,6 +24,8 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+
+using System.Linq;
 using NZBDash.DataAccessLayer.Models;
 
 namespace NZBDash.Core.Interfaces
@@ -31,5 +33,6 @@ namespace NZBDash.Core.Interfaces
     public interface IAuthenticationService
     {
         User GetUser(string userName);
+        IQueryable<User> GetAllUsers();
     }
 }
