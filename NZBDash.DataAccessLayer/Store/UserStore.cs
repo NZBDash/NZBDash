@@ -15,7 +15,7 @@ using NZBDash.DataAccessLayer.Models;
 
 namespace NZBDash.DataAccessLayer.Store
 {
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserSecurityStampStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserSecurityStampStore<User>, IQueryableUserStore<User>
     {
         private ILogger Logger { get; set; }
         private ISqliteConfiguration Db { get; set; }
@@ -129,6 +129,18 @@ namespace NZBDash.DataAccessLayer.Store
                 throw new ArgumentNullException("user");
 
             return Task.FromResult(user.SecurityStamp);
+        }
+
+        public IQueryable<User> Users
+        {
+            get
+            {
+                using (var db = Db.DbConnection())
+                {
+                    var allUsers = db.GetAll<User>();
+                    return allUsers.AsQueryable();
+                }
+            }
         }
     }
 }
