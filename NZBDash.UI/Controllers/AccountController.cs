@@ -83,6 +83,8 @@ namespace NZBDash.UI.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Get the new record from the DB (This now includes the UserId)
+                    user = UserManager.FindByName(user.UserName);
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Dashboard");
                 }
