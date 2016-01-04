@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: BaseHub.cs
+//   File: NinjectSignalRDependencyResolver.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,40 +25,32 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.AspNet.SignalR;
 
-using NZBDash.Common;
-using NZBDash.Common.Interfaces;
+using Ninject;
 
-namespace NZBDash.UI.Hubs
+namespace NZBDash.UI
 {
-    public class BaseHub : Hub
+    internal class NinjectSignalRDependencyResolver : DefaultDependencyResolver
     {
-        public BaseHub(Type classType)
+        private readonly IKernel _kernel;
+
+        public NinjectSignalRDependencyResolver(IKernel kernel)
         {
-            Logger = new NLogLogger(classType);
+            _kernel = kernel;
         }
 
-        public ILogger Logger { get; set; }
-
-        public override Task OnConnected()
+        public override object GetService(Type serviceType)
         {
-            Logger.Trace(string.Format("Connected {0} client", Context.ConnectionId));
-            return base.OnConnected();
+            return _kernel.TryGet(serviceType) ?? base.GetService(serviceType);
         }
 
-        public override Task OnDisconnected(bool stopCalled)
+        public override IEnumerable<object> GetServices(Type serviceType)
         {
-            Logger.Trace(string.Format("Disconnected {0} client", Context.ConnectionId));
-            return base.OnDisconnected(stopCalled);
-        }
-
-        public override Task OnReconnected()
-        {
-            Logger.Trace(string.Format("Reconnected {0} client", Context.ConnectionId));
-            return base.OnReconnected();
+            return _kernel.GetAll(serviceType).Concat(base.GetServices(serviceType));
         }
     }
 }

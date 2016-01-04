@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: BaseHub.cs
+//   File: HubActivator.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,41 +24,24 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR.Hubs;
 
-using Microsoft.AspNet.SignalR;
-
-using NZBDash.Common;
-using NZBDash.Common.Interfaces;
+using Ninject;
 
 namespace NZBDash.UI.Hubs
 {
-    public class BaseHub : Hub
+    public class HubActivator : IHubActivator
     {
-        public BaseHub(Type classType)
+        private readonly IKernel container;
+
+        public HubActivator(IKernel container)
         {
-            Logger = new NLogLogger(classType);
+            this.container = container;
         }
 
-        public ILogger Logger { get; set; }
-
-        public override Task OnConnected()
+        public IHub Create(HubDescriptor descriptor)
         {
-            Logger.Trace(string.Format("Connected {0} client", Context.ConnectionId));
-            return base.OnConnected();
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            Logger.Trace(string.Format("Disconnected {0} client", Context.ConnectionId));
-            return base.OnDisconnected(stopCalled);
-        }
-
-        public override Task OnReconnected()
-        {
-            Logger.Trace(string.Format("Reconnected {0} client", Context.ConnectionId));
-            return base.OnReconnected();
+            return (IHub)container.GetService(descriptor.HubType);
         }
     }
 }

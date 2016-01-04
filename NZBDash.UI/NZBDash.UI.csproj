@@ -249,8 +249,10 @@
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\DasboardHub.cs" />
+    <Compile Include="Hubs\HubActivator.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
     <Compile Include="Hubs\LinksConfigurationHub.cs" />
+    <Compile Include="App_Start\NinjectSignalRDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dashboard\DashboardLinksViewModel.cs" />
     <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
