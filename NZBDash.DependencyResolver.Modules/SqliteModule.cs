@@ -34,7 +34,7 @@ using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Repository;
-#if WINDOWS || DEBUG
+#if WINDOWS || DEBUG || RELEASE
 using System.Data.SQLite;
 #endif
 

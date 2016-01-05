@@ -63,7 +63,7 @@ namespace NZBDash.ThirdParty.Api.Models.Api
         public int DupeScore { get; set; }
         public string DupeMode { get; set; }
         public bool Deleted { get; set; }
-        public int DownloadedSizeLo { get; set; }
+        public long DownloadedSizeLo { get; set; }
         public int DownloadedSizeHi { get; set; }
         public int DownloadedSizeMB { get; set; }
         public int DownloadTimeSec { get; set; }

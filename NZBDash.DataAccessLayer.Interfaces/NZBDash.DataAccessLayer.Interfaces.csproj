@@ -73,9 +73,7 @@
     <Compile Include="ISqlRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ISqliteConfiguration.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="ISqliteConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
