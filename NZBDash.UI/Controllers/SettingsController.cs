@@ -45,23 +45,27 @@ namespace NZBDash.UI.Controllers
                                   ISettingsService<PlexSettingsDto> plexSettingsService,
                                   ISettingsService<NzbDashSettingsDto> nzbDash,
                                   IAuthenticationService auth,
-                                  ILogger logger) : base(logger)
+            ISettingsService<HardwareSettingsDto> hardwareService,
+                                  ILogger logger)
+            : base(logger)
         {
-            NzbGetSettingsServiceSettingsService = nzbGetSettingsService;
-            SabNzbSettingsServiceSettingsService = sabNzbSettingsService;
-            SonarrSettingsServiceSettingsService = sonarSettingsService;
+            NzbGetSettingsService = nzbGetSettingsService;
+            SabNzbSettingsService = sabNzbSettingsService;
+            SonarrSettingsService = sonarSettingsService;
             CpSettingsService = cpSettingsService;
-            PlexSettingsServiceSettingsService = plexSettingsService;
-            NzbDashServiceSettingsService = nzbDash;
+            PlexSettingsService = plexSettingsService;
+            NzbDashServiceSettings = nzbDash;
             Auth = auth;
+            HardwareSettingsService = hardwareService;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
-        private ISettingsService<NzbDashSettingsDto> NzbDashServiceSettingsService { get; set; }
-        private ISettingsService<NzbGetSettingsDto> NzbGetSettingsServiceSettingsService { get; set; }
-        private ISettingsService<PlexSettingsDto> PlexSettingsServiceSettingsService { get; set; }
-        private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsServiceSettingsService { get; set; }
-        private ISettingsService<SonarrSettingsDto> SonarrSettingsServiceSettingsService { get; set; }
+        private ISettingsService<NzbDashSettingsDto> NzbDashServiceSettings { get; set; }
+        private ISettingsService<NzbGetSettingsDto> NzbGetSettingsService { get; set; }
+        private ISettingsService<PlexSettingsDto> PlexSettingsService { get; set; }
+        private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsService { get; set; }
+        private ISettingsService<SonarrSettingsDto> SonarrSettingsService { get; set; }
+        private ISettingsService<HardwareSettingsDto> HardwareSettingsService { get; set; }
         private IAuthenticationService Auth { get; set; }
 
         [HttpGet]
@@ -103,7 +107,7 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbDashSettings()
         {
             Logger.Trace("Getting settings");
-            var dto = NzbDashServiceSettingsService.GetSettings();
+            var dto = NzbDashServiceSettings.GetSettings();
 
             Logger.Trace("Converting settings into ViewModel");
             var model = new NzbDashSettingsViewModel();
@@ -124,11 +128,11 @@ namespace NZBDash.UI.Controllers
             {
                 return View(model);
             }
-            
+
             var dto = new NzbDashSettingsDto();
             dto.InjectFrom(model);
 
-            var result = NzbDashServiceSettingsService.SaveSettings(dto);
+            var result = NzbDashServiceSettings.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("NzbDashSettings");
@@ -141,7 +145,7 @@ namespace NZBDash.UI.Controllers
         public ActionResult NzbGetSettings()
         {
             Logger.Trace("Getting settings");
-            var dto = NzbGetSettingsServiceSettingsService.GetSettings();
+            var dto = NzbGetSettingsService.GetSettings();
 
             Logger.Trace("Converting settings into ViewModel");
             var model = new NzbGetSettingsViewModel();
@@ -162,7 +166,7 @@ namespace NZBDash.UI.Controllers
             var dto = new NzbGetSettingsDto();
             dto.InjectFrom(viewModel);
 
-            var result = NzbGetSettingsServiceSettingsService.SaveSettings(dto);
+            var result = NzbGetSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("NzbGetSettings");
@@ -174,7 +178,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            var dto = PlexSettingsServiceSettingsService.GetSettings();
+            var dto = PlexSettingsService.GetSettings();
             var model = new PlexSettingsViewModel();
             model.InjectFrom(dto);
 
@@ -192,7 +196,7 @@ namespace NZBDash.UI.Controllers
             var dto = new PlexSettingsDto();
             dto.InjectFrom(viewModel);
 
-            var result = PlexSettingsServiceSettingsService.SaveSettings(dto);
+            var result = PlexSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("PlexSettings");
@@ -204,7 +208,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            var dto = SabNzbSettingsServiceSettingsService.GetSettings();
+            var dto = SabNzbSettingsService.GetSettings();
             var model = new SabNzbSettingsViewModel();
             model.InjectFrom(dto);
 
@@ -222,7 +226,7 @@ namespace NZBDash.UI.Controllers
             var dto = new SabNzbdSettingsDto();
             dto.InjectFrom(viewModel);
 
-            var result = SabNzbSettingsServiceSettingsService.SaveSettings(dto);
+            var result = SabNzbSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("SabNzbSettings");
@@ -234,7 +238,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var dto = SonarrSettingsServiceSettingsService.GetSettings();
+            var dto = SonarrSettingsService.GetSettings();
             var model = new SonarrSettingsViewModel();
             model.InjectFrom(dto);
 
@@ -252,13 +256,52 @@ namespace NZBDash.UI.Controllers
             var dto = new SonarrSettingsDto();
             dto.InjectFrom(viewModel);
 
-            var result = SonarrSettingsServiceSettingsService.SaveSettings(dto);
+            var result = SonarrSettingsService.SaveSettings(dto);
             if (result)
             {
                 return RedirectToAction("SonarrSettings");
             }
 
             return View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult HardwareSettings()
+        {
+            var dto = HardwareSettingsService.GetSettings();
+            var model = new HardwareSettingsViewModel();
+            model.InjectFrom(dto);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult HardwareSettings(HardwareSettingsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var dto = new HardwareSettingsDto();
+            dto.InjectFrom(viewModel);
+
+            var result = HardwareSettingsService.SaveSettings(dto);
+            if (result)
+            {
+                return RedirectToAction("HardwareSettings");
+            }
+
+            return View("Error");
+        }
+
+        private ActionResult Get<T,U>(ISettingsService<U> service) where T : new()
+        {
+            var dto = service.GetSettings();
+            var model = new T();
+            model.InjectFrom(dto);
+
+            return View(model);
         }
     }
 }

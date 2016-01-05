@@ -48,6 +48,7 @@ namespace NZBDash.Core.SettingsService
             Logger = logger;
             Repo = repo;
             EntityName = typeof(T).Name;
+            SettingsServiceName = typeof(U).Name;
         }
         private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
@@ -59,6 +60,7 @@ namespace NZBDash.Core.SettingsService
         private ILogger Logger { get; set; }
         private ISettingsRepository Repo { get; set; }
         private string EntityName { get;set; }
+        private string SettingsServiceName { get; set; }
 
         public U GetSettings()
         {
@@ -68,13 +70,13 @@ namespace NZBDash.Core.SettingsService
                 var result = Repo.Get(EntityName);
                 if (result == null)
                 {
-                    Logger.Trace("There are no items returned from NzbDashRepository. Returning new empty DTO");
+                    Logger.Trace(string.Format("There are no items returned from {0}. Returning new empty DTO",SettingsServiceName));
                     return new U();
                 }
 
                 var obj = result == null || string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings);
 
-                Logger.Trace("Creating dto from the results from NzbDashRepository");
+                Logger.Trace("Creating dto from the results from Repo");
                 var model = new U();
                 model.InjectFrom(obj);
 

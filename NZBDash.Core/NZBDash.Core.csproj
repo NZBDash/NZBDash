@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\LinksConfigurationService.cs" />
+    <Compile Include="Model\Settings\HardwareSettingsDto.cs" />
     <Compile Include="Model\Settings\NzbDashSettingsDto.cs" />
     <Compile Include="Model\Settings\PlexSettingsDto.cs" />
     <Compile Include="Model\Settings\CouchPotatoSettingsDto.cs" />

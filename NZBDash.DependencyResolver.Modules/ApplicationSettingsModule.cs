@@ -50,6 +50,7 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISettingsService<CouchPotatoSettingsDto>>().To<SettingsService<CouchPotatoSettings, CouchPotatoSettingsDto>>();
             Bind<ISettingsService<PlexSettingsDto>>().To<SettingsService<PlexSettings, PlexSettingsDto>>();
             Bind<ISettingsService<NzbDashSettingsDto>>().To<SettingsService<NzbDashSettings, NzbDashSettingsDto>>();
+            Bind<ISettingsService<HardwareSettingsDto>>().To<SettingsService<HardwareSettings, HardwareSettingsDto>>();
 
             Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<ISqlRepository<LinksConfiguration>>());
         }
