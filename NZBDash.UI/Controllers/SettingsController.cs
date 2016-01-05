@@ -24,7 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using NZBDash.Common.Interfaces;
@@ -45,7 +45,8 @@ namespace NZBDash.UI.Controllers
                                   ISettingsService<PlexSettingsDto> plexSettingsService,
                                   ISettingsService<NzbDashSettingsDto> nzbDash,
                                   IAuthenticationService auth,
-            ISettingsService<HardwareSettingsDto> hardwareService,
+                                  ISettingsService<HardwareSettingsDto> hardwareService,
+                                  IHardwareService hardware,
                                   ILogger logger)
             : base(logger)
         {
@@ -57,6 +58,7 @@ namespace NZBDash.UI.Controllers
             NzbDashServiceSettings = nzbDash;
             Auth = auth;
             HardwareSettingsService = hardwareService;
+            HardwareService = hardware;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
@@ -66,6 +68,7 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsService { get; set; }
         private ISettingsService<SonarrSettingsDto> SonarrSettingsService { get; set; }
         private ISettingsService<HardwareSettingsDto> HardwareSettingsService { get; set; }
+        private IHardwareService HardwareService { get; set; }
         private IAuthenticationService Auth { get; set; }
 
         [HttpGet]
@@ -272,6 +275,19 @@ namespace NZBDash.UI.Controllers
             var model = new HardwareSettingsViewModel();
             model.InjectFrom(dto);
 
+            // Get the drives and drive information
+            var drives = HardwareService.GetDrives().ToList();
+            model.Drives = new List<DriveSettingsViewModel>();
+
+            foreach (var d in drives)
+            {
+                var driveModel = new DriveSettingsViewModel();
+                driveModel.InjectFrom(d);
+                model.Drives.Add(driveModel);
+            }
+
+            // TODO: Sort out the NIC
+            
             return View(model);
         }
 
@@ -295,7 +311,7 @@ namespace NZBDash.UI.Controllers
             return View("Error");
         }
 
-        private ActionResult Get<T,U>(ISettingsService<U> service) where T : new()
+        private ActionResult Get<T, U>(ISettingsService<U> service) where T : new()
         {
             var dto = service.GetSettings();
             var model = new T();

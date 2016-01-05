@@ -31,6 +31,7 @@ namespace NZBDash.UI.Models.Hardware
 {
     public class ServerInformationViewModel
     {
+        // TODO: Resource
         [Display(Name = "Operating System")]
         public string OsFullName { get;set; }
         [Display(Name = "Operating Platform")]

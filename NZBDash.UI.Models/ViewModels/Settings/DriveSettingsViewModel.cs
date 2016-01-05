@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2015 Jamie Rees
-//   File: HardwareSettingsDto.cs
+//   File: DriveSettingsViewModel.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,29 +24,9 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Collections.Generic;
-
-using NZBDash.Common.Models.Settings;
-
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
-    public class HardwareSettingsDto : Setting
-    {
-        public int ThresholdTime { get; set; }
-
-        public int CpuPercentageLimit { get; set; }
-        public int MemoryUseLimit { get; set; }
-        public List<DriveSettingsDto> Drives { get; set; }
-        public int NicToMonitor { get; set; }
-
-        public bool Alert { get; set; }
-        public string EmailUsername { get; set; }
-        public string EmailPassword { get; set; }
-        public string EmailHost { get; set; }
-        public int EmailPort { get; set; }
-    }
-
-    public class DriveSettingsDto
+    public class DriveSettingsViewModel
     {
         public long AvailableFreeSpace { get; set; }
         public string DriveFormat { get; set; }

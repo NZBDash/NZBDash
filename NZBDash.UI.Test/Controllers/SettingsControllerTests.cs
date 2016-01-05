@@ -24,6 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Linq;
 using System.Web.Mvc;
 
 using Moq;
@@ -34,21 +35,26 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.UI.Controllers;
+using NZBDash.UI.Models.Hardware;
 using NZBDash.UI.Models.ViewModels.Settings;
+
+using Ploeh.AutoFixture;
 
 using TestStack.FluentMVCTesting;
 
 namespace NZBDash.UI.Test.Controllers
 {
+    // TODO: Rework
     [TestFixture]
     public class SettingsControllerTests
     {
         private SettingsController _controller;
         private ILogger Logger { get; set; }
-
+        private Fixture F { get; set; }
         public SettingsControllerTests()
         {
             Logger = new Mock<ILogger>().Object;
+            F = new Fixture();
         }
 
         [Test]
@@ -69,7 +75,7 @@ namespace NZBDash.UI.Test.Controllers
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, null, Logger);
             _controller.WithCallTo(x => x.CouchPotatoSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.CouchPotatoSettings();
@@ -93,7 +99,7 @@ namespace NZBDash.UI.Test.Controllers
             var authMock = new Mock<IAuthenticationService>();
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, authMock.Object, null, Logger);
+            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, authMock.Object, null, null, Logger);
             _controller.WithCallTo(x => x.NzbDashSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.NzbDashSettings();
@@ -111,7 +117,7 @@ namespace NZBDash.UI.Test.Controllers
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, null, Logger);
             _controller.WithCallTo(x => x.NzbGetSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.NzbGetSettings();
@@ -134,7 +140,7 @@ namespace NZBDash.UI.Test.Controllers
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, null, Logger);
             _controller.WithCallTo(x => x.PlexSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.PlexSettings();
@@ -157,7 +163,7 @@ namespace NZBDash.UI.Test.Controllers
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, null, Logger);
             _controller.WithCallTo(x => x.SabNzbSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.SabNzbSettings();
@@ -179,7 +185,7 @@ namespace NZBDash.UI.Test.Controllers
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
-            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, null, Logger);
             _controller.WithCallTo(x => x.SonarrSettings()).ShouldRenderDefaultView();
 
             var result = (ViewResult)_controller.SonarrSettings();
@@ -193,6 +199,36 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model.ShowOnDashboard, Is.EqualTo(expectedDto.ShowOnDashboard));
         }
 
+
+        [Test]
+        public void GetHardwareSettingsReturnsDefaultView()
+        {
+            var expectedDto = F.Create<HardwareSettingsDto>();
+            var expectedDrives = F.CreateMany<DriveModel>();
+            var settingsMock = new Mock<ISettingsService<HardwareSettingsDto>>();
+            var hardwareMock = new Mock<IHardwareService>();
+
+            settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
+            hardwareMock.Setup(x => x.GetDrives()).Returns(expectedDrives).Verifiable();
+
+            _controller = new SettingsController(null, null, null, null, null, null, null, settingsMock.Object, hardwareMock.Object, Logger);
+            _controller.WithCallTo(x => x.HardwareSettings()).ShouldRenderDefaultView();
+
+            var result = (ViewResult)_controller.HardwareSettings();
+            var model = (HardwareSettingsViewModel)result.Model;
+
+            Assert.That(model.Drives[0].Name, Is.EqualTo(expectedDrives.ToList()[0].Name));
+            Assert.That(model.Drives[0].AvailableFreeSpace, Is.EqualTo(expectedDrives.ToList()[0].AvailableFreeSpace));
+            Assert.That(model.Drives[0].DriveFormat, Is.EqualTo(expectedDrives.ToList()[0].DriveFormat));
+            Assert.That(model.Drives[0].DriveType, Is.EqualTo(expectedDrives.ToList()[0].DriveType));
+            Assert.That(model.Drives[0].IsReady, Is.EqualTo(expectedDrives.ToList()[0].IsReady));
+            Assert.That(model.Drives[0].TotalFreeSpace, Is.EqualTo(expectedDrives.ToList()[0].TotalFreeSpace));
+            Assert.That(model.Drives[0].TotalSize, Is.EqualTo(expectedDrives.ToList()[0].TotalSize));
+            Assert.That(model.Drives[0].VolumeLabel, Is.EqualTo(expectedDrives.ToList()[0].VolumeLabel));
+            Assert.That(model.Drives.Count, Is.EqualTo(expectedDrives.Count()));
+
+        }
+
         [Test]
         public void PostCouchPotatoSettingsBadModel()
         {
@@ -202,7 +238,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<CouchPotatoSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, null, Logger);
 
             var model = new CouchPotatoSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.CouchPotatoSettings(model)).ShouldRenderDefaultView().WithModel(model);
@@ -218,7 +254,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<CouchPotatoSettingsDto>())).Returns(false);
 
-            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, null, Logger);
 
             var model = new CouchPotatoSettingsViewModel();
             _controller.WithCallTo(x => x.CouchPotatoSettings(model)).ShouldRenderView("Error");
@@ -244,7 +280,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<CouchPotatoSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, settingsMock.Object, null, null, null, null, null, Logger);
 
             var model = new CouchPotatoSettingsViewModel();
             _controller.WithCallTo(x => x.CouchPotatoSettings(model)).ShouldRedirectTo(c => c.CouchPotatoSettings);
@@ -260,7 +296,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbDashSettingsDto>())).Returns(false).Verifiable();
 
-            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, null, Logger);
 
             var model = new NzbDashSettingsViewModel();
             _controller.WithCallTo(x => x.NzbDashSettings(model)).ShouldRenderView("Error");
@@ -275,7 +311,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbDashSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, null, Logger);
 
             var model = new NzbDashSettingsViewModel();
             _controller.WithCallTo(x => x.NzbDashSettings(model)).ShouldRedirectTo(c => c.NzbDashSettings);
@@ -290,7 +326,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbDashSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, null, null, null, Logger);
 
             var model = new NzbDashSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.NzbDashSettings(model)).ShouldRenderDefaultView().WithModel(model);
@@ -305,7 +341,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbGetSettingsDto>())).Returns(false).Verifiable();
 
-            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, null, Logger);
 
             var model = new NzbGetSettingsViewModel();
             _controller.WithCallTo(x => x.NzbGetSettings(model)).ShouldRenderView("Error");
@@ -320,7 +356,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbGetSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, null, Logger);
 
             var model = new NzbGetSettingsViewModel();
             _controller.WithCallTo(x => x.NzbGetSettings(model)).ShouldRedirectTo(c => c.NzbGetSettings);
@@ -335,7 +371,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<NzbGetSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(settingsMock.Object, null, null, null, null, null, null, null, null, Logger);
             var model = new NzbGetSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.NzbGetSettings(model)).ShouldRenderDefaultView().WithModel(model);
         }
@@ -349,7 +385,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<PlexSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, null, Logger);
 
             var model = new PlexSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.PlexSettings(model)).ShouldRenderDefaultView().WithModel(model);
@@ -365,7 +401,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<PlexSettingsDto>())).Returns(false);
 
-            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, null, Logger);
 
             var model = new PlexSettingsViewModel();
             _controller.WithCallTo(x => x.PlexSettings(model)).ShouldRenderView("Error");
@@ -381,7 +417,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<PlexSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, settingsMock.Object, null, null, null, null, Logger);
 
             var model = new PlexSettingsViewModel();
             _controller.WithCallTo(x => x.PlexSettings(model)).ShouldRedirectTo(c => c.PlexSettings);
@@ -397,7 +433,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SabNzbdSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, null, Logger);
 
             var model = new SabNzbSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.SabNzbSettings(model)).ShouldRenderDefaultView().WithModel(model);
@@ -413,7 +449,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SabNzbdSettingsDto>())).Returns(false);
 
-            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, null, Logger);
 
             var model = new SabNzbSettingsViewModel();
             _controller.WithCallTo(x => x.SabNzbSettings(model)).ShouldRenderView("Error");
@@ -429,7 +465,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SabNzbdSettingsDto>())).Returns(true);
 
-            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, settingsMock.Object, null, null, null, null, null, null, null, Logger);
 
             var model = new SabNzbSettingsViewModel();
             _controller.WithCallTo(x => x.SabNzbSettings(model)).ShouldRedirectTo(c => c.SabNzbSettings);
@@ -445,7 +481,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SonarrSettingsDto>())).Returns(false).Verifiable();
 
-            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, null, Logger);
 
             var model = new SonarrSettingsViewModel();
             _controller.WithCallTo(x => x.SonarrSettings(model)).ShouldRenderView("Error");
@@ -460,7 +496,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SonarrSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, null, Logger);
 
             var model = new SonarrSettingsViewModel();
             _controller.WithCallTo(x => x.SonarrSettings(model)).ShouldRedirectTo(c => c.SonarrSettings);
@@ -475,7 +511,7 @@ namespace NZBDash.UI.Test.Controllers
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto);
             settingsMock.Setup(x => x.SaveSettings(It.IsAny<SonarrSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, settingsMock.Object, null, null, null, null, null, null, Logger);
 
             var model = new SonarrSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.SonarrSettings(model)).ShouldRenderDefaultView().WithModel(model);
@@ -484,7 +520,7 @@ namespace NZBDash.UI.Test.Controllers
         [Test]
         public void SettingsReturnsDefaultIndex()
         {
-            _controller = new SettingsController(null, null, null, null, null, null, null, null, Logger);
+            _controller = new SettingsController(null, null, null, null, null, null, null, null, null, Logger);
             _controller.WithModelErrors().WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
     }

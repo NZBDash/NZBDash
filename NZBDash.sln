@@ -50,8 +50,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.UI.Models", "NZBDas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.ThirdParty.Api.Models", "NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj", "{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B163AFD4-7499-41D0-8B89-B6DD60970A7B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Common.Helpers", "NZBDash.Common.Helpers\NZBDash.Common.Helpers.csproj", "{D94C96BB-D3B6-492F-B594-42920088BD87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.DataAccessLayer.Models", "NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj", "{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}"

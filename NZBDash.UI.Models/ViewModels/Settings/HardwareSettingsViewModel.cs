@@ -24,23 +24,23 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Collections.Generic;
+
 namespace NZBDash.UI.Models.ViewModels.Settings
 {
     public class HardwareSettingsViewModel
     {
-        // TODO: NIC's 
-        // TODO: HDD Space per HDD
-
         public int ThresholdTime { get; set; }
 
         public int CpuPercentageLimit { get; set; }
         public int MemoryUseLimit { get; set; }
+        public List<DriveSettingsViewModel> Drives { get; set; }
+        public int NicToMonitor { get; set; }
 
         public bool Alert { get; set; }
         public string EmailUsername { get; set; }
         public string EmailPassword { get; set; }
         public string EmailHost { get; set; }
         public int EmailPort { get; set; }
-
     }
 }

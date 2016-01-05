@@ -29,6 +29,7 @@ using System.Runtime.Serialization.Formatters;
 
 using Newtonsoft.Json;
 
+using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Common.Models.Settings;
 using NZBDash.Core.Interfaces;
@@ -50,13 +51,7 @@ namespace NZBDash.Core.SettingsService
             EntityName = typeof(T).Name;
             SettingsServiceName = typeof(U).Name;
         }
-        private static readonly JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.None,
-            TypeNameHandling = TypeNameHandling.Objects,
-            TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-            NullValueHandling = NullValueHandling.Ignore
-        };
+
         private ILogger Logger { get; set; }
         private ISettingsRepository Repo { get; set; }
         private string EntityName { get;set; }
@@ -66,7 +61,7 @@ namespace NZBDash.Core.SettingsService
         {
             try
             {
-                Logger.Trace("Getting all items from NzbDashSettingsService");
+                Logger.Trace(string.Format("Getting all items from {0}", SettingsServiceName));
                 var result = Repo.Get(EntityName);
                 if (result == null)
                 {
@@ -74,7 +69,7 @@ namespace NZBDash.Core.SettingsService
                     return new U();
                 }
 
-                var obj = result == null || string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings);
+                var obj = string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings.Settings);
 
                 Logger.Trace("Creating dto from the results from Repo");
                 var model = new U();
@@ -101,7 +96,7 @@ namespace NZBDash.Core.SettingsService
                 newEntity.InjectFrom(model);
 
                 Logger.Trace("Inserting now");
-                var settings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings) };
+                var settings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings.Settings) };
 
                 var insertResult = Repo.Insert(settings);
 
@@ -113,7 +108,7 @@ namespace NZBDash.Core.SettingsService
             modified.InjectFrom(model);
             modified.Id = entity.Id;
 
-            var globalSettings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(modified, SerializerSettings), Id = entity.Id };
+            var globalSettings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(modified, SerializerSettings.Settings), Id = entity.Id };
 
             var result = Repo.Update(globalSettings);
 

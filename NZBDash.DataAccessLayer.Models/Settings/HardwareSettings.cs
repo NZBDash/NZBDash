@@ -24,9 +24,35 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Collections.Generic;
+
 namespace NZBDash.DataAccessLayer.Models.Settings
 {
     public class HardwareSettings : Entity
     {
+        public int ThresholdTime { get; set; }
+
+        public int CpuPercentageLimit { get; set; }
+        public int MemoryUseLimit { get; set; }
+        public List<DriveSettings> Drives { get; set; }
+        public int NicToMonitor { get; set; }
+
+        public bool Alert { get; set; }
+        public string EmailUsername { get; set; }
+        public string EmailPassword { get; set; }
+        public string EmailHost { get; set; }
+        public int EmailPort { get; set; }
+    }
+
+    public class DriveSettings
+    {
+        public long AvailableFreeSpace { get; set; }
+        public string DriveFormat { get; set; }
+        public string DriveType { get; set; }
+        public bool IsReady { get; set; }
+        public string Name { get; set; }
+        public long TotalFreeSpace { get; set; }
+        public long TotalSize { get; set; }
+        public string VolumeLabel { get; set; }
     }
 }
