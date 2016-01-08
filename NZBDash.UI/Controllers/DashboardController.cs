@@ -38,8 +38,6 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult Index()
         {
-            var s = new SettingsService<CouchPotatoSettings, CouchPotatoSettingsDto>(new JsonRepository(new WindowsSqliteConfiguration(new NLogLogger(typeof(string)), new SQLiteFactory())), new NLogLogger(typeof(int)));
-
             return View();
         }
 

@@ -66,5 +66,11 @@ namespace NZBDash.Core.Interfaces
         /// Gets the network information.
         /// </summary>
         NetworkInfo GetNetworkInformation();
+
+        /// <summary>
+        /// Returns all of the found NIC's on the server. Key = NIC Name, Value = NIC number (Unique)
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, int> GetAllNics();
     }
 }

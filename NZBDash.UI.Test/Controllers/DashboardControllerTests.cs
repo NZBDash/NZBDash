@@ -92,7 +92,6 @@ namespace NZBDash.UI.Test.Controllers
         [Test]
         public void EnsureThatIndexReturnsDefaultView()
         {
-
             _controller.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
 

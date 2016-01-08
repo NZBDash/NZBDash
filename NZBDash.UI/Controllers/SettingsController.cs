@@ -74,11 +74,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult CouchPotatoSettings()
         {
-            var dto = CpSettingsService.GetSettings();
-            var model = new CouchPotatoSettingsViewModel();
-            model.InjectFrom(dto);
-
-            return View(model);
+            return Get<CouchPotatoSettingsViewModel, CouchPotatoSettingsDto>(CpSettingsService);
         }
 
         [HttpPost]
@@ -109,19 +105,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult NzbDashSettings()
         {
-            Logger.Trace("Getting settings");
-            var dto = NzbDashServiceSettings.GetSettings();
-
-            Logger.Trace("Converting settings into ViewModel");
-            var model = new NzbDashSettingsViewModel();
-            model.InjectFrom(dto);
-
-            var users = Auth.GetAllUsers();
-            model.UserExist = users.Any();
-
-
-            Logger.Trace("returning ViewModel");
-            return View(model);
+            return Get<NzbDashSettingsViewModel, NzbDashSettingsDto>(NzbDashServiceSettings);
         }
 
         [HttpPost]
@@ -147,15 +131,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult NzbGetSettings()
         {
-            Logger.Trace("Getting settings");
-            var dto = NzbGetSettingsService.GetSettings();
-
-            Logger.Trace("Converting settings into ViewModel");
-            var model = new NzbGetSettingsViewModel();
-            model.InjectFrom(dto);
-
-            Logger.Trace("returning ViewModel");
-            return View(model);
+            return Get<NzbGetSettingsViewModel, NzbGetSettingsDto>(NzbGetSettingsService);
         }
 
         [HttpPost]
@@ -181,11 +157,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            var dto = PlexSettingsService.GetSettings();
-            var model = new PlexSettingsViewModel();
-            model.InjectFrom(dto);
-
-            return View(model);
+            return Get<PlexSettingsViewModel, PlexSettingsDto>(PlexSettingsService);
         }
 
         [HttpPost]
@@ -211,11 +183,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            var dto = SabNzbSettingsService.GetSettings();
-            var model = new SabNzbSettingsViewModel();
-            model.InjectFrom(dto);
-
-            return View(model);
+            return Get<SabNzbSettingsViewModel, SabNzbdSettingsDto>(SabNzbSettingsService);
         }
 
         [HttpPost]
@@ -241,11 +209,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            var dto = SonarrSettingsService.GetSettings();
-            var model = new SonarrSettingsViewModel();
-            model.InjectFrom(dto);
-
-            return View(model);
+            return Get<SonarrSettingsViewModel,SonarrSettingsDto>(SonarrSettingsService);
         }
 
         [HttpPost]
@@ -277,6 +241,7 @@ namespace NZBDash.UI.Controllers
 
             // Get the drives and drive information
             var drives = HardwareService.GetDrives().ToList();
+            var nics = HardwareService.GetAllNics();
             model.Drives = new List<DriveSettingsViewModel>();
 
             foreach (var d in drives)
@@ -286,7 +251,11 @@ namespace NZBDash.UI.Controllers
                 model.Drives.Add(driveModel);
             }
 
-            // TODO: Sort out the NIC
+            model.NicDict = new Dictionary<string, int>();
+            foreach (var nic in nics)
+            {
+                model.NicDict.Add(nic.Key,nic.Value);
+            }
             
             return View(model);
         }
@@ -311,6 +280,13 @@ namespace NZBDash.UI.Controllers
             return View("Error");
         }
 
+        /// <summary>
+        /// Gets the specified data from the specified service.
+        /// </summary>
+        /// <typeparam name="T">The ViewModel you want to return to the View</typeparam>
+        /// <typeparam name="U">The DTO returned by the service</typeparam>
+        /// <param name="service">The service.</param>
+        /// <returns>Default view with the model</returns>
         private ActionResult Get<T, U>(ISettingsService<U> service) where T : new()
         {
             var dto = service.GetSettings();

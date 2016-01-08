@@ -37,6 +37,9 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public List<DriveSettingsViewModel> Drives { get; set; }
         public int NicToMonitor { get; set; }
 
+        // Best name ever! :D
+        public Dictionary<string,int> NicDict { get; set; }
+
         public bool Alert { get; set; }
         public string EmailUsername { get; set; }
         public string EmailPassword { get; set; }

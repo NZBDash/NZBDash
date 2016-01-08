@@ -125,6 +125,25 @@ namespace NZBDash.Core.Services
             return GetNetworkingDetails();
         }
 
+        public Dictionary<string,int> GetAllNics()
+        {
+            var info = new NetworkInfo();
+            var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
+            var cn = performanceCounterCategory.GetInstanceNames();
+
+            var nicDict = new Dictionary<string, int>();
+
+            for (var i = 0; i < nicDict.Count; i++)
+            {
+                if (!nicDict.ContainsKey(cn[i]))
+                {
+                    nicDict.Add(cn[i],i);
+                }
+            }
+
+            return nicDict;
+        }
+
         private ComputerInfo GetRamInfo()
         {
             return new ComputerInfo();

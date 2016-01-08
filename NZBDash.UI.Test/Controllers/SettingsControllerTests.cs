@@ -24,6 +24,8 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -207,9 +209,11 @@ namespace NZBDash.UI.Test.Controllers
             var expectedDrives = F.CreateMany<DriveModel>();
             var settingsMock = new Mock<ISettingsService<HardwareSettingsDto>>();
             var hardwareMock = new Mock<IHardwareService>();
+            var expectedNic = F.Create<Dictionary<string, int>>();
 
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
             hardwareMock.Setup(x => x.GetDrives()).Returns(expectedDrives).Verifiable();
+            hardwareMock.Setup(x => x.GetAllNics()).Returns(expectedNic).Verifiable();
 
             _controller = new SettingsController(null, null, null, null, null, null, null, settingsMock.Object, hardwareMock.Object, Logger);
             _controller.WithCallTo(x => x.HardwareSettings()).ShouldRenderDefaultView();
@@ -227,6 +231,13 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model.Drives[0].VolumeLabel, Is.EqualTo(expectedDrives.ToList()[0].VolumeLabel));
             Assert.That(model.Drives.Count, Is.EqualTo(expectedDrives.Count()));
 
+            Assert.That(model.NicDict.Count, Is.EqualTo(expectedNic.Count()));
+
+            foreach (var nic in expectedNic)
+            {
+                Assert.That(model.NicDict.ContainsKey(nic.Key),Is.True);
+                Assert.That(model.NicDict.ContainsValue(nic.Value),Is.True);
+            }
         }
 
         [Test]
