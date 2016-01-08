@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 using Microsoft.VisualBasic.Devices;
@@ -127,13 +128,12 @@ namespace NZBDash.Core.Services
 
         public Dictionary<string,int> GetAllNics()
         {
-            var info = new NetworkInfo();
             var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
             var cn = performanceCounterCategory.GetInstanceNames();
 
             var nicDict = new Dictionary<string, int>();
 
-            for (var i = 0; i < nicDict.Count; i++)
+            for (var i = 0; i < cn.Count(); i++)
             {
                 if (!nicDict.ContainsKey(cn[i]))
                 {

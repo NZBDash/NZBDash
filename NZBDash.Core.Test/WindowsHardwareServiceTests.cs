@@ -96,5 +96,15 @@ namespace NZBDash.Core.Test
             Assert.That(process.Sent, Is.Not.Null);
             Assert.That(process.Total, Is.Not.Null);
         }
+
+
+        [Test]
+        public void GetAllNics()
+        {
+            var nics = Service.GetAllNics();
+
+            Assert.That(nics, Is.Not.Null);
+            Assert.That(nics.Count > 0);
+        }
     }
 }
