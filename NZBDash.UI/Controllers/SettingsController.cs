@@ -257,6 +257,7 @@ namespace NZBDash.UI.Controllers
                 model.NicDict.Add(nic.Key,nic.Value);
             }
             
+            // TODO: Add view
             return View(model);
         }
 
