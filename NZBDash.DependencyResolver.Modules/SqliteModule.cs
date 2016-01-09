@@ -24,7 +24,6 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using NZBDash.DataAccessLayer.Models.Settings;
 
 using System.Data.Common;
 
@@ -34,9 +33,9 @@ using NZBDash.Common.Models.Data.Models;
 using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Repository;
-#if WINDOWS || DEBUG || RELEASE
+
 using System.Data.SQLite;
-#endif
+using NZBDash.DataAccessLayer.Models;
 
 #if LINUX 
 using Mono.Data.Sqlite;
@@ -51,10 +50,10 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
 		    Bind<ISettingsRepository>().To<JsonRepository>();
 
-#if WINDOWS || DEBUG
+
             Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
             Bind<DbProviderFactory>().To<SQLiteFactory>();
-#endif
+
 
 #if LINUX 
 			Bind<ISqliteConfiguration>().To<MonoSqliteConfiguration>();
