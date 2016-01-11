@@ -117,6 +117,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\StringCipherTests.cs" />
     <Compile Include="MemoryCacheProviderTest.cs" />
     <Compile Include="Helpers\TimeExtensionTest.cs" />
     <Compile Include="Helpers\ThirdPartySerializerTest.cs" />

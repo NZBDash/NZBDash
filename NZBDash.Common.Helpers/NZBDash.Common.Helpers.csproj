@@ -52,6 +52,7 @@
     <Compile Include="CustomWebClient.cs" />
     <Compile Include="MemorySizeConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="ThirdPartySerializer.cs" />
     <Compile Include="TimeExtensions.cs" />
     <Compile Include="UrlHelper.cs" />
