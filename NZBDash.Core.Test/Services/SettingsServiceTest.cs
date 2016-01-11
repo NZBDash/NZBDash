@@ -57,8 +57,8 @@ namespace NZBDash.Core.Test.Services
             ExpectedLink = new GlobalSettings
             {
                 Id = 1,
-                Content = "{\"$type\":\"NZBDash.DataAccessLayer.Models.Settings.NzbDashSettings,NZBDash.DataAccessLayer.Models\",\"Authenticate\":true,\"Id\":6}",
-                SettingsName = "Test",
+                Content = "oDuq+yWcOzb7qgRvmyljVAS6dLdT1fydgeyMuObYkYJwzTNTXlwC4+V/Tp0O6FZuKfKbDuaonSXMzg8ndZhM118am2HiobAd37KrCFcb7X594TmzrHUFCuqflHPOl3FsZnKnZXqsvABt6QCnFZLb3eG6smE/uqQ5QVohtt2qzi8ZrGifb5pjXJIfSDwnXGj951zKfxQ7Wq84QmAUU5eqPdDBq2ODsLnRfVamrieVPIxzhhaFFKLJF9QvAE8SPm4i",
+                SettingsName = "PageName",
             };
 
             F = new Fixture();
