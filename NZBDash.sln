@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.UI", "NZBDash.UI\NZBDash.UI.csproj", "{30ED7E20-5C5B-4643-B3A6-7D10BE172241}"
 EndProject
@@ -65,6 +65,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{79A76717-2C94-4231-BCCD-BA63627EDA7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{209AB01B-A9E4-4238-AF94-AEA198CEE45A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NZBDash.UI.MVC", "NZBDash.UI.MVC\NZBDash.UI.MVC.xproj", "{24A34FAB-12A6-4D1D-9B17-011034C81F8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A329D207-5BDD-447C-B283-624A1C7EEE8D}"
+	ProjectSection(SolutionItems) = preProject
+		NZBDash.UI.MVC\global.json = NZBDash.UI.MVC\global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -750,6 +757,38 @@ Global
 		{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
 		{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}.Windows|x64.ActiveCfg = Release|Any CPU
 		{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}.Windows|x86.ActiveCfg = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|x64.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Debug|x86.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|Any CPU.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|Mixed Platforms.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|x64.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|x64.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|x86.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Linux|x86.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|x64.ActiveCfg = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|x64.Build.0 = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|x86.ActiveCfg = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Release|x86.Build.0 = Release|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|Any CPU.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|Mixed Platforms.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|x64.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|x64.Build.0 = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|x86.ActiveCfg = Debug|Any CPU
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E}.Windows|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -777,5 +816,6 @@ Global
 		{E51F0F88-A6DA-4A7E-B647-C5621B60F79D} = {209AB01B-A9E4-4238-AF94-AEA198CEE45A}
 		{D94C96BB-D3B6-492F-B594-42920088BD87} = {EEF1FD88-83E6-4B16-BFBB-EA709A020483}
 		{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6} = {3DCBDBD6-9A9D-45C2-93CE-5AECD21F225E}
+		{24A34FAB-12A6-4D1D-9B17-011034C81F8E} = {5766F4D2-5DB4-4E47-942E-CA9DD2AE6C9F}
 	EndGlobalSection
 EndGlobal
