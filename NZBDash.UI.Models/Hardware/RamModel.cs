@@ -30,6 +30,7 @@ namespace NZBDash.UI.Models.Hardware
 {
     public class RamModel
     {
+        // TODO: Resource
         [Display(Name = "Virtual Percentage Filled")]
         public int VirtualPercentageFilled
         {

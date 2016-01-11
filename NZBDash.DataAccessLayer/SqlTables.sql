@@ -1,63 +1,23 @@
 ﻿--Any DB changes need to be made in this file.
 
-
-CREATE TABLE IF NOT EXISTS LinksConfigurations
+CREATE TABLE IF NOT EXISTS Users
 (
-    ID                                   INTEGER PRIMARY KEY AUTOINCREMENT,
-    LinkName                             VARCHAR(100)  NOT NULL,
-    LinkEndpoint                         VARCHAR(100)  NOT NULL
+    UserID								INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserName							varchar(50) NOT NULL,
+    PasswordHash						varchar(100) NOT NULL,
+    SecurityStamp						varchar(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS NzbGetSettings
+CREATE TABLE IF NOT EXISTS GlobalSettings
 (
-    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    IpAddress                           VARCHAR(100)  NOT NULL,
-    Port                                INTEGER  NOT NULL,
-    Enabled           				     INTEGER  NOT NULL,
-    ShowOnDashboard				     INTEGER  NOT NULL,
-    Username							 VARCHAR(100)  NOT NULL,
-    Password							 VARCHAR(100)  NOT NULL
+    Id									INTEGER PRIMARY KEY AUTOINCREMENT,
+    SettingsName						varchar(50) NOT NULL,
+    Content								varchar(100) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS SonarrSettings
+CREATE TABLE IF NOT EXISTS LinksConfiguration
 (
-    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    IpAddress                           VARCHAR(100)  NOT NULL,
-    Port                                INTEGER  NOT NULL,
-    Enabled           					 INTEGER  NOT NULL,
-    ShowOnDashboard					 INTEGER  NOT NULL,
-    ApiKey					             VARCHAR(100)  NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS PlexSettings
-(
-    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    IpAddress                           VARCHAR(100)  NOT NULL,
-    Port                                INTEGER  NOT NULL,
-    Enabled           					 INTEGER  NOT NULL,
-    ShowOnDashboard					 INTEGER  NOT NULL,
-    Username							 VARCHAR(100)  NOT NULL,
-    Password							 VARCHAR(100)  NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS CouchPotatoSettings
-(
-    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    IpAddress                           VARCHAR(100)  NOT NULL,
-    Port                                INTEGER  NOT NULL,
-    Enabled           					INTEGER  NOT NULL,
-    ShowOnDashboard					    INTEGER  NOT NULL,
-    Username							VARCHAR(100)  NOT NULL,
-    Password							VARCHAR(100)  NOT NULL,
-    ApiKey					            VARCHAR(100)  NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS SabNzbSettings
-(
-    ID                                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    IpAddress                           VARCHAR(100) NOT NULL,
-    Port                                INTEGER NOT NULL,
-    Enabled           					INTEGER NOT NULL,
-    ShowOnDashboard					    INTEGER NOT NULL,
-    ApiKey					            VARCHAR(100) NOT NULL
+    Id                                   INTEGER PRIMARY KEY AUTOINCREMENT,
+    LinkName	                         varchar(50) NOT NULL,
+	LinkEndpoint						 varchar(2083) NOT NULL
 );

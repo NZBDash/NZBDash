@@ -44,10 +44,10 @@ namespace NZBDash.UI.Controllers.Application
     public class SonarrController : BaseController
     {
         private IThirdPartyService ApiService { get; set; }
-        private ISettingsService<SonarrSettingsViewModelDto> SettingsService { get; set; }
-        private SonarrSettingsViewModelDto Settings { get; set; }
+        private ISettingsService<SonarrSettingsDto> SettingsService { get; set; }
+        private SonarrSettingsDto Settings { get; set; }
 
-        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsViewModelDto> settingsService)
+        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsDto> settingsService)
             : base(typeof(SonarrController))
         {
             ApiService = apiService;

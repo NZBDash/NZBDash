@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.DataAccess.Api.CouchPotato;
 using NZBDash.Resources;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;

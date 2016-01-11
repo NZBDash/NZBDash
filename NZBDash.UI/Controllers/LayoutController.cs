@@ -38,7 +38,7 @@ namespace NZBDash.UI.Controllers
     public class LayoutController : Controller
     {
         public LayoutController(ISettingsService<SabNzbdSettingsDto> sab, ISettingsService<CouchPotatoSettingsDto> cp,
-            ISettingsService<SonarrSettingsViewModelDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget)
+            ISettingsService<SonarrSettingsDto> sonarr, ISettingsService<PlexSettingsDto> plex, ISettingsService<NzbGetSettingsDto> nzbget)
         {
             SabService = sab;
             CpService = cp;
@@ -51,7 +51,7 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<CouchPotatoSettingsDto> CpService { get; set; }
         private ISettingsService<PlexSettingsDto> PlexService { get; set; }
         private ISettingsService<NzbGetSettingsDto> NzbService { get; set; }
-        private ISettingsService<SonarrSettingsViewModelDto> SonarrService { get; set; }
+        private ISettingsService<SonarrSettingsDto> SonarrService { get; set; }
 
         // GET: Layout
         public ActionResult ApplicationMenu()

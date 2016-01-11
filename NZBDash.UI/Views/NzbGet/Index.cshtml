@@ -63,13 +63,13 @@
 
             //////// Ajax History Grid ////////
             $('#History').click(function () {
-                $(".grid-mvc").gridmvc().ajaxify(
+                $("[data-gridname='HistoryGrid']").gridmvc().ajaxify(
                 {
                     getPagedData: "@Url.Action("AjaxHistoryPaged")",
                     getData: "@Url.Action("AjaxHistory")"
                 });
 
-                $(".grid-mvc")
+                $("[data-gridname='HistoryGrid']")
                     .gridmvc()
                     .refreshFullGrid();
                 $('#HomeTab').removeClass("active");

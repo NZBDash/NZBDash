@@ -44,7 +44,16 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// </value>
         public override string DbFile()
         {
-            return "App_Data" + @"\\NZBDash.sqlite";
+            return ApplicationDataLocation() + @"\\NZBDash.sqlite";
+        }
+
+        /// <summary>
+        /// Applications the data location.
+        /// </summary>
+        /// <returns></returns>
+        public override string ApplicationDataLocation()
+        {
+            return "App_Data";
         }
     }
 }

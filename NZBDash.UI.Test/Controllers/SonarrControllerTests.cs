@@ -49,20 +49,20 @@ namespace NZBDash.UI.Test.Controllers
     public class SonarrControllerTests
     {
         private SonarrController _controller;
-        private SonarrSettingsViewModelDto ExpectedSettings { get; set; }
+        private SonarrSettingsDto ExpectedSettings { get; set; }
         private List<SonarrSeries> SonarrSeries { get; set; }
         private List<SonarrEpisode> SonarrEpisode { get; set; }
-        private Mock<ISettingsService<SonarrSettingsViewModelDto>> SettingsMock { get; set; }
+        private Mock<ISettingsService<SonarrSettingsDto>> SettingsMock { get; set; }
         private Mock<IThirdPartyService> ServiceMock { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsDto>>();
             ServiceMock = new Mock<IThirdPartyService>();
             var f = new Fixture();
 
-            ExpectedSettings = f.Create<SonarrSettingsViewModelDto>();
+            ExpectedSettings = f.Create<SonarrSettingsDto>();
             SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
             SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
 
@@ -113,11 +113,11 @@ namespace NZBDash.UI.Test.Controllers
         [Test]
         public void GetSeriesNoConfig()
         {
-            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsDto>>();
             ServiceMock = new Mock<IThirdPartyService>();
             var f = new Fixture();
 
-            ExpectedSettings = new SonarrSettingsViewModelDto();
+            ExpectedSettings = new SonarrSettingsDto();
             SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
             SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
 
@@ -159,11 +159,11 @@ namespace NZBDash.UI.Test.Controllers
         [Test]
         public void GetEpisodesForSeriesNoConfig()
         {
-            SettingsMock = new Mock<ISettingsService<SonarrSettingsViewModelDto>>();
+            SettingsMock = new Mock<ISettingsService<SonarrSettingsDto>>();
             ServiceMock = new Mock<IThirdPartyService>();
             var f = new Fixture();
 
-            ExpectedSettings = new SonarrSettingsViewModelDto();
+            ExpectedSettings = new SonarrSettingsDto();
             SonarrSeries = f.CreateMany<SonarrSeries>().ToList();
             SonarrEpisode = f.CreateMany<SonarrEpisode>().ToList();
 

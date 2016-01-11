@@ -64,5 +64,10 @@ namespace NZBDash.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        public Dictionary<string, int> GetAllNics()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

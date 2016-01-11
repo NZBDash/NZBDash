@@ -28,7 +28,7 @@ using NZBDash.ThirdParty.Api.Models.Api;
 #endregion
 
 using System.Collections.Generic;
-
+using NZBDash.DataAccess.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;

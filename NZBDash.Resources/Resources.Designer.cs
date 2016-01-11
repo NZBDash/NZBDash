@@ -61,6 +61,24 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Applications_CouchPotato_Movies {
+            get {
+                return ResourceManager.GetString("Applications_CouchPotato_Movies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Applications_CouchPotato_Title {
+            get {
+                return ResourceManager.GetString("Applications_CouchPotato_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing to see here!.
         /// </summary>
         public static string Applications_NzbGet_Download_NothingToSee {
@@ -255,6 +273,24 @@ namespace NZBDash.Resources {
         public static string Settings_Missing_Sonarr {
             get {
                 return ResourceManager.GetString("Settings_Missing_Sonarr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Authentication.
+        /// </summary>
+        public static string Settings_NzbDash_Authenticate {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_Authenticate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NZBDash Settings.
+        /// </summary>
+        public static string Settings_NzbDash_Title {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_Title", resourceCulture);
             }
         }
         

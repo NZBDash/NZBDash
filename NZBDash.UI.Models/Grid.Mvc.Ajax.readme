@@ -1,0 +1,63 @@
+﻿Follow thse steps to use Grid.Mvc.Ajax
+
+1. Include ~/Scripts/gridmvc-ext.js after your ~/Scripts/grimvc.js include.
+
+2. Include ~/Content/ladda-bootstrap/ladda-themeless.min.css CSS after your Bootstrap CSS/LESS include.
+
+3. Include Ladda-bootstrap Javascript via the ~/Scripts/ladda-bootstrap/ladda.min.js
+ and ~/Scripts/ladda-bootstrap/spin.min.js.
+
+4. Create a view model for you grid data, for example:
+public Person
+{
+   public string FirstName { get; set; }
+   public string LastName { get; set; }
+}
+
+5. Add a Razor partial view for your grid data that uses an AjaxGrid<T> as the model type, 
+Where T is your view model type:
+
+@using GridMvc.Html
+@using GridMvc.Sorting
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<Models.Person>
+
+@Html.Grid(Model).Columns(columns =>
+    {
+      columns.Add(c => c.FirstName);
+	  columns.Add(c => c.LastName);
+    }).Sortable(true).WithPaging(10)
+
+6. Add a controller action to retrieve the data for the first page of data that includes the Ajax pager HTML:
+
+ public JsonResult Persons()
+        {
+			var vm = new List<Person>()
+			{
+				new Person() { FirstName = "John", LastName = "Doe" }
+			}
+			.AsQueryable();
+            var ajaxGridFactory = new Grid.Mvc.Ajax.GridExtensions.AjaxGridFactory();
+            var grid = ajaxGridFactory.CreateAjaxGrid(vm, 1, false);
+        }
+
+7. Add a controller action to retrieve data for paged items that returns a JsonResult without the Ajax page HTML:
+
+ public JsonResult PersonsPaged(int page)
+        {
+			var vm = new List<Person>()
+			{
+				new Person() { FirstName = "John", LastName = "Doe" }
+			}
+			.AsQueryable();
+            var ajaxGridFactory = new Grid.Mvc.Ajax.GridExtensions.AjaxGridFactory();
+            var grid = ajaxGridFactory.CreateAjaxGrid(vm, page, true);
+        }
+
+8. Call the ajaxify Grid.Mvc.Ajax JavaScript plug-in method setting the non-paged and paged controller actions and optionally a form
+to apply additional filtering to the grid. All input and select elements in the given form will be passed into your paged and non-paged controller actions:
+
+ $(".grid-mvc").gridmvc().ajaxify({
+                getPagedData: '/Home/Persons',
+                getData : '/Home/PersonsPaged',
+                gridFilterForm: $("#gridFilters")
+            });

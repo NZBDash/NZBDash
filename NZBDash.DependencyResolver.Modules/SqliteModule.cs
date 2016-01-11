@@ -24,18 +24,18 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+
 using System.Data.Common;
 
 using Ninject.Modules;
 
 using NZBDash.Common.Models.Data.Models;
-using NZBDash.Common.Models.Data.Models.Settings;
 using NZBDash.DataAccessLayer.Configuration;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Repository;
-#if WINDOWS || DEBUG
+
 using System.Data.SQLite;
-#endif
+using NZBDash.DataAccessLayer.Models;
 
 #if LINUX 
 using Mono.Data.Sqlite;
@@ -47,19 +47,13 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-            Bind<ISqlRepository<SonarrSettings>>().To<GenericRepository<SonarrSettings>>();
-            Bind<ISqlRepository<PlexSettings>>().To<GenericRepository<PlexSettings>>();
-            Bind<ISqlRepository<NzbGetSettings>>().To<GenericRepository<NzbGetSettings>>();
-            Bind<ISqlRepository<CouchPotatoSettings>>().To<GenericRepository<CouchPotatoSettings>>();
-            Bind<ISqlRepository<SabNzbSettings>>().To<GenericRepository<SabNzbSettings>>();
             Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
+		    Bind<ISettingsRepository>().To<JsonRepository>();
 
 
-
-#if WINDOWS || DEBUG
             Bind<ISqliteConfiguration>().To<WindowsSqliteConfiguration>();
             Bind<DbProviderFactory>().To<SQLiteFactory>();
-#endif
+
 
 #if LINUX 
 			Bind<ISqliteConfiguration>().To<MonoSqliteConfiguration>();

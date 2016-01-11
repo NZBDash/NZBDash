@@ -24,31 +24,30 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
+using System.Linq;
+using System.Reflection;
+
 using Ninject.Modules;
 
 using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver
 {
-    public class CustomDependencyResolver : IDependencyResolver
-    {
-        /// <summary>
-        /// Gets the Ninject modules to pass into the Kernel.
-        /// </summary>
-        public INinjectModule[] GetModules()
-        {
-            var modules = new INinjectModule[]
-            {
-                new ServiceModule(),
-                new ApplicationSettingsModule(),
-                new SerializerModule(),
-                new LoggerModule(),
-				new SqliteModule(),
-                new SetupModule(), 
-                new CacheModule(), 
-            };
+	public class CustomDependencyResolver : IDependencyResolver
+	{
+	    /// <summary>
+	    /// Gets the Ninject modules to pass into the Kernel.
+	    /// </summary>
+	    public NinjectModule[] GetModules()
+	    {
+	        var path = Assembly.GetAssembly(typeof(CacheModule)).Location;
+            var result = Assembly.LoadFrom(path).GetTypes()
+               .Where(a => 
+                   a.IsClass &&
+                   a.BaseType == typeof(NinjectModule));
 
-            return modules;
-        }
-    }
+		    return result.Select(r => Activator.CreateInstance(r) as NinjectModule).ToArray();
+		}
+	}
 }

@@ -27,8 +27,14 @@
 using System;
 using System.Web.Mvc;
 
+using Ninject;
+
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
+using NZBDash.UI.App_Start;
+using NZBDash.UI.Helpers;
 
 namespace NZBDash.UI.Controllers
 {
@@ -38,6 +44,7 @@ namespace NZBDash.UI.Controllers
 
         public BaseController() { }
 
+        [Obsolete("Should not use this ctor, we should be using the IoC container to pass in the ILogger interface")]
         public BaseController(Type classType)
         {
             Logger = new NLogLogger(classType);
@@ -57,9 +64,18 @@ namespace NZBDash.UI.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //var actionName = filterContext.ActionDescriptor.ActionName;
-            //var controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            //Logger.Trace(string.Format("Executing action: {0}, Controller: {1}", actionName, controller));
+            // TODO: Swap out the service locator with something else
+            var kernel = NinjectWebCommon.GetKernel();
+            var authHelper = new AuthenticationHelper(kernel.Get<ISettingsService<NzbDashSettingsDto>>());
+
+            var shouldBeAuth = authHelper.IsAuthenticated();
+
+            if (!User.Identity.IsAuthenticated && shouldBeAuth)
+            {
+                filterContext.Result = RedirectToAction("Login", "Account");
+                return;
+            }
+
             base.OnActionExecuting(filterContext);
         }
     }

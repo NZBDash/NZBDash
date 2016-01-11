@@ -77,18 +77,7 @@ footer {
   margin-top: 0;
 }
 
- .k-listview {
-    padding: 0;
-    border: none;
-}
- .k-widget {
-    padding: 0;
-    border: none;
-}
 
- .tabstrip_ts_active {
-     border: none;
- }
  @media screen and (min-width: 768px) {
   .modal-dialog-middle {
     right: auto;
@@ -125,4 +114,23 @@ footer {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 12px;
+}
+
+ .navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
 }

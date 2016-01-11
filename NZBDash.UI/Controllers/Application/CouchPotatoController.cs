@@ -24,34 +24,51 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-using System.Web.Mvc;
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.UI.Models.ViewModels.CouchPotato;
 
 namespace NZBDash.UI.Controllers.Application
 {
     public class CouchPotatoController : BaseController
     {
-        public CouchPotatoController(ISettingsService<CouchPotatoSettingsDto> settingsService, IThirdPartyService api, ILogger logger)
+        public CouchPotatoController(ISettingsService<CouchPotatoSettingsDto> settingsService, IThirdPartyService api, ILogger logger, ICacheProvider cache)
         {
             SettingsService = settingsService;
             Api = api;
             Logger = logger;
             Settings = SettingsService.GetSettings();
+            Cache = cache;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> SettingsService { get; set; }
         private CouchPotatoSettingsDto Settings { get; set; }
         private IThirdPartyService Api { get; set; }
-        
+        private ICacheProvider Cache { get; set; }
+        private string MoviesCacheKey = "CPMovies";
+
+
         // GET: CouchPotato
         public ActionResult Index()
         {
-            var movies = Api.GetCouchPotatoMovies(Settings.Uri.ToString(), Settings.ApiKey);
             return View();
+        }
+
+        public ActionResult Movies()
+        {
+            var movies = Cache.GetOrSet(MoviesCacheKey,() => Api.GetCouchPotatoMovies(Settings.Uri.ToString(), Settings.ApiKey));
+            var vm = movies.movies.Select(mov => new CouchPotatoMoviesViewModel
+            {
+                MovieName = mov.title
+            }).ToList();
+
+            return PartialView(vm);
         }
     }
 }

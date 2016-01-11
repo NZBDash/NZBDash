@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 using Microsoft.VisualBasic.Devices;
@@ -123,6 +124,24 @@ namespace NZBDash.Core.Services
         public NetworkInfo GetNetworkInformation()
         {
             return GetNetworkingDetails();
+        }
+
+        public Dictionary<string,int> GetAllNics()
+        {
+            var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
+            var cn = performanceCounterCategory.GetInstanceNames();
+
+            var nicDict = new Dictionary<string, int>();
+
+            for (var i = 0; i < cn.Count(); i++)
+            {
+                if (!nicDict.ContainsKey(cn[i]))
+                {
+                    nicDict.Add(cn[i],i);
+                }
+            }
+
+            return nicDict;
         }
 
         private ComputerInfo GetRamInfo()

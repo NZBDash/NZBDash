@@ -41,6 +41,7 @@
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -102,6 +103,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SQLite, Version=1.0.98.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.98.1\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -236,6 +241,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\CacheKeys.cs" />
     <Compile Include="Helpers\CustomHtmlHelpers.cs" />
     <Compile Include="Helpers\EndpointTester.cs" />
@@ -244,8 +250,10 @@
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\DasboardHub.cs" />
+    <Compile Include="Hubs\HubActivator.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
     <Compile Include="Hubs\LinksConfigurationHub.cs" />
+    <Compile Include="App_Start\NinjectSignalRDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dashboard\DashboardLinksViewModel.cs" />
     <Compile Include="Models\Dashboard\DashboardViewModel.cs" />
@@ -257,12 +265,6 @@
     <Compile Include="Models\LoggingLevel.cs" />
     <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Settings\BaseSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\CouchPotatoSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\NzbGetSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\PlexSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\SabNzbSettingsViewModel.cs" />
-    <Compile Include="Models\Settings\SonarrSettingsViewModel.cs" />
     <Compile Include="Models\SupportedApplicationsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -303,6 +305,7 @@
     <Content Include="Scripts\gridmvc.lang.fr.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js.map" />
+    <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Dashboard.js" />
     <Content Include="Scripts\gridmvc.js" />
@@ -330,9 +333,6 @@
     <Content Include="Scripts\ServerStatus.js" />
     <Content Include="Scripts\URI.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Content Include="Styles\ServerStatus.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -403,11 +403,16 @@
     <Content Include="Views\Shared\_AjaxGridPager.cshtml" />
     <Content Include="Views\NzbGet\Partial\History.cshtml" />
     <Content Include="Views\Layout\NavBarItems.cshtml" />
+    <Content Include="Views\Shared\_NavUser.cshtml" />
+    <Content Include="Views\Settings\NzbDashSettings.cshtml" />
+    <Content Include="Views\CouchPotato\Index.cshtml" />
+    <Content Include="Views\CouchPotato\Movies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Settings\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\CouchPotato\" />
+    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -440,6 +445,18 @@
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Interfaces\NZBDash.DataAccessLayer.Interfaces.csproj">
+      <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
+      <Name>NZBDash.DataAccessLayer.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
+      <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
+      <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
+      <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
+      <Name>NZBDash.DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{CD5BA3EA-1DB7-4D2E-9CFE-4E29C2DC5EBD}</Project>
