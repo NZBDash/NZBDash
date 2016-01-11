@@ -12,6 +12,12 @@ So there will be functionality to alert you when disk space on a certain drive i
 
 ![NZBDash Preview](http://i.imgur.com/axFul8j.gif)
 
+## Contributors
+
+We are looking for any contributions to the project! Just pick up a task, if you have any questions ask and i'll get straight on it!
+
+Please feed free to submit a pull request!
+
 ## Ideas
 
 We are still very early in the project so if you have any ideas just post it!
@@ -20,6 +26,4 @@ We are still very early in the project so if you have any ideas just post it!
 
 Currently there is no installer, so to 'install' the application you will need to build it (Using Visual Studio 2013+) and then set up IIS to look at the output folder.
 
-## Contributors
 
-If you have an idea, then please feed free to submit a pull request!
