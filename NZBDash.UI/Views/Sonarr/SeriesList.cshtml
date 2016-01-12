@@ -40,10 +40,6 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-dialog-middle modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
-            </div>
             <div class="modal-body">
                 @Html.LoadingSpinner()
             </div>
@@ -57,14 +53,12 @@
 <script>
     $(function() {
         $("a[data-target=#myModal]").click(function (ev) {
-            console.log("clicked");
             ev.preventDefault();
             var target = $(this).attr("href");
 
             // load the url and show modal on success
             $("#myModal .modal-body").load(target, function() { 
                 $("#myModal").modal("show");
-                $('#myModal').modal('handleUpdate');
             });
         });
     });
