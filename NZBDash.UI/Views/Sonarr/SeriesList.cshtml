@@ -11,7 +11,7 @@
             <strong>
                 <div class="col-md-2">Title</div>
                 <div class="col-md-2">Status</div>
-                <div class="col-md-4">Overview</div>
+                <div class="col-md-4 text-center">Overview</div>
                 <div class="col-md-2">Episode Count</div>
                 <div class="col-md-2">First Aired</div>
             </strong>
@@ -20,10 +20,10 @@
         <hr/>
         @foreach (var series in Model)
         {
-            @*//TODO: add the background image to each series (series.ImageUrls) *@
+            @*// TODO: add the background image to each series (series.ImageUrls) *@
             <div class="col-md-12 row grid-row">
                 <div class="col-md-2 title">
-                    <a data-toggle="modal" id="@series.Id" href="@Url.Action("GetEpisodes")?id=@series.Id&title=@(Url.Encode(series.Title))" data-target="#myModal">@series.Title</a>
+                    <a id="@series.Id" href="@Url.Action("GetEpisodes")?id=@series.Id&title=@(Url.Encode(series.Title))" data-target="#myModal">@series.Title</a>
                 </div>
                 <div class="col-md-2">@series.Status</div>
                 <div class="col-md-4">@series.Overview</div>
@@ -56,13 +56,15 @@
 
 <script>
     $(function() {
-        $("a[data-target=#myModal]").click(function(ev) {
+        $("a[data-target=#myModal]").click(function (ev) {
+            console.log("clicked");
             ev.preventDefault();
             var target = $(this).attr("href");
 
             // load the url and show modal on success
             $("#myModal .modal-body").load(target, function() { 
-                $("#myModal").modal("show"); 
+                $("#myModal").modal("show");
+                $('#myModal').modal('handleUpdate');
             });
         });
     });
