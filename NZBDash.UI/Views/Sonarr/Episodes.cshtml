@@ -29,7 +29,7 @@
                         <div class="col-md-6">@ep.Title</div>
                         <div class="col-md-2 text-center">@Html.Raw(ep.HasFileIcon)</div>
                         <div class="col-md-2 text-center">@ep.AirDate.ToShortDateString()</div>
-                        <div class="col-md-1 text-center"><i class="fa @FontAwesome.Search"><a class="episodeId" href="#" id="@ep.ID"></a></i></div>
+                        <div class="col-md-1 text-center"><a class="episodeId" href="@Url.Action("SearchForEpisode", new {episodeId = ep.ID})"><i class="fa @FontAwesome.Search"></i></a></div>
                     </div>
                 }
             </div>
@@ -40,12 +40,3 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
-
-<script>
-    $(function() {
-        $('#episodeId').click(function (e) {
-            var id = e.target.id;
-            //TODO: Send request to search for Sonarr episode
-        });
-    });
-</script>

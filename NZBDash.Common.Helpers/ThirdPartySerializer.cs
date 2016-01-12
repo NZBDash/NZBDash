@@ -35,6 +35,23 @@ namespace NZBDash.Common.Helpers
             }
         }
 
+        public string SerializedJsonData<T>(string url, string method, Func<T> func)
+        {
+            var item = func();
+
+            using (WebClient)
+            {
+                try
+                {
+                    return WebClient.UploadString(url, method, item.ToString());
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message, e);
+                }
+            }
+        }
+
         public T SerializeXmlData<T>(string uri) where T : new()
         {
             using (WebClient)
