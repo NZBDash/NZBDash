@@ -29,6 +29,6 @@ namespace NZBDash.Common.Interfaces
         /// <param name="method">The method.</param>
         /// <param name="func">The function.</param>
         /// <returns></returns>
-        string SerializedJsonData<T>(string url, string method, Func<T> func);
+        T SerializedJsonData<T>(string url, string method, Func<T> func) where T : new();
     }
 }

@@ -35,7 +35,7 @@ namespace NZBDash.Common.Helpers
             }
         }
 
-        public string SerializedJsonData<T>(string url, string method, Func<T> func)
+        public T SerializedJsonData<T>(string url, string method, Func<T> func) where T : new()
         {
             var item = func();
 
@@ -43,7 +43,8 @@ namespace NZBDash.Common.Helpers
             {
                 try
                 {
-                    return WebClient.UploadString(url, method, item.ToString());
+                    var result = WebClient.UploadString(url, method, item.ToString());
+                    return !string.IsNullOrEmpty(result) ? JsonConvert.DeserializeObject<T>(result) : new T();
                 }
                 catch (Exception e)
                 {
