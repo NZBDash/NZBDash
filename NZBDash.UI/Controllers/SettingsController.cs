@@ -252,13 +252,13 @@ namespace NZBDash.UI.Controllers
             }
 
             model.NicDict = new Dictionary<string, int>();
-            var ddlNics = new List<SelectListItem>();
+            var ddlNics = new List<string>();
             foreach (var nic in nics)
             {
                 model.NicDict.Add(nic.Key,nic.Value);
-                ddlNics.Add(new SelectListItem{ Value = nic.Key, Text = nic.Key });
+                ddlNics.Add(nic.Key);
             }
-            model.Nics = ddlNics;
+            model.Nics = new SelectList(model.NicDict, "Value","Key",1);
             
             // TODO: Add view
             return View(model);
@@ -298,6 +298,21 @@ namespace NZBDash.UI.Controllers
             model.InjectFrom(dto);
 
             return View(model);
+        }
+
+        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
+        {
+            // Create an empty list to hold result of the operation
+
+            // For each string in the 'elements' variable, create a new SelectListItem object
+            // that has both its Value and Text properties set to a particular value.
+            // This will result in MVC rendering each item as:
+            //     <option value="State Name">State Name</option>
+
+            return elements.Select(element => new SelectListItem
+            {
+                Value = element, Text = element
+            }).ToList();
         }
     }
 }

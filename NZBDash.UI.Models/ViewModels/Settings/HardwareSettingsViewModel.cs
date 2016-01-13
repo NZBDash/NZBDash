@@ -37,12 +37,12 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public int CpuPercentageLimit { get; set; }
         public int MemoryUseLimit { get; set; }
         public List<DriveSettingsViewModel> Drives { get; set; }
-        public int NicToMonitor { get; set; }
+        public int NicId { get; set; }
 
         // Best name ever! :D
         public Dictionary<string,int> NicDict { get; set; }
 
-        public IEnumerable<SelectListItem> Nics { get; set; }
+        public SelectList Nics { get; set; }
 
         public bool Alert { get; set; }
         public string EmailUsername { get; set; }

@@ -25,9 +25,9 @@
 
                     @*---- NIC ----*@
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Nics, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.NicId, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.Nics, Model.Nics,"Please select a NIC to monitor", new { @class = "form-control" })
+                            @Html.DropDownListFor(x => x.NicId, Model.Nics,"Please select a NIC to monitor", new { @class = "form-control" })
                         </div>
                     </div>
 
@@ -110,36 +110,38 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    function enableDisable(enabled) {
-        if (enabled) {
-            $('#EmailHost').removeAttr("disabled");
-            $('#EmailPort').removeAttr("disabled");
-            $('#EmailUsername').removeAttr("disabled");
-            $('#EmailPassword').removeAttr("disabled");
-        } else {
-            $('#EmailHost').attr("disabled", "disabled");
-            $('#EmailPort').attr("disabled", "disabled");
-            $('#EmailUsername').attr("disabled", "disabled");
-            $('#EmailPassword').attr("disabled", "disabled");
+    <script>
+        //TODO: Bug when loading the page and it's enabled. The fields are disabled. 
+        // Need to enableDisable from the switch.
+        function enableDisable(enabled) {
+            if (enabled) {
+                $('#EmailHost').removeAttr("disabled");
+                $('#EmailPort').removeAttr("disabled");
+                $('#EmailUsername').removeAttr("disabled");
+                $('#EmailPassword').removeAttr("disabled");
+            } else {
+                $('#EmailHost').attr("disabled", "disabled");
+                $('#EmailPort').attr("disabled", "disabled");
+                $('#EmailUsername').attr("disabled", "disabled");
+                $('#EmailPassword').attr("disabled", "disabled");
+            }
         }
-    }
 
-    $(function () {
-        enableDisable(false);
-        $('#Alert').bootstrapSwitch();
-
-        $('#Alert').change(function () {
-            console.log("change");
+        $(function () {
             enableDisable(false);
-        });
+            $('#Alert').bootstrapSwitch();
 
-        $('input[name="Alert"]').on('switchChange.bootstrapSwitch', function (event, state) {
-            console.log(this); // DOM element
-            console.log(event); // jQuery event
-            console.log(state); // true | false
-            enableDisable(state);
+            $('#Alert').change(function () {
+                console.log("change");
+                enableDisable(false);
+            });
+
+            $('input[name="Alert"]').on('switchChange.bootstrapSwitch', function (event, state) {
+                console.log(this); // DOM element
+                console.log(event); // jQuery event
+                console.log(state); // true | false
+                enableDisable(state);
+            });
         });
-    });
     </script>
 }
