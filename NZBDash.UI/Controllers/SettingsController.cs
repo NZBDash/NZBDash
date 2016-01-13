@@ -209,7 +209,7 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            return Get<SonarrSettingsViewModel,SonarrSettingsDto>(SonarrSettingsService);
+            return Get<SonarrSettingsViewModel, SonarrSettingsDto>(SonarrSettingsService);
         }
 
         [HttpPost]
@@ -252,10 +252,13 @@ namespace NZBDash.UI.Controllers
             }
 
             model.NicDict = new Dictionary<string, int>();
+            var ddlNics = new List<SelectListItem>();
             foreach (var nic in nics)
             {
                 model.NicDict.Add(nic.Key,nic.Value);
+                ddlNics.Add(new SelectListItem{ Value = nic.Key, Text = nic.Key });
             }
+            model.Nics = ddlNics;
             
             // TODO: Add view
             return View(model);

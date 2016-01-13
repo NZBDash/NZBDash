@@ -1,0 +1,145 @@
+﻿@using NZBDash.Resources
+@model NZBDash.UI.Models.ViewModels.Settings.HardwareSettingsViewModel
+
+@{
+    ViewBag.Title = "Hardware RESOURCE"; //TODO
+}
+<div class="container-fluid">
+
+    <div class="row row-offcanvas row-offcanvas-left">
+
+        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
+
+            @Html.Partial("_Sidebar")
+        </div>
+        <div class="col-sm-9 col-md-10 main">
+            <h1 class="page-header">@ViewBag.Title</h1>
+            
+            @using (Html.BeginForm("HardwareSettings","Settings", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+             
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    @*---- NIC ----*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nics, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(x => x.Nics, Model.Nics,"Please select a NIC to monitor", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CpuPercentageLimit, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.CpuPercentageLimit, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CpuPercentageLimit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MemoryUseLimit, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.MemoryUseLimit, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MemoryUseLimit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ThresholdTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.ThresholdTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ThresholdTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @*---- Enable Alerting ----*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Alert, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.CheckBoxFor(model => model.Alert)
+                            @Html.ValidationMessageFor(model => model.Alert, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailHost, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.EmailHost, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EmailHost, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailPort, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.EmailPort, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EmailPort, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailUsername, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(x => x.EmailUsername, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.EmailUsername, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(x => x.EmailPassword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EmailPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-1">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    function enableDisable(enabled) {
+        if (enabled) {
+            $('#EmailHost').removeAttr("disabled");
+            $('#EmailPort').removeAttr("disabled");
+            $('#EmailUsername').removeAttr("disabled");
+            $('#EmailPassword').removeAttr("disabled");
+        } else {
+            $('#EmailHost').attr("disabled", "disabled");
+            $('#EmailPort').attr("disabled", "disabled");
+            $('#EmailUsername').attr("disabled", "disabled");
+            $('#EmailPassword').attr("disabled", "disabled");
+        }
+    }
+
+    $(function () {
+        enableDisable(false);
+        $('#Alert').bootstrapSwitch();
+
+        $('#Alert').change(function () {
+            console.log("change");
+            enableDisable(false);
+        });
+
+        $('input[name="Alert"]').on('switchChange.bootstrapSwitch', function (event, state) {
+            console.log(this); // DOM element
+            console.log(event); // jQuery event
+            console.log(state); // true | false
+            enableDisable(state);
+        });
+    });
+    </script>
+}

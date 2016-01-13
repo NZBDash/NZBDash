@@ -407,6 +407,7 @@
     <Content Include="Views\Settings\NzbDashSettings.cshtml" />
     <Content Include="Views\CouchPotato\Index.cshtml" />
     <Content Include="Views\CouchPotato\Movies.cshtml" />
+    <Content Include="Views\Settings\HardwareSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

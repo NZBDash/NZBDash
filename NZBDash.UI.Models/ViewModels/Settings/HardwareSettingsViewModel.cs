@@ -25,6 +25,8 @@
 // ************************************************************************/
 #endregion
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace NZBDash.UI.Models.ViewModels.Settings
 {
@@ -39,6 +41,8 @@ namespace NZBDash.UI.Models.ViewModels.Settings
 
         // Best name ever! :D
         public Dictionary<string,int> NicDict { get; set; }
+
+        public IEnumerable<SelectListItem> Nics { get; set; }
 
         public bool Alert { get; set; }
         public string EmailUsername { get; set; }
