@@ -64,7 +64,7 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public bool SonarrEpisodeSearch(string url, string apiKey, int episodeId)
         {
-            var command = Serializer.SerializedJsonData<SonarrCommand>(string.Format("{0}api/command?apiKey={1}", url, apiKey), "POST", () => "{ name: 'EpisodeSearch', episodeIds: [" + episodeId + "]}");
+            var command = Serializer.SerializedJsonData<SonarrCommand,string>(string.Format("{0}api/command?apiKey={1}", url, apiKey), "POST", () => "{ name: 'EpisodeSearch', episodeIds: [" + episodeId + "]}");
 
             return command != null;
         }

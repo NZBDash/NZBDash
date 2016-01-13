@@ -24,11 +24,12 @@ namespace NZBDash.Common.Interfaces
         /// <summary>
         /// Serializeds the json data.
         /// </summary>
-        /// <typeparam name="T">The Func's return type</typeparam>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <typeparam name="U">The Func's return type</typeparam>
         /// <param name="url">The URL.</param>
         /// <param name="method">The method.</param>
         /// <param name="func">The function.</param>
         /// <returns></returns>
-        T SerializedJsonData<T>(string url, string method, Func<T> func) where T : new();
+        T SerializedJsonData<T,U>(string url, string method, Func<U> func) where T : new();
     }
 }

@@ -80,7 +80,7 @@ namespace NZBDash.Common.Tests.Helpers
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(jsonData);
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData(jsonData, "POST", () => new RootObject());
+            var result = seralizer.SerializedJsonData<RootObject,string>(jsonData, "POST", () => "abc");
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
@@ -99,7 +99,7 @@ namespace NZBDash.Common.Tests.Helpers
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<Exception>();
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData(jsonData, "POST", () => new RootObject());
+            var result = seralizer.SerializedJsonData<RootObject,int>(jsonData, "POST", () => 2);
         }
 
         [Test]

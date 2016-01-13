@@ -35,7 +35,7 @@ namespace NZBDash.Common.Helpers
             }
         }
 
-        public T SerializedJsonData<T>(string url, string method, Func<T> func) where T : new()
+        public T SerializedJsonData<T,U>(string url, string method, Func<U> func) where T : new()
         {
             var item = func();
 
