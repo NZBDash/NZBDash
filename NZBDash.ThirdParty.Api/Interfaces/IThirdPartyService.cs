@@ -2,7 +2,7 @@
 using NZBDash.ThirdParty.Api.Models.Api;
 #region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: IThirdPartyService.cs
 //  Created By: Jamie Rees
 //

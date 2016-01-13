@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ServerStatus.cs
 //  Created By: Jamie Rees
 // 

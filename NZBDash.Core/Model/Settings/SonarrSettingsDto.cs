@@ -1,7 +1,7 @@
 ﻿#region Copyright statement
 //  ***********************************************************************
 //  Created By: Jamie Rees at 2015/11/19 11:03
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SonarrSettingsDto.cs
 //
 //  Permission is hereby granted, free of charge, to any person obtaining

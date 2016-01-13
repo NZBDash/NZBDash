@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // ************************************************************************
-//   Copyright (c) 2015 
+//   Copyright (c) 2016 
 //   File: MemoryCacheProviderTest.cs
 //   Created By: Jamie Rees
 //  
