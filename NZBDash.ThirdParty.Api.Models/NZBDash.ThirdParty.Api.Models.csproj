@@ -76,6 +76,7 @@
     <Compile Include="Api\SabNzbd\SabNzbdHistory.cs" />
     <Compile Include="Api\SabNzbd\SabNzbModels.cs" />
     <Compile Include="Api\ServerStatus.cs" />
+    <Compile Include="Api\Sonarr\SonarrCommand.cs" />
     <Compile Include="Api\Sonarr\SoanrrSeries.cs" />
     <Compile Include="Api\Sonarr\SonarrSystemStatus.cs" />
     <Compile Include="Api\Sonarr\SonarrEpisode.cs" />

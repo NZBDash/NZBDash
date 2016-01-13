@@ -35952,6 +35952,31 @@
   }
 ]</value>
   </data>
+  <data name="Sonarr_EpisodeSearch" xml:space="preserve">
+    <value>{
+  "name": "EpisodeSearch",
+  "body": {
+    "episodeIds": [
+      1
+    ],
+    "sendUpdatesToClient": true,
+    "updateScheduledTask": true,
+    "completionMessage": "Completed",
+    "name": "EpisodeSearch",
+    "trigger": "manual"
+  },
+  "priority": "normal",
+  "status": "queued",
+  "queued": "0001-01-01T00:00:00Z",
+  "trigger": "manual",
+  "state": "queued",
+  "manual": true,
+  "startedOn": "0001-01-01T00:00:00Z",
+  "sendUpdatesToClient": true,
+  "updateScheduledTask": true,
+  "id": 551827
+}</value>
+  </data>
   <data name="Sonarr_Series" xml:space="preserve">
     <value>[
   {

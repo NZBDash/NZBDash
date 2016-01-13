@@ -130,5 +130,20 @@ namespace NZBDash.UI.Controllers.Application
 
             return PartialView("Episodes", viewModel);
         }
+
+        public ActionResult SearchForEpisode(int episodeId)
+        {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_Sonarr;
+                return PartialView("DashletError");
+            }
+
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+
+            var result = ApiService.SonarrEpisodeSearch(formattedUri, Settings.ApiKey, episodeId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -145,6 +145,37 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;name&quot;: &quot;EpisodeSearch&quot;,
+        ///  &quot;body&quot;: {
+        ///    &quot;episodeIds&quot;: [
+        ///      1
+        ///    ],
+        ///    &quot;sendUpdatesToClient&quot;: true,
+        ///    &quot;updateScheduledTask&quot;: true,
+        ///    &quot;completionMessage&quot;: &quot;Completed&quot;,
+        ///    &quot;name&quot;: &quot;EpisodeSearch&quot;,
+        ///    &quot;trigger&quot;: &quot;manual&quot;
+        ///  },
+        ///  &quot;priority&quot;: &quot;normal&quot;,
+        ///  &quot;status&quot;: &quot;queued&quot;,
+        ///  &quot;queued&quot;: &quot;0001-01-01T00:00:00Z&quot;,
+        ///  &quot;trigger&quot;: &quot;manual&quot;,
+        ///  &quot;state&quot;: &quot;queued&quot;,
+        ///  &quot;manual&quot;: true,
+        ///  &quot;startedOn&quot;: &quot;0001-01-01T00:00:00Z&quot;,
+        ///  &quot;sendUpdatesToClient&quot;: true,
+        ///  &quot;updateScheduledTask&quot;: true,
+        ///  &quot;id&quot;: 551827
+        ///}.
+        /// </summary>
+        public static string Sonarr_EpisodeSearch {
+            get {
+                return ResourceManager.GetString("Sonarr_EpisodeSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
         ///    &quot;title&quot;: &quot;Family Guy&quot;,

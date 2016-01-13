@@ -41,6 +41,7 @@ namespace NZBDash.ThirdParty.Api.Interfaces
         PlexServers GetPlexServers(string uri);
         List<SonarrSeries> GetSonarrSeries(string uri, string api);
         List<SonarrEpisode> GetSonarrEpisodes(string uri, string api, int seriesId);
+        bool SonarrEpisodeSearch(string url, string apiKey, int episodeId);
         SonarrSystemStatus GetSonarrSystemStatus(string uri, string api);
         CouchPotatoStatus GetCouchPotatoStatus(string uri, string api);
         NzbGetHistory GetNzbGetHistory(string url, string username, string password);
