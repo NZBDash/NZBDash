@@ -1,26 +1,19 @@
 ﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
 @model NZBDash.UI.Models.ViewModels.Settings.CouchPotatoSettingsViewModel
 
-@{
-    ViewBag.Title = @Resources.Settings_CouchPotato_Title;
-}
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
 
-        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
-
-            @Html.Partial("_Sidebar")
-        </div>
         <div class="col-sm-9 col-md-10 main">
-            <h1 class="page-header">@ViewBag.Title</h1>
+            @Html.RenderHeader(Resources.Settings_CouchPotato_Title)
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>@ViewBag.Title</h4>
                     <hr/>
                     You can get your API key by visiting the documentation page: http://CouchPotatoIP:port/docs.
                     <p>It looks like the following in bold: /api/<strong>f9992811232402182c44d24b1f3e845</strong>/</p>

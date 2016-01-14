@@ -214,9 +214,21 @@
     <value>NZBDash Settings</value>
   </data>
   <data name="Applications_CouchPotato_Title" xml:space="preserve">
-    <value></value>
+    <value>CouchPotato</value>
   </data>
   <data name="Applications_CouchPotato_Movies" xml:space="preserve">
-    <value></value>
+    <value>Movies</value>
+  </data>
+  <data name="Settings_Hardware_Title" xml:space="preserve">
+    <value>Hardware Settings</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Navbar_SearchPlaceholder" xml:space="preserve">
+    <value>Search...</value>
   </data>
 </root>

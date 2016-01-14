@@ -1,0 +1,53 @@
+﻿@using NZBDash.Resources
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="@Resources.Navbar_SearchPlaceholder">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard fa-fw"></i> @Resources.Dashboard</a>
+            </li>
+
+            @{ Html.RenderAction("ApplicationMenu", "Layout"); }
+
+            <li>
+                <a href="#"><i class="fa fa-wrench fa-fw"></i> @Resources.Settings<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Action("NzbDashSettings","Settings")">@Resources.Settings_NzbDash_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("HardwareSettings","Settings")">@Resources.Settings_Hardware_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("NzbGetSettings", "Settings")">@Resources.Settings_NzbGet_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("SabNzbSettings", "Settings")">@Resources.Settings_SabNzb_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("SonarrSettings", "Settings")">@Resources.Settings_Sonarr_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CouchPotatoSettings", "Settings")">@Resources.Settings_CouchPotato_Title</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("PlexSettings","Settings")">@Resources.Settings_Plex_Title</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>
+<!-- /.navbar-static-side -->

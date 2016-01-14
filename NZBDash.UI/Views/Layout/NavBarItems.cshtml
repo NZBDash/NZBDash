@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<NZBDash.UI.Models.ViewModels.LayoutModel>
-           
+
 
 @foreach (var item in Model)
 {
-    @Html.Raw(item.Html)
+    <li>
+        @Html.Raw(item.Html)
+    </li>
 }

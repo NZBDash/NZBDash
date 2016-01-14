@@ -1,16 +1,14 @@
-﻿@{
-    ViewBag.Title = "Dashboard";
-}
+﻿@using NZBDash.UI.Helpers
 
-<h2>@ViewBag.Title</h2>
+
+@Html.RenderHeader("Dashboard")
 
 
 <br />
 <br />
 <br />
 
-<button id="save" hidden="hidden">Save</button>
-<button id="Edit">Edit Grid</button>
+
 <div class="gridster" id="griddy">
     <ul style="list-style: none">
         <li data-row="1" data-col="1" data-sizex="2" data-sizey="4">
@@ -39,15 +37,8 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/gridster")
-    @Styles.Render("~/Content/gridster")
-
-    <script src="~/Scripts/Highcharts.js"></script>
-    <script src="~/Scripts/Dashboard.js"></script>
-    <script src="http://code.highcharts.com/modules/data.js"></script>
-    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-
     <script>
+
 
         $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
             $('#Drives').html(view);

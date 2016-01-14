@@ -25,12 +25,29 @@ namespace NZBDash.UI
                         "~/Scripts/bootstrap-switch.js"
                       ));
 
+            /* ---- Dashboard Styles ---- */
+
+            bundles.Add(new StyleBundle("~/Content/dashboard").Include("~/Content/bootstrap.css",
+                "~/Content/Dashboard/metisMenu.css",
+                "~/Content/dashboard.css",
+                "~/Content/Dashboard/morris.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include("~/Scripts/Dashboard/metisMenu.js",
+                        "~/Scripts/Dashboard/raphael.js",
+                        "~/Scripts/Dashboard/morris.js",
+                        "~/Scripts/Dashboard/mocha.js",
+                        "~/Scripts/Dashboard/dashboard.js"
+
+                        ));
+
+            /* ---- Dashboard Styles ---- */
+
+
             bundles.Add(new ScriptBundle("~/bundles/gridster").Include("~/Scripts/jquery.gridster.js"));
 
             bundles.Add(new StyleBundle("~/Content/gridster").Include("~/Content/jquery.gridster.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/font-awesome.css",
                       "~/Content/bootstrap-switch.css"));

@@ -48,6 +48,7 @@ namespace NZBDash.Core.Services
         /// </summary>
         public IEnumerable<DriveModel> GetDrives()
         {
+            var id = 0;
             var drives = GetDriveInfo();
             var model = new List<DriveModel>();
             foreach (var drive in drives)
@@ -56,10 +57,11 @@ namespace NZBDash.Core.Services
                 {
                     continue;
                 }
-
+                
                 var driveModel = new DriveModel();
-                var mapped = driveModel.InjectFrom(drive);
-                model.Add((DriveModel)mapped);
+                var mapped = (DriveModel)driveModel.InjectFrom(drive);
+                mapped.DriveId = id++;
+                model.Add(mapped);
             }
 
             return model;

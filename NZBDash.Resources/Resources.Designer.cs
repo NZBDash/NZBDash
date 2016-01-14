@@ -61,7 +61,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Movies.
         /// </summary>
         public static string Applications_CouchPotato_Movies {
             get {
@@ -70,7 +70,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to CouchPotato.
         /// </summary>
         public static string Applications_CouchPotato_Title {
             get {
@@ -187,6 +187,33 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Navbar_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("Navbar_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api Key.
         /// </summary>
         public static string Settings_ApiKey {
@@ -210,6 +237,15 @@ namespace NZBDash.Resources {
         public static string Settings_Enabled {
             get {
                 return ResourceManager.GetString("Settings_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware Settings.
+        /// </summary>
+        public static string Settings_Hardware_Title {
+            get {
+                return ResourceManager.GetString("Settings_Hardware_Title", resourceCulture);
             }
         }
         

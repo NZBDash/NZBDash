@@ -1,6 +1,46 @@
 ﻿@model IEnumerable<NZBDash.UI.Models.Hardware.DriveModel>
 
+<div class="col-lg-12">
     <div class="panel panel-default">
+        <div class="panel-heading">
+            Drives
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            @foreach (var drive in Model)
+            {
+                <div id="@drive.DriveId" class="col-sm-2" style="height: 250px;"></div>
+            }
+
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- /.col-lg-6 -->
+
+<script>
+    @foreach (var drive in Model)
+    {
+        <text>
+    Morris.Donut({
+        element: '@drive.DriveId',
+        data: [
+          {label: "Free Space", value: @drive.PercentageFilled},
+          {label: "Used Space", value: 100 - @drive.PercentageFilled},
+        ],
+        formatter: function (x, data) { return '@drive.Name\' },
+        resize: true
+    });
+    </text>
+    }
+
+
+
+
+</script>
+
+@*<div class="panel panel-default">
         <div class="panel-heading">Drives</div>
         <div class="panel-body">
             @foreach (var drive in Model)
@@ -76,5 +116,5 @@
 
             }
         </div>
-    </div>
+    </div>*@
 

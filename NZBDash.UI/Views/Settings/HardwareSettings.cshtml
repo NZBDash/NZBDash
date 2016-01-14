@@ -1,33 +1,28 @@
 ﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
 @model NZBDash.UI.Models.ViewModels.Settings.HardwareSettingsViewModel
 
-@{
-    ViewBag.Title = "Hardware RESOURCE"; //TODO
-}
+
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
-
-        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
-
-            @Html.Partial("_Sidebar")
-        </div>
         <div class="col-sm-9 col-md-10 main">
-            <h1 class="page-header">@ViewBag.Title</h1>
             
-            @using (Html.BeginForm("HardwareSettings","Settings", FormMethod.Post))
+            @Html.RenderHeader(Resources.Settings_Hardware_Title)
+
+            @using (Html.BeginForm("HardwareSettings", "Settings", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-             
+
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     @*---- NIC ----*@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Nics, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.Nics, Model.Nics,"Please select a NIC to monitor", new { @class = "form-control" })
+                            @Html.DropDownListFor(x => x.Nics, Model.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
                         </div>
                     </div>
 
@@ -99,7 +94,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-1">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                            <input type="submit" value="Save" class="btn btn-default"/>
                         </div>
                     </div>
                 </div>

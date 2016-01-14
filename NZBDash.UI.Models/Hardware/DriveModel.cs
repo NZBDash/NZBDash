@@ -28,6 +28,7 @@ namespace NZBDash.UI.Models.Hardware
 {
     public class DriveModel
     {
+        public int DriveId { get; set; }
         public long AvailableFreeSpace { get; set; }
         public string DriveFormat { get; set; }
         public string DriveType { get; set; }

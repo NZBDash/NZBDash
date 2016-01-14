@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2015 Jamie Rees
-//  File: StaticConstDefinitions.cs
+//  File: CacheModule.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,14 +24,18 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System.Collections.Generic;
+using Ninject.Modules;
 
-namespace NZBDash.UI.Helpers
+using NZBDash.Common;
+using NZBDash.Common.Interfaces;
+
+namespace NZBDash.DependencyResolver.Modules
 {
-    public class StaticConstDefinitions
+    public class CacheModule : NinjectModule
     {
-        public string ClassName { get; set; }
-        public string Namespace { get; set; }
-        public Dictionary<string, string> Definitions { get; set; }
+        public override void Load()
+        {
+            Bind<ICacheProvider>().To<MemoryCacheProvider>();
+        }
     }
 }
