@@ -37,7 +37,7 @@ namespace NZBDash.Core.Model.Settings
         public int CpuPercentageLimit { get; set; }
         public int MemoryUseLimit { get; set; }
         public List<DriveSettingsDto> Drives { get; set; }
-        public int NicToMonitor { get; set; }
+        public int NicId { get; set; }
 
         public bool Alert { get; set; }
         public string EmailUsername { get; set; }

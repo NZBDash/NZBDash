@@ -7,7 +7,7 @@
 
     <div class="row row-offcanvas row-offcanvas-left">
         <div class="col-sm-9 col-md-10 main">
-            
+
             @Html.RenderHeader(Resources.Settings_Hardware_Title)
 
             @using (Html.BeginForm("HardwareSettings", "Settings", FormMethod.Post))
@@ -15,14 +15,14 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-
+             
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     @*---- NIC ----*@
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Nics, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.NicId, new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(x => x.Nics, Model.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
+                            @Html.DropDownListFor(x => x.NicId, Model.Nics,"Please select a NIC to monitor", new { @class = "form-control" })
                         </div>
                     </div>
 
@@ -106,6 +106,8 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 <script>
+        //TODO: Bug when loading the page and it's enabled. The fields are disabled. 
+        // Need to enableDisable from the switch.
     function enableDisable(enabled) {
         if (enabled) {
             $('#EmailHost').removeAttr("disabled");
