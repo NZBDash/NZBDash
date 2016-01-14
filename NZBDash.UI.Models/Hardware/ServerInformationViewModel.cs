@@ -27,6 +27,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
+using Humanizer;
+
 namespace NZBDash.UI.Models.Hardware
 {
     public class ServerInformationViewModel
@@ -44,5 +46,10 @@ namespace NZBDash.UI.Models.Hardware
         public float CpuPercentage { get; set; }
         [Display(Name = "Available Memory")]
         public float AvailableMemory { get; set; }
+
+        public string UptimeString
+        {
+            get { return Uptime.Humanize(3); }
+        }
     }
 }
