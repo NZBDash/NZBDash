@@ -37,10 +37,13 @@ namespace NZBDash.UI
                         "~/Scripts/Dashboard/raphael.js",
                         "~/Scripts/Dashboard/morris.js",
                         "~/Scripts/Dashboard/mocha.js",
+                        "~/Scripts/Dashboard/dashboard.js",
                         "~/Scripts/Dashboard/dashboard.js"
 
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/flot").Include("~/Scripts/Dashboard/flot/jquery.flot.js",
+                "~/Scripts/Dashboard/flot/jquery.flot.js"));
             /* ---- Dashboard Styles ---- */
 
 

@@ -308,6 +308,24 @@
     <Content Include="NLog.config" />
     <Content Include="Scripts\Dashboard\dashboard.js" />
     <Content Include="Scripts\Dashboard\flot-data.js" />
+    <Content Include="Scripts\Dashboard\flot\excanvas.js" />
+    <Content Include="Scripts\Dashboard\flot\excanvas.min.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.colorhelpers.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.canvas.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.categories.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.crosshair.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.errorbars.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.image.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.navigate.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.selection.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.stack.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.threshold.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.time.js" />
     <Content Include="Scripts\Dashboard\metisMenu.js" />
     <Content Include="Scripts\Dashboard\metisMenu.min.js" />
     <Content Include="Scripts\Dashboard\metisMenu\Gruntfile.js" />
@@ -510,6 +528,7 @@
     <Content Include="Views\Shared\Navbars.cshtml" />
     <Content Include="Views\Shared\SideNavbar.cshtml" />
     <Content Include="Views\Shared\TopNavbar.cshtml" />
+    <Content Include="Views\Dashboard\Partial\_CpuChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

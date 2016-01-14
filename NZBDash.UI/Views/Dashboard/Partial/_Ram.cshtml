@@ -1,14 +1,12 @@
 ﻿@model NZBDash.UI.Models.Hardware.RamModel
 
     <div class="panel panel-default" id="RamDiv">
-        <a class="panel-default" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+
 
             <div class="panel-heading">Ram</div>
-        </a>
-        <div class="panel-collapse" id="collapseOne">
 
             <div class="panel-body">
-                <div data-toggle="collapse" data-target="#physical">
+                <div >
                     <h3>Physical Ram</h3>
 
                     <div class="progress">
@@ -16,27 +14,25 @@
                             @Model.PhysicalPercentageFilled%
                         </div>
                     </div>
-                    <span id="physical" class="collapse">
+                    <span id="physical" >
                         @Model.AvailablePhysicalMemory out of @Model.TotalPhysicalMemory
                     </span>
                 </div>
-                <div data-toggle="collapse" data-target="#virtualdiv">
+                <div >
                     <h3>Virtual Ram</h3>
 
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="@Model.VirtualPercentageFilled" aria-valuemin="0" aria-valuemax="100" style="width: @Model.VirtualPercentageFilled%;">
-                           @Model.VirtualPercentageFilled%
+                            @Model.VirtualPercentageFilled%
                         </div>
                     </div>
-                    <span id="virtualdiv" class="collapse ">
+                    <span id="virtualdiv">
                         @Model.AvailableVirtualMemory out of @Model.TotalVirtualMemory
                     </span>
                 </div>
             </div>
 
-        </div>
     </div>
-
 
 
 

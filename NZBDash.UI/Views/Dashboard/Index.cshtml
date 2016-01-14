@@ -9,27 +9,18 @@
 <br />
 
 
-<div class="gridster" id="griddy">
-    <ul style="list-style: none">
-        <li data-row="1" data-col="1" data-sizex="2" data-sizey="4">
-            <div id="Drives"></div>
-        </li>
-
-        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
-            <div id="Links">
-            </div>
-        </li>
-
-        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
-            <div id="Ram">
-            </div>
-        </li>
-
-        <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
-            <div id="Server">
-            </div>
-        </li>
-    </ul>
+<div class="col-md-12">
+    <div id="Drives"></div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-4" id="Ram"></div>
+    <div class="col-md-4" id="Server"></div>
+    <div class="col-md-3" id="Links"></div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-6">
+        @Html.Partial("_CpuChart")
+    </div>
 </div>
 
 
@@ -48,9 +39,9 @@
             $('#Links').html(view);
         });
 
-            $.ajax("@Url.Action("GetRam")").success(function (view) {
-                $('#Ram').html(view);
-            });
+        $.ajax("@Url.Action("GetRam")").success(function (view) {
+            $('#Ram').html(view);
+        });
 
         $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
             $('#Server').html(view);
