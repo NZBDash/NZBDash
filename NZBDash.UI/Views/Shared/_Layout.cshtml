@@ -10,22 +10,22 @@
     <title>NZBDash</title>
     @Styles.Render("~/Content/dashboard")
 
-    @Scripts.Render("~/bundles/jquery")
+
     <script src="~/signalr/hubs"></script>
   
     @Styles.Render("~/Content/css")
 </head>
 
 <body>
-    <div id="wrapper">
-        @Html.Partial("Navbars")
-        <div id="page-wrapper">
-            @RenderBody()
+<div id="wrapper">
+@Html.Partial("Navbars")
+<div id="page-wrapper">
+@RenderBody()
 
 
-        @*// TODO: work out the body*@
+@*// TODO: work out the body*@
 
-        @*<!-- /.row -->
+@*<!-- /.row -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
@@ -589,10 +589,11 @@
             </div>
             <!-- /.row -->
             *@
-        </div>
-        <!-- /#page-wrapper -->
+</div>
+<!-- /#page-wrapper -->
 
-    </div>
+</div>
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dashboard")
 
