@@ -101,7 +101,7 @@ namespace NZBDash.Core.Services
                 process.NextValue();
 
                 // We require the PC tp update it self... We need to wait.
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 return process.NextValue();
             }
         }

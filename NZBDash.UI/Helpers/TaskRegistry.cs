@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 Jamie Rees
-//   File: Startup.cs
+//   File: TaskRegistry.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,49 +25,36 @@
 // ************************************************************************/
 #endregion
 
-using System;
 using FluentScheduler;
-using FluentScheduler.Model;
-using Microsoft.Owin;
 using Ninject;
-using NZBDash.Common.Interfaces;
-using NZBDash.Core;
-using NZBDash.UI;
-using NZBDash.UI.App_Start;
-using NZBDash.UI.Helpers;
-using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
-namespace NZBDash.UI
+namespace NZBDash.UI.Helpers
 {
-    public partial class Startup
+    public class TaskRegistry : Registry
     {
-        private static IKernel Kernel { get; set; }
-        private static ILogger Logger {get { return Kernel.Get<ILogger>(); } }
-        public void Configuration(IAppBuilder app)
+        public TaskRegistry()
         {
-            Kernel = NinjectWebCommon.GetKernel();
-            ConfigureAuth(app);
-            app.MapSignalR();
-            ApplicationSetup();
-            StartCpuMonitor();
-        }
-
-        private void StartCpuMonitor()
-        {
-            TaskManager.UnobservedTaskException += TaskManager_UnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(Kernel);
-            TaskManager.Initialize(new TaskRegistry());
-        }
-
-        private void ApplicationSetup()
-        {
-            var setup = Kernel.Get<ISetup>();
-            setup.Start();
-        }
-        static void TaskManager_UnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
-        {
-            Logger.Fatal("An error happened with a scheduled task: " + e.ExceptionObject);
+            Schedule<CpuCounter>().ToRunNow().AndEvery(1).Seconds();
         }
     }
+
+    public class NinjectTaskFactory : ITaskFactory
+    {
+        private IKernel Kernel { get; set; }
+        public NinjectTaskFactory(IKernel kernel)
+        {
+            Kernel = kernel;
+        }
+
+        /// <summary>
+        /// Gets the task instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public ITask GetTaskInstance<T>() where T : ITask
+        {
+            return Kernel.Get<T>();
+        }
+    }
+
 }
