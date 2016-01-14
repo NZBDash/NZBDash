@@ -9,6 +9,7 @@ namespace NZBDash.UI
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.signalR-{version}.js",
                         "~/Scripts/bootstrap-notify.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -48,7 +49,6 @@ namespace NZBDash.UI
             bundles.Add(new StyleBundle("~/Content/gridster").Include("~/Content/jquery.gridster.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/site.css",
                       "~/Content/font-awesome.css",
                       "~/Content/bootstrap-switch.css"));
 
