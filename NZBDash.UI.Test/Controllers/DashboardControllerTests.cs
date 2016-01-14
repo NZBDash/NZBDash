@@ -32,7 +32,7 @@ using System.Web.Mvc;
 using Moq;
 
 using NUnit.Framework;
-
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.DTO;
 using NZBDash.Core.Model.Settings;
@@ -65,6 +65,7 @@ namespace NZBDash.UI.Test.Controllers
         {
             var f = new Fixture();
             var mockHardware = new Mock<IHardwareService>();
+            var mockLog = new Mock<ILogger>();
             var mockApi = new Mock<IThirdPartyService>();
             var mockLinks = new Mock<ILinksConfiguration>();
             var mocknzbGet = new Mock<ISettingsService<NzbGetSettingsDto>>();
@@ -85,7 +86,7 @@ namespace NZBDash.UI.Test.Controllers
             LinksDto = linksDto.ToList();
             LinksConfigurationServiceMock = mockLinks;
 
-            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object, mockLog.Object);
         }
 
 

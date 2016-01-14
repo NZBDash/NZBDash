@@ -25,7 +25,9 @@
 // ************************************************************************/
 #endregion
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Hosting;
 using FluentScheduler;
 using NZBDash.Core.Interfaces;
@@ -49,7 +51,7 @@ namespace NZBDash.UI.Helpers
         /// <value>
         /// The counter.
         /// </value>
-        private static List<int> Counter = new List<int>();
+        public static List<Counter> Counter = new List<Counter>();
 
         /// <summary>
         /// Gets or sets the service.
@@ -77,15 +79,18 @@ namespace NZBDash.UI.Helpers
         /// <para>There is an internal counter being incremented and decremented.</para>
         /// </summary>
         /// <returns></returns>
-        public List<int> StartCounter()
+        public List<Counter> StartCounter()
         {
             var cpuCurrent = (int)Service.GetCpuPercentage();
-
+        
             if (Counter.Count >= 60)
             {
-                Counter.RemoveAt(0);
+                Counter.RemoveAt(0); 
             }
-            Counter.Add(cpuCurrent);
+            var now = DateTime.Now.Millisecond;
+            var c = new Counter(now,cpuCurrent);
+
+            Counter.Add(c);
 
             return Counter;
         }
@@ -118,6 +123,18 @@ namespace NZBDash.UI.Helpers
 
             HostingEnvironment.UnregisterObject(this);
         }
+    }
+
+    public class Counter
+    {
+        public Counter(int intValue, int intSecondValue)
+        {
+            IntegerData = intValue;
+            IntSecondValue = intSecondValue;
+        }
+
+        public int IntegerData { get; private set; }
+        public int IntSecondValue { get; private set; }
     }
 }
 

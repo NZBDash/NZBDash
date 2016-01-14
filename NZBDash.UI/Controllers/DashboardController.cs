@@ -1,23 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
-
-using NZBDash.Common;
+using System.Web.Script.Serialization;
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
-using NZBDash.Core;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
-using NZBDash.Core.Services;
-using NZBDash.Core.SettingsService;
-using NZBDash.DataAccessLayer.Configuration;
-using NZBDash.DataAccessLayer.Models;
-using NZBDash.DataAccessLayer.Models.Settings;
-using NZBDash.DataAccessLayer.Repository;
 using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.UI.Helpers;
 using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.Hardware;
-
 using Omu.ValueInjecter;
 
 namespace NZBDash.UI.Controllers
@@ -28,8 +18,8 @@ namespace NZBDash.UI.Controllers
         private IHardwareService Service { get; set; }
         private ILinksConfiguration LinksConfiguration { get; set; }
 
-        public DashboardController(IHardwareService service, IThirdPartyService api, ILinksConfiguration linksConfiguration)
-            : base(typeof(DashboardController))
+        public DashboardController(IHardwareService service, IThirdPartyService api, ILinksConfiguration linksConfiguration, ILogger logger)
+            : base(logger)
         {
             Api = api;
             Service = service;
@@ -79,10 +69,10 @@ namespace NZBDash.UI.Controllers
             return PartialView("Partial/_ServerInformation", model);
         }
 
-        public ActionResult UpdateGrid(GridsterModel[] s)
+        public ActionResult GetCpu()
         {
-            var j = s;
-            return Json("",JsonRequestBehavior.AllowGet);
+            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
+            return Json(js, JsonRequestBehavior.AllowGet);
         }
     }
 }
