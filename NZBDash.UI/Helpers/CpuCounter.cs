@@ -52,7 +52,7 @@ namespace NZBDash.UI.Helpers
         /// The counter.
         /// </value>
         public static List<Counter> Counter = new List<Counter>();
-
+        private object _counterLock = new object();
         /// <summary>
         /// Gets or sets the service.
         /// </summary>
@@ -81,17 +81,20 @@ namespace NZBDash.UI.Helpers
         /// <returns></returns>
         public List<Counter> StartCounter()
         {
-            var cpuCurrent = (int)Service.GetCpuPercentage();
-        
-            if (Counter.Count >= 60)
+            lock (_counterLock)
             {
-                Counter.RemoveAt(0); 
+                var cpuCurrent = (int)Service.GetCpuPercentage();
+
+                if (Counter.Count >= 60)
+                {
+                    Counter.RemoveAt(0);
+                }
+                var c = new Counter(cpuCurrent);
+
+                Counter.Add(c);
+
+                return Counter;
             }
-            var c = new Counter(cpuCurrent);
-
-            Counter.Add(c);
-
-            return Counter;
         }
 
         /// <summary>
