@@ -80,6 +80,7 @@
     <Compile Include="Hardware\ServerInformationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CouchPotato\CouchPotatoMoviesViewModel.cs" />
+    <Compile Include="ViewModels\Dashboard\DashboardDownloadViewModel.cs" />
     <Compile Include="ViewModels\LayoutModel.cs" />
     <Compile Include="ViewModels\SabNzbdHistoryGrid.cs" />
     <Compile Include="ViewModels\NzbGetHistoryGrid.cs" />

@@ -1,52 +1,32 @@
-﻿@model NZBDash.UI.Models.Dashboard.DownloaderViewModel
-<div class="panel panel-default">
-    <div class="panel-heading">
-        @Model.Application
-        <span id="DlSpeed" style="float:right">@Model.DownloadSpeed</span>
-       
-    </div>
-    <div class="panel-body">
-        @if (Model.DownloadItem.Count > 0)
-        {
-            foreach (var item in Model.DownloadItem)
-            {
-                <div class="col-md-12 nzbCount" id="@item.NzbId">
-                    <div class="col-md-2 h6 text-center">
-                        <i id="@(item.NzbId)icon" class="fa @item.FontAwesomeIcon fa-4x"></i>
-                    </div>
-                    <div class="col-md-3 h6">
-                        @item.DownloadingName
-                    </div>
-                    <div class="col-md-7">
-                        <div class="progress h1">
-                            <div id="@(item.NzbId)progress" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="@(item.DownloadPercentage)%" aria-valuemin="0" aria-valuemax="100" style="width: @(item.DownloadPercentage)%;">
-                                @item.DownloadPercentage%
-                            </div>
-                        </div>
-                    </div>
+﻿@model NZBDash.UI.Models.ViewModels.Dashboard.DashboardDownloadViewModel
+@{
+    var url = string.Empty;
+    if (Model.Application == "Sabnzbd")
+    {
+        url = Url.Action("Index", "Sabnzbd");
+    }
+    else
+    {
+        url = Url.Action("Index", "Nzbget");
+    }
+}
+<div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-download fa-5x"></i>
                 </div>
-            }
-        }
-        else
-        {
-            <div class="col-md-12">
-                <div class="col-md-2 h6 text-center">
-                    <i class="fa fa-smile-o fa-5x"></i>
-
+                <div class="col-xs-9 text-right">
+                    <div class="huge">@Model.DownloadItems</div>
+                    <div>Currently Downloading!</div>
                 </div>
-                Nothing to see here
             </div>
-
-        }
+        </div>
+        <a href="@url">
+            <div class="panel-footer">
+                <span class="pull-left">View Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
     </div>
-</div>
-
-
-<script>
-    $(document).ready(function() {
-
-        var items = @Model.DownloadItem.Count;
-        resizeWidgets(items, 4,1);
-    });
-</script>
-

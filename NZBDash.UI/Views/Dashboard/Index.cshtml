@@ -8,43 +8,57 @@
 <br />
 <br />
 
+<div class="row">
+    <div id="currentDownloads" class="col-md-4">
 
-<div class="col-md-12">
-    <div id="Drives"></div>
-</div>
-<div class="col-md-12">
-    <div class="col-md-6">
-        @Html.Partial("Partial/_CpuChart")
     </div>
-    <div class="col-md-4" id="Ram"></div>
 </div>
-<div class="col-md-12">
-    @*<div class="col-md-3" id="Links"></div>*@
-    <div class="col-md-5" id="Server"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="Drives"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            @Html.Partial("Partial/_CpuChart")
+        </div>
+        <div class="col-md-4" id="Ram"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @*<div class="col-md-3" id="Links"></div>*@
+        <div class="col-md-5" id="Server"></div>
+    </div>
 </div>
 
 
 
 
-@section scripts
+    @section scripts
 {
-    <script>
+        <script>
 
 
-        $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
-            $('#Drives').html(view);
-        });
+            $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
+                $('#Drives').html(view);
+            });
 
-        $.ajax("@Url.Action("GetLinks")").success(function (view) {
-            $('#Links').html(view);
-        });
+            $.ajax("@Url.Action("GetLinks")").success(function (view) {
+                $('#Links').html(view);
+            });
 
-        $.ajax("@Url.Action("GetRam")").success(function (view) {
-            $('#Ram').html(view);
-        });
+            $.ajax("@Url.Action("GetRam")").success(function (view) {
+                $('#Ram').html(view);
+            });
 
-        $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
-            $('#Server').html(view);
-        });
-    </script>
-}
+            $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
+                $('#Server').html(view);
+            });
+
+            $.ajax("@Url.Action("GetDownloads")").success(function (view) {
+                $('#currentDownloads').html(view);
+            });
+        </script>
+    }
