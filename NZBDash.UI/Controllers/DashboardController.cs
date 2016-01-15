@@ -76,5 +76,11 @@ namespace NZBDash.UI.Controllers
             var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter.Last());
             return Json(js, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetAllCpu()
+        {
+            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
+            return Json(js, JsonRequestBehavior.AllowGet);
+        }
     }
 }

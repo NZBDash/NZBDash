@@ -17,11 +17,12 @@
         // Determine how many data points to keep based on the placeholder's initial size;
         // this gives us a nice high-res plot while avoiding more than one point per pixel.
 
-        var maximum = container.outerWidth() / 2 || 300;
+        var maximum = 60;
 
         //
 
         var data = [];
+
 
         function getRandomData() {
             $.ajax({
@@ -31,14 +32,12 @@
                     if (data.length >= maximum) {
                         data.shift();
                     }
-                    var now = new Date().getTime();
-                    var temp = [now += 60, cpu]; //data format [x, y]
-
-                    console.log(temp);
+                    var obj = JSON.parse(cpu);
+                    var temp = [obj.TimeMs += 60, obj.CpuVal]; //data format [x, y]
 
                     data.push(temp);
 
-                    console.log(data);
+                    console.log(data.length);
                     return data;
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -139,7 +138,7 @@
         setInterval(function updateRandom() {
             getRandomData();
             series[0].data = data;
-            
+
 
             $.plot(container, series, {
                 grid: {
