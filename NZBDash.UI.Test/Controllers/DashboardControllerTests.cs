@@ -86,7 +86,7 @@ namespace NZBDash.UI.Test.Controllers
             LinksDto = linksDto.ToList();
             LinksConfigurationServiceMock = mockLinks;
 
-            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object, mockLog.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, StatusApiMock.Object, LinksConfigurationServiceMock.Object, mockLog.Object, null,null);
         }
 
 
