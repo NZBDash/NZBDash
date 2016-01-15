@@ -9,84 +9,13 @@
 
 <script src="~/Scripts/Dashboard/flot/jquery.flot.js"></script>
 <script src="~/Scripts/Dashboard/flot/jquery.flot.time.js"></script>
+<script src="~/Scripts/Dashboard/flot/jquery.flot.resize.js"></script>
 <script>
     $(function () {
 
         var container = $("#cpuChart");
-
-        // Determine how many data points to keep based on the placeholder's initial size;
-        // this gives us a nice high-res plot while avoiding more than one point per pixel.
-
-        var maximum = 60;
-
-        //
-        var data = [];
-
-
-        function getRandomData() {
-            $.ajax({
-                url: '@Url.Action("GetCpu")',
-                type: 'GET',
-                success: function (cpu) {
-                    if (data.length >= maximum) {
-                        data.shift();
-                    }
-                    var obj = JSON.parse(cpu);
-                    var temp = [obj.TimeMs += 60, obj.CpuVal]; //data format [x, y]
-
-                    data.push(temp);
-
-                    console.log(data.length);
-                    return data;
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                    console.log(textStatus);
-                    console.log(jqXHR);
-                }
-            });
-        }
-
-        function fillCpuChart() {
-            $.ajax({
-                url: '@Url.Action("GetAllCpu")',
-                type: 'GET',
-                success: function (cpu) {
-                    var obj = JSON.parse(cpu);
-                    var len = data.length;
-                    if (len >= maximum) {
-                        data.shift();
-                        data.push([obj[len - 1].TimeMs += 60, obj[len - 1].CpuVal]); //data format [x, y]
-                    } else {
-                        $.each(obj, function (index, item) {
-                            data.push([item.TimeMs, item.CpuVal]); //data format [x, y]
-                        });
-                    }
-
-                    return data;
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                    console.log(textStatus);
-                    console.log(jqXHR);
-                }
-            });
-        }
-
-        series = [{
-            data: fillCpuChart(),
-            lines: {
-                show: true,
-                lineWidth: 1.2,
-                fill: true
-            }
-        }];
-
-        fillCpuChart();
-
-
-        function getPlot() {
-            var plot = $.plot(container, series, {
+        function getPlot(a, b) {
+            var plot = $.plot(a, b, {
                 grid: {
                     borderWidth: 1,
                     minBorderMargin: 20,
@@ -160,6 +89,77 @@
 
             return plot;
         }
+        series = [{
+            data: [],
+            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }
+        }];
+
+
+        // Determine how many data points to keep based on the placeholder's initial size;
+        // this gives us a nice high-res plot while avoiding more than one point per pixel.
+
+        var maximum = 60;
+
+        //
+        var data = [];
+
+
+        function getRandomData() {
+            $.ajax({
+                url: '@Url.Action("GetCpu")',
+                type: 'GET',
+                success: function (cpu) {
+                    if (data.length >= maximum) {
+                        data.shift();
+                    }
+                    var obj = JSON.parse(cpu);
+                    var temp = [obj.TimeMs += 60, obj.CpuVal]; //data format [x, y]
+
+                    data.push(temp);
+
+                    console.log(data.length);
+                    return data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                }
+            });
+        }
+
+        function fillCpuChart() {
+            $.ajax({
+                url: '@Url.Action("GetAllCpu")',
+                type: 'GET',
+                success: function (cpu) {
+                    var obj = JSON.parse(cpu);
+                    var len = series[0].data.length;
+                    if (len >= maximum) {
+                        series[0].data.shift();
+                        series[0].data.push([obj[len - 1].TimeMs += 60, obj[len - 1].CpuVal]); //data format [x, y]
+                    } else {
+                        var temp = [];
+                        $.each(obj, function (index, item) {
+                            temp.push([item.TimeMs, item.CpuVal]); //data format [x, y]
+                        });
+                        series[0].data = temp;
+                    }
+
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                }
+            });
+        }
 
 
 
@@ -167,9 +167,13 @@
 
         setInterval(function updateRandom() {
             fillCpuChart();
-            series[0].data = data;
-            getPlot();
+            getPlot(container, series);
+            plot.setData(series[0].data);
+            plot.setupGrid();
+            plot.draw();
         }, 1000);
+
+
 
     });
 
