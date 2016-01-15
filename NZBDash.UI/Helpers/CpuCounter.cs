@@ -51,7 +51,7 @@ namespace NZBDash.UI.Helpers
         /// <value>
         /// The counter.
         /// </value>
-        public static List<Counter> Counter = new List<Counter>();
+        public static List<int> Counter = new List<int>();
 
         /// <summary>
         /// Gets or sets the service.
@@ -79,7 +79,7 @@ namespace NZBDash.UI.Helpers
         /// <para>There is an internal counter being incremented and decremented.</para>
         /// </summary>
         /// <returns></returns>
-        public List<Counter> StartCounter()
+        public List<int> StartCounter()
         {
             var cpuCurrent = (int)Service.GetCpuPercentage();
         
@@ -87,10 +87,9 @@ namespace NZBDash.UI.Helpers
             {
                 Counter.RemoveAt(0); 
             }
-            var now = DateTime.Now.Millisecond;
-            var c = new Counter(now,cpuCurrent);
+            
 
-            Counter.Add(c);
+            Counter.Add(cpuCurrent);
 
             return Counter;
         }

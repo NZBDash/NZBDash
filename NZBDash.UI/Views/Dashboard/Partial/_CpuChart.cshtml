@@ -10,122 +10,210 @@
 <script src="~/Scripts/Dashboard/flot/jquery.flot.js"></script>
 <script src="~/Scripts/Dashboard/flot/jquery.flot.time.js"></script>
 <script>
-    $(function() {
+    $(function () {
 
         var container = $("#cpuChart");
 
-    //var maximum = container.outerWidth() / 2 || 300;
+        // Determine how many data points to keep based on the placeholder's initial size;
+        // this gives us a nice high-res plot while avoiding more than one point per pixel.
 
-    //var data = [];
+        var maximum = container.outerWidth() / 2 || 300;
 
-    function getCpuInformation() {
+        //
 
+        var data = [];
 
-        //if (data.length) {
-        //    data = data.slice(1);
-        //}
+        function getRandomData() {
+            $.ajax({
+                url: '@Url.Action("GetCpu")',
+                type: 'GET',
+                success: function (cpu) {
+                    if (data.length >= maximum) {
+                        data.shift();
+                    }
+                    var now = new Date().getTime();
+                    var temp = [now += 60, cpu]; //data format [x, y]
 
-        //while (data.length < maximum) {
-        //    var previous = data.length ? data[data.length - 1] : 50;
-        //    var y = previous + Math.random() * 10 - 5;
-        //    data.push(y < 0 ? 0 : y > 100 ? 100 : y);
-        //}
+                    console.log(temp);
 
-        //// zip the generated y values with the x values
+                    data.push(temp);
 
-        //var res = [];
-        //for (var i = 0; i < data.length; ++i) {
-        //    res.push([i, data[i]])
-        //}
-
-        //return res;
-        $.ajax("@Url.Action("GetCpu")").success(function (data) {
-            return data;
-        });
-    }
-
-    //
-
-    series = [{
-        data: getCpuInformation(),
-        lines: {
-            fill: true
-        }
-    }];
-
-    //
-
-    var plot = $.plot(container, series, {
-        grid: {
-            borderWidth: 1,
-            minBorderMargin: 20,
-            labelMargin: 10,
-            backgroundColor: {
-                colors: ["#fff", "#e4f4f4"]
-            },
-            margin: {
-                top: 8,
-                bottom: 20,
-                left: 20
-            },
-            markings: function(axes) {
-                var markings = [];
-                var xaxis = axes.xaxis;
-                for (var x = Math.floor(xaxis.min); x < xaxis.max; x += xaxis.tickSize * 2) {
-                    markings.push({
-                        xaxis: {
-                            from: x,
-                            to: x + xaxis.tickSize
-                        },
-                        color: "rgba(232, 232, 255, 0.2)"
-                    });
+                    console.log(data);
+                    return data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(jqXHR);
                 }
-                return markings;
+            });
+        }
+
+        //
+
+        series = [{
+            data: getRandomData(),
+            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
             }
-        },
-        xaxis: {
-            mode: "time",
-            tickSize: [1,"second"],
-            tickFormatter: function(v, axis) {
-                var date = new Date(v);
+        }];
 
-                if (date.getSeconds() % 20 == 0) {
-                    var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-                    var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-                    var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        //
 
-                    return hours + ":" + minutes + ":" + seconds;
-                } else {
-                    return "";
+        var plot = $.plot(container, series, {
+            grid: {
+                borderWidth: 1,
+                minBorderMargin: 20,
+                labelMargin: 10,
+                backgroundColor: {
+                    colors: ["#fff", "#e4f4f4"]
+                },
+                margin: {
+                    top: 8,
+                    bottom: 20,
+                    left: 20
+                },
+                markings: function (axes) {
+                    var markings = [];
+                    var xaxis = axes.xaxis;
+                    for (var x = Math.floor(xaxis.min) ; x < xaxis.max; x += xaxis.tickSize * 2) {
+                        markings.push({
+                            xaxis: {
+                                from: x,
+                                to: x + xaxis.tickSize
+                            },
+                            color: "rgba(232, 232, 255, 0.2)"
+                        });
+                    }
+                    return markings;
                 }
             },
-            axisLabel: "Time"
-        },
-        yaxis: {
-            min: 0,
-            max: 100,
-            tickFormatter: function (v, axis) {
-                if (v % 10 == 0) {
-                    return v + "%";
-                } else {
-                    return "";
-                }
+            xaxis: {
+                mode: "time",
+                tickSize: [1, "second"],
+                tickFormatter: function (v, axis) {
+                    var date = new Date(v);
+
+                    if (date.getSeconds() % 20 == 0) {
+                        var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                        var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                        var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                        return hours + ":" + minutes + ":" + seconds;
+                    } else {
+                        return "";
+                    }
+                },
+                axisLabel: "Time",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10
             },
-            axisLabel: "CPU",
-        },
-        legend: {
-            show: true
-        }
+            yaxis: {
+                min: 0,
+                max: 100,
+                tickFormatter: function (v, axis) {
+                    if (v % 10 == 0) {
+                        return v + "%";
+                    } else {
+                        return "";
+                    }
+                },
+                axisLabel: "CPU loading",
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 6
+            },
+            legend: {
+                show: true,
+                tickColor: "#008040"
+            }
+        });
+
+        // Update the random dataset at 25FPS for a smoothly-animating chart
+
+        setInterval(function updateRandom() {
+            getRandomData();
+            series[0].data = data;
+            
+
+            $.plot(container, series, {
+                grid: {
+                    borderWidth: 1,
+                    minBorderMargin: 20,
+                    labelMargin: 10,
+                    backgroundColor: {
+                        colors: ["#fff", "#e4f4f4"]
+                    },
+                    margin: {
+                        top: 8,
+                        bottom: 20,
+                        left: 20
+                    },
+                    markings: function (axes) {
+                        var markings = [];
+                        var xaxis = axes.xaxis;
+                        for (var x = Math.floor(xaxis.min) ; x < xaxis.max; x += xaxis.tickSize * 2) {
+                            markings.push({
+                                xaxis: {
+                                    from: x,
+                                    to: x + xaxis.tickSize
+                                },
+                                color: "rgba(232, 232, 255, 0.2)"
+                            });
+                        }
+                        return markings;
+                    }
+                },
+                xaxis: {
+                    mode: "time",
+                    tickSize: [1, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 20 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                    axisLabel: "Time",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Verdana, Arial',
+                    axisLabelPadding: 10
+                },
+                yaxis: {
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (v, axis) {
+                        if (v % 10 == 0) {
+                            return v + "%";
+                        } else {
+                            return "";
+                        }
+                    },
+                    axisLabel: "CPU loading",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Verdana, Arial',
+                    axisLabelPadding: 6
+                },
+                legend: {
+                    show: true,
+                    tickColor: "#008040"
+                }
+            });
+        }, 1000);
+
     });
-
-    // Update the random dataset at 25FPS for a smoothly-animating chart
-
-    setInterval(function updateRandom() {
-        series[0].data = getCpuInformation();
-        plot.setData(series);
-        plot.draw();
-    }, 800);
-
-});
 
 </script>

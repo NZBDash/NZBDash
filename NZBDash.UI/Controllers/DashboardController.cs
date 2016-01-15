@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using NZBDash.Common.Interfaces;
@@ -71,7 +73,7 @@ namespace NZBDash.UI.Controllers
 
         public ActionResult GetCpu()
         {
-            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
+            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter.Last());
             return Json(js, JsonRequestBehavior.AllowGet);
         }
     }
