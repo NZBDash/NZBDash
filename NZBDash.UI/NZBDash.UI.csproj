@@ -540,6 +540,7 @@
     <Content Include="Views\Shared\SideNavbar.cshtml" />
     <Content Include="Views\Shared\TopNavbar.cshtml" />
     <Content Include="Views\Dashboard\Partial\_CpuChart.cshtml" />
+    <Content Include="Views\Shared\NavbarDownloads.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

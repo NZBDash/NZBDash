@@ -3,7 +3,7 @@
 	<s:String x:Key="/Default/CodeStyle/CodeCleanup/SilentCleanupProfile/@EntryValue">NZBDashProfile</s:String>
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderRegionName/@EntryValue">Copyright</s:String>
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">/************************************************************************&#xD;
-  Copyright (c) 2015 Jamie Rees&#xD;
+  Copyright (c) $CURRENT_YEAR$ NZBDash&#xD;
   File: $FILENAME$&#xD;
   Created By: $USER_NAME$&#xD;
  &#xD;

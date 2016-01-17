@@ -1,0 +1,59 @@
+﻿
+@model NZBDash.UI.Models.ViewModels.Dashboard.TabDownloadViewModel
+@{
+    var url = string.Empty;
+    url = Url.Action("Index", Model.Application == "Sabnzbd" ? "Sabnzbd" : "Nzbget");
+}
+@if (Model.Downloads.Count > 0)
+{
+    <li>
+        <a href="#">
+            <div>
+                <p>
+                    <strong class="pull-right text-muted">@Model.DownloadSpeed</strong>
+                    <br
+                </p>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    foreach (var dl in Model.Downloads)
+    {
+        <li>
+            <a href="#">
+                <div>
+                    <p>
+                        <strong>@dl.DownloadName</strong>
+                        <span class="pull-right text-muted">@Math.Round(dl.DownloadPercentage)%</span>
+                    </p>
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar progress-bar-@dl.ProgressBarClass" role="progressbar" aria-valuenow="@dl.DownloadPercentage" aria-valuemin="0" aria-valuemax="100" style="width: @dl.DownloadPercentage%">
+                            <span class="sr-only">@dl.DownloadPercentage%</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+                <li class="divider"></li>
+    }
+}
+else
+{
+    <li>
+        <a href="#">
+            <div>
+                <p>
+                    <strong>Nothing is currently downloading!</strong>
+                </p>
+            </div>
+        </a>
+    </li>
+            <li class="divider"></li>
+}
+<li>
+    <a class="text-center" href="@url">
+        <strong>See All Downloads</strong>
+        <i class="fa fa-angle-right"></i>
+    </a>
+</li>
+<!-- /.dropdown-tasks -->
