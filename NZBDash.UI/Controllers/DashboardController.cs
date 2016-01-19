@@ -1,6 +1,33 @@
-﻿using System.Linq;
+﻿#region Copyright
+// /************************************************************************
+//   Copyright (c) 2016 NZBDash
+//   File: DashboardController.cs
+//   Created By: Jamie Rees
+//  
+//   Permission is hereby granted, free of charge, to any person obtaining
+//   a copy of this software and associated documentation files (the
+//   "Software"), to deal in the Software without restriction, including
+//   without limitation the rights to use, copy, modify, merge, publish,
+//   distribute, sublicense, and/or sell copies of the Software, and to
+//   permit persons to whom the Software is furnished to do so, subject to
+//   the following conditions:
+//  
+//   The above copyright notice and this permission notice shall be
+//   included in all copies or substantial portions of the Software.
+//  
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//   LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// ************************************************************************/
+#endregion
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
@@ -15,20 +42,18 @@ using NZBDash.UI.Models.ViewModels.Dashboard;
 
 using Omu.ValueInjecter;
 
+using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
+
 namespace NZBDash.UI.Controllers
 {
     public class DashboardController : BaseController
     {
-        private IThirdPartyService Api { get; set; }
-        private IHardwareService Service { get; set; }
-        private ILinksConfiguration LinksConfiguration { get; set; }
-        private ISettingsService<NzbGetSettingsDto> NzbGet { get; set; }
-        private ISettingsService<SabNzbdSettingsDto> Sab { get; set; }
-
-        public DashboardController(IHardwareService service, IThirdPartyService api, ILinksConfiguration linksConfiguration, ILogger logger,
-            ISettingsService<NzbGetSettingsDto> nzbGetSettingsService,
-            ISettingsService<SabNzbdSettingsDto> sabSettingsService)
-            : base(logger)
+        public DashboardController(IHardwareService service,
+                                   IThirdPartyService api,
+                                   ILinksConfiguration linksConfiguration,
+                                   ILogger logger,
+                                   ISettingsService<NzbGetSettingsDto> nzbGetSettingsService,
+                                   ISettingsService<SabNzbdSettingsDto> sabSettingsService) : base(logger)
         {
             Api = api;
             Service = service;
@@ -37,9 +62,56 @@ namespace NZBDash.UI.Controllers
             Sab = sabSettingsService;
         }
 
-        public ActionResult Index()
+        private IThirdPartyService Api { get; set; }
+        private ILinksConfiguration LinksConfiguration { get; set; }
+        private ISettingsService<NzbGetSettingsDto> NzbGet { get; set; }
+        private ISettingsService<SabNzbdSettingsDto> Sab { get; set; }
+        private IHardwareService Service { get; set; }
+
+        public ActionResult GetAllCpu()
         {
-            return View();
+            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
+            return Json(js, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetCpu()
+        {
+            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter.Last());
+            return Json(js, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetDownloads()
+        {
+            var model = new DashboardDownloadViewModel();
+            var sab = Sab.GetSettings();
+            var nzb = NzbGet.GetSettings();
+            if (sab != null)
+            {
+                if (sab.HasSettings)
+                {
+                    var formattedUri = UrlHelper.ReturnUri(sab.IpAddress, sab.Port).ToString();
+                    var items = Api.GetSabNzbdQueue(formattedUri, sab.ApiKey);
+
+                    model.DownloadItems = items.jobs.Count;
+                    model.Application = "Sabnzbd";
+                }
+            }
+            else if (nzb != null)
+            {
+                if (nzb.HasSettings)
+                {
+                    var formattedUri = UrlHelper.ReturnUri(nzb.IpAddress, nzb.Port).ToString();
+                    var nzbItem = Api.GetNzbGetList(formattedUri, nzb.Username, nzb.Password);
+
+                    model.DownloadItems = nzbItem.result.Count;
+                    model.Application = "NzbGet";
+                }
+            }
+            else
+            {
+                Logger.Trace("No settings found. Cannot display downloads on the Dashboard");
+            }
+            return PartialView("Partial/_Download", model);
         }
 
         public ActionResult GetDriveInformation()
@@ -52,9 +124,7 @@ namespace NZBDash.UI.Controllers
         {
             var allLinks = LinksConfiguration.GetLinks();
 
-            var model = allLinks.Select(link =>
-                (DashboardLinksViewModel)new DashboardLinksViewModel().InjectFrom(link))
-                .ToList();
+            var model = allLinks.Select(link => (DashboardLinksViewModel)new DashboardLinksViewModel().InjectFrom(link)).ToList();
 
             return PartialView("Partial/_Links", model);
         }
@@ -76,48 +146,7 @@ namespace NZBDash.UI.Controllers
             model.AvailableMemory = Service.GetAvailableRam();
             model.Uptime = Service.GetUpTime();
 
-
             return PartialView("Partial/_ServerInformation", model);
-        }
-
-        public ActionResult GetCpu()
-        {
-            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter.Last());
-            return Json(js, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetAllCpu()
-        {
-            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
-            return Json(js, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult GetDownloads()
-        {
-            var model = new DashboardDownloadViewModel();
-            var sab = Sab.GetSettings();
-            var nzb = NzbGet.GetSettings();
-            if (sab.HasSettings)
-            {
-                var formattedUri = Common.Helpers.UrlHelper.ReturnUri(sab.IpAddress, sab.Port).ToString();
-                var items = Api.GetSabNzbdQueue(formattedUri,sab.ApiKey);
-
-                model.DownloadItems = items.jobs.Count;
-                model.Application = "Sabnzbd";
-            }
-            else if (nzb.HasSettings)
-            {
-                var formattedUri = Common.Helpers.UrlHelper.ReturnUri(nzb.IpAddress, nzb.Port).ToString();
-                var nzbItem = Api.GetNzbGetList(formattedUri, nzb.Username, nzb.Password);
-
-                model.DownloadItems = nzbItem.result.Count;
-                model.Application = "NzbGet";
-            }
-            else
-            {
-                Logger.Trace("No settings found. Cannot display downloads on the Dashboard");
-            }
-            return PartialView("Partial/_Download", model);
         }
 
         public ActionResult GetTabDownloads()
@@ -125,69 +154,76 @@ namespace NZBDash.UI.Controllers
             var model = new TabDownloadViewModel();
             var sab = Sab.GetSettings();
             var nzb = NzbGet.GetSettings();
-            if (sab.HasSettings)
+            if (sab != null)
             {
-                var formattedUri = Common.Helpers.UrlHelper.ReturnUri(sab.IpAddress, sab.Port).ToString();
-                var items = Api.GetSabNzbdQueue(formattedUri, sab.ApiKey);
-
-                model.DownloadSpeed = MemorySizeConverter.SizeSuffix((long) items.kbpersec);
-                model.Application = "Sabnzbd";
-                foreach (var dl in items.jobs)
+                if (sab.HasSettings)
                 {
-                    var percentage = (dl.mbleft / dl.mb * 100);
-                    Logger.Trace(string.Format("Percentage : {0}", percentage));
+                    var formattedUri = UrlHelper.ReturnUri(sab.IpAddress, sab.Port).ToString();
+                    var items = Api.GetSabNzbdQueue(formattedUri, sab.ApiKey);
 
-                    var status = EnumHelper<DownloadStatus>.Parse(items.paused ? "PAUSED" : "DOWNLOADING");
-                    var progressBar = Bootstrap.ProgressBarDanger;
-                    if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
+                    model.DownloadSpeed = MemorySizeConverter.SizeSuffix((long)items.kbpersec);
+                    model.Application = "Sabnzbd";
+                    foreach (var dl in items.jobs)
                     {
-                        progressBar = Bootstrap.ProgressBarWarning;
+                        var percentage = (dl.mbleft / dl.mb * 100);
+                        Logger.Trace(string.Format("Percentage : {0}", percentage));
+
+                        var status = EnumHelper<DownloadStatus>.Parse(items.paused ? "PAUSED" : "DOWNLOADING");
+                        var progressBar = Bootstrap.ProgressBarDanger;
+                        if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
+                        {
+                            progressBar = Bootstrap.ProgressBarWarning;
+                        }
+                        if (status == DownloadStatus.DOWNLOADING)
+                        {
+                            progressBar = Bootstrap.ProgressBarSuccess;
+                        }
+                        model.Downloads.Add(
+                            new TabDownloadItems
+                            {
+                                DownloadName = dl.filename,
+                                Status = status.ToString(),
+                                DownloadPercentage = percentage,
+                                ProgressBarClass = progressBar
+                            });
                     }
-                    if (status == DownloadStatus.DOWNLOADING)
-                    {
-                        progressBar = Bootstrap.ProgressBarSuccess;
-                    }
-                    model.Downloads.Add(new TabDownloadItems
-                    {
-                        DownloadName = dl.filename,
-                        Status = status.ToString(),
-                        DownloadPercentage = percentage,
-                        ProgressBarClass = progressBar
-                    });
                 }
-               
             }
-            else if (nzb.HasSettings)
+            else if (nzb != null)
             {
-                var formattedUri = Common.Helpers.UrlHelper.ReturnUri(nzb.IpAddress, nzb.Port).ToString();
-                var statusInfo = Api.GetNzbGetStatus(formattedUri, nzb.Username, nzb.Password);
-                var nzbItem = Api.GetNzbGetList(formattedUri, nzb.Username, nzb.Password);
-
-                model.DownloadSpeed = MemorySizeConverter.SizeSuffix(statusInfo.Result.DownloadRate / 1024);
-                model.Application = "NzbGet";
-
-                foreach (var dl in nzbItem.result)
+                if (nzb.HasSettings)
                 {
-                    var percentage = (dl.DownloadedSizeMB / (dl.RemainingSizeMB + (double)dl.DownloadedSizeMB) * 100);
-                    Logger.Trace(string.Format("Percentage : {0}", percentage));
+                    var formattedUri = UrlHelper.ReturnUri(nzb.IpAddress, nzb.Port).ToString();
+                    var statusInfo = Api.GetNzbGetStatus(formattedUri, nzb.Username, nzb.Password);
+                    var nzbItem = Api.GetNzbGetList(formattedUri, nzb.Username, nzb.Password);
 
-                    var status = EnumHelper<DownloadStatus>.Parse(dl.Status);
-                    var progressBar = "progress-bar-danger";
-                    if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
+                    model.DownloadSpeed = MemorySizeConverter.SizeSuffix(statusInfo.Result.DownloadRate / 1024);
+                    model.Application = "NzbGet";
+
+                    foreach (var dl in nzbItem.result)
                     {
-                        progressBar = "progress-bar-warning";
+                        var percentage = (dl.DownloadedSizeMB / (dl.RemainingSizeMB + (double)dl.DownloadedSizeMB) * 100);
+                        Logger.Trace(string.Format("Percentage : {0}", percentage));
+
+                        var status = EnumHelper<DownloadStatus>.Parse(dl.Status);
+                        var progressBar = "progress-bar-danger";
+                        if (status == DownloadStatus.PAUSED || status == DownloadStatus.QUEUED)
+                        {
+                            progressBar = "progress-bar-warning";
+                        }
+                        if (status == DownloadStatus.DOWNLOADING)
+                        {
+                            progressBar = "progress-bar-success";
+                        }
+                        model.Downloads.Add(
+                            new TabDownloadItems
+                            {
+                                DownloadName = dl.NZBName,
+                                Status = status.ToString(),
+                                DownloadPercentage = percentage,
+                                ProgressBarClass = progressBar
+                            });
                     }
-                    if (status == DownloadStatus.DOWNLOADING)
-                    {
-                        progressBar = "progress-bar-success";
-                    }
-                    model.Downloads.Add(new TabDownloadItems
-                    {
-                        DownloadName = dl.NZBName,
-                        Status = status.ToString(),
-                        DownloadPercentage = percentage,
-                        ProgressBarClass = progressBar
-                    });
                 }
             }
             else
@@ -195,6 +231,11 @@ namespace NZBDash.UI.Controllers
                 Logger.Trace("No settings found. Cannot display downloads on the Dashboard");
             }
             return PartialView("NavbarDownloads", model);
+        }
+
+        public ActionResult Index()
+        {
+            return View();
         }
     }
 }
