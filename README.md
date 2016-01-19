@@ -23,7 +23,7 @@ So there will be functionality to alert you when disk space on a certain drive i
 
 # Preview 
 
-![NZBDash Preview](http://i.imgur.com/axFul8j.gif)
+![NZBDash Preview](http://i.imgur.com/MKDE9Nr.gif)
 
 ## Contributors
 
