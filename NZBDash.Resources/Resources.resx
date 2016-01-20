@@ -285,4 +285,31 @@
   <data name="UI_ViewModels_SabNzbd_HistoryTime" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="UI_Models_LoginViewModel_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="UI_Models_LoginViewModel_RememeberMe" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="UI_Models_LoginViewModel_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Views_Account_Login_PasswordPlaceholder" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Views_Account_Login_PleaseSignIn" xml:space="preserve">
+    <value>Please Sign In</value>
+  </data>
+  <data name="Views_Account_Login_UsernamePlaceholder" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Views_Shared_NavUser_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Views_Shared_NavUser_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Views_Shared_NavUser_Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
 </root>

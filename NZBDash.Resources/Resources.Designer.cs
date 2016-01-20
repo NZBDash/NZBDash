@@ -538,6 +538,33 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_Password {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me?.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_RememeberMe {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_RememeberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_Username {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File Size.
         /// </summary>
         public static string UI_ViewModels_SabNzbd_FileSize {
@@ -561,6 +588,60 @@ namespace NZBDash.Resources {
         public static string UI_ViewModels_SabNzbd_NzbName {
             get {
                 return ResourceManager.GetString("UI_ViewModels_SabNzbd_NzbName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Views_Account_Login_PasswordPlaceholder {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_PasswordPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Sign In.
+        /// </summary>
+        public static string Views_Account_Login_PleaseSignIn {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_PleaseSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Views_Account_Login_UsernamePlaceholder {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_UsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Views_Shared_NavUser_Account {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Views_Shared_NavUser_Login {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Views_Shared_NavUser_Logout {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Logout", resourceCulture);
             }
         }
     }

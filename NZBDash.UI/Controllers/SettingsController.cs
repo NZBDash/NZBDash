@@ -260,7 +260,6 @@ namespace NZBDash.UI.Controllers
             }
             model.Nics = new SelectList(model.NicDict, "Value","Key",1);
             
-            // TODO: Add view
             return View(model);
         }
 
