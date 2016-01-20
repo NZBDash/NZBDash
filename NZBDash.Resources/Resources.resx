@@ -231,4 +231,31 @@
   <data name="Navbar_SearchPlaceholder" xml:space="preserve">
     <value>Search...</value>
   </data>
+  <data name="UI_Models_Hardware_RamModel_VirtualPercentageFilled" xml:space="preserve">
+    <value>Virtual Percentage Filled</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_PhysicalPercentageFilled" xml:space="preserve">
+    <value>Physical Percentage Filled</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_AvailablePhysicalMemory" xml:space="preserve">
+    <value>Available Physical Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_AvailableVirtualMemory" xml:space="preserve">
+    <value>Available Virtual Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSName" xml:space="preserve">
+    <value>OS Name</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSPlatform" xml:space="preserve">
+    <value>OS Platform</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSVersion" xml:space="preserve">
+    <value>OS Version</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_TotalPhysicalMemory" xml:space="preserve">
+    <value>Total Physical Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_TotalVirtualMemory" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

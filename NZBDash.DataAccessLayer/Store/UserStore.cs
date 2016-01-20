@@ -25,7 +25,7 @@ namespace NZBDash.DataAccessLayer.Store
 
         public void Dispose()
         {
-            // Nothing to Dispose
+            GC.SuppressFinalize(this);
         }
 
         public async Task CreateAsync(User user)

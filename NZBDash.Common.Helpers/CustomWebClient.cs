@@ -34,11 +34,11 @@ namespace NZBDash.Common.Helpers
             return Client.DownloadString(address);
         }
 
-        
 
         public void Dispose()
         {
             Client.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

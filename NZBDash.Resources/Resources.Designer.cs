@@ -401,5 +401,86 @@ namespace NZBDash.Resources {
                 return ResourceManager.GetString("Settings_Username", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Physical Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_AvailablePhysicalMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_AvailablePhysicalMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Virtual Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_AvailableVirtualMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_AvailableVirtualMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Name.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSName {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Platform.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSPlatform {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Version.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSVersion {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical Percentage Filled.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_PhysicalPercentageFilled {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_PhysicalPercentageFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Physical Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_TotalPhysicalMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_TotalPhysicalMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_TotalVirtualMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_TotalVirtualMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Percentage Filled.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_VirtualPercentageFilled {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_VirtualPercentageFilled", resourceCulture);
+            }
+        }
     }
 }
