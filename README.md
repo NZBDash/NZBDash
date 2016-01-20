@@ -8,9 +8,22 @@ NZBDash is a all in one dashboard for your server!
 The goal is to provide basic information about your news reader (SabNZB, NZBGet), your news automation programs (Sonarr, CouchPotato etc.) and also information about your system!
 So there will be functionality to alert you when disk space on a certain drive is low etc.
 
-## Early Preview 
+### Current Features
+- Hardware monitoring alerts (CPU Usage %, Memory, HDD Space)
+- SabNzbd Integration (Current Downloads, Download History & Logs)
+- NZBGet Integration (Current Downloads, Download History & Logs)
+- Sonarr Integration (View your current series and search your indexers for episodes!)
+- CouchPotato Integration (Add new movies and view your existing movies)
 
-![NZBDash Preview](http://i.imgur.com/axFul8j.gif)
+### Possible Features
+- XBMC Integration
+- Plex Integration
+- Headphones Integration
+- Sickbeard Integration
+
+# Preview 
+
+![NZBDash Preview](http://i.imgur.com/MKDE9Nr.gif)
 
 ## Contributors
 
@@ -24,6 +37,6 @@ We are still very early in the project so if you have any ideas just post it!
 
 ## Installation
 
-Currently there is no installer, so to 'install' the application you will need to build it (Using Visual Studio 2013+) and then set up IIS to look at the output folder.
+Currently there is no installer, there is a task to sort this out. To 'install' the application you will need to build it (Using Visual Studio 2013+) and then set up IIS to look at the output folder. This is currently a WIP as this is not ideal.
 
 
