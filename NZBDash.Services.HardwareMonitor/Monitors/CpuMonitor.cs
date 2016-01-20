@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: CpuMonitor.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,28 +25,63 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Web.Hosting;
 
 using FluentScheduler;
-using FluentScheduler.Model;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.Monitors
 {
-    public class HardwareMonitor : IService
+    public class CpuMonitor : ITask, IRegisteredObject
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+        private readonly object _lock = new object();
+
+        public CpuMonitor()
         {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
+            HostingEnvironment.RegisterObject(this);
         }
 
-        public void Start()
+        private bool ShuttingDown { get; set; }
+
+        private void MonitorCpu()
         {
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.Initialize(new TaskRegistry());
+            while (true)
+            {
+                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+                {
+                    // Call this an extra time before reading its value
+                    process.NextValue();
+
+                    // We require the PC to update it self... We need to wait.
+                    Thread.Sleep(1000);
+                    var realValue = process.NextValue();
+                    Console.WriteLine(realValue); // TODO Store
+                }
+            }
         }
 
-        public void Stop()
+        public void Stop(bool immediate)
         {
-            TaskManager.Stop();
+            lock (_lock)
+            {
+                ShuttingDown = true;
+            }
+
+            HostingEnvironment.UnregisterObject(this);
+        }
+
+        public void Execute()
+        {
+            lock (_lock)
+            {
+                if (ShuttingDown)
+                {
+                    return;
+                }
+
+                MonitorCpu();
+            }
         }
     }
 }

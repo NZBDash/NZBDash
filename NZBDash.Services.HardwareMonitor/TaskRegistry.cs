@@ -26,6 +26,8 @@
 #endregion
 using FluentScheduler;
 
+using NZBDash.Services.HardwareMonitor.Monitors;
+
 namespace NZBDash.Services.HardwareMonitor
 {
     public class TaskRegistry : Registry
@@ -33,6 +35,7 @@ namespace NZBDash.Services.HardwareMonitor
         public TaskRegistry()
         {
             Schedule<CpuMonitor>().ToRunNow();
+            Schedule<NetworkMonitor>().ToRunNow();
         }
     }
 }

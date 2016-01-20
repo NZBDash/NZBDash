@@ -50,7 +50,7 @@ namespace NZBDash.Services.HardwareMonitor
                             r.RestartService(1);
                         });
 
-                    x.SetDescription("NZBDash Hardware Monitor");
+                    x.SetDescription("NZBDash Monitor");
                     x.SetDisplayName("NZBDash Monitor");
                     x.SetServiceName("NZBDashMonitor");
                 });

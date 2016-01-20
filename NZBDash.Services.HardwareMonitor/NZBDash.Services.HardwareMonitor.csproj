@@ -51,7 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CpuMonitor.cs" />
+    <Compile Include="Monitors\NetworkMonitor.cs" />
+    <Compile Include="Monitors\CpuMonitor.cs" />
     <Compile Include="HardwareMonitor.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Program.cs" />

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuMonitor.cs
+//   File: MonitorNetwork.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -31,20 +31,20 @@ using System.Web.Hosting;
 
 using FluentScheduler;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.Monitors
 {
-    public class CpuMonitor : ITask, IRegisteredObject
+    public class NetworkMonitor : ITask, IRegisteredObject
     {
         private readonly object _lock = new object();
 
-        public CpuMonitor()
+        public NetworkMonitor()
         {
             HostingEnvironment.RegisterObject(this);
         }
 
         private bool ShuttingDown { get; set; }
 
-        private void MonitorCpu()
+        private void MonitorNetwork()
         {
             while (true)
             {
@@ -56,8 +56,21 @@ namespace NZBDash.Services.HardwareMonitor
                     // We require the PC to update it self... We need to wait.
                     Thread.Sleep(1000);
                     var realValue = process.NextValue();
-                    Console.WriteLine(realValue); // TODO Store
+                    Console.WriteLine("OI!"); // TODO Store
                 }
+
+                // TODO: We require the network card value from the Settings page.
+                //var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
+                //var cn = performanceCounterCategory.GetInstanceNames();
+                //var firstNetworkCard = cn[0]; 
+                //var networkBytesSent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", firstNetworkCard);
+                //var networkBytesReceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", firstNetworkCard);
+                //var networkBytesTotal = new PerformanceCounter("Network Interface", "Bytes Total/sec", firstNetworkCard);
+
+                
+                //// First counter is empty
+                //Thread.Sleep(1000);
+
             }
         }
 
@@ -80,7 +93,7 @@ namespace NZBDash.Services.HardwareMonitor
                     return;
                 }
 
-                MonitorCpu();
+                MonitorNetwork();
             }
         }
     }
