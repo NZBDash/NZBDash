@@ -256,6 +256,33 @@
     <value>Total Physical Memory</value>
   </data>
   <data name="UI_Models_Hardware_RamModel_TotalVirtualMemory" xml:space="preserve">
-    <value></value>
+    <value>Total Virtual Memory</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_NzbName" xml:space="preserve">
+    <value>NZB Name</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_AvailableMemory" xml:space="preserve">
+    <value>Available Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_CpuPercentage" xml:space="preserve">
+    <value>Cpu %</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSFullName" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSPlatform" xml:space="preserve">
+    <value>Operating Platform</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSVersion" xml:space="preserve">
+    <value>Operating Version</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_Uptime" xml:space="preserve">
+    <value>System Uptime</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_HistoryTime" xml:space="preserve">
+    <value>Time</value>
   </data>
 </root>

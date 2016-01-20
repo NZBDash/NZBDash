@@ -466,7 +466,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Total Virtual Memory.
         /// </summary>
         public static string UI_Models_Hardware_RamModel_TotalVirtualMemory {
             get {
@@ -480,6 +480,87 @@ namespace NZBDash.Resources {
         public static string UI_Models_Hardware_RamModel_VirtualPercentageFilled {
             get {
                 return ResourceManager.GetString("UI_Models_Hardware_RamModel_VirtualPercentageFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_AvailableMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_AvailableMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cpu %.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_CpuPercentage {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_CpuPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating System.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSFullName {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating Platform.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSPlatform {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating Version.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSVersion {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Uptime.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_Uptime {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_Uptime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Size.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_FileSize {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_HistoryTime {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_HistoryTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NZB Name.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_NzbName {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_NzbName", resourceCulture);
             }
         }
     }
