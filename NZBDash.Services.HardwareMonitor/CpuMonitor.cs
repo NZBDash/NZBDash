@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: Startup.cs
+//   Copyright (c) 2016 NZBDash
+//   File: CpuMonitor.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,51 +24,64 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
 using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Web.Hosting;
+
 using FluentScheduler;
-using FluentScheduler.Model;
-using Microsoft.Owin;
-using Ninject;
-using NZBDash.Common.Interfaces;
-using NZBDash.Core;
-using NZBDash.UI;
-using NZBDash.UI.App_Start;
-using NZBDash.UI.Helpers;
-using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
-namespace NZBDash.UI
+namespace NZBDash.Services.HardwareMonitor
 {
-    public partial class Startup
+    public class CpuMonitor : ITask, IRegisteredObject
     {
-        private static IKernel Kernel { get; set; }
-        private static ILogger Logger {get { return Kernel.Get<ILogger>(); } }
-        public void Configuration(IAppBuilder app)
+        private readonly object _lock = new object();
+
+        public CpuMonitor()
         {
-            Kernel = NinjectWebCommon.GetKernel();
-            ConfigureAuth(app);
-            app.MapSignalR();
-            ApplicationSetup();
-            StartCpuMonitor();
+            HostingEnvironment.RegisterObject(this);
         }
 
-        private void StartCpuMonitor()
+        private bool ShuttingDown { get; set; }
+
+        private void MonitorCpu()
         {
-            TaskManager.UnobservedTaskException += TaskManager_UnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(Kernel);
-            TaskManager.Initialize(new TaskRegistry());
+            while (true)
+            {
+                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+                {
+                    // Call this an extra time before reading its value
+                    process.NextValue();
+
+                    // We require the PC to update it self... We need to wait.
+                    Thread.Sleep(1000);
+                    var realValue = process.NextValue();
+                    Console.WriteLine(realValue); // TODO Store
+                }
+            }
         }
 
-        private void ApplicationSetup()
+        public void Stop(bool immediate)
         {
-            var setup = Kernel.Get<ISetup>();
-            setup.Start();
+            lock (_lock)
+            {
+                ShuttingDown = true;
+            }
+
+            HostingEnvironment.UnregisterObject(this);
         }
-        static void TaskManager_UnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+
+        public void Execute()
         {
-            Logger.Fatal("An error happened with a scheduled task: " + e.ExceptionObject);
+            lock (_lock)
+            {
+                if (ShuttingDown)
+                {
+                    return;
+                }
+
+                MonitorCpu();
+            }
         }
     }
-
 }

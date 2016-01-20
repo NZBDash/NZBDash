@@ -95,12 +95,14 @@ namespace NZBDash.Core.Services
         /// </summary>
         public float GetCpuPercentage()
         {
+            //TODO: We should not really be using and disposing the PerfCounter on every call.
+            // We should just call NextValue(); 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
             {
                 // Call this an extra time before reading its value
                 process.NextValue();
 
-                // We require the PC tp update it self... We need to wait.
+                // We require the PC to update it self... We need to wait.
                 Thread.Sleep(1000);
                 return process.NextValue();
             }
