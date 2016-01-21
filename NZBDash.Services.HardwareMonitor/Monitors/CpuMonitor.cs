@@ -26,71 +26,93 @@
 #endregion
 using System;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Web.Hosting;
 
 using FluentScheduler;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Model.Settings;
 
 namespace NZBDash.Services.HardwareMonitor.Monitors
 {
-    public class CpuMonitor : ITask, IRegisteredObject
+    public class CpuMonitor : ITask, IRegisteredObject, IMonitor
     {
         private readonly object _lock = new object();
+        public int ThreasholdPercentage { get; set; } // TODO Get these from settings page
+        public int TimeThreasholdSec { get; set; }
+        public int ThreasholdBreachCount { get; set; }
+        public DateTime BreachStart { get; set; }
+        public DateTime BreachEnd { get; set; }
+        private bool ShuttingDown { get; set; }
+        private ISettingsService<HardwareSettingsDto> SettingsService { get; set; } 
 
-        private int ThreasholdPercentage { get { return 20; } } // TODO Get these from settings page
-        private int TimeThreasholdSec { get { return 5; } }
-        private int ThreasholdBreach { get; set; }
-        private DateTime BreachStart { get; set; }
-        private DateTime BreachEnd { get; set; }
-
-        public CpuMonitor()
+        public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService)
         {
             HostingEnvironment.RegisterObject(this);
+            SettingsService = settingsService;
+            GetThresholds();
         }
 
-        private bool ShuttingDown { get; set; }
+        public void GetThresholds()
+        {
+            var settings = SettingsService.GetSettings();
+            ThreasholdPercentage = settings.CpuPercentageLimit;
+            TimeThreasholdSec = settings.ThresholdTime;
+        }
 
-        private void MonitorCpu()
+        public void Alert()
+        {
+            
+        }
+
+        public void StartMonitoring()
         {
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
             {
                 var hasBeenBreached = false;
                 while (true)
                 {
-                    var breached = CheckBreach();
-                    if (breached)
-                    {
-                        hasBeenBreached = true;
-                        BreachStart = DateTime.Now;
-                    }
-                    else if (hasBeenBreached)
-                    {
-                        BreachEnd = DateTime.Now;
-                    }
-
-                    process.NextValue();
-                    Thread.Sleep(1000);
-                    var realValue = process.NextValue();
-                    if (realValue >= ThreasholdPercentage)
-                    {
-                        ThreasholdBreach++;
-                    }
-                    else
-                    {
-                        ThreasholdBreach = 0;
-                    }
+                   hasBeenBreached = Monitor(process, hasBeenBreached);
                 }
             }
         }
 
+        public bool Monitor(PerformanceCounter process, bool hasBeenBreached)
+        {
+            var breached = CheckBreach();
+            if (breached)
+            {
+                hasBeenBreached = true;
+                BreachStart = DateTime.Now;
+                Alert();
+            }
+            else if (hasBeenBreached)
+            {
+                BreachEnd = DateTime.Now;
+            }
+
+            process.NextValue();
+            Thread.Sleep(1000);
+            var currentValue = process.NextValue();
+            if (currentValue >= ThreasholdPercentage)
+            {
+                ThreasholdBreachCount++;
+            }
+            else
+            {
+                ThreasholdBreachCount = 0;
+            }
+
+            return hasBeenBreached;
+        }
+
         private bool CheckBreach()
         {
-            return ThreasholdBreach >= TimeThreasholdSec;
+            return ThreasholdBreachCount >= TimeThreasholdSec;
         }
 
         public void Stop(bool immediate)
-        {
+        {   
             lock (_lock)
             {
                 ShuttingDown = true;
@@ -108,7 +130,7 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
                     return;
                 }
 
-                MonitorCpu();
+                StartMonitoring();
             }
         }
     }
