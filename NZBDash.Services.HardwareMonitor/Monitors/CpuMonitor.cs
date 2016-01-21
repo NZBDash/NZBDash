@@ -26,6 +26,7 @@
 #endregion
 using System;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Web.Hosting;
 
@@ -37,6 +38,12 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
     {
         private readonly object _lock = new object();
 
+        private int ThreasholdPercentage { get { return 20; } } // TODO Get these from settings page
+        private int TimeThreasholdSec { get { return 5; } }
+        private int ThreasholdBreach { get; set; }
+        private DateTime BreachStart { get; set; }
+        private DateTime BreachEnd { get; set; }
+
         public CpuMonitor()
         {
             HostingEnvironment.RegisterObject(this);
@@ -46,19 +53,40 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         private void MonitorCpu()
         {
-            while (true)
+            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
             {
-                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+                var hasBeenBreached = false;
+                while (true)
                 {
-                    // Call this an extra time before reading its value
-                    process.NextValue();
+                    var breached = CheckBreach();
+                    if (breached)
+                    {
+                        hasBeenBreached = true;
+                        BreachStart = DateTime.Now;
+                    }
+                    else if (hasBeenBreached)
+                    {
+                        BreachEnd = DateTime.Now;
+                    }
 
-                    // We require the PC to update it self... We need to wait.
+                    process.NextValue();
                     Thread.Sleep(1000);
                     var realValue = process.NextValue();
-                    Console.WriteLine(realValue); // TODO Store
+                    if (realValue >= ThreasholdPercentage)
+                    {
+                        ThreasholdBreach++;
+                    }
+                    else
+                    {
+                        ThreasholdBreach = 0;
+                    }
                 }
             }
+        }
+
+        private bool CheckBreach()
+        {
+            return ThreasholdBreach >= TimeThreasholdSec;
         }
 
         public void Stop(bool immediate)

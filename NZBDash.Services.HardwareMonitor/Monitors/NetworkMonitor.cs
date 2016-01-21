@@ -56,7 +56,7 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
                     // We require the PC to update it self... We need to wait.
                     Thread.Sleep(1000);
                     var realValue = process.NextValue();
-                    Console.WriteLine("OI!"); // TODO Store
+                    //Console.WriteLine("OI!"); // TODO Store
                 }
 
                 // TODO: We require the network card value from the Settings page.
