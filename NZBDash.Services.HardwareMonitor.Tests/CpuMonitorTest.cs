@@ -33,6 +33,7 @@ using NUnit.Framework;
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models;
 using NZBDash.Services.HardwareMonitor.Monitors;
 
 using Ploeh.AutoFixture;
@@ -43,6 +44,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
     public class CpuMonitorTest
     {
         private ISettingsService<HardwareSettingsDto> Service { get; set; }
+        private Mock<IEventService> EventService { get; set; }
         private HardwareSettingsDto Settings { get; set; }
 
         [SetUp]
@@ -50,14 +52,19 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             Settings = new Fixture().Create<HardwareSettingsDto>();
             var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
+            var mockEvent = new Mock<IEventService>();
+
             mock.Setup(x => x.GetSettings()).Returns(Settings);
+            mockEvent.Setup(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>())).Returns(1);
+
             Service = mock.Object;
+            EventService = mockEvent;
         }
 
         [Test]
         public void TestNoBreach()
         {
-            var cpu = new CpuMonitor(Service)
+            var cpu = new CpuMonitor(Service, EventService.Object)
             {
                 TimeThreasholdSec = 1,
                 ThreasholdPercentage = 1
@@ -67,12 +74,17 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             {
                 cpu.Monitor(process, false);
             }
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
         }
 
         [Test]
         public void TestStartBreach()
         {
-            var cpu = new CpuMonitor(Service)
+            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
+            Settings.EmailAlertSettings.AlertOnBreach = true;
+            mock.Setup(x => x.GetSettings()).Returns(Settings);
+
+            var cpu = new CpuMonitor(mock.Object, EventService.Object)
             {
                 TimeThreasholdSec = 1,
                 ThreasholdPercentage = 1,
@@ -86,12 +98,18 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
             Assert.That(cpu.BreachStart.Hour, Is.EqualTo(DateTime.Now.Hour));
             Assert.That(cpu.BreachStart.Minute, Is.EqualTo(DateTime.Now.Minute));
+            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Once);
         }
 
         [Test]
         public void TestEndBreach()
         {
-            var cpu = new CpuMonitor(Service)
+            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
+            Settings.EmailAlertSettings.AlertOnBreach = false;
+            Settings.EmailAlertSettings.AlertOnBreachEnd = true;
+            mock.Setup(x => x.GetSettings()).Returns(Settings);
+
+            var cpu = new CpuMonitor(Service, EventService.Object)
             {
                 TimeThreasholdSec = 1,
                 ThreasholdPercentage = 1,
@@ -102,19 +120,30 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             {
                 cpu.Monitor(process, true);
 
+                EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Never);
+
                 cpu.ThreasholdBreachCount = 0;
 
                 cpu.Monitor(process, true);
             }
 
-            Assert.That(cpu.BreachEnd.Hour,Is.EqualTo(DateTime.Now.Hour));
-            Assert.That(cpu.BreachEnd.Minute,Is.EqualTo(DateTime.Now.Minute));
+
+            Assert.That(cpu.BreachEnd.Hour, Is.EqualTo(DateTime.Now.Hour));
+            Assert.That(cpu.BreachEnd.Minute, Is.EqualTo(DateTime.Now.Minute));
+            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Never);
+            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Once);
         }
 
         [Test]
         public void TestResetBreach()
         {
-            var cpu = new CpuMonitor(Service)
+            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
+            Settings.EmailAlertSettings.AlertOnBreach = false;
+            Settings.EmailAlertSettings.AlertOnBreachEnd = false;
+
+            mock.Setup(x => x.GetSettings()).Returns(Settings);
+
+            var cpu = new CpuMonitor(Service, EventService.Object)
             {
                 TimeThreasholdSec = 10,
                 ThreasholdPercentage = 999,
@@ -125,8 +154,9 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             {
                 cpu.Monitor(process, true);
             }
-            
+
             Assert.That(cpu.ThreasholdBreachCount, Is.EqualTo(0));
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
         }
     }
 }

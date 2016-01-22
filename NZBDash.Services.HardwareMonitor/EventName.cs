@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: MonitoringEvents.cs
+//   File: EventName.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,26 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
-using Dapper.Contrib.Extensions;
-
-using NZBDash.DataAccessLayer.Models.Settings;
-
-namespace NZBDash.DataAccessLayer.Models
+namespace NZBDash.Services.HardwareMonitor
 {
-    [Table("MonitoringEvents")]
-    public class MonitoringEvents : Entity
+    internal static class EventName
     {
-        public string EventName { get; set; }
-        public EventType EventType { get; set; }
-        public DateTime EventStart { get; set; }
-        public DateTime EventEnd { get; set; }
-    }
-
-    public enum EventType
-    {
-        Start,
-        End
+        public const string CpuEvent = "CPUEvent";
+        public const string NetworkEvent = "NetworkEvent";
+        public const string HddSpaceEvent = "HDDSpaceEvent";
     }
 }

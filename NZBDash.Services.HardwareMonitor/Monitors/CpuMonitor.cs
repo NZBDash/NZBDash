@@ -48,11 +48,15 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
         private bool MonitoringEnabled { get; set; }
         private ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
         private HardwareSettingsDto Settings { get; set; }
+        private IEventService EventService { get; set; }
+        private EmailAlert EmailAlert { get; set; }
 
-        public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService)
+        public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService, IEventService eventService)
         {
-            HostingEnvironment.RegisterObject(this);
+            EventService = eventService;
             SettingsService = settingsService;
+
+            HostingEnvironment.RegisterObject(this);
             GetThresholds();
 
             if (!MonitoringEnabled)
@@ -69,8 +73,8 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         public void Alert()
         {
-            var a = new EmailAlert(Settings.EmailAlertSettings, BreachStart, BreachEnd);
-            a.Alert();
+            EmailAlert = new EmailAlert(EventService, Settings.EmailAlertSettings, BreachStart, BreachEnd);
+            EmailAlert.Alert();
         }
 
         public void StartMonitoring()
@@ -98,6 +102,8 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
             else if (hasBeenBreached)
             {
                 BreachEnd = DateTime.Now;
+                EmailAlert = new EmailAlert(EventService, Settings.EmailAlertSettings, BreachStart, BreachEnd);
+                EmailAlert.Alert();
             }
 
             process.NextValue();

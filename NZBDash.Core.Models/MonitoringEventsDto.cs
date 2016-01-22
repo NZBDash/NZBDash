@@ -31,8 +31,15 @@ namespace NZBDash.Core.Models
     public class MonitoringEventsDto
     {
         public DateTime EventEnd { get; set; }
+        public EventTypeDto EventType { get; set; }
         public string EventName { get; set; }
         public DateTime EventStart { get; set; }
         public int Id { get; set; }
+    }
+
+    public enum EventTypeDto
+    {
+        Start,
+        End
     }
 }

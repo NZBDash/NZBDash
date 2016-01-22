@@ -24,7 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Threading.Tasks;
+using NZBDash.Core.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Alert
 {
@@ -33,6 +33,7 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         bool AlertedOnStart { get; set; }
         bool AlertedOnEnd { get; set; }
         bool AlertEnabledOnBreach { get; set; }
+        void SaveEvent();
         void Alert();
     }
 }

@@ -27,7 +27,9 @@
 using System;
 using System.Threading.Tasks;
 
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models;
 
 namespace NZBDash.Services.HardwareMonitor.Alert
 {
@@ -47,8 +49,11 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         private DateTime BreachTime { get; set; }
         private DateTime EndBreachTime { get; set; }
 
-        public EmailAlert(EmailAlertSettingsDto settings, DateTime breachTime, DateTime endBreachTime)
+        private IEventService EventService { get; set; }
+
+        public EmailAlert(IEventService eventService, EmailAlertSettingsDto settings, DateTime breachTime, DateTime endBreachTime)
         {
+            EventService = eventService;
             EmailUsername = settings.EmailUsername;
             EmailPassword = settings.EmailPassword;
             EmailHost = settings.EmailHost;
@@ -58,6 +63,20 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             Recipient = settings.RecipientAddress;
             BreachTime = breachTime;
             EndBreachTime = endBreachTime;
+        }
+
+        public void SaveEvent()
+        {
+            var dto = new MonitoringEventsDto
+            {
+                EventName = EventName.CpuEvent,
+                EventEnd = EndBreachTime,
+                EventStart = BreachTime,
+                EventType = EndBreachTime == DateTime.MinValue ? EventTypeDto.Start : EventTypeDto.End
+            };
+
+            var result = EventService.RecordEvent(dto);
+            
         }
 
         public void Alert()
@@ -80,11 +99,13 @@ namespace NZBDash.Services.HardwareMonitor.Alert
 
         private void AlertOnBreach()
         {
+            SaveEvent();
             Console.WriteLine("Breach Started");
         }
 
         private void AlertOnBreachEnd()
         {
+            SaveEvent();
             Console.WriteLine("Breach Ended");
         }
     }
