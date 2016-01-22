@@ -26,6 +26,8 @@
 #endregion
 using FluentScheduler;
 
+using Ninject;
+
 using NZBDash.Services.HardwareMonitor.Monitors;
 
 namespace NZBDash.Services.HardwareMonitor
@@ -36,6 +38,24 @@ namespace NZBDash.Services.HardwareMonitor
         {
             Schedule<CpuMonitor>().ToRunNow();
             Schedule<NetworkMonitor>().ToRunNow();
+        }
+    }
+    public class NinjectTaskFactory : ITaskFactory
+    {
+        private IKernel Kernel { get; set; }
+        public NinjectTaskFactory(IKernel kernel)
+        {
+            Kernel = kernel;
+        }
+
+        /// <summary>
+        /// Gets the task instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public ITask GetTaskInstance<T>() where T : ITask
+        {
+            return Kernel.Get<T>();
         }
     }
 }

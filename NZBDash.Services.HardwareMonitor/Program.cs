@@ -24,12 +24,20 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Net;
+
+using Ninject;
+using Ninject.Modules;
+
+using NZBDash.DependencyResolver;
+
 using Topshelf;
 
 namespace NZBDash.Services.HardwareMonitor
 {
     internal class Program
     {
+
         private static void Main(string[] args)
         {
             HostFactory.Run(

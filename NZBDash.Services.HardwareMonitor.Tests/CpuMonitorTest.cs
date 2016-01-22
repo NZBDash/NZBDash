@@ -24,17 +24,20 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
 using System;
 using System.Diagnostics;
+
 using Moq;
+
 using NUnit.Framework;
+
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Services.HardwareMonitor.Monitors;
+
 using Ploeh.AutoFixture;
 
-namespace NZBDash.Services.HardwareMonitor.Test
+namespace NZBDash.Services.HardwareMonitor.Tests
 {
     [TestFixture]
     public class CpuMonitorTest

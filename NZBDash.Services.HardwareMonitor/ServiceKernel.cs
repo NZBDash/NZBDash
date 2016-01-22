@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: ServiceKernel.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,32 +24,25 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using Ninject;
 
-using FluentScheduler;
-using FluentScheduler.Model;
-
+using NZBDash.DependencyResolver;
 
 namespace NZBDash.Services.HardwareMonitor
 {
-    public class HardwareMonitor : IService
+    internal static class ServiceKernel
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+        static ServiceKernel()
         {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
+            var r = new CustomDependencyResolver();
+            Kernel = new StandardKernel(r.GetModules());
         }
 
-        public void Start()
-        {
-            
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new TaskRegistry());
-        }
+        private static IKernel Kernel { get; set; }
 
-        public void Stop()
+        public static IKernel GetKernel()
         {
-            TaskManager.Stop();
+            return Kernel;
         }
     }
 }

@@ -38,12 +38,13 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
     public class CpuMonitor : ITask, IRegisteredObject, IMonitor
     {
         private readonly object _lock = new object();
-        public int ThreasholdPercentage { get; set; } // TODO Get these from settings page
+        public int ThreasholdPercentage { get; set; }
         public int TimeThreasholdSec { get; set; }
         public int ThreasholdBreachCount { get; set; }
         public DateTime BreachStart { get; set; }
         public DateTime BreachEnd { get; set; }
         private bool ShuttingDown { get; set; }
+        private bool MonitoringEnabled { get; set; }
         private ISettingsService<HardwareSettingsDto> SettingsService { get; set; } 
 
         public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService)
@@ -51,11 +52,15 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
             HostingEnvironment.RegisterObject(this);
             SettingsService = settingsService;
             GetThresholds();
+
+            if (!MonitoringEnabled)
+                ShuttingDown = true;
         }
 
         public void GetThresholds()
         {
             var settings = SettingsService.GetSettings();
+            MonitoringEnabled = settings.Alert;
             ThreasholdPercentage = settings.CpuPercentageLimit;
             TimeThreasholdSec = settings.ThresholdTime;
         }
@@ -79,6 +84,7 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         public bool Monitor(PerformanceCounter process, bool hasBeenBreached)
         {
+            Console.WriteLine("Monitoring");
             var breached = CheckBreach();
             if (breached)
             {
