@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alert\EmailAlert.cs" />
+    <Compile Include="Alert\IAlert.cs" />
     <Compile Include="IMonitor.cs" />
     <Compile Include="Monitors\NetworkMonitor.cs" />
     <Compile Include="Monitors\CpuMonitor.cs" />

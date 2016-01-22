@@ -32,18 +32,43 @@ namespace NZBDash.Core.Model.Settings
 {
     public class HardwareSettingsDto : Setting
     {
-        public int ThresholdTime { get; set; }
+        public HardwareSettingsDto()
+        {
+            EmailAlertSettings = new EmailAlertSettingsDto();
+            CpuMonitoringDto = new CpuMonitoringDto();
+            NetworkMonitoringDto = new NetworkMonitoringDto();
+        }
 
-        public int CpuPercentageLimit { get; set; }
-        public int MemoryUseLimit { get; set; }
+        public CpuMonitoringDto CpuMonitoringDto { get; set; }
+        public NetworkMonitoringDto NetworkMonitoringDto { get; set; }
         public List<DriveSettingsDto> Drives { get; set; }
-        public int NicId { get; set; }
+        public EmailAlertSettingsDto EmailAlertSettings { get; set; }
+    }
 
-        public bool Alert { get; set; }
+    public class NetworkMonitoringDto : Setting
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int NicId { get; set; }
+        public int MemoryUseLimit { get; set; }
+    }
+
+    public class CpuMonitoringDto : Setting
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int CpuPercentageLimit { get; set; }
+    }
+
+    public class EmailAlertSettingsDto : Setting
+    {
+        public bool AlertOnBreach { get; set; }
+        public bool AlertOnBreachEnd { get; set; }
         public string EmailUsername { get; set; }
         public string EmailPassword { get; set; }
         public string EmailHost { get; set; }
         public int EmailPort { get; set; }
+        public string RecipientAddress { get; set; }
     }
 
     public class DriveSettingsDto
