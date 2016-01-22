@@ -27,13 +27,11 @@
 using System.Linq;
 
 using Ninject;
-using Ninject.Modules;
 
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver.Test

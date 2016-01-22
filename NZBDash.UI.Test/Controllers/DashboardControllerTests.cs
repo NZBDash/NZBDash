@@ -37,7 +37,7 @@ using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.DTO;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.ThirdParty.Api.Models.Api.SabNzbd;

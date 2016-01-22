@@ -24,9 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using NZBDash.Common.Models.Settings;
-
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.Core.Models.Settings
 {
     public class SonarrSettingsDto : BaseSettingsDto
     {

@@ -30,7 +30,7 @@ using System.Web.Mvc;
 
 using NZBDash.Common;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.UI.Models.ViewModels;
 
 namespace NZBDash.UI.Controllers

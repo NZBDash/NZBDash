@@ -34,13 +34,14 @@ using Moq;
 using NUnit.Framework;
 
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
 using Ploeh.AutoFixture;
+
 using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Test.Controllers

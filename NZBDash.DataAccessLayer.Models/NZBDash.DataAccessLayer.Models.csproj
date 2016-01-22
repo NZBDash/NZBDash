@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Applications.cs" />
     <Compile Include="DashboardGrid.cs" />
+    <Compile Include="MonitoringEvents.cs" />
     <Compile Include="Settings\Entity.cs" />
     <Compile Include="LinksConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

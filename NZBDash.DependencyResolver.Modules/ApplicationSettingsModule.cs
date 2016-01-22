@@ -31,6 +31,7 @@ using NZBDash.Common.Models.Data.Models;
 using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;

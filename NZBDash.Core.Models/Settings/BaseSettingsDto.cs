@@ -27,8 +27,9 @@
 using System;
 
 using NZBDash.Common.Helpers;
+using NZBDash.Common.Models.Settings;
 
-namespace NZBDash.Common.Models.Settings
+namespace NZBDash.Core.Models.Settings
 {
     public class BaseSettingsDto : Setting
     {

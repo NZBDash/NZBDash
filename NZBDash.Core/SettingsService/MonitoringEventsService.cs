@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: PlexSettingsDto.cs
+//   Copyright (c) 2016 NZBDash
+//   File: MonitoringEventsService.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,13 +24,30 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Common.Models.Settings;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Models;
+using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models;
 
-namespace NZBDash.Core.Model.Settings
+using Omu.ValueInjecter;
+
+namespace NZBDash.Core.SettingsService
 {
-    public class PlexSettingsDto : BaseSettingsDto
+    public class MonitoringEventsService : IEventService
     {
-        public string Password { get; set; }
-        public string Username { get; set; }
+        public MonitoringEventsService(ISqlRepository<MonitoringEvents> repo)
+        {
+            Repo = repo;
+        }
+
+        public ISqlRepository<MonitoringEvents> Repo { get; set; }
+
+        public long RecordEvent(MonitoringEventsDto dto)
+        {
+            var entity = new MonitoringEvents();
+            entity.InjectFrom(dto);
+
+            return Repo.Insert(entity);
+        }
     }
 }

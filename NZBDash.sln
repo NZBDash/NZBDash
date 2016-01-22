@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor.Tests", "NZBDash.Services.HardwareMonitor.Tests\NZBDash.Services.HardwareMonitor.Tests.csproj", "{C5343CA6-E481-49E4-98E3-174D26BE625E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Core.Models", "NZBDash.Core.Models\NZBDash.Core.Models.csproj", "{12FE449B-C0B1-4350-953C-D55320E59E54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -809,6 +811,30 @@ Global
 		{C5343CA6-E481-49E4-98E3-174D26BE625E}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
 		{C5343CA6-E481-49E4-98E3-174D26BE625E}.Windows|x64.ActiveCfg = Release|Any CPU
 		{C5343CA6-E481-49E4-98E3-174D26BE625E}.Windows|x86.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|Any CPU.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|Mixed Platforms.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|x64.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Linux|x86.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|x64.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Release|x86.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|x64.ActiveCfg = Release|Any CPU
+		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -838,5 +864,6 @@ Global
 		{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6} = {3DCBDBD6-9A9D-45C2-93CE-5AECD21F225E}
 		{50D733E2-11E0-4002-A7CD-E5B556A80032} = {036CBD72-078D-4E64-A8DD-FC66BFAC028B}
 		{C5343CA6-E481-49E4-98E3-174D26BE625E} = {181FD6CB-70C5-475A-9215-A864EA1B057B}
+		{12FE449B-C0B1-4350-953C-D55320E59E54} = {79A76717-2C94-4231-BCCD-BA63627EDA7B}
 	EndGlobalSection
 EndGlobal

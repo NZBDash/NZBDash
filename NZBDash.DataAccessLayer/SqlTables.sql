@@ -21,3 +21,11 @@ CREATE TABLE IF NOT EXISTS LinksConfiguration
     LinkName	                         varchar(50) NOT NULL,
 	LinkEndpoint						 varchar(2083) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS MonitoringEvents
+(
+    Id                                   INTEGER PRIMARY KEY AUTOINCREMENT,
+    EventName	                         varchar(50) NOT NULL,
+	EventStart							 Text(50) NOT NULL
+	EventEnd							 Text(50) NULL
+);

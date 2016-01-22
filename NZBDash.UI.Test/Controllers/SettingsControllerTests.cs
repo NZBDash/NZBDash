@@ -25,17 +25,17 @@
 // ************************************************************************/
 #endregion
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 
 using Moq;
 
 using NUnit.Framework;
-using NZBDash.Common;
+
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Hardware;
 using NZBDash.UI.Models.ViewModels.Settings;

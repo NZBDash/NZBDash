@@ -31,7 +31,7 @@ using System.Web.Mvc;
 
 using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 

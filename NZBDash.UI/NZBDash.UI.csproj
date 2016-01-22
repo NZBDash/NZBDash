@@ -576,6 +576,10 @@
       <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
       <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Models\NZBDash.Core.Models.csproj">
+      <Project>{12FE449B-C0B1-4350-953C-D55320E59E54}</Project>
+      <Name>NZBDash.Core.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>
       <Name>NZBDash.Core</Name>
