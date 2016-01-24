@@ -252,14 +252,14 @@ namespace NZBDash.UI.Controllers
                 model.Drives.Add(driveModel);
             }
 
-            model.NicDict = new Dictionary<string, int>();
+            model.NetworkMonitoring.NicDict = new Dictionary<string, int>();
             var ddlNics = new List<string>();
             foreach (var nic in nics)
             {
-                model.NicDict.Add(nic.Key,nic.Value);
+                model.NetworkMonitoring.NicDict.Add(nic.Key,nic.Value);
                 ddlNics.Add(nic.Key);
             }
-            model.Nics = new SelectList(model.NicDict, "Value","Key",1);
+            model.NetworkMonitoring.Nics = new SelectList(model.NetworkMonitoring.NicDict, "Value","Key",1);
             
             return View(model);
         }
@@ -273,7 +273,7 @@ namespace NZBDash.UI.Controllers
             }
 
             var dto = new HardwareSettingsDto();
-            dto.InjectFrom(viewModel);
+            dto.InjectFrom(viewModel); // TODO: It's not injecting the view model. Everything is null
 
             var result = HardwareSettingsService.SaveSettings(dto);
             if (result)

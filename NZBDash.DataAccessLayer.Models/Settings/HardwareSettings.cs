@@ -45,14 +45,16 @@ namespace NZBDash.DataAccessLayer.Models.Settings
 
     public class NetworkMonitoring : Entity
     {
+        public bool Alert { get; set; }
         public bool Enabled { get; set; }
         public int ThresholdTime { get; set; }
         public int NicId { get; set; }
-        public int MemoryUseLimit { get; set; }
+        public int NetworkUsagePercentage { get; set; }
     }
 
     public class CpuMonitoring : Entity
     {
+        public bool Alert { get; set; }
         public bool Enabled { get; set; }
         public int ThresholdTime { get; set; }
         public int CpuPercentageLimit { get; set; }

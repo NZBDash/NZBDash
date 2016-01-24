@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="AuthenticationModule.cs" />
     <Compile Include="CacheModule.cs" />
+    <Compile Include="EventModule.cs" />
     <Compile Include="SerializerModule.cs" />
     <Compile Include="ApplicationSettingsModule.cs" />
     <Compile Include="LoggerModule.cs" />

@@ -24,38 +24,40 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Collections.Generic;
 
+using System.Collections.Generic;
 using NZBDash.Common.Models.Settings;
 
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.Core.Models.Settings
 {
     public class HardwareSettingsDto : Setting
     {
         public HardwareSettingsDto()
         {
             EmailAlertSettings = new EmailAlertSettingsDto();
-            CpuMonitoringDto = new CpuMonitoringDto();
-            NetworkMonitoringDto = new NetworkMonitoringDto();
+            CpuMonitoring = new CpuMonitoringDto();
+            NetworkMonitoring = new NetworkMonitoringDto();
         }
 
-        public CpuMonitoringDto CpuMonitoringDto { get; set; }
-        public NetworkMonitoringDto NetworkMonitoringDto { get; set; }
+        public CpuMonitoringDto CpuMonitoring { get; set; }
+        public NetworkMonitoringDto NetworkMonitoring { get; set; }
         public List<DriveSettingsDto> Drives { get; set; }
         public EmailAlertSettingsDto EmailAlertSettings { get; set; }
     }
 
     public class NetworkMonitoringDto : Setting
     {
+        public bool Alert { get; set; }
         public bool Enabled { get; set; }
         public int ThresholdTime { get; set; }
         public int NicId { get; set; }
-        public int MemoryUseLimit { get; set; }
+        public int NetworkUsagePercentage { get; set; }
     }
 
     public class CpuMonitoringDto : Setting
     {
         public bool Enabled { get; set; }
+        public bool Alert { get; set; }
         public int ThresholdTime { get; set; }
         public int CpuPercentageLimit { get; set; }
     }

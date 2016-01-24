@@ -34,6 +34,7 @@ using NUnit.Framework;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Monitors;
 
 using Ploeh.AutoFixture;

@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models;
+using NZBDash.Core.Models.Settings;
 
 namespace NZBDash.Services.HardwareMonitor.Alert
 {

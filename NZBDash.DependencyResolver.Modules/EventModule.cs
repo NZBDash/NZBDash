@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: IEventService.cs
+//   File: EventModule.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,12 +25,17 @@
 // ************************************************************************/
 #endregion
 
-using NZBDash.Core.Models;
+using Ninject.Modules;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.SettingsService;
 
-namespace NZBDash.Core.Interfaces
+namespace NZBDash.DependencyResolver.Modules
 {
-    public interface IEventService
+    public class EventModule : NinjectModule
     {
-        long RecordEvent(MonitoringEventsDto dto);
+        public override void Load()
+        {
+            Bind<IEventService>().To<MonitoringEventsService>();
+        }
     }
 }

@@ -32,6 +32,7 @@ using System.Web.Hosting;
 using FluentScheduler;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Alert;
 
 namespace NZBDash.Services.HardwareMonitor.Monitors
@@ -67,8 +68,8 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
         {
             Settings = SettingsService.GetSettings();
             MonitoringEnabled = Settings.EmailAlertSettings.AlertOnBreach || Settings.EmailAlertSettings.AlertOnBreachEnd;
-            ThreasholdPercentage = Settings.CpuMonitoringDto.CpuPercentageLimit;
-            TimeThreasholdSec = Settings.CpuMonitoringDto.ThresholdTime;
+            ThreasholdPercentage = Settings.CpuMonitoring.CpuPercentageLimit;
+            TimeThreasholdSec = Settings.CpuMonitoring.ThresholdTime;
         }
 
         public void Alert()

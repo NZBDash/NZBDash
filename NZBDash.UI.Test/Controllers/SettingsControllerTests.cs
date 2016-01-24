@@ -231,12 +231,12 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model.Drives[0].VolumeLabel, Is.EqualTo(expectedDrives.ToList()[0].VolumeLabel));
             Assert.That(model.Drives.Count, Is.EqualTo(expectedDrives.Count()));
 
-            Assert.That(model.NicDict.Count, Is.EqualTo(expectedNic.Count()));
+            Assert.That(model.NetworkMonitoring.NicDict.Count, Is.EqualTo(expectedNic.Count()));
 
             foreach (var nic in expectedNic)
             {
-                Assert.That(model.NicDict.ContainsKey(nic.Key),Is.True);
-                Assert.That(model.NicDict.ContainsValue(nic.Value),Is.True);
+                Assert.That(model.NetworkMonitoring.NicDict.ContainsKey(nic.Key),Is.True);
+                Assert.That(model.NetworkMonitoring.NicDict.ContainsValue(nic.Value),Is.True);
             }
         }
 
