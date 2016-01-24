@@ -113,15 +113,13 @@
                 url: '@Url.Action("GetCpu")',
                 type: 'GET',
                 success: function (cpu) {
-                    if (data.length >= maximum) {
-                        data.shift();
+                    if (series[0].data.length >= maximum) {
+                        series[0].data.shift();
                     }
                     var obj = JSON.parse(cpu);
                     var temp = [obj.TimeMs += 60, obj.CpuVal]; //data format [x, y]
 
-                    data.push(temp);
-
-                    console.log(data.length);
+                    series[0].data.push(temp);
                     return data;
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -132,45 +130,16 @@
             });
         }
 
-        function fillCpuChart() {
-            $.ajax({
-                url: '@Url.Action("GetAllCpu")',
-                type: 'GET',
-                success: function (cpu) {
-                    var obj = JSON.parse(cpu);
-                    var len = series[0].data.length;
-                    if (len >= maximum) {
-                        series[0].data.shift();
-                        series[0].data.push([obj[len - 1].TimeMs += 60, obj[len - 1].CpuVal]); //data format [x, y]
-                    } else {
-                        var temp = [];
-                        $.each(obj, function (index, item) {
-                            temp.push([item.TimeMs, item.CpuVal]); //data format [x, y]
-                        });
-                        series[0].data = temp;
-                    }
-
-
-
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                    console.log(textStatus);
-                    console.log(jqXHR);
-                }
-            });
-        }
+       
 
 
 
         // Update the random dataset at 25FPS for a smoothly-animating chart
 
         setInterval(function updateRandom() {
-            fillCpuChart();
+            getRandomData();
             getPlot(container, series);
-            plot.setData(series[0].data);
-            plot.setupGrid();
-            plot.draw();
+            
         }, 1000);
 
 

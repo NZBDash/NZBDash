@@ -69,15 +69,11 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<SabNzbdSettingsDto> Sab { get; set; }
         private IHardwareService Service { get; set; }
 
-        public ActionResult GetAllCpu()
-        {
-            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter);
-            return Json(js, JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult GetCpu()
         {
-            var js = new JavaScriptSerializer().Serialize(CpuCounter.Counter.Last());
+            var current = Service.GetCpuPercentage();
+            var counter = new Counter((int)current);
+            var js = new JavaScriptSerializer().Serialize(counter);
             return Json(js, JsonRequestBehavior.AllowGet);
         }
 

@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
     <Compile Include="FontAwesome.cs" />
+    <Compile Include="Hardware\Counter.cs" />
     <Compile Include="Hardware\DriveModel.cs" />
     <Compile Include="Hardware\RamModel.cs" />
     <Compile Include="Hardware\ServerInformationViewModel.cs" />

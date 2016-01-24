@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: TaskRegistry.cs
+//   Copyright (c) 2016 NZBDash
+//   File: Counter.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,36 +25,28 @@
 // ************************************************************************/
 #endregion
 
-using FluentScheduler;
-using Ninject;
+using System;
 
-namespace NZBDash.UI.Helpers
+namespace NZBDash.UI.Models.Hardware
 {
-    public class TaskRegistry : Registry
+    public class Counter
     {
-        public TaskRegistry()
+        public Counter(int cpuVal)
         {
-            Schedule<CpuCounter>().ToRunNow().AndEvery(1).Seconds();
+            CpuVal = cpuVal;
         }
+
+        public long TimeMs
+        {
+            get
+            {
+                var d1 = new DateTime(1970, 1, 1);
+                var d2 = DateTime.UtcNow.ToUniversalTime();
+                var ts = new TimeSpan(d2.Ticks - d1.Ticks);
+
+                return (long)ts.TotalMilliseconds;
+            }
+        }
+        public int CpuVal { get; private set; }
     }
-
-    public class NinjectTaskFactory : ITaskFactory
-    {
-        private IKernel Kernel { get; set; }
-        public NinjectTaskFactory(IKernel kernel)
-        {
-            Kernel = kernel;
-        }
-
-        /// <summary>
-        /// Gets the task instance.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public ITask GetTaskInstance<T>() where T : ITask
-        {
-            return Kernel.Get<T>();
-        }
-    }
-
 }
