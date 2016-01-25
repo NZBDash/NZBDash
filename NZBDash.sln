@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.UI", "NZBDash.UI\NZBDash.UI.csproj", "{30ED7E20-5C5B-4643-B3A6-7D10BE172241}"
 EndProject
@@ -78,6 +78,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor.Tests", "NZBDash.Services.HardwareMonitor.Tests\NZBDash.Services.HardwareMonitor.Tests.csproj", "{C5343CA6-E481-49E4-98E3-174D26BE625E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Core.Models", "NZBDash.Core.Models\NZBDash.Core.Models.csproj", "{12FE449B-C0B1-4350-953C-D55320E59E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor.Interfaces", "NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj", "{3D144CD4-00F4-4D64-924D-1D1580F2809F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -835,6 +837,38 @@ Global
 		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
 		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|x64.ActiveCfg = Release|Any CPU
 		{12FE449B-C0B1-4350-953C-D55320E59E54}.Windows|x86.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|x64.Build.0 = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Debug|x86.Build.0 = Debug|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|Any CPU.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|Mixed Platforms.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|x64.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|x64.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|x86.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Linux|x86.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|x64.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|x64.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|x86.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Release|x86.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|Any CPU.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|Any CPU.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|Mixed Platforms.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|x64.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|x64.Build.0 = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|x86.ActiveCfg = Release|Any CPU
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F}.Windows|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -865,5 +899,6 @@ Global
 		{50D733E2-11E0-4002-A7CD-E5B556A80032} = {036CBD72-078D-4E64-A8DD-FC66BFAC028B}
 		{C5343CA6-E481-49E4-98E3-174D26BE625E} = {181FD6CB-70C5-475A-9215-A864EA1B057B}
 		{12FE449B-C0B1-4350-953C-D55320E59E54} = {79A76717-2C94-4231-BCCD-BA63627EDA7B}
+		{3D144CD4-00F4-4D64-924D-1D1580F2809F} = {036CBD72-078D-4E64-A8DD-FC66BFAC028B}
 	EndGlobalSection
 EndGlobal

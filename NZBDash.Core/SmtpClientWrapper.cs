@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: SmtpClientWrapper.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,33 +24,32 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using System.Net;
+using System.Net.Mail;
 
-using FluentScheduler;
-using FluentScheduler.Model;
+using NZBDash.Core.Interfaces;
 
-using NZBDash.Services.HardwareMonitor.Interfaces;
-
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Core
 {
-    public class HardwareMonitor : IService
+    public class SmtpClientWrapper : ISmtpClient
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+        public void Send(string host, int port, MailMessage mailMessage)
         {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
+            using (var c = new SmtpClient(host, port))
+            {
+                c.EnableSsl = true;
+                c.Send(mailMessage);
+            }
         }
 
-        public void Start()
+        public void Send(string host, int port, MailMessage mailMessage, NetworkCredential creds)
         {
-            
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new TaskRegistry());
-        }
-
-        public void Stop()
-        {
-            TaskManager.Stop();
+            using (var c = new SmtpClient(host, port))
+            {
+                c.Credentials = creds;
+                c.EnableSsl = true;
+                c.Send(mailMessage);
+            }
         }
     }
 }

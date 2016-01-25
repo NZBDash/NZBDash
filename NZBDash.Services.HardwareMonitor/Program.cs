@@ -24,12 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Net;
+using System;
 
 using Ninject;
-using Ninject.Modules;
 
-using NZBDash.DependencyResolver;
+using NZBDash.Common.Interfaces;
+using NZBDash.Core;
 
 using Topshelf;
 
@@ -37,9 +37,12 @@ namespace NZBDash.Services.HardwareMonitor
 {
     internal class Program
     {
-
+        private static ILogger Logger { get; set; }
         private static void Main(string[] args)
         {
+            Setup();
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
             HostFactory.Run(
                 x =>
                 {
@@ -50,6 +53,8 @@ namespace NZBDash.Services.HardwareMonitor
                             s.ConstructUsing(name => new HardwareMonitor());
                             s.WhenStarted(tc => tc.Start());
                             s.WhenStopped(tc => tc.Stop());
+                            s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
+                            s.AfterStoppingService(() => { Logger.Info("Stopping HardwareMonitor Service"); });
                         });
                     x.RunAsLocalSystem();
                     x.EnableServiceRecovery(
@@ -61,7 +66,27 @@ namespace NZBDash.Services.HardwareMonitor
                     x.SetDescription("NZBDash Monitor");
                     x.SetDisplayName("NZBDash Monitor");
                     x.SetServiceName("NZBDashMonitor");
+                    x.UseNLog();
                 });
         }
+
+        private static void Setup()
+        {
+            var k = ServiceKernel.GetKernel();
+            Logger = k.Get<ILogger>();
+            var setup = k.Get<ISetup>();
+            setup.Start();
+        }
+
+        private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger = ServiceKernel.GetKernel().Get<ILogger>();
+            if (e.IsTerminating)
+            {
+                Logger.Info("Application is terminating due to an unhandled exception");
+            }
+            Logger.Fatal(e.ExceptionObject as Exception);
+        }
+
     }
 }

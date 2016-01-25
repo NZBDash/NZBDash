@@ -151,6 +151,7 @@
     <Compile Include="SettingsService\MonitoringEventsService.cs" />
     <Compile Include="SettingsService\SettingsService.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="SmtpClientWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.Common.Helpers\NZBDash.Common.Helpers.csproj">

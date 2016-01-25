@@ -31,8 +31,8 @@ using Moq;
 
 using NUnit.Framework;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Monitors;
@@ -46,6 +46,8 @@ namespace NZBDash.Services.HardwareMonitor.Tests
     {
         private ISettingsService<HardwareSettingsDto> Service { get; set; }
         private Mock<IEventService> EventService { get; set; }
+        private Mock<ILogger> Logger { get; set; }
+        private Mock<ISmtpClient> SmtpClient { get; set; }
         private HardwareSettingsDto Settings { get; set; }
 
         [SetUp]
@@ -54,21 +56,25 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             Settings = new Fixture().Create<HardwareSettingsDto>();
             var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
             var mockEvent = new Mock<IEventService>();
+            var mockLogger = new Mock<ILogger>();
+            var mockSmtp = new Mock<ISmtpClient>();
 
             mock.Setup(x => x.GetSettings()).Returns(Settings);
             mockEvent.Setup(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>())).Returns(1);
 
             Service = mock.Object;
             EventService = mockEvent;
+            Logger = mockLogger;
+            SmtpClient = mockSmtp;
         }
 
         [Test]
         public void TestNoBreach()
         {
-            var cpu = new CpuMonitor(Service, EventService.Object)
+            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThreasholdSec = 1,
-                ThreasholdPercentage = 1
+                TimeThresholdSec = 1,
+                ThresholdPercentage = 1
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -83,13 +89,14 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
             Settings.EmailAlertSettings.AlertOnBreach = true;
+            Settings.EmailAlertSettings.RecipientAddress = "google@gmail.com";
             mock.Setup(x => x.GetSettings()).Returns(Settings);
 
-            var cpu = new CpuMonitor(mock.Object, EventService.Object)
+            var cpu = new CpuMonitor(mock.Object, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThreasholdSec = 1,
-                ThreasholdPercentage = 1,
-                ThreasholdBreachCount = 2,
+                TimeThresholdSec = 1,
+                ThresholdPercentage = 1,
+                ThresholdBreachCount = 2,
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -110,11 +117,11 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             Settings.EmailAlertSettings.AlertOnBreachEnd = true;
             mock.Setup(x => x.GetSettings()).Returns(Settings);
 
-            var cpu = new CpuMonitor(Service, EventService.Object)
+            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThreasholdSec = 1,
-                ThreasholdPercentage = 1,
-                ThreasholdBreachCount = 2,
+                TimeThresholdSec = 1,
+                ThresholdPercentage = 1,
+                ThresholdBreachCount = 2,
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -123,7 +130,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
                 EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Never);
 
-                cpu.ThreasholdBreachCount = 0;
+                cpu.ThresholdBreachCount = 0;
 
                 cpu.Monitor(process, true);
             }
@@ -144,11 +151,11 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
             mock.Setup(x => x.GetSettings()).Returns(Settings);
 
-            var cpu = new CpuMonitor(Service, EventService.Object)
+            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThreasholdSec = 10,
-                ThreasholdPercentage = 999,
-                ThreasholdBreachCount = 1,
+                TimeThresholdSec = 10,
+                ThresholdPercentage = 999,
+                ThresholdBreachCount = 1,
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -156,7 +163,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
                 cpu.Monitor(process, true);
             }
 
-            Assert.That(cpu.ThreasholdBreachCount, Is.EqualTo(0));
+            Assert.That(cpu.ThresholdBreachCount, Is.EqualTo(0));
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
         }
     }

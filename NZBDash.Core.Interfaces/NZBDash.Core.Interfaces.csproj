@@ -102,6 +102,7 @@
     <Compile Include="ILinksConfiguration.cs" />
     <Compile Include="IMembershipProvider.cs" />
     <Compile Include="ISettingsService.cs" />
+    <Compile Include="ISmtpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

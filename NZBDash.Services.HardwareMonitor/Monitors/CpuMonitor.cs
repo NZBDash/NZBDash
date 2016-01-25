@@ -30,19 +30,21 @@ using System.Threading;
 using System.Web.Hosting;
 
 using FluentScheduler;
+
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Alert;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Monitors
 {
     public class CpuMonitor : ITask, IRegisteredObject, IMonitor
     {
         private readonly object _lock = new object();
-        public int ThreasholdPercentage { get; set; }
-        public int TimeThreasholdSec { get; set; }
-        public int ThreasholdBreachCount { get; set; }
+        public int ThresholdPercentage { get; set; }
+        public int TimeThresholdSec { get; set; }
+        public int ThresholdBreachCount { get; set; }
         public DateTime BreachStart { get; set; }
         public DateTime BreachEnd { get; set; }
         private bool ShuttingDown { get; set; }
@@ -51,9 +53,13 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
         private HardwareSettingsDto Settings { get; set; }
         private IEventService EventService { get; set; }
         private EmailAlert EmailAlert { get; set; }
+        private ILogger Logger { get; set; }
+        private ISmtpClient SmtpClient { get; set; }
 
-        public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService, IEventService eventService)
+        public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService, IEventService eventService, ILogger logger, ISmtpClient client)
         {
+            Logger = logger;
+            SmtpClient = client;
             EventService = eventService;
             SettingsService = settingsService;
 
@@ -68,25 +74,36 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
         {
             Settings = SettingsService.GetSettings();
             MonitoringEnabled = Settings.EmailAlertSettings.AlertOnBreach || Settings.EmailAlertSettings.AlertOnBreachEnd;
-            ThreasholdPercentage = Settings.CpuMonitoring.CpuPercentageLimit;
-            TimeThreasholdSec = Settings.CpuMonitoring.ThresholdTime;
+            ThresholdPercentage = Settings.CpuMonitoring.CpuPercentageLimit;
+            TimeThresholdSec = Settings.CpuMonitoring.ThresholdTime;
         }
 
         public void Alert()
         {
-            EmailAlert = new EmailAlert(EventService, Settings.EmailAlertSettings, BreachStart, BreachEnd);
+            EmailAlert = new EmailAlert(EventService, Logger,SmtpClient, Settings.EmailAlertSettings, BreachStart, BreachEnd);
             EmailAlert.Alert();
         }
 
         public void StartMonitoring()
         {
-            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+            Logger.Info("Starting CPU Monitor");
+            try
             {
-                var hasBeenBreached = false;
-                while (true)
+                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
                 {
-                   hasBeenBreached = Monitor(process, hasBeenBreached);
+                    var hasBeenBreached = false;
+                    while (true)
+                    {
+                        hasBeenBreached = Monitor(process, hasBeenBreached);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal(e);
+                Stop();
+
+                //TODO: We need to possibly restart the service.
             }
         }
 
@@ -103,20 +120,20 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
             else if (hasBeenBreached)
             {
                 BreachEnd = DateTime.Now;
-                EmailAlert = new EmailAlert(EventService, Settings.EmailAlertSettings, BreachStart, BreachEnd);
+                EmailAlert = new EmailAlert(EventService, Logger,SmtpClient, Settings.EmailAlertSettings, BreachStart, BreachEnd);
                 EmailAlert.Alert();
             }
 
             process.NextValue();
             Thread.Sleep(1000);
             var currentValue = process.NextValue();
-            if (currentValue >= ThreasholdPercentage)
+            if (currentValue >= ThresholdPercentage)
             {
-                ThreasholdBreachCount++;
+                ThresholdBreachCount++;
             }
             else
             {
-                ThreasholdBreachCount = 0;
+                ThresholdBreachCount = 0;
             }
 
             return hasBeenBreached;
@@ -124,16 +141,16 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         private bool CheckBreach()
         {
-            return ThreasholdBreachCount >= TimeThreasholdSec;
+            return ThresholdBreachCount >= TimeThresholdSec;
         }
 
-        public void Stop(bool immediate)
-        {   
+        public void Stop(bool immediate = false)
+        {
             lock (_lock)
             {
                 ShuttingDown = true;
             }
-
+            Logger.Info("Stopping CPU Monitor");
             HostingEnvironment.UnregisterObject(this);
         }
 

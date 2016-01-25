@@ -37,7 +37,7 @@ namespace NZBDash.Services.HardwareMonitor
         public TaskRegistry()
         {
             Schedule<CpuMonitor>().ToRunNow();
-            Schedule<NetworkMonitor>().ToRunNow();
+            //Schedule<NetworkMonitor>().ToRunNow();
         }
     }
     public class NinjectTaskFactory : ITaskFactory

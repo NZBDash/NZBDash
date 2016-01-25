@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: IService.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,33 +24,11 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
-using FluentScheduler;
-using FluentScheduler.Model;
-
-using NZBDash.Services.HardwareMonitor.Interfaces;
-
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class HardwareMonitor : IService
+    public interface IService
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
-        {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
-        }
-
-        public void Start()
-        {
-            
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new TaskRegistry());
-        }
-
-        public void Stop()
-        {
-            TaskManager.Stop();
-        }
+        void Start();
+        void Stop();
     }
 }

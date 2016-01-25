@@ -68,6 +68,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
+      <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
+      <Name>NZBDash.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
@@ -83,6 +87,10 @@
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj">
+      <Project>{3d144cd4-00f4-4d64-924d-1d1580f2809f}</Project>
+      <Name>NZBDash.Services.HardwareMonitor.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Services.HardwareMonitor\NZBDash.Services.HardwareMonitor.csproj">
       <Project>{50D733E2-11E0-4002-A7CD-E5B556A80032}</Project>

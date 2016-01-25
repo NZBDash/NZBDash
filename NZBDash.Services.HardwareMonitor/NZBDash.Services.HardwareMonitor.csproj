@@ -41,9 +41,14 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.2\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,16 +58,18 @@
       <HintPath>..\packages\Topshelf.3.3.1\lib\net40-full\Topshelf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Topshelf.NLog, Version=3.3.154.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.NLog.3.3.1\lib\net40-full\Topshelf.NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alert\EmailAlert.cs" />
     <Compile Include="Alert\IAlert.cs" />
     <Compile Include="EventName.cs" />
-    <Compile Include="IMonitor.cs" />
     <Compile Include="Monitors\NetworkMonitor.cs" />
     <Compile Include="Monitors\CpuMonitor.cs" />
     <Compile Include="HardwareMonitor.cs" />
-    <Compile Include="IService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceKernel.cs" />
@@ -73,6 +80,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NZBDash.Common.Interfaces\NZBDash.Common.Interfaces.csproj">
+      <Project>{2FE2D4CA-5F3A-4B06-A95F-5F561B1AEFE4}</Project>
+      <Name>NZBDash.Common.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521cb3c7-f19c-4b92-8a39-4537bec094b5}</Project>
       <Name>NZBDash.Common.Models</Name>
@@ -96,6 +107,10 @@
     <ProjectReference Include="..\NZBDash.DependencyResolver\NZBDash.DependencyResolver.csproj">
       <Project>{cd5ba3ea-1db7-4d2e-9cfe-4e29c2dc5ebd}</Project>
       <Name>NZBDash.DependencyResolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj">
+      <Project>{3D144CD4-00F4-4D64-924D-1D1580F2809F}</Project>
+      <Name>NZBDash.Services.HardwareMonitor.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -25,10 +25,11 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
 
@@ -51,8 +52,10 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         private DateTime EndBreachTime { get; set; }
 
         private IEventService EventService { get; set; }
+        private ILogger Logger { get; set; }
+        private ISmtpClient SmtpClient { get; set; }
 
-        public EmailAlert(IEventService eventService, EmailAlertSettingsDto settings, DateTime breachTime, DateTime endBreachTime)
+        public EmailAlert(IEventService eventService, ILogger logger, ISmtpClient smtp, EmailAlertSettingsDto settings, DateTime breachTime, DateTime endBreachTime)
         {
             EventService = eventService;
             EmailUsername = settings.EmailUsername;
@@ -64,6 +67,8 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             Recipient = settings.RecipientAddress;
             BreachTime = breachTime;
             EndBreachTime = endBreachTime;
+            Logger = logger;
+            SmtpClient = smtp;
         }
 
         public void SaveEvent()
@@ -77,7 +82,7 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             };
 
             var result = EventService.RecordEvent(dto);
-            
+
         }
 
         public void Alert()
@@ -89,11 +94,13 @@ namespace NZBDash.Services.HardwareMonitor.Alert
 
             if (AlertEnabledOnBreach && BreachTime != DateTime.MinValue && !AlertedOnStart)
             {
+                Logger.Info("Alerted on breach");
                 AlertOnBreach();
             }
 
             if (AlertEnabledOnBreachEnd && EndBreachTime != DateTime.MinValue && !AlertedOnEnd)
             {
+                Logger.Info("Alerted on breach end");
                 AlertOnBreachEnd();
             }
         }
@@ -101,13 +108,27 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         private void AlertOnBreach()
         {
             SaveEvent();
-            Console.WriteLine("Breach Started");
+            SendEmail();
         }
 
         private void AlertOnBreachEnd()
         {
             SaveEvent();
             Console.WriteLine("Breach Ended");
+        }
+
+        private void SendEmail()
+        {
+            var message = new MailMessage
+            {
+                To = { Recipient },
+                From = new MailAddress("nzbdash@nzbdash.com", "NZBDash Alert"),
+                IsBodyHtml = true,
+                Body = "TEST"
+            };
+            var creds = new NetworkCredential(EmailUsername, EmailPassword);
+            SmtpClient.Send(EmailHost,EmailPort,message, creds);
+            Logger.Info("Alert Email Sent");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: IService.cs
+//   File: ISmtpClient.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,11 +24,14 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Services.HardwareMonitor
+using System.Net;
+using System.Net.Mail;
+
+namespace NZBDash.Core.Interfaces
 {
-    public interface IService
+    public interface ISmtpClient
     {
-        void Start();
-        void Stop();
+        void Send(string host, int port, MailMessage mailMessage);
+        void Send(string host, int port, MailMessage mailMessage, NetworkCredential creds);
     }
 }

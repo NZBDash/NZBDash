@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2016 Jamie Rees
-//  File: CpuCounterTest.cs
+//  File: CacheModule.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -24,46 +24,18 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using Ninject.Modules;
 
-using System;
-using Moq;
-using NUnit.Framework;
-using NZBDash.Common;
+using NZBDash.Core;
 using NZBDash.Core.Interfaces;
-using NZBDash.UI.Helpers;
 
-namespace NZBDash.UI.Test.Helpers
+namespace NZBDash.DependencyResolver.Modules
 {
-    [TestFixture]
-    public class CpuCounterTest
+    public class SmtpModule : NinjectModule
     {
-        [Test]
-        public void TestCounter()
+        public override void Load()
         {
-            var h = new Mock<IHardwareService>();
-            h.Setup(x => x.GetCpuPercentage()).Returns(99);
-
-            var cpu = new CpuCounter(h.Object);
-
-            cpu.StartCounter();
-
-            Assert.That(CpuCounter.Counter.Count, Is.EqualTo(1));
-        }
-
-        [Test]
-        public void TestCounterRemove()
-        {
-            var h = new Mock<IHardwareService>();
-            h.Setup(x => x.GetCpuPercentage()).Returns(99);
-
-            var cpu = new CpuCounter(h.Object);
-
-            for (var i = 0; i < 99; i++)
-            {
-                cpu.StartCounter();
-            }
-            
-            Assert.That(CpuCounter.Counter.Count, Is.EqualTo(60));
+            Bind<ISmtpClient>().To<SmtpClientWrapper>();
         }
     }
 }
