@@ -42,6 +42,7 @@ using Ploeh.AutoFixture;
 namespace NZBDash.Services.HardwareMonitor.Tests
 {
     [TestFixture]
+    [Ignore]
     public class CpuMonitorTest
     {
         private ISettingsService<HardwareSettingsDto> Service { get; set; }
