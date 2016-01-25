@@ -48,9 +48,16 @@ namespace NZBDash.Common.Tests.Helpers
         }
 
         [TestCase("ABCDEF", "Passone")]
+        [TestCase("<app block>", "Passtwo")]
+        [TestCase("{\"glossary\": {\"title\": \"example glossary\",\"GlossDiv\": {\"title\": \"S\",\"GlossList\": {\"GlossEntry\": {\"ID\": \"SGML\",\"SortAs\": \"SGML\",\"GlossTerm\": \"Standard Generalized Markup Language\",\"Acronym\": \"SGML\",\"Abbrev\": \"ISO 8879:1986\",\"GlossDef\": {\"para\": \"A meta-markup language, used to create markup languages such as DocBook.\",\"GlossSeeAlso\": [\"GML\", \"XML\"]},\"GlossSee\": \"markup\"}}}}}"
+                , "JSONExample")]
         public void Decrypt(string text, string passPhrase)
         {
             var encrypted = StringCipher.Encrypt(text,passPhrase);
+
+            Assert.That(encrypted, Is.Not.EqualTo(text));
+            Assert.That(encrypted, Is.Not.EqualTo(passPhrase));
+
             var decrypted = StringCipher.Decrypt(encrypted, passPhrase);
 
             Assert.That(decrypted, Is.EqualTo(text));
