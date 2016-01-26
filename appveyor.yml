@@ -7,7 +7,6 @@ install:
 
 build_script:
   - echo "Starting Build script..."
-  - nuget restore
   - msbuild /m /p:Configuraiton=Release NZBDash.sln
   
   # Compile installer
