@@ -43,7 +43,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 {
     [Ignore]
     [TestFixture]
-    public class CpuMonitorTest
+    public class CpuMonitorTest 
     {
         private ISettingsService<HardwareSettingsDto> Service { get; set; }
         private Mock<IEventService> EventService { get; set; }
