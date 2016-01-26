@@ -8,3 +8,6 @@ build_script:
   - msbuild /m /p:Configuraiton=Release NZBDash.sln
   - iscc NZBDash.iss 
   - dir
+ artifacts:
+  - path: C:\projects\Installer\setup.exe
+ 
