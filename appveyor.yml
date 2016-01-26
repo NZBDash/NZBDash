@@ -1,12 +1,10 @@
 version: 1.0.{build}
 install:
-- choco install -y curl 7zip InnoSetup
+- choco install -y InnoSetup
 - set PATH="C:\Program Files\7-Zip";"C:\Program Files (x86)\Inno Setup 5";%PATH%
 build_script:
+  - echo "Starting Build script..."
+  - nuget restore
+  - msbuild /m /p:Configuraiton=Release NZBDash.sln
   - iscc NZBDash.iss 
   - dir
-before_build:
-- cmd: dnu restore
-- cmd: nuget restore
-build:
-  verbosity: minimal
