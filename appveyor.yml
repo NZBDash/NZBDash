@@ -3,14 +3,14 @@ version: 1.0.{build}
 install:
 # Setup Inno so we can compile the installer
 - choco install -y InnoSetup
-- set PATH="C:\Program Files (x86)\Inno Setup 5"
+- set PATH="C:\Program Files\7-Zip";"C:\Program Files (x86)\Inno Setup 5";%PATH%
 
 build_script:
   - echo "Starting Build script..."
+  - nuget restore
   - msbuild /m /p:Configuraiton=Release NZBDash.sln
   
   # Compile installer
   - iscc NZBDash.iss 
   - dir 
-  - dir C:\projects\Installer
-  - appveyor PushArtifact C:\projects\Installer\setup.exe
+   - appveyor PushArtifact C:\projects\Installer\setup.exe
