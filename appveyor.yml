@@ -13,10 +13,10 @@ build_script:
   # Compile installer
   - iscc NZBDash.iss 
   - dir 
-  - dir "C:\projects\Installer"
+  - dir C:\projects\Installer
  
 artifacts:
   # pushing a single file
   - echo "Publishing artifacts"
-  - path: "C:\projects\Installer\setup.exe"
+  - path: C:\projects\Installer\setup.exe
   - dir
