@@ -3,7 +3,7 @@ version: 1.0.{build}
 install:
 # Setup Inno so we can compile the installer
 - choco install -y InnoSetup
-- set PATH="C:\Program Files\7-Zip";"C:\Program Files (x86)\Inno Setup 5";%PATH%
+- set PATH="C:\Program Files (x86)\Inno Setup 5"
 
 build_script:
   - echo "Starting Build script..."
@@ -13,7 +13,7 @@ build_script:
   # Compile installer
   - iscc NZBDash.iss 
   - dir 
-  - dir C:\projects\Installer
+  - dir "C:\projects\Installer"
  
 artifacts:
   # pushing a single file
