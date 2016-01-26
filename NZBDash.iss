@@ -11,7 +11,7 @@ DefaultGroupName=NZBDash
 UninstallDisplayIcon={app}\NZBDash.exe
 Compression=lzma2
 SolidCompression=yes
-OutputDir=..\Installer
+OutputDir=Installer
 PrivilegesRequired=admin
 UninstallRestartComputer=false
 

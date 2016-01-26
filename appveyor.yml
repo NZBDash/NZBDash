@@ -13,4 +13,4 @@ build_script:
   # Compile installer
   - iscc NZBDash.iss 
   - dir 
-   - appveyor PushArtifact C:\projects\Installer\setup.exe
+   - appveyor PushArtifact Installer\setup.exe
