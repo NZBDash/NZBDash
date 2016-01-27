@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: TaskRegistry.cs
+//   File: IMonitor.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,39 +24,15 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using FluentScheduler;
+using System;
 
-using Ninject;
-
-using NZBDash.Services.HardwareMonitor.Monitors;
-using NZBDash.Services.HardwareMonitor.Observers;
-
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class TaskRegistry : Registry
+    public interface IMonitorObservable
     {
-        public TaskRegistry()
-        {
-            //Schedule<CpuMonitor>().ToRunNow();
-            Schedule<GenericMonitor<CpuObservable,AlertingObserver>>().ToRunNow();
-        }
-    }
-    public class NinjectTaskFactory : ITaskFactory
-    {
-        private IKernel Kernel { get; set; }
-        public NinjectTaskFactory(IKernel kernel)
-        {
-            Kernel = kernel;
-        }
-
-        /// <summary>
-        /// Gets the task instance.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public ITask GetTaskInstance<T>() where T : ITask
-        {
-            return Kernel.Get<T>();
-        }
+        void StartMonitoring();
+        event EventHandler StartAlert;
+        event EventHandler EndAlert;
+        event UnhandledExceptionEventHandler ExceptionThrown;
     }
 }

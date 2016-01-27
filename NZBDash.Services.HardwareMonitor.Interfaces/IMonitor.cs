@@ -30,7 +30,6 @@ namespace NZBDash.Services.HardwareMonitor.Interfaces
     {
         void Alert();
         void StartMonitoring();
-        void GetThresholds();
-        ThresholdModel Threshold { get; set; }
+
     }
 }

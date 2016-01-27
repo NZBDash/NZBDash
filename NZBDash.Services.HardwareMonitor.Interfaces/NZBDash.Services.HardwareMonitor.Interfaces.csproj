@@ -43,6 +43,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertModel.cs" />
+    <Compile Include="IMonitorObservable.cs" />
     <Compile Include="IMonitor.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

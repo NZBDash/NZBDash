@@ -25,11 +25,13 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Diagnostics;
 
 using Ninject;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core;
+using NZBDash.Services.HardwareMonitor.Observers;
 
 using Topshelf;
 
@@ -42,6 +44,32 @@ namespace NZBDash.Services.HardwareMonitor
         {
             Setup();
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
+            //HostFactory.Run(
+            //    x =>
+            //    {
+            //        x.StartAutomatically();
+            //        x.Service<HardwareMonitor>(
+            //            s =>
+            //            {
+            //                s.ConstructUsing(monitor => new HardwareMonitor());
+            //                s.WhenStarted(tc => tc.Start());
+            //                s.WhenStopped(tc => tc.Stop());
+            //                s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
+            //                s.AfterStoppingService(() => { Logger.Info("Stopping HardwareMonitor Service"); });
+            //            });
+            //        x.RunAsLocalSystem();
+            //        x.EnableServiceRecovery(
+            //            r =>
+            //            {
+            //                r.RestartService(1);
+            //            });
+
+            //        x.SetDescription("NZBDash Monitor");
+            //        x.SetDisplayName("NZBDash Monitor");
+            //        x.SetServiceName("NZBDashMonitor");
+            //        x.UseNLog();
+            //    });
 
             HostFactory.Run(
                 x =>
@@ -68,8 +96,7 @@ namespace NZBDash.Services.HardwareMonitor
                     x.SetServiceName("NZBDashMonitor");
                     x.UseNLog();
                 });
-            
-            
+
         }
 
         private static void Setup()
@@ -83,11 +110,11 @@ namespace NZBDash.Services.HardwareMonitor
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Logger = ServiceKernel.GetKernel().Get<ILogger>();
+            Logger.Fatal(e.ExceptionObject as Exception);
             if (e.IsTerminating)
             {
                 Logger.Info("Application is terminating due to an unhandled exception");
             }
-            Logger.Fatal(e.ExceptionObject as Exception);
         }
 
     }

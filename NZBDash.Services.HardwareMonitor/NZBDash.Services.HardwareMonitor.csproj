@@ -57,9 +57,12 @@
     <Compile Include="Alert\EmailAlert.cs" />
     <Compile Include="Alert\IAlert.cs" />
     <Compile Include="EventName.cs" />
+    <Compile Include="GenericMonitor.cs" />
     <Compile Include="Monitors\NetworkMonitor.cs" />
     <Compile Include="Monitors\CpuMonitor.cs" />
     <Compile Include="HardwareMonitor.cs" />
+    <Compile Include="Observers\CpuObservable.cs" />
+    <Compile Include="Observers\AlertingObserver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceKernel.cs" />

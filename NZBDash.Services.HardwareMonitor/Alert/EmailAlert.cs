@@ -119,13 +119,13 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             var message = new MailMessage
             {
                 To = { Recipient },
-                From = new MailAddress("nzbdash@nzbdash.com", "NZBDash Alert"),
+                From = new MailAddress("nzbdash@nzbdash.com", "NZBDash StartAlert"),
                 IsBodyHtml = true,
                 Body = "TEST"
             };
             var creds = new NetworkCredential(EmailUsername, EmailPassword);
             SmtpClient.Send(EmailHost, EmailPort, message, creds);
-            Logger.Info("Alert Email Sent");
+            Logger.Info("StartAlert Email Sent");
         }
     }
 }
