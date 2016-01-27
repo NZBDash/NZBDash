@@ -27,38 +27,8 @@ Source: "NZBDash.UI\favicon.ico"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.UI\NLog.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Web.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Global.asax"; DestDir: "{app}\UI"; Flags: ignoreversion
-Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\HardwareMonitor"; Flags: ignoreversion recursesubdirs createallsubdirs
-
-[Icons]
-Name: "{group}\My Program"; Filename: "{app}\MyProg.exe"
+Source: "NZBDash.Services.HardwareMonitor\bin\Release\*"; DestDir: "{app}\HardwareMonitor"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Run]
-Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{pf}/NZBDash/"""; Check: IsCheckSelectedIIS; Flags: runhidden; StatusMsg: "Settings Up Website"
-
-[Code]
-
-
-var iisDefaultDir: String;
-var WebServerPage: TInputOptionWizardPage;
-
-function GetWebServerType(Param:String):String;
-
-var
-	WebServer: String;
-begin
-	case WebServerPage.SelectedValueIndex of
-		0:
-			if iisDefaultDir <> '' then begin
-				WebServer := 'iis';
-			end else
-				WebServer := 'apache';
-		1: WebServer := 'apache';
-	end;
-	Result := WebServer;
-end;
-
-function IsCheckSelectedIIS():Boolean;
-begin
-	Result := GetWebServerType('') = 'iis';
-end;
-
+Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{pf}/NZBDash/"""; Flags: runhidden; StatusMsg: "Settings Up Website"
+Filename: {cmd}; Parameters: "/C ""{app}\NZBDash.Services.HardwareMonitor\bin\Release\NZBDash.Services.HardwareMonitor.exe install"; Flags: runhidden; StatusMsg: "Settings Up Website"

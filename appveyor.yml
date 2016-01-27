@@ -23,4 +23,4 @@ deploy:
     secure: jDpp1/WUQl3uN41fNI3VeZoRZbDiDfs3GPQ1v+C5ZNE3cWdnUvuJfCCfUbYUV1Rp
   draft: true
   on:
-    branch: Dev
+    branch: master

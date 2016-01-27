@@ -107,13 +107,13 @@ namespace NZBDash.Services.HardwareMonitor.Tests
                 }
             };
 
+            var now = DateTime.Now;
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
             {
                 cpu.Monitor(process, true);
             }
 
-            Assert.That(cpu.Threshold.BreachStart.Hour, Is.EqualTo(DateTime.Now.Hour));
-            Assert.That(cpu.Threshold.BreachStart.Minute, Is.EqualTo(DateTime.Now.Minute));
+            Assert.That(cpu.Threshold.BreachStart.Hour, Is.EqualTo(now.Hour));
             EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Once);
         }
 
