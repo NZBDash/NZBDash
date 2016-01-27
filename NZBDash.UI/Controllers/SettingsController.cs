@@ -272,8 +272,35 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new HardwareSettingsDto();
-            dto.InjectFrom(viewModel); // TODO: It's not injecting the view model. Everything is null
+            var dto = new HardwareSettingsDto
+            {
+                EmailAlertSettings = new EmailAlertSettingsDto
+                {
+                    EmailUsername = viewModel.EmailAlertSettings.EmailUsername,
+                    AlertOnBreach = viewModel.EmailAlertSettings.AlertOnBreach,
+                    AlertOnBreachEnd = viewModel.EmailAlertSettings.AlertOnBreachEnd,
+                    RecipientAddress = viewModel.EmailAlertSettings.RecipientAddress,
+                    EmailPassword = viewModel.EmailAlertSettings.EmailPassword,
+                    EmailHost = viewModel.EmailAlertSettings.EmailHost,
+                    EmailPort = viewModel.EmailAlertSettings.EmailPort,
+                },
+                CpuMonitoring = new CpuMonitoringDto
+                {
+                    Alert = viewModel.CpuMonitoring.Alert,
+                    CpuPercentageLimit = viewModel.CpuMonitoring.CpuPercentageLimit,
+                    Enabled = viewModel.CpuMonitoring.Enabled,
+                    ThresholdTime = viewModel.CpuMonitoring.ThresholdTime
+                },
+                NetworkMonitoring = new NetworkMonitoringDto
+                {
+                    Enabled = viewModel.NetworkMonitoring.Enabled,
+                    ThresholdTime = viewModel.NetworkMonitoring.ThresholdTime,
+                    Alert = viewModel.NetworkMonitoring.Alert,
+                    NetworkUsagePercentage = viewModel.NetworkMonitoring.NetworkUsagePercentage,
+                    NicId = viewModel.NetworkMonitoring.NicId
+                }
+            };
+            //dto.InjectFrom(viewModel); // TODO: It's not injecting the view model. Everything is null
 
             var result = HardwareSettingsService.SaveSettings(dto);
             if (result)
