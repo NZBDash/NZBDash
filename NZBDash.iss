@@ -27,7 +27,7 @@ Source: "NZBDash.UI\favicon.ico"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.UI\NLog.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Web.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Global.asax"; DestDir: "{app}\UI"; Flags: ignoreversion
-Source: "NZBDash.Services.HardwareMonitor\bin\Release\*"; DestDir: "{app}\HardwareMonitor"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\HardwareMonitor"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Run]
 Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{pf}/NZBDash/"""; Flags: runhidden; StatusMsg: "Settings Up Website"
