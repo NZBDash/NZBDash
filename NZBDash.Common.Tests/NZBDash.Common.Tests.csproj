@@ -125,7 +125,7 @@
     <Compile Include="MemoryCacheProviderTest.cs" />
     <Compile Include="Helpers\TimeExtensionTest.cs" />
     <Compile Include="Helpers\ThirdPartySerializerTest.cs" />
-    <Compile Include="Helpers\MemorySizeConverterTest.cs">
+    <Compile Include="Helpers\MemorySizeConverterTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\UrlHelperTests.cs" />

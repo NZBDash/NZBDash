@@ -64,7 +64,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="CpuMonitorTest.cs" />
+    <Compile Include="CpuMonitorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

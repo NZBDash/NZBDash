@@ -32,6 +32,7 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Alert
 {
@@ -48,14 +49,12 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         public bool AlertEnabledOnBreachEnd { get; set; }
         private string Recipient { get; set; }
 
-        private DateTime BreachTime { get; set; }
-        private DateTime EndBreachTime { get; set; }
-
+        private ThresholdModel Threshold { get; set; }
         private IEventService EventService { get; set; }
         private ILogger Logger { get; set; }
         private ISmtpClient SmtpClient { get; set; }
 
-        public EmailAlert(IEventService eventService, ILogger logger, ISmtpClient smtp, EmailAlertSettingsDto settings, DateTime breachTime, DateTime endBreachTime)
+        public EmailAlert(IEventService eventService, ILogger logger, ISmtpClient smtp, EmailAlertSettingsDto settings, ThresholdModel threshold)
         {
             EventService = eventService;
             EmailUsername = settings.EmailUsername;
@@ -65,8 +64,7 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             AlertEnabledOnBreach = settings.AlertOnBreach;
             AlertEnabledOnBreachEnd = settings.AlertOnBreachEnd;
             Recipient = settings.RecipientAddress;
-            BreachTime = breachTime;
-            EndBreachTime = endBreachTime;
+            Threshold = threshold;
             Logger = logger;
             SmtpClient = smtp;
         }
@@ -76,9 +74,9 @@ namespace NZBDash.Services.HardwareMonitor.Alert
             var dto = new MonitoringEventsDto
             {
                 EventName = EventName.CpuEvent,
-                EventEnd = EndBreachTime,
-                EventStart = BreachTime,
-                EventType = EndBreachTime == DateTime.MinValue ? EventTypeDto.Start : EventTypeDto.End
+                EventEnd = Threshold.BreachEnd,
+                EventStart = Threshold.BreachStart,
+                EventType = Threshold.BreachEnd == DateTime.MinValue ? EventTypeDto.Start : EventTypeDto.End
             };
 
             var result = EventService.RecordEvent(dto);
@@ -88,20 +86,19 @@ namespace NZBDash.Services.HardwareMonitor.Alert
         public void Alert()
         {
             // EndBreachTime could be DateTime.MinValue meaning it hasn't ended.
-            // TODO: Requirements in the UI:
-            // Alert on threashold breached?
-            // Alert on threashold breach recovered/ended?
 
-            if (AlertEnabledOnBreach && BreachTime != DateTime.MinValue && !AlertedOnStart)
+            if (AlertEnabledOnBreach && Threshold.BreachStart != DateTime.MinValue && !AlertedOnStart)
             {
                 Logger.Info("Alerted on breach");
                 AlertOnBreach();
+                AlertedOnStart = true;
             }
 
-            if (AlertEnabledOnBreachEnd && EndBreachTime != DateTime.MinValue && !AlertedOnEnd)
+            if (AlertEnabledOnBreachEnd && Threshold.BreachEnd != DateTime.MinValue && !AlertedOnEnd)
             {
                 Logger.Info("Alerted on breach end");
                 AlertOnBreachEnd();
+                AlertedOnEnd = true;
             }
         }
 
@@ -127,7 +124,7 @@ namespace NZBDash.Services.HardwareMonitor.Alert
                 Body = "TEST"
             };
             var creds = new NetworkCredential(EmailUsername, EmailPassword);
-            SmtpClient.Send(EmailHost,EmailPort,message, creds);
+            SmtpClient.Send(EmailHost, EmailPort, message, creds);
             Logger.Info("Alert Email Sent");
         }
     }

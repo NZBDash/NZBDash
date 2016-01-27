@@ -1,7 +1,7 @@
 ﻿#region Copyright
 //  ***********************************************************************
 //  Copyright (c) 2016 Jamie Rees
-//  File: MemorySizeConverterTest.cs
+//  File: MemorySizeConverterTests.cs
 //  Created By: Jamie Rees
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining
@@ -33,7 +33,7 @@ using NZBDash.Common.Helpers;
 namespace NZBDash.Common.Tests.Helpers
 {
     [TestFixture]
-    public class MemorySizeConverterTest
+    public class MemorySizeConverterTests
     {
         [TestCase(1, "1 KB")]
         [TestCase(1024, "1 MB")]

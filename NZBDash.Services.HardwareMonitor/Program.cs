@@ -50,7 +50,7 @@ namespace NZBDash.Services.HardwareMonitor
                     x.Service<HardwareMonitor>(
                         s =>
                         {
-                            s.ConstructUsing(name => new HardwareMonitor());
+                            s.ConstructUsing(monitor => new HardwareMonitor());
                             s.WhenStarted(tc => tc.Start());
                             s.WhenStopped(tc => tc.Stop());
                             s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
@@ -68,6 +68,8 @@ namespace NZBDash.Services.HardwareMonitor
                     x.SetServiceName("NZBDashMonitor");
                     x.UseNLog();
                 });
+            
+            
         }
 
         private static void Setup()

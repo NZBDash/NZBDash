@@ -24,8 +24,6 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
     public interface IMonitor
@@ -33,10 +31,6 @@ namespace NZBDash.Services.HardwareMonitor.Interfaces
         void Alert();
         void StartMonitoring();
         void GetThresholds();
-        int ThresholdPercentage { get; set; }
-        int TimeThresholdSec { get; set; }
-        int ThresholdBreachCount { get; set; }
-        DateTime BreachStart { get; set; }
-        DateTime BreachEnd { get; set; }
+        ThresholdModel Threshold { get; set; }
     }
 }

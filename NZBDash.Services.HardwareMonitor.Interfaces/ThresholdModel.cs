@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: Threshold.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,41 +25,22 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading;
 
-using FluentScheduler;
-using FluentScheduler.Model;
-
-using NZBDash.Services.HardwareMonitor.Interfaces;
-
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class HardwareMonitor : IService
+    public class ThresholdModel
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+        public bool HasBreached
         {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
+            get
+            {
+                return BreachCount >= TimeThresholdSec;
+            }
         }
-
-        public void Start()
-        {
-            
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new TaskRegistry());
-
-            Thread.Sleep(10000);
-
-            TaskManager.Stop();
-            Console.WriteLine("Stopping!");
-            //TaskManager.Initialize(new TaskRegistry());
-            //Console.WriteLine("Started!!");
-            //Console.WriteLine(TaskManager.RunningSchedules[0].Name);
-        }
-
-        public void Stop()
-        {
-            TaskManager.Stop();
-        }
+        public DateTime BreachEnd { get; set; }
+        public DateTime BreachStart { get; set; }
+        public int BreachCount { get; set; }
+        public int Percentage { get; set; }
+        public int TimeThresholdSec { get; set; }
     }
 }

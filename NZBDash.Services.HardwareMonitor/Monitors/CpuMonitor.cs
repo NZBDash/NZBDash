@@ -42,22 +42,10 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
     public class CpuMonitor : ITask, IRegisteredObject, IMonitor
     {
         private readonly object _lock = new object();
-        public int ThresholdPercentage { get; set; }
-        public int TimeThresholdSec { get; set; }
-        public int ThresholdBreachCount { get; set; }
-        public DateTime BreachStart { get; set; }
-        public DateTime BreachEnd { get; set; }
-        private bool ShuttingDown { get; set; }
-        private bool MonitoringEnabled { get; set; }
-        private ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
-        private HardwareSettingsDto Settings { get; set; }
-        private IEventService EventService { get; set; }
-        private EmailAlert EmailAlert { get; set; }
-        private ILogger Logger { get; set; }
-        private ISmtpClient SmtpClient { get; set; }
 
         public CpuMonitor(ISettingsService<HardwareSettingsDto> settingsService, IEventService eventService, ILogger logger, ISmtpClient client)
         {
+            Threshold = new ThresholdModel();
             Logger = logger;
             SmtpClient = client;
             EventService = eventService;
@@ -67,20 +55,66 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
             GetThresholds();
 
             if (!MonitoringEnabled)
+            {
                 ShuttingDown = true;
+            }
+        }
+
+        private EmailAlert EmailAlert { get; set; }
+        private IEventService EventService { get; set; }
+        private ILogger Logger { get; set; }
+        private bool MonitoringEnabled { get; set; }
+        private HardwareSettingsDto Settings { get; set; }
+        private ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
+        private bool ShuttingDown { get; set; }
+        private ISmtpClient SmtpClient { get; set; }
+
+        public ThresholdModel Threshold { get; set; }
+
+        public bool Monitor(PerformanceCounter process, bool hasBeenBreached)
+        {
+            Console.WriteLine("Monitoring");
+            var breached = Threshold.HasBreached;
+            if (breached)
+            {
+                hasBeenBreached = true;
+                Threshold.BreachStart = DateTime.Now;
+                Alert();
+            }
+            else if (hasBeenBreached)
+            {
+                Threshold.BreachEnd = DateTime.Now;
+                EmailAlert = new EmailAlert(EventService, Logger, SmtpClient, Settings.EmailAlertSettings, Threshold);
+                EmailAlert.Alert();
+                hasBeenBreached = false;
+            }
+
+            process.NextValue();
+            Thread.Sleep(1000);
+            var currentValue = process.NextValue();
+            if (currentValue >= Threshold.Percentage)
+            {
+                Threshold.BreachCount++;
+            }
+            else
+            {
+                Threshold.BreachCount = 0;
+            }
+
+            return hasBeenBreached;
         }
 
         public void GetThresholds()
         {
             Settings = SettingsService.GetSettings();
             MonitoringEnabled = Settings.EmailAlertSettings.AlertOnBreach || Settings.EmailAlertSettings.AlertOnBreachEnd;
-            ThresholdPercentage = Settings.CpuMonitoring.CpuPercentageLimit;
-            TimeThresholdSec = Settings.CpuMonitoring.ThresholdTime;
+            Threshold.Percentage = Settings.CpuMonitoring.CpuPercentageLimit;
+            Threshold.TimeThresholdSec = Settings.CpuMonitoring.ThresholdTime;
         }
 
         public void Alert()
         {
-            EmailAlert = new EmailAlert(EventService, Logger,SmtpClient, Settings.EmailAlertSettings, BreachStart, BreachEnd);
+            EmailAlert = new EmailAlert(EventService, Logger, SmtpClient, Settings.EmailAlertSettings, Threshold);
             EmailAlert.Alert();
         }
 
@@ -105,43 +139,6 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
                 //TODO: We need to possibly restart the service.
             }
-        }
-
-        public bool Monitor(PerformanceCounter process, bool hasBeenBreached)
-        {
-            Console.WriteLine("Monitoring");
-            var breached = CheckBreach();
-            if (breached)
-            {
-                hasBeenBreached = true;
-                BreachStart = DateTime.Now;
-                Alert();
-            }
-            else if (hasBeenBreached)
-            {
-                BreachEnd = DateTime.Now;
-                EmailAlert = new EmailAlert(EventService, Logger,SmtpClient, Settings.EmailAlertSettings, BreachStart, BreachEnd);
-                EmailAlert.Alert();
-            }
-
-            process.NextValue();
-            Thread.Sleep(1000);
-            var currentValue = process.NextValue();
-            if (currentValue >= ThresholdPercentage)
-            {
-                ThresholdBreachCount++;
-            }
-            else
-            {
-                ThresholdBreachCount = 0;
-            }
-
-            return hasBeenBreached;
-        }
-
-        private bool CheckBreach()
-        {
-            return ThresholdBreachCount >= TimeThresholdSec;
         }
 
         public void Stop(bool immediate = false)

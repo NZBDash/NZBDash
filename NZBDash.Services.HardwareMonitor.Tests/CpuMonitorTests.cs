@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuMonitorTest.cs
+//   File: CpuMonitorTests.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -35,15 +35,16 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Monitors;
 
 using Ploeh.AutoFixture;
 
 namespace NZBDash.Services.HardwareMonitor.Tests
 {
-    [Ignore]
+
     [TestFixture]
-    public class CpuMonitorTest 
+    public class CpuMonitorTests
     {
         private ISettingsService<HardwareSettingsDto> Service { get; set; }
         private Mock<IEventService> EventService { get; set; }
@@ -74,8 +75,11 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThresholdSec = 1,
-                ThresholdPercentage = 1
+                Threshold = new ThresholdModel
+                {
+                    TimeThresholdSec = 1,
+                    Percentage = 1
+                }
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -95,9 +99,12 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
             var cpu = new CpuMonitor(mock.Object, EventService.Object, Logger.Object, SmtpClient.Object)
             {
-                TimeThresholdSec = 1,
-                ThresholdPercentage = 1,
-                ThresholdBreachCount = 2,
+                Threshold = new ThresholdModel
+                {
+                    TimeThresholdSec = 1,
+                    Percentage = 1,
+                    BreachCount = 2,
+                }
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -105,8 +112,8 @@ namespace NZBDash.Services.HardwareMonitor.Tests
                 cpu.Monitor(process, true);
             }
 
-            Assert.That(cpu.BreachStart.Hour, Is.EqualTo(DateTime.Now.Hour));
-            Assert.That(cpu.BreachStart.Minute, Is.EqualTo(DateTime.Now.Minute));
+            Assert.That(cpu.Threshold.BreachStart.Hour, Is.EqualTo(DateTime.Now.Hour));
+            Assert.That(cpu.Threshold.BreachStart.Minute, Is.EqualTo(DateTime.Now.Minute));
             EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Once);
         }
 
@@ -120,9 +127,12 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
             var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
+             Threshold = new ThresholdModel
+            {
                 TimeThresholdSec = 1,
-                ThresholdPercentage = 1,
-                ThresholdBreachCount = 2,
+                Percentage = 1,
+                BreachCount = 2,
+}
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -131,14 +141,14 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
                 EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Never);
 
-                cpu.ThresholdBreachCount = 0;
+                cpu.Threshold.BreachCount = 0;
 
                 cpu.Monitor(process, true);
             }
 
 
-            Assert.That(cpu.BreachEnd.Hour, Is.EqualTo(DateTime.Now.Hour));
-            Assert.That(cpu.BreachEnd.Minute, Is.EqualTo(DateTime.Now.Minute));
+            Assert.That(cpu.Threshold.BreachEnd.Hour, Is.EqualTo(DateTime.Now.Hour));
+            Assert.That(cpu.Threshold.BreachEnd.Minute, Is.EqualTo(DateTime.Now.Minute));
             EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Never);
             EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Once);
         }
@@ -154,9 +164,12 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
             var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
             {
+                Threshold = new ThresholdModel
+                {
                 TimeThresholdSec = 10,
-                ThresholdPercentage = 999,
-                ThresholdBreachCount = 1,
+                Percentage = 999,
+                BreachCount = 1,
+}
             };
 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
@@ -164,7 +177,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
                 cpu.Monitor(process, true);
             }
 
-            Assert.That(cpu.ThresholdBreachCount, Is.EqualTo(0));
+            Assert.That(cpu.Threshold.BreachCount, Is.EqualTo(0));
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
         }
     }
