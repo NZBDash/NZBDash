@@ -56,6 +56,7 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
             if (!MonitoringEnabled)
             {
+                Logger.Info("CPU Monitor is not enabled. Shutting down.");
                 ShuttingDown = true;
             }
         }
@@ -73,16 +74,18 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         public bool Monitor(PerformanceCounter process, bool hasBeenBreached)
         {
-            Console.WriteLine("Monitoring");
+            Logger.Trace("Monitoring... ");
             var breached = Threshold.HasBreached;
             if (breached)
             {
+                Logger.Trace(string.Format("We have an CPU breach at {0}", DateTime.Now));
                 hasBeenBreached = true;
                 Threshold.BreachStart = DateTime.Now;
                 Alert();
             }
             else if (hasBeenBreached)
             {
+                Logger.Trace(string.Format("We have an ended a CPU breach at {0}", DateTime.Now));
                 Threshold.BreachEnd = DateTime.Now;
                 EmailAlert = new EmailAlert(EventService, Logger, SmtpClient, Settings.EmailAlertSettings, Threshold);
                 EmailAlert.Alert();
@@ -106,10 +109,15 @@ namespace NZBDash.Services.HardwareMonitor.Monitors
 
         public void GetThresholds()
         {
+            Logger.Trace("Settings all thresholds");
             Settings = SettingsService.GetSettings();
             MonitoringEnabled = Settings.EmailAlertSettings.AlertOnBreach || Settings.EmailAlertSettings.AlertOnBreachEnd;
             Threshold.Percentage = Settings.CpuMonitoring.CpuPercentageLimit;
             Threshold.TimeThresholdSec = Settings.CpuMonitoring.ThresholdTime;
+
+            Logger.Trace("Monitoring Enabled Settings: " + MonitoringEnabled);
+            Logger.Trace("Percentage Settings: " + Settings.CpuMonitoring.CpuPercentageLimit);
+            Logger.Trace("TimeThresholdSec Settings: " + Settings.CpuMonitoring.ThresholdTime);
         }
 
         public void Alert()
