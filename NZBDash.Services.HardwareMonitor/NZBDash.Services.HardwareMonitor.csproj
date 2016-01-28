@@ -43,6 +43,22 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="Topshelf, Version=3.3.154.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
       <HintPath>..\packages\Topshelf.3.3.1\lib\net40-full\Topshelf.dll</HintPath>
@@ -58,6 +74,7 @@
     <Compile Include="Alert\IAlert.cs" />
     <Compile Include="EventName.cs" />
     <Compile Include="GenericMonitor.cs" />
+    <Compile Include="HardwareObserver.cs" />
     <Compile Include="Monitors\NetworkMonitor.cs" />
     <Compile Include="Monitors\CpuMonitor.cs" />
     <Compile Include="HardwareMonitor.cs" />
@@ -65,6 +82,10 @@
     <Compile Include="Observers\AlertingObserver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="React\CpuIntervals.cs" />
+    <Compile Include="React\CpuPerformanceCounter.cs" />
+    <Compile Include="React\CpuThreshold.cs" />
+    <Compile Include="React\EmailNotifier.cs" />
     <Compile Include="ServiceKernel.cs" />
     <Compile Include="TaskRegistry.cs" />
   </ItemGroup>

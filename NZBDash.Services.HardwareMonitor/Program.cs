@@ -26,12 +26,15 @@
 #endregion
 using System;
 using System.Diagnostics;
+using System.Reactive.Linq;
 
 using Ninject;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Observers;
+using NZBDash.Services.HardwareMonitor.React;
 
 using Topshelf;
 
@@ -45,40 +48,14 @@ namespace NZBDash.Services.HardwareMonitor
             Setup();
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-            //HostFactory.Run(
-            //    x =>
-            //    {
-            //        x.StartAutomatically();
-            //        x.Service<HardwareMonitor>(
-            //            s =>
-            //            {
-            //                s.ConstructUsing(monitor => new HardwareMonitor());
-            //                s.WhenStarted(tc => tc.Start());
-            //                s.WhenStopped(tc => tc.Stop());
-            //                s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
-            //                s.AfterStoppingService(() => { Logger.Info("Stopping HardwareMonitor Service"); });
-            //            });
-            //        x.RunAsLocalSystem();
-            //        x.EnableServiceRecovery(
-            //            r =>
-            //            {
-            //                r.RestartService(1);
-            //            });
-
-            //        x.SetDescription("NZBDash Monitor");
-            //        x.SetDisplayName("NZBDash Monitor");
-            //        x.SetServiceName("NZBDashMonitor");
-            //        x.UseNLog();
-            //    });
-
             HostFactory.Run(
                 x =>
                 {
                     x.StartAutomatically();
-                    x.Service<HardwareMonitor>(
+                    x.Service<HardwareObserver>(
                         s =>
                         {
-                            s.ConstructUsing(monitor => new HardwareMonitor());
+                            s.ConstructUsing(monitor => new HardwareObserver());
                             s.WhenStarted(tc => tc.Start());
                             s.WhenStopped(tc => tc.Stop());
                             s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
@@ -96,6 +73,10 @@ namespace NZBDash.Services.HardwareMonitor
                     x.SetServiceName("NZBDashMonitor");
                     x.UseNLog();
                 });
+
+
+
+            Console.ReadLine();
 
         }
 

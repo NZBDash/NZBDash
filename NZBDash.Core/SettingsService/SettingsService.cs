@@ -31,6 +31,7 @@ using Newtonsoft.Json;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Mapping;
 using NZBDash.Common.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
