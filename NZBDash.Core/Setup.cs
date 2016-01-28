@@ -65,6 +65,11 @@ namespace NZBDash.Core
             }
         }
 
+        public void SetupMappers()
+        {
+            throw new NotImplementedException();
+        }
+
         private void MigrateDatabase()
         {
             var connection = Configuration.DbConnection();
@@ -75,5 +80,6 @@ namespace NZBDash.Core
     public interface ISetup
     {
         bool Start();
+        void SetupMappers();
     }
 }

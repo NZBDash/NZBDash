@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: HardwareMonitor.cs
+//   File: HardwareSettingsMapper.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,32 +24,38 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
 
-using FluentScheduler;
-using FluentScheduler.Model;
-using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.IoC;
+using System.Collections.Generic;
+using System.Linq;
+using NZBDash.Core.Models.Settings;
+using NZBDash.DataAccessLayer.Models.Settings;
+using Omu.ValueInjecter;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Common.Mapping
 {
-    public class HardwareMonitor : IService
+    public class HardwareSettingsMapper
     {
-        private static void TaskManagerUnobservedTaskException(TaskExceptionInformation sender, UnhandledExceptionEventArgs e)
+        public HardwareSettingsDto Map(HardwareSettings entity)
         {
-            Console.WriteLine("An error happened with a scheduled task: " + e.ExceptionObject);
-        }
+            Mapper.AddMap<HardwareSettings, HardwareSettingsDto>(x =>
+            {
+                var settings = new HardwareSettingsDto();
+                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
+                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
+                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
 
-        public void Start()
-        {
-            TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
-            TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new HardwareTaskRegistry());
-        }
+                settings.Drives = x.Drives
+                    .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
+                    .ToList();
 
-        public void Stop()
-        {
-            TaskManager.Stop();
+                return settings;
+            });
+
+
+ 
+
+            var result = Mapper.Map<HardwareSettings, HardwareSettingsDto>(entity);
+            return result;
         }
     }
 }
