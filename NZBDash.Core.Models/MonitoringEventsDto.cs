@@ -39,7 +39,7 @@ namespace NZBDash.Core.Models
 
     public enum EventTypeDto
     {
-        Start,
-        End
+        Start = 0,
+        End = 1
     }
 }

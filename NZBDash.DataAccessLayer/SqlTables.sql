@@ -27,6 +27,6 @@ CREATE TABLE IF NOT EXISTS MonitoringEvents
     Id                                   INTEGER PRIMARY KEY AUTOINCREMENT,
     EventName	                         varchar(50) NOT NULL,
 	EventStart							 Text(50) NOT NULL,
-	EventEnd							 Text(50) NULL
-	EventType							 VARCHAR(50) NOT NULL,
+	EventEnd							 Text(50) NULL,
+	EventType							 INTEGER NOT NULL
 );

@@ -36,7 +36,6 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.Monitors;
 
 using Ploeh.AutoFixture;
 
@@ -70,115 +69,23 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             SmtpClient = mockSmtp;
         }
 
-        [Test]
-        public void TestNoBreach()
-        {
-            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
-            {
-                Threshold = new ThresholdModel
-                {
-                    TimeThresholdSec = 1,
-                    Percentage = 1
-                }
-            };
+        //[Test]
+        //public void TestNoBreach()
+        //{
+        //    var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
+        //    {
+        //        Threshold = new ThresholdModel
+        //        {
+        //            TimeThresholdSec = 1,
+        //            Percentage = 1
+        //        }
+        //    };
 
-            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
-            {
-                cpu.Monitor(process, false);
-            }
-            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
-        }
-
-        [Test]
-        public void TestStartBreach()
-        {
-            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
-            Settings.EmailAlertSettings.AlertOnBreach = true;
-            Settings.EmailAlertSettings.RecipientAddress = "google@gmail.com";
-            mock.Setup(x => x.GetSettings()).Returns(Settings);
-
-            var cpu = new CpuMonitor(mock.Object, EventService.Object, Logger.Object, SmtpClient.Object)
-            {
-                Threshold = new ThresholdModel
-                {
-                    TimeThresholdSec = 1,
-                    Percentage = 1,
-                    BreachCount = 2,
-                }
-            };
-
-            var now = DateTime.Now;
-            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
-            {
-                cpu.Monitor(process, true);
-            }
-
-            Assert.That(cpu.Threshold.BreachStart.Hour, Is.EqualTo(now.Hour));
-            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Once);
-        }
-
-        [Test]
-        public void TestEndBreach()
-        {
-            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
-            Settings.EmailAlertSettings.AlertOnBreach = false;
-            Settings.EmailAlertSettings.AlertOnBreachEnd = true;
-            mock.Setup(x => x.GetSettings()).Returns(Settings);
-
-            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
-            {
-             Threshold = new ThresholdModel
-            {
-                TimeThresholdSec = 1,
-                Percentage = 1,
-                BreachCount = 2,
-}
-            };
-
-            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
-            {
-                cpu.Monitor(process, true);
-
-                EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Never);
-
-                cpu.Threshold.BreachCount = 0;
-
-                cpu.Monitor(process, true);
-            }
-
-
-            Assert.That(cpu.Threshold.BreachEnd.Hour, Is.EqualTo(DateTime.Now.Hour));
-            Assert.That(cpu.Threshold.BreachEnd.Minute, Is.EqualTo(DateTime.Now.Minute));
-            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.Start)), Times.Never);
-            EventService.Verify(x => x.RecordEvent(It.Is<MonitoringEventsDto>(dto => dto.EventType == EventTypeDto.End)), Times.Once);
-        }
-
-        [Test]
-        public void TestResetBreach()
-        {
-            var mock = new Mock<ISettingsService<HardwareSettingsDto>>();
-            Settings.EmailAlertSettings.AlertOnBreach = false;
-            Settings.EmailAlertSettings.AlertOnBreachEnd = false;
-
-            mock.Setup(x => x.GetSettings()).Returns(Settings);
-
-            var cpu = new CpuMonitor(Service, EventService.Object, Logger.Object, SmtpClient.Object)
-            {
-                Threshold = new ThresholdModel
-                {
-                TimeThresholdSec = 10,
-                Percentage = 999,
-                BreachCount = 1,
-}
-            };
-
-            using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
-            {
-                cpu.Monitor(process, true);
-            }
-
-            Assert.That(cpu.Threshold.BreachCount, Is.EqualTo(0));
-            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
-        }
+        //    using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+        //    {
+        //        cpu.Monitor(process, false);
+        //    }
+        //    EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
+        //}
     }
 }

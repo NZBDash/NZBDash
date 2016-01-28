@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: TaskRegistry.cs
+//   File: NinjectTaskFactory.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -28,26 +28,16 @@ using FluentScheduler;
 
 using Ninject;
 
-using NZBDash.Services.HardwareMonitor.Monitors;
-using NZBDash.Services.HardwareMonitor.Observers;
-
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.HardwareMonitor.IoC
 {
-    public class TaskRegistry : Registry
-    {
-        public TaskRegistry()
-        {
-            //Schedule<CpuMonitor>().ToRunNow();
-            Schedule<GenericMonitor<CpuObservable,AlertingObserver>>().ToRunNow();
-        }
-    }
     public class NinjectTaskFactory : ITaskFactory
     {
-        private IKernel Kernel { get; set; }
         public NinjectTaskFactory(IKernel kernel)
         {
             Kernel = kernel;
         }
+
+        private IKernel Kernel { get; set; }
 
         /// <summary>
         /// Gets the task instance.

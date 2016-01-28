@@ -73,21 +73,17 @@
     <Compile Include="Alert\EmailAlert.cs" />
     <Compile Include="Alert\IAlert.cs" />
     <Compile Include="EventName.cs" />
-    <Compile Include="GenericMonitor.cs" />
-    <Compile Include="HardwareObserver.cs" />
-    <Compile Include="Monitors\NetworkMonitor.cs" />
-    <Compile Include="Monitors\CpuMonitor.cs" />
+    <Compile Include="Cpu\CpuObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />
-    <Compile Include="Observers\CpuObservable.cs" />
-    <Compile Include="Observers\AlertingObserver.cs" />
+    <Compile Include="IoC\NinjectTaskFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="React\CpuIntervals.cs" />
-    <Compile Include="React\CpuPerformanceCounter.cs" />
-    <Compile Include="React\CpuThreshold.cs" />
-    <Compile Include="React\EmailNotifier.cs" />
+    <Compile Include="Cpu\CpuIntervals.cs" />
+    <Compile Include="Cpu\CpuPerformanceCounter.cs" />
+    <Compile Include="Cpu\CpuThreshold.cs" />
+    <Compile Include="Notification\EmailNotifier.cs" />
     <Compile Include="ServiceKernel.cs" />
-    <Compile Include="TaskRegistry.cs" />
+    <Compile Include="HardwareTaskRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -132,6 +128,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

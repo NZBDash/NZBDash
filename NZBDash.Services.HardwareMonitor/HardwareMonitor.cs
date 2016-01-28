@@ -25,12 +25,12 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading;
 
 using FluentScheduler;
 using FluentScheduler.Model;
 
 using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.HardwareMonitor.IoC;
 
 namespace NZBDash.Services.HardwareMonitor
 {
@@ -43,18 +43,9 @@ namespace NZBDash.Services.HardwareMonitor
 
         public void Start()
         {
-            
             TaskManager.UnobservedTaskException += TaskManagerUnobservedTaskException;
             TaskManager.TaskFactory = new NinjectTaskFactory(ServiceKernel.GetKernel());
-            TaskManager.Initialize(new TaskRegistry());
-
-            Thread.Sleep(10000);
-
-            TaskManager.Stop();
-            Console.WriteLine("Stopping!");
-            //TaskManager.Initialize(new TaskRegistry());
-            //Console.WriteLine("Started!!");
-            //Console.WriteLine(TaskManager.RunningSchedules[0].Name);
+            TaskManager.Initialize(new HardwareTaskRegistry());
         }
 
         public void Stop()

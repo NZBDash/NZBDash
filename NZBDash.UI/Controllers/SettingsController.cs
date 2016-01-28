@@ -286,7 +286,6 @@ namespace NZBDash.UI.Controllers
                 },
                 CpuMonitoring = new CpuMonitoringDto
                 {
-                    Alert = viewModel.CpuMonitoring.Alert,
                     CpuPercentageLimit = viewModel.CpuMonitoring.CpuPercentageLimit,
                     Enabled = viewModel.CpuMonitoring.Enabled,
                     ThresholdTime = viewModel.CpuMonitoring.ThresholdTime
@@ -295,7 +294,6 @@ namespace NZBDash.UI.Controllers
                 {
                     Enabled = viewModel.NetworkMonitoring.Enabled,
                     ThresholdTime = viewModel.NetworkMonitoring.ThresholdTime,
-                    Alert = viewModel.NetworkMonitoring.Alert,
                     NetworkUsagePercentage = viewModel.NetworkMonitoring.NetworkUsagePercentage,
                     NicId = viewModel.NetworkMonitoring.NicId
                 }

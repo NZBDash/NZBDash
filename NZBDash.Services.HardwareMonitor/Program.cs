@@ -25,16 +25,11 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Diagnostics;
-using System.Reactive.Linq;
 
 using Ninject;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core;
-using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.Observers;
-using NZBDash.Services.HardwareMonitor.React;
 
 using Topshelf;
 
@@ -43,6 +38,7 @@ namespace NZBDash.Services.HardwareMonitor
     internal class Program
     {
         private static ILogger Logger { get; set; }
+
         private static void Main(string[] args)
         {
             Setup();
@@ -52,40 +48,23 @@ namespace NZBDash.Services.HardwareMonitor
                 x =>
                 {
                     x.StartAutomatically();
-                    x.Service<HardwareObserver>(
+                    x.Service<HardwareMonitor>(
                         s =>
                         {
-                            s.ConstructUsing(monitor => new HardwareObserver());
+                            s.ConstructUsing(monitor => new HardwareMonitor());
                             s.WhenStarted(tc => tc.Start());
                             s.WhenStopped(tc => tc.Stop());
                             s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });
                             s.AfterStoppingService(() => { Logger.Info("Stopping HardwareMonitor Service"); });
                         });
                     x.RunAsLocalSystem();
-                    x.EnableServiceRecovery(
-                        r =>
-                        {
-                            r.RestartService(1);
-                        });
+                    x.EnableServiceRecovery(r => { r.RestartService(1); });
 
                     x.SetDescription("NZBDash Monitor");
                     x.SetDisplayName("NZBDash Monitor");
                     x.SetServiceName("NZBDashMonitor");
                     x.UseNLog();
                 });
-
-
-
-            Console.ReadLine();
-
-        }
-
-        private static void Setup()
-        {
-            var k = ServiceKernel.GetKernel();
-            Logger = k.Get<ILogger>();
-            var setup = k.Get<ISetup>();
-            setup.Start();
         }
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -98,5 +77,12 @@ namespace NZBDash.Services.HardwareMonitor
             }
         }
 
+        private static void Setup()
+        {
+            var k = ServiceKernel.GetKernel();
+            Logger = k.Get<ILogger>();
+            var setup = k.Get<ISetup>();
+            setup.Start();
+        }
     }
 }

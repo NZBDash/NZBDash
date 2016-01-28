@@ -66,11 +66,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{79A76717-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{209AB01B-A9E4-4238-AF94-AEA198CEE45A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A329D207-5BDD-447C-B283-624A1C7EEE8D}"
-	ProjectSection(SolutionItems) = preProject
-		NZBDash.UI.MVC\global.json = NZBDash.UI.MVC\global.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{036CBD72-078D-4E64-A8DD-FC66BFAC028B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor", "NZBDash.Services.HardwareMonitor\NZBDash.Services.HardwareMonitor.csproj", "{50D733E2-11E0-4002-A7CD-E5B556A80032}"

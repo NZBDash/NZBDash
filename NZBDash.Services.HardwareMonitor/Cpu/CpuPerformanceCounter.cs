@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: EmailNotifier.cs
+//   File: CpuPerformanceCounter.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,60 +24,27 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using System.Diagnostics;
+using System.Threading;
 
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.React
+namespace NZBDash.Services.HardwareMonitor.Cpu
 {
-    class EmailNotifier : INotifier
+    class CpuPerformanceCounter : IPerformanceCounter
     {
-        public EmailNotifier(TimeSpan interval)
+        public double Value
         {
-            Interval = interval;
-        }
-
-        private int AlertCount { get; set; }
-        private TimeSpan Interval { get; set; }
-        private bool SendEndNotification { get; set; }
-        private bool SendStartNotification { get; set; }
-        private bool SentStartNotification { get; set; }
-
-        public void ResetCounter()
-        {
-            Console.WriteLine("RESET!");
-            AlertCount = 0;
-        }
-
-        private void CheckSend()
-        {
-            if (AlertCount >= Interval.Seconds && !SentStartNotification)
+            get
             {
-                Console.WriteLine("SEND OUT TEH EMAILZ");
-                SentStartNotification = true;
+                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
+                {
+                    process.NextValue();
+                    Thread.Sleep(1000);
+                    var currentValue = process.NextValue();
+                    return currentValue;
+                }
             }
-            if (AlertCount == 0 && SentStartNotification)
-            {
-                Console.WriteLine("ALERT, IT's ENDED");
-                SentStartNotification = false;
-            }
-        }
-
-        public void Notify(bool critical)
-        {
-            Console.WriteLine("ALERT! {0}", critical);
-            Console.WriteLine(DateTime.Now.Second);
-
-            if (critical)
-            {
-                AlertCount++;
-            }
-            else
-            {
-                ResetCounter();
-            }
-
-            CheckSend();
         }
     }
 }

@@ -4,14 +4,13 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.React
+namespace NZBDash.Services.HardwareMonitor.Cpu
 {
     public class CpuIntervals : IIntervals
     {
-        public CpuIntervals(ISettingsService<HardwareSettingsDto> service)
+        public CpuIntervals(HardwareSettingsDto service)
         {
-            var settings = service.GetSettings();
-            CriticalNotification = TimeSpan.FromSeconds(settings.CpuMonitoring.ThresholdTime);
+            CriticalNotification = TimeSpan.FromSeconds(service.CpuMonitoring.ThresholdTime);
         }
         public TimeSpan Measurement => TimeSpan.FromSeconds(0.1);
         public TimeSpan CriticalNotification { get; }

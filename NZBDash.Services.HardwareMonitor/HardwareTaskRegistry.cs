@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuThreshold.cs
+//   File: HardwareTaskRegistry.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,19 +24,18 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Interfaces;
+using FluentScheduler;
 
-namespace NZBDash.Services.HardwareMonitor.React
+using NZBDash.Services.HardwareMonitor.Cpu;
+
+namespace NZBDash.Services.HardwareMonitor
 {
-    public class CpuThreshold : IThresholds
+    public class HardwareTaskRegistry : Registry
     {
-        public CpuThreshold(ISettingsService<HardwareSettingsDto> service)
+        public HardwareTaskRegistry()
         {
-            var settings = service.GetSettings();
-            CriticalLoad = settings.CpuMonitoring.CpuPercentageLimit;
+            Schedule<CpuObserver>().ToRunNow();
         }
-        public double CriticalLoad { get; set; }
     }
+
 }

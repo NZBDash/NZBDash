@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuPerformanceCounter.cs
+//   File: CpuThreshold.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,27 +24,18 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Diagnostics;
-using System.Threading;
-
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.React
+namespace NZBDash.Services.HardwareMonitor.Cpu
 {
-    class CpuPerformanceCounter : IPerformanceCounter
+    public class CpuThreshold : IThresholds
     {
-        public double Value
+        public CpuThreshold(HardwareSettingsDto service)
         {
-            get
-            {
-                using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
-                {
-                    process.NextValue();
-                    Thread.Sleep(1000);
-                    var currentValue = process.NextValue();
-                    return currentValue;
-                }
-            }
+            CriticalLoad = service.CpuMonitoring.CpuPercentageLimit;
         }
+        public double CriticalLoad { get; set; }
     }
 }

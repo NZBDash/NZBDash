@@ -46,7 +46,6 @@ namespace NZBDash.UI.Models.ViewModels.Settings
 
     public class CpuMonitoringViewModel
     {
-        public bool Alert { get; set; }
         public bool Enabled { get; set; }
         public int ThresholdTime { get; set; }
         public int CpuPercentageLimit { get; set; }
@@ -54,7 +53,6 @@ namespace NZBDash.UI.Models.ViewModels.Settings
 
     public class NetworkMonitoringViewModel
     {
-        public bool Alert { get; set; }
         public bool Enabled { get; set; }
         public int ThresholdTime { get; set; }
         public int NicId { get; set; }
