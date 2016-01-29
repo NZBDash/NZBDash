@@ -83,6 +83,7 @@ namespace NZBDash.Services.HardwareMonitor
             Logger = k.Get<ILogger>();
             var setup = k.Get<ISetup>();
             setup.Start();
+            setup.SetupMappers();
         }
     }
 }

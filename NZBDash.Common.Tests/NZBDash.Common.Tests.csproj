@@ -110,6 +110,7 @@
       <HintPath>..\packages\AutoFixture.3.36.11\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
@@ -122,7 +123,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\StringCipherTests.cs" />
-    <Compile Include="Mapping\HardwareSettingsMapperTests.cs" />
+    <Compile Include="Mapping\SetupMapperTests.cs" />
     <Compile Include="MemoryCacheProviderTest.cs" />
     <Compile Include="Helpers\TimeExtensionTest.cs" />
     <Compile Include="Helpers\ThirdPartySerializerTest.cs" />
@@ -163,6 +164,14 @@
     <ProjectReference Include="..\NZBDash.Core.Models\NZBDash.Core.Models.csproj">
       <Project>{12FE449B-C0B1-4350-953C-D55320E59E54}</Project>
       <Name>NZBDash.Core.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
+      <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
+      <Name>NZBDash.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Interfaces\NZBDash.DataAccessLayer.Interfaces.csproj">
+      <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
+      <Name>NZBDash.DataAccessLayer.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
       <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>

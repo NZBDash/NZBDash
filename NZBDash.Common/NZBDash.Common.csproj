@@ -110,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Applications.cs" />
-    <Compile Include="Mapping\HardwareSettingsMapper.cs" />
     <Compile Include="Mapping\JsonSerializerTargetMapper.cs" />
     <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Mapping\MappingHelper.cs" />

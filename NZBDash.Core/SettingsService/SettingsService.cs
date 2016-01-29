@@ -73,8 +73,9 @@ namespace NZBDash.Core.SettingsService
                 var obj = string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings.Settings);
                 
                 Logger.Trace("Creating dto from the results from Repo");
-                var model = new U();
-                model.InjectFrom(obj);
+                //var model = new U();
+                var model = Mapper.Map<U>(obj);
+                //model.InjectFrom(obj);
 
                 return model;
             }

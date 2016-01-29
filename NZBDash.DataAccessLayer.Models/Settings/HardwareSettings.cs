@@ -35,6 +35,7 @@ namespace NZBDash.DataAccessLayer.Models.Settings
             EmailAlertSettings = new EmailAlertSettings();
             CpuMonitoring = new CpuMonitoring();
             NetworkMonitoring = new NetworkMonitoring();
+            Drives = new List<DriveSettings>();
         }
 
         public CpuMonitoring CpuMonitoring { get; set; }

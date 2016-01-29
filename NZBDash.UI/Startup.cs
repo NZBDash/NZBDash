@@ -51,6 +51,7 @@ namespace NZBDash.UI
         {
             var setup = Kernel.Get<ISetup>();
             setup.Start();
+            setup.SetupMappers();
         }
     }
 

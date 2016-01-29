@@ -26,6 +26,8 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
 using NZBDash.Common.Models.Settings;
 
 namespace NZBDash.Core.Models.Settings
@@ -37,6 +39,7 @@ namespace NZBDash.Core.Models.Settings
             EmailAlertSettings = new EmailAlertSettingsDto();
             CpuMonitoring = new CpuMonitoringDto();
             NetworkMonitoring = new NetworkMonitoringDto();
+            Drives = new List<DriveSettingsDto>();
         }
 
         public CpuMonitoringDto CpuMonitoring { get; set; }

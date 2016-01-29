@@ -26,10 +26,15 @@
 #endregion
 using System;
 using System.Data.Common;
+using System.Linq;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.Core.Models.Settings;
 using NZBDash.DataAccessLayer;
 using NZBDash.DataAccessLayer.Interfaces;
+using NZBDash.DataAccessLayer.Models.Settings;
+
+using Omu.ValueInjecter;
 
 namespace NZBDash.Core
 {
@@ -67,7 +72,35 @@ namespace NZBDash.Core
 
         public void SetupMappers()
         {
-            throw new NotImplementedException();
+            // Hardware Settings Map
+            Mapper.AddMap<HardwareSettings, HardwareSettingsDto>(x =>
+            {
+                var settings = new HardwareSettingsDto();
+                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
+                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
+                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
+
+                settings.Drives = x.Drives
+                    .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
+                    .ToList();
+
+                return settings;
+            });
+
+            Mapper.AddMap<HardwareSettingsDto, HardwareSettings>(x =>
+            {
+                var settings = new HardwareSettings();
+                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
+                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
+                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
+
+                settings.Drives = x.Drives
+                    .Select(c => new DriveSettings().InjectFrom(c)).Cast<DriveSettings>()
+                    .ToList();
+
+                return settings;
+            });
+
         }
 
         private void MigrateDatabase()
