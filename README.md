@@ -42,4 +42,7 @@ Currently there is no installer, there is a task to sort this out. To 'install' 
 ## Sponsors
 - [JetBrains](http://www.jetbrains.com/) for providing us with free licenses to their great tools!!!
     - [ReSharper](http://www.jetbrains.com/resharper/)
+    - [dotTrace] (https://www.jetbrains.com/profiler/)
+    - [dotMemory] (https://www.jetbrains.com/dotmemory/)
+    - [dotCover] (https://www.jetbrains.com/dotcover/)
 
