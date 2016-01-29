@@ -39,4 +39,7 @@ We are still very early in the project so if you have any ideas just post it!
 
 Currently there is no installer, there is a task to sort this out. To 'install' the application you will need to build it (Using Visual Studio 2013+) and then set up IIS to look at the output folder. This is currently a WIP as this is not ideal.
 
+### Sponsors ###
+- [JetBrains](http://www.jetbrains.com/) for providing us with free licenses to their great tools!!!
+    - [ReSharper](http://www.jetbrains.com/resharper/)
 
