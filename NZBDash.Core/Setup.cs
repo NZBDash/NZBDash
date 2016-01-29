@@ -33,6 +33,7 @@ using NZBDash.Core.Models.Settings;
 using NZBDash.DataAccessLayer;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
+using NZBDash.UI.Models.ViewModels.Settings;
 
 using Omu.ValueInjecter;
 
@@ -96,6 +97,34 @@ namespace NZBDash.Core
 
                 settings.Drives = x.Drives
                     .Select(c => new DriveSettings().InjectFrom(c)).Cast<DriveSettings>()
+                    .ToList();
+
+                return settings;
+            });
+
+            Mapper.AddMap<HardwareSettingsViewModel, HardwareSettingsDto>(x =>
+            {
+                var settings = new HardwareSettingsDto();
+                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
+                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
+                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
+
+                settings.Drives = x.Drives
+                    .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
+                    .ToList();
+
+                return settings;
+            });
+
+            Mapper.AddMap<HardwareSettingsDto, HardwareSettingsViewModel>(x =>
+            {
+                var settings = new HardwareSettingsViewModel();
+                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
+                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
+                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
+
+                settings.Drives = x.Drives
+                    .Select(c => new DriveSettingsViewModel().InjectFrom(c)).Cast<DriveSettingsViewModel>()
                     .ToList();
 
                 return settings;

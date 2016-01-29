@@ -94,8 +94,7 @@ namespace NZBDash.Core.SettingsService
             if (entity == null)
             {
                 Logger.Trace("Our entity is null so we are going to insert one");
-                var newEntity = new T();
-                newEntity.InjectFrom(model);
+                var newEntity = Mapper.Map<T>(model);
                 
                 Logger.Trace("Inserting now");
                 var settings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings.Settings) };
@@ -106,8 +105,8 @@ namespace NZBDash.Core.SettingsService
                 return insertResult != long.MinValue;
             }
 
-            var modified = new T();
-            modified.InjectFrom(model);
+
+            var modified = Mapper.Map<T>(model);
             modified.Id = entity.Id;
 
             var globalSettings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(modified, SerializerSettings.Settings), Id = entity.Id };

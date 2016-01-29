@@ -237,8 +237,7 @@ namespace NZBDash.UI.Controllers
         public ActionResult HardwareSettings()
         {
             var dto = HardwareSettingsService.GetSettings();
-            var model = new HardwareSettingsViewModel();
-            model.InjectFrom(dto);
+            var model = Mapper.Map<HardwareSettingsViewModel>(dto);
 
             // Get the drives and drive information
             var drives = HardwareService.GetDrives().ToList();
@@ -272,34 +271,8 @@ namespace NZBDash.UI.Controllers
                 return View(viewModel);
             }
 
-            var dto = new HardwareSettingsDto
-            {
-                EmailAlertSettings = new EmailAlertSettingsDto
-                {
-                    EmailUsername = viewModel.EmailAlertSettings.EmailUsername,
-                    AlertOnBreach = viewModel.EmailAlertSettings.AlertOnBreach,
-                    AlertOnBreachEnd = viewModel.EmailAlertSettings.AlertOnBreachEnd,
-                    RecipientAddress = viewModel.EmailAlertSettings.RecipientAddress,
-                    EmailPassword = viewModel.EmailAlertSettings.EmailPassword,
-                    EmailHost = viewModel.EmailAlertSettings.EmailHost,
-                    EmailPort = viewModel.EmailAlertSettings.EmailPort,
-                },
-                CpuMonitoring = new CpuMonitoringDto
-                {
-                    CpuPercentageLimit = viewModel.CpuMonitoring.CpuPercentageLimit,
-                    Enabled = viewModel.CpuMonitoring.Enabled,
-                    ThresholdTime = viewModel.CpuMonitoring.ThresholdTime
-                },
-                NetworkMonitoring = new NetworkMonitoringDto
-                {
-                    Enabled = viewModel.NetworkMonitoring.Enabled,
-                    ThresholdTime = viewModel.NetworkMonitoring.ThresholdTime,
-                    NetworkUsagePercentage = viewModel.NetworkMonitoring.NetworkUsagePercentage,
-                    NicId = viewModel.NetworkMonitoring.NicId
-                }
-            };
-            //dto.InjectFrom(viewModel); // TODO: It's not injecting the view model. Everything is null
-
+            var dto = Mapper.Map<HardwareSettingsDto>(viewModel);
+            
             var result = HardwareSettingsService.SaveSettings(dto);
             if (result)
             {

@@ -37,6 +37,7 @@ namespace NZBDash.UI.Models.ViewModels.Settings
             CpuMonitoring = new CpuMonitoringViewModel();
             NetworkMonitoring = new NetworkMonitoringViewModel();
             EmailAlertSettings = new EmailAlertSettingsViewModel();
+            Drives = new List<DriveSettingsViewModel>();
         }
         public CpuMonitoringViewModel CpuMonitoring { get; set; }
         public NetworkMonitoringViewModel NetworkMonitoring { get; set; }
