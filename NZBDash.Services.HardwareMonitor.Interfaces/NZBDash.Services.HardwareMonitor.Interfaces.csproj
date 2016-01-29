@@ -43,7 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlertModel.cs" />
+    <Compile Include="EmailModel.cs" />
     <Compile Include="IIntervals.cs" />
     <Compile Include="IMonitorObservable.cs" />
     <Compile Include="IMonitor.cs" />

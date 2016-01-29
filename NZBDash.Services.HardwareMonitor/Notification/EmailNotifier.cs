@@ -25,13 +25,20 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
+
+using HtmlAgilityPack;
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+
+using RazorEngine;
+using RazorEngine.Templating;
+
 
 namespace NZBDash.Services.HardwareMonitor.Notification
 {
@@ -58,13 +65,11 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         public void ResetCounter()
         {
-            Console.WriteLine("RESET!");
             AlertCount = 0;
         }
 
         private void CheckSend()
         {
-
             if (AlertCount >= Interval.Seconds && !SentStartNotification)
             {
                 StartEventTime = DateTime.Now;
@@ -92,6 +97,9 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                     Console.WriteLine("ALERT, IT's ENDED");
                     SentStartNotification = false;
                 }
+
+                StartEventTime = DateTime.MinValue;
+                EndEventTime = DateTime.MinValue;
             }
         }
 
@@ -101,9 +109,8 @@ namespace NZBDash.Services.HardwareMonitor.Notification
             {
                 return;
             }
-
+            Console.WriteLine("Current Interval {0}", Interval.Seconds);
             Console.WriteLine("ALERT! {0}", critical);
-            Console.WriteLine(DateTime.Now.Second);
 
             if (critical)
             {
@@ -133,16 +140,48 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         private void SendEmail()
         {
+            var m = new EmailModel
+            {
+                BreachEnd = EndEventTime,
+                BreachStart = StartEventTime,
+                TimeThresholdSec = CpuSettings.ThresholdTime,
+                Percentage = CpuSettings.CpuPercentageLimit,
+                BreachType = "CPU %"
+            };
+            var body = GenerateHtmlTemplate(m);
             var message = new MailMessage
             {
                 To = { EmailSettings.RecipientAddress },
                 From = new MailAddress("nzbdash@nzbdash.com", "NZBDash StartAlert"),
                 IsBodyHtml = true,
-                Body = "TEST"
+                Body = body
             };
             var creds = new NetworkCredential(EmailSettings.EmailUsername, EmailSettings.EmailPassword);
             SmtpClient.Send(EmailSettings.EmailHost, EmailSettings.EmailPort, message, creds);
             //Logger.Info("StartAlert Email Sent");
+        }
+
+        private string GenerateHtmlTemplate(EmailModel model)
+        {
+            var template = string.Empty;
+            template = File.ReadAllText("Email Templates\\Email.html");
+            var document = new HtmlDocument();
+            document.LoadHtml(template);
+
+            template = document.DocumentNode.OuterHtml;
+
+            template = RemoveBadHtml(template);
+
+            template = Engine.Razor.RunCompile(template, model.BreachType, null, model);
+
+            return template;
+        }
+
+        private static string RemoveBadHtml(string text)
+        {
+            var newRegex = new System.Text.RegularExpressions.Regex("\\r\\n");
+            text = newRegex.Replace(text, string.Empty);
+            return text.Replace("\\", "\"");
         }
     }
 }

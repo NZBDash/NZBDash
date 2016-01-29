@@ -61,6 +61,9 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             CpuIntervals = new CpuIntervals(settings);
             CpuThresholds = new CpuThreshold(settings);
             Notifier = new EmailNotifier(CpuIntervals.CriticalNotification, EventService, settings.CpuMonitoring, settings.EmailAlertSettings, SmtpClient);
+            Console.WriteLine("Settings Refreshed");
+            Console.WriteLine("New threshold {0}",CpuThresholds.CriticalLoad);
+            Console.WriteLine("New interval {0}", CpuIntervals.CriticalNotification);
         }
 
         public void Start()
