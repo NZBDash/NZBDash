@@ -29,6 +29,7 @@ using System.Linq;
 
 using Dapper.Contrib.Extensions;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
 
@@ -36,9 +37,14 @@ namespace NZBDash.DataAccessLayer.Repository
 {
     public class JsonRepository : ISettingsRepository
     {
-        public JsonRepository(ISqliteConfiguration config)
+        private ICacheProvider Cache { get; set; }
+
+        private string TypeName { get; set; }
+        public JsonRepository(ISqliteConfiguration config, ICacheProvider cacheProvider)
         {
             Db = config;
+            Cache = cacheProvider;
+            TypeName = typeof(JsonRepository).Name;
         }
 
         private ISqliteConfiguration Db { get; set; }
@@ -58,6 +64,7 @@ namespace NZBDash.DataAccessLayer.Repository
                 var page = con.GetAll<GlobalSettings>();
                 return page;
             }
+
         }
 
         public GlobalSettings Get(string pageName)
@@ -83,6 +90,12 @@ namespace NZBDash.DataAccessLayer.Repository
             {
                 return con.Update(entity);
             }
+        }
+
+        private void ResetCache()
+        {
+            Cache.Remove(TypeName + "Get");
+            Cache.Remove(TypeName + "GetAll");
         }
     }
 }

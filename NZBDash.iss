@@ -1,7 +1,4 @@
-; -- Example1.iss --
-; Demonstrates copying 3 files and creating an icon.
-
-; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
+; NZBDash Installer
 
 [Setup]
 AppName=NZBDash
@@ -15,7 +12,7 @@ OutputDir=Installer
 PrivilegesRequired=admin
 UninstallRestartComputer=false
 
-
+; Copy over all the files
 [Files]
 Source: "NZBDash.UI\bin\*"; DestDir: "{app}\UI\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "NZBDash.UI\Content\*"; DestDir: "{app}\UI\Content"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -27,8 +24,11 @@ Source: "NZBDash.UI\favicon.ico"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.UI\NLog.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Web.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Global.asax"; DestDir: "{app}\UI"; Flags: ignoreversion
-Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\HardwareMonitor"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\Monitoring"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Run]
-Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{pf}/NZBDash/"""; Flags: runhidden; StatusMsg: "Settings Up Website"
-Filename: {cmd}; Parameters: "/C ""{app}\NZBDash.Services.HardwareMonitor\bin\Release\NZBDash.Services.HardwareMonitor.exe install"; Flags: runhidden; StatusMsg: "Settings Up Website"
+; Add a IIS website
+Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{app}/UI/"""; Flags: runhidden; StatusMsg: "Settings Up Website"
+
+; Install the monitoring service
+Filename: {cmd}; Parameters: "/C ""{app}\Monitoring\bin\Release\NZBDash.Services.HardwareMonitor.exe install"; Flags: runhidden; StatusMsg: "Settings Up Monitoring Service"

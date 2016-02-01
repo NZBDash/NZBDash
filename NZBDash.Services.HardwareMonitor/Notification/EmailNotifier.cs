@@ -61,6 +61,8 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private bool SentStartNotification { get; set; }
         private DateTime StartEventTime { get; set; }
         private DateTime EndEventTime { get; set; }
+        private bool StartEventSaved { get; set; }
+        private bool EndEventSaved { get; set; }
 
         public void ResetCounter()
         {
@@ -69,37 +71,52 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         private void CheckSend()
         {
-            if (AlertCount >= Interval.Seconds && !SentStartNotification)
+            if (AlertCount >= Interval.Seconds && !StartEventSaved)
             {
-                StartEventTime = DateTime.Now;
-                Debug.WriteLine("Saving Start Event");
-                SaveEvent();
-
-                if (EmailSettings.AlertOnBreach)
+                if (!StartEventSaved)
                 {
-                    SendEmail();
-                    Debug.WriteLine("SEND OUT TEH EMAILZ");
-                    SentStartNotification = true;
+                    StartEventTime = DateTime.Now;
+                    Debug.WriteLine("Saving Start Event");
+                    SaveEvent();
+                    StartEventSaved = true;
+
+                    if (EmailSettings.AlertOnBreach  && !SentStartNotification)
+                    {
+                        SendEmail();
+                        Debug.WriteLine("SEND OUT TEH EMAILZ");
+                        SentStartNotification = true;
+                    }
                 }
             }
 
 
-            if (AlertCount == 0 && SentStartNotification)
+            if (AlertCount == 0 && StartEventSaved)
             {
-                EndEventTime = DateTime.Now;
-                Debug.WriteLine("Saving End Event");
-                SaveEvent();
-
-                if (EmailSettings.AlertOnBreachEnd)
+                if (!EndEventSaved)
                 {
-                    SendEmail();
-                    Debug.WriteLine("ALERT, IT's ENDED");
-                    SentStartNotification = false;
-                }
 
-                StartEventTime = DateTime.MinValue;
-                EndEventTime = DateTime.MinValue;
+                    EndEventTime = DateTime.Now;
+                    Debug.WriteLine("Saving End Event");
+                    SaveEvent();
+                    EndEventSaved = true;
+
+                    if (EmailSettings.AlertOnBreachEnd)
+                    {
+                        SendEmail();
+                        Debug.WriteLine("ALERT, IT's ENDED");
+                        SentStartNotification = false;
+                    }
+                }
+                Reset();
             }
+        }
+
+        private void Reset()
+        {
+            StartEventTime = DateTime.MinValue;
+            EndEventTime = DateTime.MinValue;
+            StartEventSaved = false;
+            EndEventSaved = false;
         }
 
         public void Notify(bool critical)

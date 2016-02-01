@@ -24,6 +24,9 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System;
+using System.Linq;
+
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.DataAccessLayer.Interfaces;
@@ -46,6 +49,18 @@ namespace NZBDash.Core.SettingsService
         {
             var entity = new MonitoringEvents();
             entity.InjectFrom(dto);
+
+            if (entity.EventEnd != DateTime.MinValue)
+            {
+                var startNotification = Repo.Find(
+                    () =>
+                    {
+                        var all = Repo.GetAll();
+                        return all.FirstOrDefault(x => x.EventStart == entity.EventStart);
+                    });
+
+                Repo.Delete(startNotification);
+            }
 
             return Repo.Insert(entity);
         }

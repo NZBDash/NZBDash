@@ -24,6 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
 using System.Collections.Generic;
 
 namespace NZBDash.DataAccessLayer.Interfaces
@@ -61,5 +62,7 @@ namespace NZBDash.DataAccessLayer.Interfaces
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         bool Update(T entity);
+
+        T Find(Func<T> func);
     }
 }

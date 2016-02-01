@@ -25,8 +25,8 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Configuration;
 using System.Diagnostics;
-using System.Net.Mail;
 using System.Reactive.Linq;
 
 using FluentScheduler;
@@ -35,6 +35,8 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Notification;
+
+using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
 
 namespace NZBDash.Services.HardwareMonitor.Cpu
 {
@@ -48,6 +50,16 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
         private IEventService EventService { get; set; }
         private ISmtpClient SmtpClient { get; set; }
         private IConfigurationReader ConfigurationReader { get; set; }
+        private int ConfigurationRefreshTime
+        {
+            get
+            {
+                var val = ConfigurationManager.AppSettings["configRefresh"];
+                int retVal;
+                int.TryParse(val, out retVal);
+                return retVal;
+            }
+        }
 
 
         public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client)
@@ -81,7 +93,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             Debug.WriteLine("New interval {0}", c.Intervals.CriticalNotification);
 
             Sync = Observable
-            .Interval(TimeSpan.FromSeconds(30))
+            .Interval(TimeSpan.FromMinutes(ConfigurationRefreshTime)) // Refresh the settings and counters every X minutes
             .Select(i => ConfigurationReader.Read())
             .DistinctUntilChanged()
             .Subscribe(Start);
@@ -102,7 +114,8 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
 
         public void Stop()
         {
-            Subscription.Dispose();
+            Subscription?.Dispose();
+            Sync?.Dispose();
         }
 
         public void Execute()
