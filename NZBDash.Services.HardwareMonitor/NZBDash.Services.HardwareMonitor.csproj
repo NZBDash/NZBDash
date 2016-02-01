@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationReader.cs" />
     <Compile Include="EventName.cs" />
     <Compile Include="Cpu\CpuObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />

@@ -25,6 +25,7 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -42,23 +43,21 @@ using RazorEngine.Templating;
 
 namespace NZBDash.Services.HardwareMonitor.Notification
 {
-    class EmailNotifier : INotifier
+    public class EmailNotifier : INotifier
     {
-        public EmailNotifier(TimeSpan interval, IEventService eventService, CpuMonitoringDto dto, EmailAlertSettingsDto emailDto, ISmtpClient client)
+        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client)
         {
             Interval = interval;
             EventService = eventService;
-            CpuSettings = dto;
-            EmailSettings = emailDto;
             SmtpClient = client;
         }
 
         private ISmtpClient SmtpClient { get; set; }
         private IEventService EventService { get; set; }
-        private CpuMonitoringDto CpuSettings { get; set; }
-        private EmailAlertSettingsDto EmailSettings { get; set; }
+        public CpuMonitoringDto CpuSettings { get; set; }
+        public EmailAlertSettingsDto EmailSettings { get; set; }
         private int AlertCount { get; set; }
-        private TimeSpan Interval { get; set; }
+        public TimeSpan Interval { get; set; }
         private bool SentStartNotification { get; set; }
         private DateTime StartEventTime { get; set; }
         private DateTime EndEventTime { get; set; }
@@ -73,13 +72,13 @@ namespace NZBDash.Services.HardwareMonitor.Notification
             if (AlertCount >= Interval.Seconds && !SentStartNotification)
             {
                 StartEventTime = DateTime.Now;
-                Console.WriteLine("Saving Start Event");
+                Debug.WriteLine("Saving Start Event");
                 SaveEvent();
 
                 if (EmailSettings.AlertOnBreach)
                 {
                     SendEmail();
-                    Console.WriteLine("SEND OUT TEH EMAILZ");
+                    Debug.WriteLine("SEND OUT TEH EMAILZ");
                     SentStartNotification = true;
                 }
             }
@@ -88,13 +87,13 @@ namespace NZBDash.Services.HardwareMonitor.Notification
             if (AlertCount == 0 && SentStartNotification)
             {
                 EndEventTime = DateTime.Now;
-                Console.WriteLine("Saving End Event");
+                Debug.WriteLine("Saving End Event");
                 SaveEvent();
 
                 if (EmailSettings.AlertOnBreachEnd)
                 {
                     SendEmail();
-                    Console.WriteLine("ALERT, IT's ENDED");
+                    Debug.WriteLine("ALERT, IT's ENDED");
                     SentStartNotification = false;
                 }
 
@@ -105,12 +104,13 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         public void Notify(bool critical)
         {
+            Debug.WriteLine("Starting Notify");
             if (!CpuSettings.Enabled)
             {
                 return;
             }
-            Console.WriteLine("Current Interval {0}", Interval.Seconds);
-            Console.WriteLine("ALERT! {0}", critical);
+            Debug.WriteLine("Current Interval {0}", Interval.Seconds);
+            Debug.WriteLine("ALERT! {0}", critical);
 
             if (critical)
             {

@@ -25,6 +25,8 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Diagnostics;
+using System.Net.Mail;
 using System.Reactive.Linq;
 
 using FluentScheduler;
@@ -36,67 +38,76 @@ using NZBDash.Services.HardwareMonitor.Notification;
 
 namespace NZBDash.Services.HardwareMonitor.Cpu
 {
-    public class CpuObserver : IService, ITask
+    public class CpuObserver : ITask
     {
         private IDisposable Subscription { get; set; }
-        private IDisposable SettingsRefresh { get; set; }
-        private IPerformanceCounter CpuCounter { get; set; }
-        private IIntervals CpuIntervals { get; set; }
-        private IThresholds CpuThresholds { get; set; }
+        private IDisposable Sync { get; set; }
+        private IPerformanceCounter CpuCounter { get; set; } 
         private INotifier Notifier { get; set; }
         private ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
         private IEventService EventService { get; set; }
         private ISmtpClient SmtpClient { get; set; }
+        private IConfigurationReader ConfigurationReader { get; set; }
+
 
         public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
+            ConfigurationReader = new ConfigurationReader(SettingsService);
+            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification,eventService,client);
         }
 
-        private void RefreshSettings(long a = default(long))
+        private void RefreshSettings(Configuration c)
         {
             var settings = SettingsService.GetSettings();
-            CpuIntervals = new CpuIntervals(settings);
-            CpuThresholds = new CpuThreshold(settings);
-            Notifier = new EmailNotifier(CpuIntervals.CriticalNotification, EventService, settings.CpuMonitoring, settings.EmailAlertSettings, SmtpClient);
-            Console.WriteLine("Settings Refreshed");
-            Console.WriteLine("New threshold {0}",CpuThresholds.CriticalLoad);
-            Console.WriteLine("New interval {0}", CpuIntervals.CriticalNotification);
+            Notifier.EmailSettings = settings.EmailAlertSettings;
+            Notifier.CpuSettings = settings.CpuMonitoring;
+            Notifier.Interval = c.Intervals.CriticalNotification;
+
+            Debug.WriteLine("Settings Refreshed");
+
         }
 
-        public void Start()
+        public void Start(Configuration c)
         {
-            RefreshSettings();
+            Subscription?.Dispose();
+            Sync?.Dispose();
+
+            RefreshSettings(c);
             
+            Debug.WriteLine("New threshold {0}", c.Thresholds.CriticalLoad);
+            Debug.WriteLine("New interval {0}", c.Intervals.CriticalNotification);
+
+            Sync = Observable
+            .Interval(TimeSpan.FromSeconds(30))
+            .Select(i => ConfigurationReader.Read())
+            .DistinctUntilChanged()
+            .Subscribe(Start);
+
             CpuCounter = new CpuPerformanceCounter();
             
-            var alarms = Observable.Interval(CpuIntervals.Measurement) // generate endless sequence of events
+            var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
                                    .Select(i => CpuCounter.Value) // convert event index to cpu load value
-                                   .Select(load => load > CpuThresholds.CriticalLoad); // is critical? convert load to boolean
-
-            var settingsRefresh = Observable.Interval(TimeSpan.FromSeconds(20));
-
-            SettingsRefresh = Observable.Merge(settingsRefresh).Subscribe(RefreshSettings);
+                                   .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean
 
             Subscription = alarms // here we throttle critical alarms 
-                .Where(critical => critical).Sample(CpuIntervals.Notification).Merge(
+                .Where(critical => critical).Sample(c.Intervals.Notification).Merge(
                     // allow critical notification no more often then ...
                     alarms // here we throttle non critical alarms
-                        .Where(critical => !critical).Sample(CpuIntervals.Notification)) // allow non critical notification no more often then ...
+                        .Where(critical => !critical).Sample(c.Intervals.Notification)) // allow non critical notification no more often then ...
                 .Subscribe(Notifier.Notify); // our action to send notifications
         }
 
         public void Stop()
         {
             Subscription.Dispose();
-            SettingsRefresh.Dispose();
         }
 
         public void Execute()
         {
-            Start();
+            Start(ConfigurationReader.Read());
         }
     }
 }

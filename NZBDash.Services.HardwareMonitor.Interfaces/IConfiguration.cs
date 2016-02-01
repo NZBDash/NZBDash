@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: INotifier.cs
+//   File: IConfiguration.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,17 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
 using NZBDash.Core.Models.Settings;
 
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public interface INotifier
+    public interface IConfigurationReader
     {
-        void Notify(bool critical); // sends email
-        CpuMonitoringDto CpuSettings { get; set; }
-        EmailAlertSettingsDto EmailSettings { get; set; }
-        TimeSpan Interval { get; set; }
+        Configuration Read();
     }
 }

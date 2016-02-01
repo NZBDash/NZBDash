@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: INotifier.cs
+//   File: ConfigurationReader.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,17 +24,27 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Cpu;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Interfaces
+namespace NZBDash.Services.HardwareMonitor
 {
-    public interface INotifier
+    public class ConfigurationReader : IConfigurationReader
     {
-        void Notify(bool critical); // sends email
-        CpuMonitoringDto CpuSettings { get; set; }
-        EmailAlertSettingsDto EmailSettings { get; set; }
-        TimeSpan Interval { get; set; }
+        public ConfigurationReader(ISettingsService<HardwareSettingsDto> settings)
+        {
+            Settings = settings;
+        }
+        private ISettingsService<HardwareSettingsDto> Settings { get; set; }
+        public Configuration Read()
+        {
+            var config = Settings.GetSettings();
+            var intervals = new CpuIntervals(config);
+            var thresholds = new CpuThreshold(config);
+            var configuration = new Configuration(intervals, thresholds, config.EmailAlertSettings);
+            return configuration;
+        }
     }
 }
