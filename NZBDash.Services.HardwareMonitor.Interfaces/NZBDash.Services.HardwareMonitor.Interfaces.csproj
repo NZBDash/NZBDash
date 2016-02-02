@@ -46,6 +46,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="EmailModel.cs" />
     <Compile Include="IConfiguration.cs" />
+    <Compile Include="IHardwareObserver.cs" />
     <Compile Include="IIntervals.cs" />
     <Compile Include="IMonitorObservable.cs" />
     <Compile Include="IMonitor.cs" />

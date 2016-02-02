@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: ConfigurationReader.cs
+//   File: BaseObserver.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,27 +24,37 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System;
+using System.Configuration;
+
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+
+using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
 
 namespace NZBDash.Services.HardwareMonitor
 {
-    public class ConfigurationReader : IConfigurationReader
+    public abstract class BaseObserver
     {
-        public ConfigurationReader(ISettingsService<HardwareSettingsDto> settings)
+        protected virtual int ConfigurationRefreshTime
         {
-            Settings = settings;
+            get
+            {
+                var val = ConfigurationManager.AppSettings["configRefresh"];
+                int retVal;
+                int.TryParse(val, out retVal);
+                return retVal;
+            }
         }
-        private ISettingsService<HardwareSettingsDto> Settings { get; set; }
-        public Configuration Read()
-        {
-            var config = Settings.GetSettings();
-            var intervals = new CpuIntervals(config);
-            var thresholds = new CpuThreshold(config);
-            var configuration = new Configuration(intervals, thresholds, config.EmailAlertSettings);
-            return configuration;
-        }
+        protected IDisposable Subscription { get; set; }
+        protected IDisposable ConfigurationSync { get; set; }
+        protected IPerformanceCounter Counter { get; set; }
+        protected INotifier Notifier { get; set; }
+        protected ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
+        protected IEventService EventService { get; set; }
+        protected ISmtpClient SmtpClient { get; set; }
+        protected IConfigurationReader ConfigurationReader { get; set; }
+        protected abstract void RefreshSettings(Configuration c);
     }
 }

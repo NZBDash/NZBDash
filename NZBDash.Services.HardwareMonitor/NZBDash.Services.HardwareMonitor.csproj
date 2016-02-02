@@ -84,7 +84,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationReader.cs" />
+    <Compile Include="BaseObserver.cs" />
+    <Compile Include="Cpu\CpuConfigurationReader.cs" />
     <Compile Include="EventName.cs" />
     <Compile Include="Cpu\CpuObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />
@@ -97,6 +98,11 @@
     <Compile Include="Notification\EmailNotifier.cs" />
     <Compile Include="ServiceKernel.cs" />
     <Compile Include="HardwareTaskRegistry.cs" />
+    <Compile Include="Storage\StorageIntervals.cs" />
+    <Compile Include="Storage\StorageThreshold.cs" />
+    <Compile Include="Storage\StorageConfigurationReader.cs" />
+    <Compile Include="Storage\StorageObserver.cs" />
+    <Compile Include="Storage\StoragePerformanceCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

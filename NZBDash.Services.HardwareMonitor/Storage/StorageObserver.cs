@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuObserver.cs
+//   File: StorageObserver.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,7 +25,6 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Reactive.Linq;
 
@@ -33,23 +32,21 @@ using FluentScheduler;
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Notification;
 
-using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
-
-namespace NZBDash.Services.HardwareMonitor.Cpu
+namespace NZBDash.Services.HardwareMonitor.Storage
 {
-    public class CpuObserver : BaseObserver, ITask, IHardwareObserver
+    public class StorageObserver : BaseObserver, ITask, IHardwareObserver
     {
-
-        public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client)
+        public StorageObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification,eventService,client);
+            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client);
         }
 
         protected override void RefreshSettings(Configuration c)
@@ -60,7 +57,6 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             Notifier.Interval = c.Intervals.CriticalNotification;
 
             Debug.WriteLine("Settings Refreshed");
-
         }
 
         public void Start(Configuration c)
@@ -68,19 +64,16 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             Subscription?.Dispose();
             ConfigurationSync?.Dispose();
 
-            RefreshSettings(c);
-            
+            //RefreshSettings(c);
+
             Debug.WriteLine("New threshold {0}", c.Thresholds.CriticalLoad);
             Debug.WriteLine("New interval {0}", c.Intervals.CriticalNotification);
 
-            ConfigurationSync = Observable
-            .Interval(TimeSpan.FromMinutes(ConfigurationRefreshTime)) // Refresh the settings and counters every X minutes
-            .Select(i => ConfigurationReader.Read())
-            .DistinctUntilChanged()
-            .Subscribe(Start);
+            ConfigurationSync = Observable.Interval(TimeSpan.FromMinutes(ConfigurationRefreshTime)) // Refresh the settings and counters every X minutes
+                                          .Select(i => ConfigurationReader.Read()).DistinctUntilChanged().Subscribe(Start);
 
-            Counter = new CpuPerformanceCounter();
-            
+            Counter = new StoragePerformanceCounter();
+
             var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
                                    .Select(i => Counter.Value) // convert event index to cpu load value
                                    .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean
