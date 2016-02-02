@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: INotifier.cs
+//   File: CpuMonitorTests.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,18 +25,49 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Diagnostics;
 
+using Moq;
+
+using NUnit.Framework;
+
+using NZBDash.Common.Interfaces;
+using NZBDash.Core.Interfaces;
+using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.HardwareMonitor.Notification;
 
-namespace NZBDash.Services.HardwareMonitor.Interfaces
+using Ploeh.AutoFixture;
+
+namespace NZBDash.Services.HardwareMonitor.Tests
 {
-    public interface INotifier
+
+    [TestFixture]
+    public class EmailNotifierTests
     {
-        void Notify(bool critical); // sends email
-        CpuMonitoringDto CpuSettings { get; set; }
-        EmailAlertSettingsDto EmailSettings { get; set; }
-        TimeSpan Interval { get; set; }
-        bool StartEventSaved { get; set; }
-        bool EndEventSaved { get; set; }
+
+        private Mock<ISmtpClient> Smtp { get; set; }
+        private Mock<IEventService> EventService { get; set; }
+
+        [SetUp]
+        public void Setup()
+        {
+            Smtp = new Mock<ISmtpClient>();
+            EventService = new Mock<IEventService>();
+            EventService.Setup(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>())).Returns(1);
+        }
+
+        [Test]
+        [Ignore("Need to mock out the IFile")]
+        public void TestSendStartNotification()
+        {
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object)
+            {
+                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true }
+            };
+            n.Notify(true);
+        }
     }
 }

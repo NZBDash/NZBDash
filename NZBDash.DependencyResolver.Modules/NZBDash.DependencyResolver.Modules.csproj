@@ -129,7 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationModule.cs" />
-    <Compile Include="SmtpModule.cs" />
+    <Compile Include="WrapperModule.cs" />
     <Compile Include="CacheModule.cs" />
     <Compile Include="EventModule.cs" />
     <Compile Include="SerializerModule.cs" />

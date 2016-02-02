@@ -86,6 +86,11 @@
   <ItemGroup>
     <Compile Include="BaseObserver.cs" />
     <Compile Include="Cpu\CpuConfigurationReader.cs" />
+    <Compile Include="Email Templates\EmailResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="EventName.cs" />
     <Compile Include="Cpu\CpuObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />
@@ -150,7 +155,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Email Templates\EmailResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

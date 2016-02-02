@@ -35,6 +35,7 @@ using HtmlAgilityPack;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Email_Templates;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
 using RazorEngine;
@@ -61,8 +62,8 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private bool SentStartNotification { get; set; }
         private DateTime StartEventTime { get; set; }
         private DateTime EndEventTime { get; set; }
-        private bool StartEventSaved { get; set; }
-        private bool EndEventSaved { get; set; }
+        public bool StartEventSaved { get; set; }
+        public bool EndEventSaved { get; set; }
 
         public void ResetCounter()
         {
@@ -169,7 +170,8 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 To = { EmailSettings.RecipientAddress },
                 From = new MailAddress("nzbdash@nzbdash.com", "NZBDash StartAlert"),
                 IsBodyHtml = true,
-                Body = body
+                Body = body,
+                Subject = string.Format("NZBDash Monitor {0} Alert!", m.BreachType)
             };
             var creds = new NetworkCredential(EmailSettings.EmailUsername, EmailSettings.EmailPassword);
             SmtpClient.Send(EmailSettings.EmailHost, EmailSettings.EmailPort, message, creds);
@@ -179,7 +181,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private string GenerateHtmlTemplate(EmailModel model)
         {
             var template = string.Empty;
-            template = File.ReadAllText("Email Templates\\Email.html");
+            template = File.ReadAllText(EmailResource.Email); // TODO Replace with IFile implementation
             var document = new HtmlDocument();
             document.LoadHtml(template);
 

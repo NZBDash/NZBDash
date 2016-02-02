@@ -64,7 +64,7 @@ namespace NZBDash.Services.HardwareMonitor.Storage
             Subscription?.Dispose();
             ConfigurationSync?.Dispose();
 
-            //RefreshSettings(c);
+            RefreshSettings(c);
 
             Debug.WriteLine("New threshold {0}", c.Thresholds.CriticalLoad);
             Debug.WriteLine("New interval {0}", c.Intervals.CriticalNotification);

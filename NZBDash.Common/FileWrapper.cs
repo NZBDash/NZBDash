@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: INotifier.cs
+//   File: FileWrapper.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,19 +24,17 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using System.IO;
 
-using NZBDash.Core.Models.Settings;
+using NZBDash.Common.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Interfaces
+namespace NZBDash.Common
 {
-    public interface INotifier
+    public class FileWrapper : IFile
     {
-        void Notify(bool critical); // sends email
-        CpuMonitoringDto CpuSettings { get; set; }
-        EmailAlertSettingsDto EmailSettings { get; set; }
-        TimeSpan Interval { get; set; }
-        bool StartEventSaved { get; set; }
-        bool EndEventSaved { get; set; }
+        public string ReadAllText(string path)
+        {
+            return File.ReadAllText(path);
+        }
     }
 }

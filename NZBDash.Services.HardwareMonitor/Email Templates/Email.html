@@ -3,23 +3,30 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>@Model.BreachType</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-Start: @Model.BreachStart
-<br/>
-End: @Model.BreachEnd
+    <div>@Model.BreachType Breach</div>
 
+    Start: @Model.BreachStart
+    <br />
+    @if(Model.BreachEnd != DateTime.MinValue)
+    {
+        End: @Model.BreachEnd
+        Duration: @Model.Duration
+    } else
+    {
+        Still in progress, It has not yet ended.
+    }
 
+    <div>
+        Current Settings:
+        <ul>
+            <li>Percentage: @Model.Percentage</li>
+            <li>Threshold Time: @Model.TimeThresholdSec</li>
+        </ul>
+    </div>
 
 
 </body>

@@ -26,16 +26,19 @@
 #endregion
 using Ninject.Modules;
 
+using NZBDash.Common;
+using NZBDash.Common.Interfaces;
 using NZBDash.Core;
 using NZBDash.Core.Interfaces;
 
 namespace NZBDash.DependencyResolver.Modules
 {
-    public class SmtpModule : NinjectModule
+    public class WrapperModule : NinjectModule
     {
         public override void Load()
         {
             Bind<ISmtpClient>().To<SmtpClientWrapper>();
+            Bind<IFile>().To<FileWrapper>();
         }
     }
 }

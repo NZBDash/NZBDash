@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICacheProvider.cs" />
+    <Compile Include="IFile.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IWebClient.cs" />
