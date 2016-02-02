@@ -538,6 +538,8 @@
     <Content Include="Views\Shared\TopNavbar.cshtml" />
     <Content Include="Views\Dashboard\Partial\_CpuChart.cshtml" />
     <Content Include="Views\Shared\NavbarDownloads.cshtml" />
+    <Content Include="Views\Settings\AlertSettings.cshtml" />
+    <Content Include="Views\Settings\Alert\CpuAlertModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

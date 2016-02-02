@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: MonitoringEventsService.cs
+//   File: AlertType.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,47 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-using System.Diagnostics;
-using System.Linq;
-
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models;
-using NZBDash.DataAccessLayer.Interfaces;
-using NZBDash.DataAccessLayer.Models;
-
-using Omu.ValueInjecter;
-
-namespace NZBDash.Core.SettingsService
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
-    public class MonitoringEventsService : IEventService
+    public enum AlertType
     {
-        public MonitoringEventsService(ISqlRepository<MonitoringEvents> repo)
-        {
-            Repo = repo;
-        }
-
-        public ISqlRepository<MonitoringEvents> Repo { get; set; }
-
-        public long RecordEvent(MonitoringEventsDto dto)
-        {
-            var entity = new MonitoringEvents();
-            entity.InjectFrom(dto);
-
-            if (entity.EventEnd != DateTime.MinValue)
-            {
-                Debug.WriteLine("Removing existing Event record");
-                var startNotification = Repo.Find(
-                    () =>
-                    {
-                        var all = Repo.GetAll();
-                        return all.FirstOrDefault(x => x.EventStart == entity.EventStart);
-                    });
-
-                Repo.Delete(startNotification);
-            }
-
-            return Repo.Insert(entity);
-        }
+        Cpu,
+        Network,
+        Hdd
     }
 }

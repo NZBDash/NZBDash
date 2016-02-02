@@ -282,6 +282,44 @@ namespace NZBDash.UI.Controllers
             return View("Error");
         }
 
+        [HttpGet]
+        public ActionResult AlertSettings()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditAlert(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAlert(int id)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AlertModal(AlertType alertType)
+        {
+            var model = new AlertSettingsViewModel { AlertType = alertType };
+            return PartialView("Alert/CpuAlertModal", model);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AlertModal(AlertSettingsViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("AlertSettings");
+            }
+            return RedirectToAction("AlertSettings");
+        }
+
         /// <summary>
         /// Gets the specified data from the specified service.
         /// </summary>

@@ -92,6 +92,9 @@
     <Compile Include="ViewModels\NzbGet\NzbGetViewModel.cs" />
     <Compile Include="ViewModels\SabNzbd\SabNzbdHistoryViewModel.cs" />
     <Compile Include="ViewModels\SabNzbd\SabNzbdStatusViewModel.cs" />
+    <Compile Include="ViewModels\Settings\AlertRules.cs" />
+    <Compile Include="ViewModels\Settings\AlertSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\AlertType.cs" />
     <Compile Include="ViewModels\Settings\BaseSettingsViewmodel.cs" />
     <Compile Include="ViewModels\Settings\CouchPotatoSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\DriveSettingsViewModel.cs" />

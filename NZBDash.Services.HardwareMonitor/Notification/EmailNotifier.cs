@@ -121,13 +121,11 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         public void Notify(bool critical)
         {
-            Debug.WriteLine("Starting Notify");
             if (!CpuSettings.Enabled)
             {
                 return;
             }
-            Debug.WriteLine("Current Interval {0}", Interval.Seconds);
-            Debug.WriteLine("ALERT! {0}", critical);
+            Debug.WriteLine("Cpu critical: {0}", critical);
 
             if (critical)
             {

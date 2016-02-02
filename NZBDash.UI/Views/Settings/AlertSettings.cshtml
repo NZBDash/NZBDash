@@ -1,0 +1,90 @@
+﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
+@using NZBDash.UI.Models.ViewModels.Settings
+@model NZBDash.UI.Models.ViewModels.Settings.AlertSettingsViewModel
+
+
+<div class="container-fluid">
+
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-sm-9 col-md-10 main">
+
+            @*@Html.RenderHeader(Resources.Settings_Hardware_Title)*@
+
+            @*<a href="@Url.Action("GetAlertModal")?alertType=@AlertType.Cpu" data-target="myModal">AddAlert</a>*@
+
+            <div>
+                Type @Html.EnumDropDownListFor(x => x.AlertType);
+                <br/>
+            </div>
+
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Alert Rules
+                        </div>
+
+                        @foreach (var rule in Model.AlertRules)
+                        {
+                            <div class="panel-body">
+                                <div class="form-group row">
+                                    Type: @rule.AlertType
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.ActionLink("Edit", "EditAlert", null, new { @class = "form-control" })
+
+                                    @using (Html.BeginForm("DeleteAlert", "Settings", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ActionLink("Delete", "DeleteAlert", null, new { @class = "form-control" })
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-middle modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                @Html.LoadingSpinner()
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+
+
+            $("a[data-target=myModal]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModal .modal-body").load(target, function () {
+                    $("#myModal").modal("show");
+                });
+            });
+
+            $('#CpuMonitoring_Enabled').bootstrapSwitch();
+            $('#NetworkMonitoring_Enabled').bootstrapSwitch();
+            $('#EmailAlertSettings_AlertOnBreachEnd').bootstrapSwitch();
+            $('#EmailAlertSettings_AlertOnBreach').bootstrapSwitch();
+        });
+    </script>
+}
