@@ -24,8 +24,6 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Models.Settings;
-
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
     public interface IConfigurationReader

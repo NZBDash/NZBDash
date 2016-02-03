@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("NZBDash.Services.HardwareMonitor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Exclaimer Ltd")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NZBDash.Services.HardwareMonitor")]
-[assembly: AssemblyCopyright("Copyright © Exclaimer Ltd 2016")]
+[assembly: AssemblyCopyright("Copyright 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
