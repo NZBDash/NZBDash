@@ -75,7 +75,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         private void CheckSend()
         {
-            if (AlertCount >= Interval.Seconds && !StartEventSaved)
+            if (AlertCount >= Interval.Seconds)
             {
                 if (!StartEventSaved)
                 {
