@@ -36,14 +36,14 @@ namespace NZBDash.Common.Helpers
         {
             var bytes = ByteSize.FromKiloBytes(value);
 
-            return String.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
+            return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }
 
         public static string SizeSuffixMb(long value)
         {
             var bytes = ByteSize.FromMegaBytes(value);
 
-            return String.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
+            return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }
 
 
@@ -51,7 +51,7 @@ namespace NZBDash.Common.Helpers
         {
             var bytes = ByteSize.FromMegaBytes(value);
 
-            return String.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
+            return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }
 
         public static double ConvertToMb(string text)
