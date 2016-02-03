@@ -47,7 +47,7 @@ namespace NZBDash.Services.HardwareMonitor.Storage
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger);
+            Notifier = new CpuNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger);
         }
 
         protected override void RefreshSettings(Configuration c)

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: EmailNotifier.cs
+//   File: CpuNotifier.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,33 +25,26 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Diagnostics;
-using System.Net;
-using System.Net.Mail;
-
-using HtmlAgilityPack;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Email_Templates;
+using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
-
-using RazorEngine;
-using RazorEngine.Templating;
 
 namespace NZBDash.Services.HardwareMonitor.Notification
 {
-    public class EmailNotifier : INotifier
+    public class CpuNotifier : INotifier
     {
-        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file, ILogger logger)
+        public CpuNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file, ILogger logger)
         {
             Interval = interval;
             EventService = eventService;
             SmtpClient = client;
             File = file;
             Logger = logger;
+            Sendy = new EmailSender(file, logger, client);
         }
 
 
@@ -68,6 +61,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private bool SentStartNotification { get; set; }
         private DateTime StartEventTime { get; set; }
         private DateTime EndEventTime { get; set; }
+        private EmailSender Sendy { get; set; }
 
 
         public void ResetCounter()
@@ -87,7 +81,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                     SaveEvent();
                     StartEventSaved = true;
 
-                    if (EmailSettings.AlertOnBreach  && !SentStartNotification)
+                    if (EmailSettings.AlertOnBreach && !SentStartNotification)
                     {
                         SendEmail();
                         Logger.Trace("Sending out alert start email");
@@ -164,49 +158,16 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         private void SendEmail()
         {
-            var m = new EmailModel
+            var model = new EmailModel
             {
                 BreachEnd = EndEventTime,
                 BreachStart = StartEventTime,
-                TimeThresholdSec = CpuSettings.ThresholdTime,
                 Percentage = CpuSettings.CpuPercentageLimit,
-                BreachType = "CPU %"
+                TimeThresholdSec = CpuSettings.ThresholdTime,
+                BreachType = "CPU"
             };
-            var body = GenerateHtmlTemplate(m);
-            var message = new MailMessage
-            {
-                To = { EmailSettings.RecipientAddress },
-                From = new MailAddress("nzbdash@nzbdash.com", "NZBDash StartAlert"),
-                IsBodyHtml = true,
-                Body = body,
-                Subject = string.Format("NZBDash Monitor {0} Alert!", m.BreachType)
-            };
-            var creds = new NetworkCredential(EmailSettings.EmailUsername, EmailSettings.EmailPassword);
-            SmtpClient.Send(EmailSettings.EmailHost, EmailSettings.EmailPort, message, creds);
-            Logger.Info("Email: { To: {0}, Subject: {1}, Host: {2}, Port: {3} };",EmailSettings.RecipientAddress, message.Subject, EmailSettings.EmailHost, EmailSettings.EmailPort);
+            Sendy.SendEmail(model, EmailSettings);
         }
 
-        private string GenerateHtmlTemplate(EmailModel model)
-        {
-            var template = string.Empty;
-            template = File.ReadAllText(EmailResource.Email);
-            var document = new HtmlDocument();
-            document.LoadHtml(template);
-
-            template = document.DocumentNode.OuterHtml;
-
-            template = RemoveLineBreaks(template);
-
-            template = Engine.Razor.RunCompile(template, model.BreachType, null, model);
-
-            return template;
-        }
-
-        private static string RemoveLineBreaks(string text)
-        {
-            var newRegex = new System.Text.RegularExpressions.Regex("\\r\\n");
-            text = newRegex.Replace(text, string.Empty);
-            return text.Replace("\\", "\"");
-        }
     }
 }

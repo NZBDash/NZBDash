@@ -95,12 +95,13 @@
     <Compile Include="Cpu\CpuObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />
     <Compile Include="IoC\NinjectTaskFactory.cs" />
+    <Compile Include="Notification\EmailSender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cpu\CpuIntervals.cs" />
     <Compile Include="Cpu\CpuPerformanceCounter.cs" />
     <Compile Include="Cpu\CpuThreshold.cs" />
-    <Compile Include="Notification\EmailNotifier.cs" />
+    <Compile Include="Notification\CpuNotifier.cs" />
     <Compile Include="ServiceKernel.cs" />
     <Compile Include="HardwareTaskRegistry.cs" />
     <Compile Include="Storage\StorageIntervals.cs" />
