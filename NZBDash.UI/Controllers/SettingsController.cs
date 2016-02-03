@@ -285,7 +285,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult AlertSettings()
         {
-            return View();
+            var model = new AlertSettingsViewModel();
+            return View(model);
         }
 
         [HttpGet]
@@ -304,19 +305,26 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult AlertModal(AlertType alertType)
         {
-            var model = new AlertSettingsViewModel { AlertType = alertType };
+            var model = new AlertRules { AlertType = alertType };
+
+            if (model.AlertType == AlertType.Cpu)
+            {
+                return PartialView("Alert/CpuAlertModal", model);
+            }
             return PartialView("Alert/CpuAlertModal", model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AlertModal(AlertSettingsViewModel vm)
+        public ActionResult AlertModal(AlertRules vm)
         {
-            if (ModelState.IsValid)
+            if (!vm.IsValid)
             {
-                return RedirectToAction("AlertSettings");
+                return Json(vm.Errors);
             }
+
+
             return RedirectToAction("AlertSettings");
         }
 

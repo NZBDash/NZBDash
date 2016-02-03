@@ -219,8 +219,8 @@
   <data name="Applications_CouchPotato_Movies" xml:space="preserve">
     <value>Movies</value>
   </data>
-  <data name="Settings_Hardware_Title" xml:space="preserve">
-    <value>Hardware Settings</value>
+  <data name="Settings_Alert_Title" xml:space="preserve">
+    <value>Alert Settings</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>

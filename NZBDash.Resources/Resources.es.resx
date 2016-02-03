@@ -219,9 +219,6 @@
   <data name="Applications_CouchPotato_Movies" xml:space="preserve">
     <value>Movies</value>
   </data>
-  <data name="Settings_Hardware_Title" xml:space="preserve">
-    <value>Hardware Settings</value>
-  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
@@ -311,5 +308,8 @@
   </data>
   <data name="Views_Shared_NavUser_Logout" xml:space="preserve">
     <value>Logout</value>
+  </data>
+  <data name="Settings_Alert_Title" xml:space="preserve">
+    <value>Configuración de alertas</value>
   </data>
 </root>

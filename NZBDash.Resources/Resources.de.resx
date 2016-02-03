@@ -243,9 +243,6 @@
   <data name="Applications_CouchPotato_Movies" xml:space="preserve">
     <value>Filme</value>
   </data>
-  <data name="Settings_Hardware_Title" xml:space="preserve">
-    <value>Hardware-Einstellungen!</value>
-  </data>
   <data name="Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -311,5 +308,8 @@
   </data>
   <data name="UI_Models_LoginViewModel_RememeberMe" xml:space="preserve">
     <value>Angemeldet bleiben</value>
+  </data>
+  <data name="Settings_Alert_Title" xml:space="preserve">
+    <value>Job Alarm Einstellungen</value>
   </data>
 </root>

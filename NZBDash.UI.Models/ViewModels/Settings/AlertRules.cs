@@ -24,11 +24,48 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Collections.Generic;
+
 namespace NZBDash.UI.Models.ViewModels.Settings
 {
     public class AlertRules
     {
+        public AlertRules()
+        {
+            Errors = new Dictionary<string, string>();
+        }
         public AlertType AlertType { get; set; }
         public int Id { get; set; }
+        public int ThresholdTime { get; set; }
+        public int Percentage { get; set; }
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// This is only valid for network monitoring, we need to know the Nic to monitor
+        /// </summary>
+        public int NicId { get; set; }
+        
+        /// <summary>
+        /// Custom check to see if the model is valid
+        /// </summary>
+        public bool IsValid
+        {
+            get
+            {
+                if (Enabled)
+                {
+                    if (ThresholdTime == 0)
+                        Errors.Add("ThresholdTime", "Threshold is not valid");
+
+                    if (Percentage == 0)
+                        Errors.Add("Percentage", "Percentage is not valid");
+
+                    return Errors.Count == 0;
+                }
+                return true;
+            }
+        }
+
+        public Dictionary<string, string> Errors { get; set; }
     }
 }

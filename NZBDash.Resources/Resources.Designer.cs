@@ -214,6 +214,15 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alert Settings.
+        /// </summary>
+        public static string Settings_Alert_Title {
+            get {
+                return ResourceManager.GetString("Settings_Alert_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api Key.
         /// </summary>
         public static string Settings_ApiKey {
@@ -237,15 +246,6 @@ namespace NZBDash.Resources {
         public static string Settings_Enabled {
             get {
                 return ResourceManager.GetString("Settings_Enabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hardware Settings.
-        /// </summary>
-        public static string Settings_Hardware_Title {
-            get {
-                return ResourceManager.GetString("Settings_Hardware_Title", resourceCulture);
             }
         }
         

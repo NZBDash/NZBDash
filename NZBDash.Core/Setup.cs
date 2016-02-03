@@ -26,16 +26,12 @@
 #endregion
 using System;
 using System.Data.Common;
-using System.Linq;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Core.Models.Settings;
+using NZBDash.Common.Mapping;
+using NZBDash.Core.Interfaces;
 using NZBDash.DataAccessLayer;
 using NZBDash.DataAccessLayer.Interfaces;
-using NZBDash.DataAccessLayer.Models.Settings;
-using NZBDash.UI.Models.ViewModels.Settings;
-
-using Omu.ValueInjecter;
 
 namespace NZBDash.Core
 {
@@ -73,62 +69,8 @@ namespace NZBDash.Core
 
         public void SetupMappers()
         {
-            // Hardware Settings Map
-            Mapper.AddMap<HardwareSettings, HardwareSettingsDto>(x =>
-            {
-                var settings = new HardwareSettingsDto();
-                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
-                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
-                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
-
-                settings.Drives = x.Drives
-                    .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
-                    .ToList();
-
-                return settings;
-            });
-
-            Mapper.AddMap<HardwareSettingsDto, HardwareSettings>(x =>
-            {
-                var settings = new HardwareSettings();
-                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
-                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
-                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
-
-                settings.Drives = x.Drives
-                    .Select(c => new DriveSettings().InjectFrom(c)).Cast<DriveSettings>()
-                    .ToList();
-
-                return settings;
-            });
-
-            Mapper.AddMap<HardwareSettingsViewModel, HardwareSettingsDto>(x =>
-            {
-                var settings = new HardwareSettingsDto();
-                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
-                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
-                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
-
-                settings.Drives = x.Drives
-                    .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
-                    .ToList();
-
-                return settings;
-            });
-
-            Mapper.AddMap<HardwareSettingsDto, HardwareSettingsViewModel>(x =>
-            {
-                var settings = new HardwareSettingsViewModel();
-                settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
-                settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
-                settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
-
-                settings.Drives = x.Drives
-                    .Select(c => new DriveSettingsViewModel().InjectFrom(c)).Cast<DriveSettingsViewModel>()
-                    .ToList();
-
-                return settings;
-            });
+            // ReSharper disable once ObjectCreationAsStatement
+            new HardwareMapperInitialise();
 
         }
 
@@ -137,11 +79,5 @@ namespace NZBDash.Core
             var connection = Configuration.DbConnection();
             TableCreation.CreateTables(connection);
         }
-    }
-
-    public interface ISetup
-    {
-        bool Start();
-        void SetupMappers();
     }
 }

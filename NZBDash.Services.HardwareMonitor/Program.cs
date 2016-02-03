@@ -30,6 +30,7 @@ using Ninject;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core;
+using NZBDash.Core.Interfaces;
 
 using Topshelf;
 

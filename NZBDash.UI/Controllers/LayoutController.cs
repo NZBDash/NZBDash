@@ -72,7 +72,7 @@ namespace NZBDash.UI.Controllers
                     case Applications.Sickbeard: break;
 
                     case Applications.CouchPotato:
-                        var cpService =CpService.GetSettings();
+                        var cpService = CpService.GetSettings();
                         if (cpService.Enabled)
                         {
                             model.Add(

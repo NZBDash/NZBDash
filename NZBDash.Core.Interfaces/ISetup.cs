@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: Startup.cs
+//   Copyright (c) 2016 NZBDash
+//   File: ISetup.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,36 +24,11 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
-using Microsoft.Owin;
-using Ninject;
-using NZBDash.Core;
-using NZBDash.Core.Interfaces;
-using NZBDash.UI;
-using NZBDash.UI.App_Start;
-using Owin;
-
-[assembly: OwinStartup(typeof(Startup))]
-namespace NZBDash.UI
+namespace NZBDash.Core.Interfaces
 {
-    public partial class Startup
+    public interface ISetup
     {
-        private static IKernel Kernel { get; set; }
-
-        public void Configuration(IAppBuilder app)
-        {
-            Kernel = NinjectWebCommon.GetKernel();
-            ConfigureAuth(app);
-            app.MapSignalR();
-            ApplicationSetup();
-
-        }
-        private void ApplicationSetup()
-        {
-            var setup = Kernel.Get<ISetup>();
-            setup.Start();
-            setup.SetupMappers();
-        }
+        bool Start();
+        void SetupMappers();
     }
-
 }

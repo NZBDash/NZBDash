@@ -27,6 +27,7 @@
 using Ninject.Modules;
 
 using NZBDash.Core;
+using NZBDash.Core.Interfaces;
 
 namespace NZBDash.DependencyResolver.Modules
 {
