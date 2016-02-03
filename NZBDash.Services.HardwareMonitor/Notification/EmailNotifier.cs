@@ -45,12 +45,13 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 {
     public class EmailNotifier : INotifier
     {
-        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file)
+        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file, ILogger logger)
         {
             Interval = interval;
             EventService = eventService;
             SmtpClient = client;
             File = file;
+            Logger = logger;
         }
 
 
@@ -59,6 +60,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         public CpuMonitoringDto CpuSettings { get; set; }
         public EmailAlertSettingsDto EmailSettings { get; set; }
         private ISmtpClient SmtpClient { get; set; }
+        private ILogger Logger { get; set; }
         private IFile File { get; set; }
         private IEventService EventService { get; set; }
         private int AlertCount { get; set; }
@@ -70,6 +72,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
         public void ResetCounter()
         {
+            Logger.Trace("Reset CPU Counter");
             AlertCount = 0;
         }
 
@@ -80,14 +83,14 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 if (!StartEventSaved)
                 {
                     StartEventTime = DateTime.Now;
-                    Debug.WriteLine("Saving Start Event");
+                    Logger.Trace("Saving Start Event");
                     SaveEvent();
                     StartEventSaved = true;
 
                     if (EmailSettings.AlertOnBreach  && !SentStartNotification)
                     {
                         SendEmail();
-                        Debug.WriteLine("SEND OUT TEH EMAILZ");
+                        Logger.Trace("Sending out alert start email");
                         SentStartNotification = true;
                     }
                 }
@@ -100,14 +103,14 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 {
 
                     EndEventTime = DateTime.Now;
-                    Debug.WriteLine("Saving End Event");
+                    Logger.Trace("Saving End Event");
                     SaveEvent();
                     EndEventSaved = true;
 
                     if (EmailSettings.AlertOnBreachEnd)
                     {
                         SendEmail();
-                        Debug.WriteLine("ALERT, IT's ENDED");
+                        Logger.Trace("Sent out Alert end email");
                         SentStartNotification = false;
                     }
                 }
@@ -127,13 +130,14 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         {
             if (!CpuSettings.Enabled)
             {
+                Logger.Trace("CPU Monitoring is not enabled");
                 return;
             }
-            Debug.WriteLine("Cpu critical: {0}", critical);
 
             if (critical)
             {
                 AlertCount++;
+                Logger.Trace("Current alert count {0}", AlertCount);
             }
             else
             {
@@ -154,6 +158,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
             };
 
             var result = EventService.RecordEvent(dto);
+            Logger.Trace("Saved event to DB result {0}", result);
 
         }
 
@@ -177,9 +182,8 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 Subject = string.Format("NZBDash Monitor {0} Alert!", m.BreachType)
             };
             var creds = new NetworkCredential(EmailSettings.EmailUsername, EmailSettings.EmailPassword);
-            Console.WriteLine("{0},{1}", EmailSettings.EmailUsername, EmailSettings.EmailPassword);
             SmtpClient.Send(EmailSettings.EmailHost, EmailSettings.EmailPort, message, creds);
-            //Logger.Info("StartAlert Email Sent");
+            Logger.Info("Email: { To: {0}, Subject: {1}, Host: {2}, Port: {3} };",EmailSettings.RecipientAddress, message.Subject, EmailSettings.EmailHost, EmailSettings.EmailPort);
         }
 
         private string GenerateHtmlTemplate(EmailModel model)
@@ -191,14 +195,14 @@ namespace NZBDash.Services.HardwareMonitor.Notification
 
             template = document.DocumentNode.OuterHtml;
 
-            template = RemoveBadHtml(template);
+            template = RemoveLineBreaks(template);
 
             template = Engine.Razor.RunCompile(template, model.BreachType, null, model);
 
             return template;
         }
 
-        private static string RemoveBadHtml(string text)
+        private static string RemoveLineBreaks(string text)
         {
             var newRegex = new System.Text.RegularExpressions.Regex("\\r\\n");
             text = newRegex.Replace(text, string.Empty);

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuMonitorTests.cs
+//   File: EmailNotifierTests.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,7 +25,6 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 
@@ -37,10 +36,7 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Notification;
-
-using Ploeh.AutoFixture;
 
 namespace NZBDash.Services.HardwareMonitor.Tests
 {
@@ -51,31 +47,42 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
         private Mock<ISmtpClient> Smtp { get; set; }
         private Mock<IEventService> EventService { get; set; }
+        private EmailNotifier N { get; set; }
 
         [SetUp]
         public void Setup()
         {
             Smtp = new Mock<ISmtpClient>();
             EventService = new Mock<IEventService>();
+            var logger = new Mock<ILogger>();
+
             EventService.Setup(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>())).Returns(1);
+            var fileMock = new Mock<IFile>();
+            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("<html>\\r\\n</html>");
+
+            N = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object, logger.Object);
         }
 
         [Test]
         public void TestSendStartNotification()
         {
-            var fileMock = new Mock<IFile>();
-            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
-            {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password"}
-            };
-            n.Notify(true);
 
-            Assert.That(n.EndEventSaved, Is.False,"The values never got reset, this means that we didn't correctly end the notification");
-            Assert.That(n.StartEventSaved, Is.True, "We never saved the start notification event");
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto
+            {
+                AlertOnBreach = true,
+                RecipientAddress = "ABC@ABC.com",
+                EmailHost = "Host123",
+                EmailPort = 99,
+                EmailUsername = "Username",
+                EmailPassword = "password"
+            };
+            N.Notify(true);
+
+            Assert.That(N.EndEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
+            Assert.That(N.StartEventSaved, Is.True, "We never saved the start notification event");
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Once);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Once);
         }
 
         [Test]
@@ -83,23 +90,29 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             var fileMock = new Mock<IFile>();
             fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto
             {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true,AlertOnBreachEnd = true,RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+                AlertOnBreach = true,
+                AlertOnBreachEnd = true,
+                RecipientAddress = "ABC@ABC.com",
+                EmailHost = "Host123",
+                EmailPort = 99,
+                EmailUsername = "Username",
+                EmailPassword = "password"
             };
-            n.Notify(true);
+            N.Notify(true);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
 
-            n.Notify(false);
+            N.Notify(false);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Exactly(2));
 
             // Values get reset
-            Assert.That(n.EndEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
-            Assert.That(n.StartEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
+            Assert.That(N.EndEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
+            Assert.That(N.StartEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
 
 
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Exactly(2));
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Exactly(2));
         }
 
         [Test]
@@ -107,17 +120,14 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             var fileMock = new Mock<IFile>();
             fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
-            {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
-            };
-            n.Notify(true);
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" };
+            N.Notify(true);
 
-            Assert.That(n.EndEventSaved, Is.False, "The end event should never get saved.");
-            Assert.That(n.StartEventSaved, Is.True, "We never saved the start notification event");
+            Assert.That(N.EndEventSaved, Is.False, "The end event should never get saved.");
+            Assert.That(N.StartEventSaved, Is.True, "We never saved the start notification event");
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
 
         [Test]
@@ -125,79 +135,96 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         {
             var fileMock = new Mock<IFile>();
             fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto
             {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+                AlertOnBreach = false,
+                AlertOnBreachEnd = false,
+                RecipientAddress = "ABC@ABC.com",
+                EmailHost = "Host123",
+                EmailPort = 99,
+                EmailUsername = "Username",
+                EmailPassword = "password"
             };
-            n.Notify(true);
+
+            N.Notify(true);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
 
-            n.Notify(false);
+            N.Notify(false);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Exactly(2));
 
             // Values get reset
-            Assert.That(n.EndEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
-            Assert.That(n.StartEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
+            Assert.That(N.EndEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
+            Assert.That(N.StartEventSaved, Is.False, "The values never got reset, this means that we didn't correctly end the notification");
 
 
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
 
         [Test]
         public void TestNotificationDisabled()
         {
             var fileMock = new Mock<IFile>();
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
-            {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = false, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
-            };
-            n.Notify(true);
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = false, ThresholdTime = 1 };
+                N.EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" };
+            N.Notify(true);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
 
             // Values never get set
-            Assert.That(n.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
-            Assert.That(n.StartEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
+            Assert.That(N.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
+            Assert.That(N.StartEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
 
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
 
         [Test]
         public void TestNotificationStartEventNotSavedButAttemptEndEvent()
         {
             var fileMock = new Mock<IFile>();
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto
             {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = true, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+                AlertOnBreach = false,
+                AlertOnBreachEnd = true,
+                RecipientAddress = "ABC@ABC.com",
+                EmailHost = "Host123",
+                EmailPort = 99,
+                EmailUsername = "Username",
+                EmailPassword = "password"
             };
-            n.Notify(true);
+        
+            N.Notify(true);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
-            n.StartEventSaved = false;
-            n.Notify(false);
+            N.StartEventSaved = false;
+            N.Notify(false);
             // Values never get set
-            Assert.That(n.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
+            Assert.That(N.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
 
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
 
         [Test]
         public void TestNotificationStartEventSavedButAttemptStartEvent()
         {
             var fileMock = new Mock<IFile>();
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
+            N.EmailSettings = new EmailAlertSettingsDto
             {
-                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+                AlertOnBreach = true,
+                AlertOnBreachEnd = false,
+                RecipientAddress = "ABC@ABC.com",
+                EmailHost = "Host123",
+                EmailPort = 99,
+                EmailUsername = "Username",
+                EmailPassword = "password"
             };
-            n.StartEventSaved = true;
-            n.Notify(true);
+            N.StartEventSaved = true;
+            N.Notify(true);
             EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
             // Values never get set
-            Assert.That(n.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
+            Assert.That(N.EndEventSaved, Is.False, "The values have been set, they should not be set as notifier should be disabled");
 
-            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+            Smtp.Verify(x => x.Send(N.EmailSettings.EmailHost, N.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
     }
 }

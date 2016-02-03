@@ -27,6 +27,7 @@
 using System;
 using System.Configuration;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
@@ -37,6 +38,11 @@ namespace NZBDash.Services.HardwareMonitor
 {
     public abstract class BaseObserver
     {
+        protected BaseObserver(ILogger logger)
+        {
+            Logger = logger;
+        }
+
         protected virtual int ConfigurationRefreshTime
         {
             get
@@ -47,6 +53,7 @@ namespace NZBDash.Services.HardwareMonitor
                 return retVal;
             }
         }
+        protected ILogger Logger { get; set; }
         protected IDisposable Subscription { get; set; }
         protected IDisposable ConfigurationSync { get; set; }
         protected IPerformanceCounter Counter { get; set; }

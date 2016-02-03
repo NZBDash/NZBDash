@@ -25,8 +25,6 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Configuration;
-using System.Diagnostics;
 using System.Reactive.Linq;
 
 using FluentScheduler;
@@ -44,13 +42,13 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
     public class CpuObserver : BaseObserver, ITask, IHardwareObserver
     {
 
-        public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file)
+        public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger) : base(logger)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification,eventService,client, file);
+            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification,eventService,client, file, logger);
         }
 
         protected override void RefreshSettings(Configuration c)
@@ -60,7 +58,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             Notifier.CpuSettings = settings.CpuMonitoring;
             Notifier.Interval = c.Intervals.CriticalNotification;
 
-            Debug.WriteLine("Settings Refreshed");
+            Logger.Trace("Settings Refreshed");
 
         }
 
@@ -71,8 +69,8 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
 
             RefreshSettings(c);
             
-            Debug.WriteLine("New threshold {0}", c.Thresholds.CriticalLoad);
-            Debug.WriteLine("New interval {0}", c.Intervals.CriticalNotification);
+            Logger.Trace("New threshold {0}", c.Thresholds.CriticalLoad);
+            Logger.Trace("New interval {0}", c.Intervals.CriticalNotification);
 
             ConfigurationSync = Observable
             .Interval(TimeSpan.FromMinutes(ConfigurationRefreshTime)) // Refresh the settings and counters every X minutes
@@ -102,6 +100,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
 
         public void Execute()
         {
+            Logger.Trace("Starting CPU Monitor");
             Start(ConfigurationReader.Read());
         }
     }

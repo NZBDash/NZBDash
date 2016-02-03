@@ -41,13 +41,13 @@ namespace NZBDash.Services.HardwareMonitor.Storage
 {
     public class StorageObserver : BaseObserver, ITask, IHardwareObserver
     {
-        public StorageObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file)
+        public StorageObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger) : base(logger)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file);
+            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger);
         }
 
         protected override void RefreshSettings(Configuration c)
@@ -57,7 +57,7 @@ namespace NZBDash.Services.HardwareMonitor.Storage
             Notifier.CpuSettings = settings.CpuMonitoring;
             Notifier.Interval = c.Intervals.CriticalNotification;
 
-            Debug.WriteLine("Settings Refreshed");
+            Logger.Trace("Settings Refreshed");
         }
 
         public void Start(Configuration c)
