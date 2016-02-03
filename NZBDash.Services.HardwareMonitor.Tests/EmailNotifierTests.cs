@@ -164,7 +164,6 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         [Test]
         public void TestNotificationDisabled()
         {
-            var fileMock = new Mock<IFile>();
             N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = false, ThresholdTime = 1 };
                 N.EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" };
             N.Notify(true);
@@ -180,7 +179,6 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         [Test]
         public void TestNotificationStartEventNotSavedButAttemptEndEvent()
         {
-            var fileMock = new Mock<IFile>();
             N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
             N.EmailSettings = new EmailAlertSettingsDto
             {
@@ -206,7 +204,6 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         [Test]
         public void TestNotificationStartEventSavedButAttemptStartEvent()
         {
-            var fileMock = new Mock<IFile>();
             N.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 };
             N.EmailSettings = new EmailAlertSettingsDto
             {
