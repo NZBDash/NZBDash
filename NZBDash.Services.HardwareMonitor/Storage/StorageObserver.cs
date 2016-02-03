@@ -30,6 +30,7 @@ using System.Reactive.Linq;
 
 using FluentScheduler;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Cpu;
@@ -40,13 +41,13 @@ namespace NZBDash.Services.HardwareMonitor.Storage
 {
     public class StorageObserver : BaseObserver, ITask, IHardwareObserver
     {
-        public StorageObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client)
+        public StorageObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client);
+            Notifier = new EmailNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file);
         }
 
         protected override void RefreshSettings(Configuration c)

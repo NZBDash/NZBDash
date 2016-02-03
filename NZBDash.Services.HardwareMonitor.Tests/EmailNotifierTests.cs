@@ -26,6 +26,8 @@
 #endregion
 using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
 
 using Moq;
 
@@ -59,15 +61,106 @@ namespace NZBDash.Services.HardwareMonitor.Tests
         }
 
         [Test]
-        [Ignore("Need to mock out the IFile")]
         public void TestSendStartNotification()
         {
-            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object)
+            var fileMock = new Mock<IFile>();
+            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
             {
                 CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
-                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true }
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password"}
             };
             n.Notify(true);
+
+            Assert.That(n.EndEventSaved, Is.False);
+            Assert.That(n.StartEventSaved, Is.True);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
+            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Once);
+        }
+
+        [Test]
+        public void TestSendEndNotification()
+        {
+            var fileMock = new Mock<IFile>();
+            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            {
+                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = true,AlertOnBreachEnd = true,RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+            };
+            n.Notify(true);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
+
+            n.Notify(false);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Exactly(2));
+
+            // Values get reset
+            Assert.That(n.EndEventSaved, Is.False);
+            Assert.That(n.StartEventSaved, Is.False);
+
+
+            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Exactly(2));
+        }
+
+        [Test]
+        public void TestSendStartNotificationWithOutEmail()
+        {
+            var fileMock = new Mock<IFile>();
+            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            {
+                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+            };
+            n.Notify(true);
+
+            Assert.That(n.EndEventSaved, Is.False);
+            Assert.That(n.StartEventSaved, Is.True);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
+            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+        }
+
+        [Test]
+        public void TestSendEndNotificationWithoutEmail()
+        {
+            var fileMock = new Mock<IFile>();
+            fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("abc");
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            {
+                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = true, ThresholdTime = 1 },
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+            };
+            n.Notify(true);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Once);
+
+            n.Notify(false);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Exactly(2));
+
+            // Values get reset
+            Assert.That(n.EndEventSaved, Is.False);
+            Assert.That(n.StartEventSaved, Is.False);
+
+
+            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
+        }
+
+        [Test]
+        public void TestNotificationDisabled()
+        {
+            var fileMock = new Mock<IFile>();
+            var n = new EmailNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object)
+            {
+                CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = 1, Enabled = false, ThresholdTime = 1 },
+                EmailSettings = new EmailAlertSettingsDto { AlertOnBreach = false, AlertOnBreachEnd = false, RecipientAddress = "ABC@ABC.com", EmailHost = "Host123", EmailPort = 99, EmailUsername = "Username", EmailPassword = "password" }
+            };
+            n.Notify(true);
+            EventService.Verify(x => x.RecordEvent(It.IsAny<MonitoringEventsDto>()), Times.Never);
+
+            // Values never get set
+            Assert.That(n.EndEventSaved, Is.False);
+            Assert.That(n.StartEventSaved, Is.False);
+
+            Smtp.Verify(x => x.Send(n.EmailSettings.EmailHost, n.EmailSettings.EmailPort, It.IsAny<MailMessage>(), It.IsAny<NetworkCredential>()), Times.Never);
         }
     }
 }

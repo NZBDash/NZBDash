@@ -26,12 +26,12 @@
 #endregion
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Mail;
 
 using HtmlAgilityPack;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
@@ -41,29 +41,32 @@ using NZBDash.Services.HardwareMonitor.Interfaces;
 using RazorEngine;
 using RazorEngine.Templating;
 
-
 namespace NZBDash.Services.HardwareMonitor.Notification
 {
     public class EmailNotifier : INotifier
     {
-        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client)
+        public EmailNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file)
         {
             Interval = interval;
             EventService = eventService;
             SmtpClient = client;
+            File = file;
         }
 
-        private ISmtpClient SmtpClient { get; set; }
-        private IEventService EventService { get; set; }
+
+        public bool StartEventSaved { get; set; }
+        public bool EndEventSaved { get; set; }
         public CpuMonitoringDto CpuSettings { get; set; }
         public EmailAlertSettingsDto EmailSettings { get; set; }
+        private ISmtpClient SmtpClient { get; set; }
+        private IFile File { get; set; }
+        private IEventService EventService { get; set; }
         private int AlertCount { get; set; }
         public TimeSpan Interval { get; set; }
         private bool SentStartNotification { get; set; }
         private DateTime StartEventTime { get; set; }
         private DateTime EndEventTime { get; set; }
-        public bool StartEventSaved { get; set; }
-        public bool EndEventSaved { get; set; }
+
 
         public void ResetCounter()
         {
@@ -174,6 +177,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 Subject = string.Format("NZBDash Monitor {0} Alert!", m.BreachType)
             };
             var creds = new NetworkCredential(EmailSettings.EmailUsername, EmailSettings.EmailPassword);
+            Console.WriteLine("{0},{1}", EmailSettings.EmailUsername, EmailSettings.EmailPassword);
             SmtpClient.Send(EmailSettings.EmailHost, EmailSettings.EmailPort, message, creds);
             //Logger.Info("StartAlert Email Sent");
         }
@@ -181,7 +185,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private string GenerateHtmlTemplate(EmailModel model)
         {
             var template = string.Empty;
-            template = File.ReadAllText(EmailResource.Email); // TODO Replace with IFile implementation
+            template = File.ReadAllText(EmailResource.Email);
             var document = new HtmlDocument();
             document.LoadHtml(template);
 
