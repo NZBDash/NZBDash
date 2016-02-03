@@ -28,15 +28,24 @@ using System;
 
 using ByteSizeLib;
 
+using Humanizer;
+
 namespace NZBDash.Common.Helpers
 {
     public class MemorySizeConverter
     {
         public static string SizeSuffix(long value)
         {
-            var bytes = ByteSize.FromKiloBytes(value);
+            var result = value.Kilobytes();
 
-            return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
+            return string.Format("{0} {1}", Math.Round(result.LargestWholeNumberValue, 1), result.LargestWholeNumberSymbol);
+        }
+
+        public static string SizeSuffixTime(long value)
+        {
+            var result = value.Kilobytes();
+
+            return result.Per(TimeSpan.FromSeconds(1)).Humanize("#.#");
         }
 
         public static string SizeSuffixMb(long value)
@@ -49,7 +58,7 @@ namespace NZBDash.Common.Helpers
 
         public static string SizeSuffixMb(double value)
         {
-            var bytes = ByteSize.FromMegaBytes(value);
+            var bytes = value.Megabytes();
 
             return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }

@@ -47,6 +47,17 @@ namespace NZBDash.Common.Tests.Helpers
             Assert.That(result, Is.EqualTo(expected));
         }
 
+        [TestCase(1, "1 KB/s")]
+        [TestCase(1024, "1 MB/s")]
+        [TestCase(2048, "2 MB/s")]
+        [TestCase(4879456, "4.7 GB/s")]
+        [TestCase(10485760, "10 GB/s")]
+        [TestCase(104857600000, "97.7 TB/s")]
+        public void SizeSuffixTime(Int64 input, string expected)
+        {
+            var result = MemorySizeConverter.SizeSuffixTime(input);
+            Assert.That(result, Is.EqualTo(expected));
+        }
         [TestCase(1024, "1 GB")]
         [TestCase(3817, "3.7 GB")]
         [TestCase(2048, "2 GB")]

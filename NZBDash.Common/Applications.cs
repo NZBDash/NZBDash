@@ -4,6 +4,7 @@ namespace NZBDash.Common
 {
     public enum Applications
     {
+        //TODO Resource
         [Display(Name = "SabNZBD")]
         SabNZBD = 0,
         [Display(Name = "Sickbeard")]

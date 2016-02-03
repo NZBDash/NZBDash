@@ -108,6 +108,7 @@
     <Compile Include="ViewModels\Sonarr\SonarrSeriesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Grid.Mvc.Ajax.readme" />
     <None Include="packages.config" />
     <None Include="Scripts\gridmvc.min.js.map" />
