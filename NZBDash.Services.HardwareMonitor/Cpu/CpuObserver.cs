@@ -64,6 +64,11 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
 
         public void Start(Configuration c)
         {
+            if (Notifier.StartEventSaved && !Notifier.EndEventSaved)
+            {
+                // Ensure we do not dispose of the Observers if they are in the middle of an alert cycle.
+                return;
+            }
             Subscription?.Dispose();
             ConfigurationSync?.Dispose();
 
