@@ -25,7 +25,7 @@ Source: "NZBDash.UI\NLog.config"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.UI\Web.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Global.asax"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\Monitoring"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "Install\*"; DestDir: "{app}\Install"; Flags: ignoreversion
+Source: "Install\*"; DestDir: "{app}\Install"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Run]
 ; Add a IIS website
