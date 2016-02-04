@@ -29,7 +29,7 @@ Source: "Install\*"; DestDir: "{app}\Install"; Flags: ignoreversion recursesubdi
 
 [Run]
 ; Add a IIS website
-Filename: {cmd}; Parameters: "/C ""{app}\Install\IISSetup.bat {app}"""
+Filename: {cmd}; Parameters: "/C ""{app}\Install\IISSetup.bat {app}"""; Flags: runascurrentuser
 
 ; Install the monitoring service
-Filename: {cmd}; Parameters: "/C ""{app}\Install\MonitoringInstall.bat"""
+Filename: {cmd}; Parameters: "/C ""{app}\Install\MonitoringInstall.bat"""; Flags: runascurrentuser
