@@ -29,7 +29,12 @@ Source: "Install\*"; DestDir: "{app}\Install"; Flags: ignoreversion recursesubdi
 
 [Run]
 ; Add a IIS website
-Filename: {cmd}; Parameters: "/C ""{app}\Install\IISSetup.bat {app}"""; Flags: runascurrentuser
+Filename: C:\Windows\System32\inetsrv\appcmd.exe; Parameters: "add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{app}/UI/"; Flags: runascurrentuser
 
 ; Install the monitoring service
-Filename: {cmd}; Parameters: "/C ""{app}\Install\MonitoringInstall.bat"""; Flags: runascurrentuser
+Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameters: "install"; Flags: runascurrentuser
+
+[UninstallRun]
+; Uninstall the monitoring service
+Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameters: "uninstall"; Flags: runascurrentuser
+
