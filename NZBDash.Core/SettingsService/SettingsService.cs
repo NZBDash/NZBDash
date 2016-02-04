@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
+//   Copyright (c) 2016 NZBDash
 //   File: SettingsService.cs
 //   Created By: Jamie Rees
 //  
@@ -31,7 +31,6 @@ using Newtonsoft.Json;
 using NZBDash.Common;
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Mapping;
 using NZBDash.Common.Models.Settings;
 using NZBDash.Core.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
@@ -73,9 +72,8 @@ namespace NZBDash.Core.SettingsService
                 var obj = string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings.Settings);
                 
                 Logger.Trace("Creating dto from the results from Repo");
-                //var model = new U();
+
                 var model = Mapper.Map<U>(obj);
-                //model.InjectFrom(obj);
 
                 return model;
             }
@@ -115,6 +113,19 @@ namespace NZBDash.Core.SettingsService
 
             Logger.Trace(string.Format("Our modify was {0}", result));
             return result;
+        }
+
+        public bool Delete(U model)
+        {
+            Logger.Trace(string.Format("Looking for id {0} in the {1} to delete", model.Id, EntityName));
+            var entity = Repo.Get(EntityName);
+            if (entity != null)
+            {
+                return Repo.Delete(entity);
+            }
+
+            // Entity does not exist so nothing to delete
+            return true;
         }
 
         private string EncryptSettings(GlobalSettings settings)

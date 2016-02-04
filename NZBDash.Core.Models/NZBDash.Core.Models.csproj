@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="MonitoringEventsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\AlertRulesDto.cs" />
+    <Compile Include="Settings\AlertSettingsDto.cs" />
+    <Compile Include="Settings\AlertTypeDto.cs" />
     <Compile Include="Settings\BaseSettingsDto.cs" />
     <Compile Include="Settings\CouchPotatoSettingsDto.cs" />
     <Compile Include="Settings\EnabledDashletsDto.cs" />

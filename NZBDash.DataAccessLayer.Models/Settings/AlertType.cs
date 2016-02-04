@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: ISettingsService.cs
+//   File: AlertType.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,29 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Core.Interfaces
+namespace NZBDash.DataAccessLayer.Models.Settings
 {
-    public interface ISettingsService<T>
+    public enum AlertType
     {
-        /// <summary>
-        /// Gets the settings.
-        /// </summary>
-        /// <returns></returns>
-        T GetSettings();
-
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        bool SaveSettings(T model);
-
-        /// <summary>
-        /// Delete the settings.
-        /// </summary>
-        /// <param name="model">The model to delete.</param>
-        /// <returns></returns>
-        bool Delete(T model);
-
+            Cpu,
+            Network,
+            Hdd
     }
 }

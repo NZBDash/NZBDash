@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: ISettingsService.cs
+//   File: AlertRulesDto.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,29 +24,19 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Core.Interfaces
+namespace NZBDash.Core.Models.Settings
 {
-    public interface ISettingsService<T>
+    public class AlertRulesDto : BaseSettingsDto
     {
-        /// <summary>
-        /// Gets the settings.
-        /// </summary>
-        /// <returns></returns>
-        T GetSettings();
+        public AlertTypeDto AlertType { get; set; }
+        public int Id { get; set; }
+        public int ThresholdTime { get; set; }
+        public int Percentage { get; set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
-        /// Saves the settings.
+        /// This is only valid for network monitoring, we need to know the Nic to monitor
         /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        bool SaveSettings(T model);
-
-        /// <summary>
-        /// Delete the settings.
-        /// </summary>
-        /// <param name="model">The model to delete.</param>
-        /// <returns></returns>
-        bool Delete(T model);
-
+        public int NicId { get; set; }
     }
 }

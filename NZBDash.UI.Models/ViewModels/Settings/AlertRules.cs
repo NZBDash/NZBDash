@@ -55,7 +55,7 @@ namespace NZBDash.UI.Models.ViewModels.Settings
                 if (Enabled)
                 {
                     if (ThresholdTime == 0)
-                        Errors.Add("ThresholdTime", "Threshold is not valid");
+                        Errors.Add("ThresholdTime", "Threshold is not valid"); //TODO Resource
 
                     if (Percentage == 0)
                         Errors.Add("Percentage", "Percentage is not valid");

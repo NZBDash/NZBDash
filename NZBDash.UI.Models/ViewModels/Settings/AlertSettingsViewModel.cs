@@ -35,6 +35,5 @@ namespace NZBDash.UI.Models.ViewModels.Settings
             AlertRules = new List<AlertRules>();
         }
         public List<AlertRules> AlertRules { get; set; }
-        public AlertType AlertType { get; set; }
     }
 }

@@ -48,7 +48,8 @@ namespace NZBDash.UI.Controllers
                                   IAuthenticationService auth,
                                   ISettingsService<HardwareSettingsDto> hardwareService,
                                   IHardwareService hardware,
-                                  ILogger logger)
+                                  ILogger logger,
+                                  ISettingsService<AlertSettingsDto> alertSettings)
             : base(logger)
         {
             NzbGetSettingsService = nzbGetSettingsService;
@@ -60,6 +61,7 @@ namespace NZBDash.UI.Controllers
             Auth = auth;
             HardwareSettingsService = hardwareService;
             HardwareService = hardware;
+            AlertSettingsService = alertSettings;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
@@ -69,6 +71,7 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsService { get; set; }
         private ISettingsService<SonarrSettingsDto> SonarrSettingsService { get; set; }
         private ISettingsService<HardwareSettingsDto> HardwareSettingsService { get; set; }
+        private ISettingsService<AlertSettingsDto> AlertSettingsService { get; set; }
         private IHardwareService HardwareService { get; set; }
         private IAuthenticationService Auth { get; set; }
 
@@ -255,11 +258,11 @@ namespace NZBDash.UI.Controllers
             var ddlNics = new List<string>();
             foreach (var nic in nics)
             {
-                model.NetworkMonitoring.NicDict.Add(nic.Key,nic.Value);
+                model.NetworkMonitoring.NicDict.Add(nic.Key, nic.Value);
                 ddlNics.Add(nic.Key);
             }
-            model.NetworkMonitoring.Nics = new SelectList(model.NetworkMonitoring.NicDict, "Value","Key",1);
-            
+            model.NetworkMonitoring.Nics = new SelectList(model.NetworkMonitoring.NicDict, "Value", "Key", 1);
+
             return View(model);
         }
 
@@ -272,7 +275,7 @@ namespace NZBDash.UI.Controllers
             }
 
             var dto = Mapper.Map<HardwareSettingsDto>(viewModel);
-            
+
             var result = HardwareSettingsService.SaveSettings(dto);
             if (result)
             {
@@ -285,21 +288,64 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult AlertSettings()
         {
+            var settings = AlertSettingsService.GetSettings();
             var model = new AlertSettingsViewModel();
+
+            foreach (var rDto in settings.AlertRules)
+            {
+                var m = new AlertRules();
+                m.InjectFrom(rDto);
+
+                model.AlertRules.Add(m);
+            }
+            model.InjectFrom(settings);
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult EditAlert(int id)
+        public ActionResult UpdateAlert(int id)
         {
-            return View();
+            var settings = AlertSettingsService.GetSettings();
+            var selected = settings.AlertRules.Select(x => x.Id == id);
+            var vm = new AlertRules();
+            vm.InjectFrom(selected);
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAlert(AlertRules model)
+        {
+            if (!model.IsValid)
+            {
+                return Json(model.Errors);
+            }
+
+            var dtoRule = new AlertRulesDto();
+            dtoRule.InjectFrom(model);
+
+            var dto = new AlertSettingsDto();
+            dto.AlertRules.Add(dtoRule);
+
+            var result = AlertSettingsService.SaveSettings(dto);
+            if (result)
+            {
+                return RedirectToAction("AlertSettings");
+            }
+
+            return View("Error");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteAlert(int id)
         {
-            return View();
+            var settings = AlertSettingsService.GetSettings();
+            var settingToRemove = settings.AlertRules.FirstOrDefault(x => x.Id == id);
+
+            settings.AlertRules.Remove(settingToRemove);
+
+            var result = AlertSettingsService.SaveSettings(settings);
+            return View(result);
         }
 
         [HttpGet]
@@ -311,7 +357,7 @@ namespace NZBDash.UI.Controllers
             {
                 return PartialView("Alert/CpuAlertModal", model);
             }
-            return PartialView("Alert/CpuAlertModal", model);
+            return RedirectToAction("AlertSettings");
         }
 
 
@@ -324,8 +370,19 @@ namespace NZBDash.UI.Controllers
                 return Json(vm.Errors);
             }
 
+            var dtoRule = new AlertRulesDto();
+            dtoRule.InjectFrom(vm);
 
-            return RedirectToAction("AlertSettings");
+            var dto = new AlertSettingsDto();
+            dto.AlertRules.Add(dtoRule);
+
+            var result = AlertSettingsService.SaveSettings(dto);
+            if (result)
+            {
+                return RedirectToAction("AlertSettings");
+            }
+
+            return View("Error");
         }
 
         /// <summary>
@@ -342,21 +399,6 @@ namespace NZBDash.UI.Controllers
             model.InjectFrom(dto);
 
             return View(model);
-        }
-
-        private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
-        {
-            // Create an empty list to hold result of the operation
-
-            // For each string in the 'elements' variable, create a new SelectListItem object
-            // that has both its Value and Text properties set to a particular value.
-            // This will result in MVC rendering each item as:
-            //     <option value="State Name">State Name</option>
-
-            return elements.Select(element => new SelectListItem
-            {
-                Value = element, Text = element
-            }).ToList();
         }
     }
 }

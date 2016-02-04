@@ -77,6 +77,8 @@ namespace NZBDash.Core.Test.Services
 
             mockRepo.Setup(x => x.Insert(It.IsAny<GlobalSettings>())).Returns(1).Verifiable();
 
+            mockRepo.Setup(x => x.Delete(It.IsAny<GlobalSettings>())).Returns(true).Verifiable();
+
 
             MockRepo = mockRepo;
             Service = new SettingsService<NzbDashSettings, Setting>(MockRepo.Object, logger.Object);
@@ -135,6 +137,39 @@ namespace NZBDash.Core.Test.Services
             MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
             MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
             MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Once);
+        }
+
+        [Test]
+        public void DeleteSetting()
+        {
+            var model = F.Create<Setting>();
+            var result = Service.Delete(model);
+
+            Assert.That(result, Is.True);
+            MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Delete(It.IsAny<GlobalSettings>()), Times.Once);
+        }
+
+        [Test]
+        public void DeleteSettingThatDoesntExist()
+        {
+            var model = F.Create<Setting>();
+            var mockRepo = new Mock<ISettingsRepository>();
+            mockRepo.Setup(x => x.Get("Test")).Returns((GlobalSettings)null).Verifiable();
+            MockRepo = mockRepo;
+
+            Service = new SettingsService<NzbDashSettings, Setting>(MockRepo.Object, logger.Object);
+
+            var result = Service.Delete(model);
+
+            Assert.That(result, Is.True);
+            logger.Verify(x => x.Trace(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Delete(It.IsAny<GlobalSettings>()), Times.Never); // Null so nothing to delete 
         }
     }
 }
