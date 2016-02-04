@@ -1,3 +1,2 @@
-@echo off
-cd ..\Monitoring\bin\Release\
-NZBDash.Services.HardwareMonitor.exe install
+@echo off 
+cd ..\Monitoring\Debug\NZBDash.Services.HardwareMonitor.exe install
