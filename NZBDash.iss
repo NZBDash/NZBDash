@@ -37,4 +37,3 @@ Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameter
 [UninstallRun]
 ; Uninstall the monitoring service
 Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameters: "uninstall"; Flags: runascurrentuser
-
