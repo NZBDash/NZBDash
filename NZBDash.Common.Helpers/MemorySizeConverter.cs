@@ -50,7 +50,7 @@ namespace NZBDash.Common.Helpers
 
         public static string SizeSuffixMb(long value)
         {
-            var bytes = ByteSize.FromMegaBytes(value);
+            var bytes = value.Megabytes();
 
             return string.Format("{0} {1}", Math.Round(bytes.LargestWholeNumberValue, 1), bytes.LargestWholeNumberSymbol);
         }

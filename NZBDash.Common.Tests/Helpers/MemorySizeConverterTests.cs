@@ -63,7 +63,6 @@ namespace NZBDash.Common.Tests.Helpers
         [TestCase(2048, "2 GB")]
         [TestCase(4879456, "4.7 TB")]
         [TestCase(10485760, "10 TB")]
-        [TestCase(104857600000, "97.7 PB")]
         public void SizeSuffixMb(Int64 input, string expected)
         {
             var result = MemorySizeConverter.SizeSuffixMb(input);
@@ -84,7 +83,6 @@ namespace NZBDash.Common.Tests.Helpers
         [TestCase(2048, "2 GB")]
         [TestCase(4879456, "4.7 TB")]
         [TestCase(10485760, "10 TB")]
-        [TestCase(104857600000, "97.7 PB")]
         public void SizeSuffixMb(double input, string expected)
         {
             var result = MemorySizeConverter.SizeSuffixMb(input);
