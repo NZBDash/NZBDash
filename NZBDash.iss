@@ -25,10 +25,11 @@ Source: "NZBDash.UI\NLog.config"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.UI\Web.config"; DestDir: "{app}\UI"; Flags: ignoreversion  
 Source: "NZBDash.UI\Global.asax"; DestDir: "{app}\UI"; Flags: ignoreversion
 Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\Monitoring"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Install\*"; DestDir: "{app}\Install"; Flags: ignoreversion
 
 [Run]
 ; Add a IIS website
-Filename: {cmd}; Parameters: "/C ""C:\Windows\System32\inetsrv\appcmd.exe add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{app}/UI/"""; Flags: runhidden; StatusMsg: "Settings Up Website"
+Filename: {cmd}; Parameters: "/C ""{app}\Install\IISSetup.bat {app}"""
 
 ; Install the monitoring service
-Filename: {cmd}; Parameters: "/C ""{app}\Monitoring\bin\Release\NZBDash.Services.HardwareMonitor.exe install"; Flags: runhidden; StatusMsg: "Settings Up Monitoring Service"
+Filename: {cmd}; Parameters: "/C ""{app}\Install\MonitoringInstall.bat"""
