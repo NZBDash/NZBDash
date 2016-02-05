@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 Jamie Rees
-//   File: ThirdPartySerializerTest.cs
+//   File: ThirdPartySerializerTests.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -38,18 +38,20 @@ using NZBDash.Common.Interfaces;
 namespace NZBDash.Common.Tests.Helpers
 {
     [TestFixture]
-    public class ThirdPartySerializerTest
+    public class ThirdPartySerializerTests
     {
+        public string JsonData = "{  \"version\": 3.1,\"releaseDate\": \"2014-06-25T00:00:00.000Z\",\"demo\": true,\"person\": {\"id\": 12345,\"name\": \"John Doe\",\"phones\": {\"home\": \"800-123-4567\",\"mobile\": \"877-123-1234\"},\"email\": [\"jd@example.com\",\"jd@example.org\"],\"dateOfBirth\": \"1980-01-02T00:00:00.000Z\",\"registered\": true}}";
+        public string XmlData = "<?xml version=\"1.0\" encoding=\"utf-16\"?><RootObject xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><version>3.1</version><releaseDate>2014-06-25T00:00:00.000Z</releaseDate><demo>true</demo><person><id>12345</id><name>John Doe</name><phones><home>800-123-4567</home><mobile>877-123-1234</mobile></phones><email>  <string>jd @example.com</string>  <string>jd @example.org</string></email><dateOfBirth>1980-01-02T00:00:00.000Z</dateOfBirth><registered>true</registered></person></RootObject>";
         [Test]
         public void JsonSerializer()
         {
-            var jsonData = File.ReadAllText("TestData/Class.json");
+            
             var mockWebClient = new Mock<IWebClient>();
 
-            mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(jsonData);
+            mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(JsonData);
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject>(jsonData);
+            var result = seralizer.SerializedJsonData<RootObject>(JsonData);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
@@ -61,7 +63,7 @@ namespace NZBDash.Common.Tests.Helpers
         [Test]
         public void JsonSerializerException()
         {
-            var jsonData = File.ReadAllText("TestData/Class.json");
+           
             var mockWebClient = new Mock<IWebClient>();
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Throws<Exception>();
@@ -71,20 +73,20 @@ namespace NZBDash.Common.Tests.Helpers
                 typeof(Exception),
                 () =>
                 {
-                    var result = seralizer.SerializedJsonData<RootObject>(jsonData);
+                    var result = seralizer.SerializedJsonData<RootObject>(JsonData);
                 });
         }
 
         [Test]
         public void JsonSerializerWithFunc()
         {
-            var jsonData = File.ReadAllText("TestData/Class.json");
+           
             var mockWebClient = new Mock<IWebClient>();
 
-            mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(jsonData);
+            mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(JsonData);
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject, string>(jsonData, "POST", () => "abc");
+            var result = seralizer.SerializedJsonData<RootObject, string>(JsonData, "POST", () => "abc");
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
@@ -96,7 +98,6 @@ namespace NZBDash.Common.Tests.Helpers
         [Test]
         public void JsonSerializerWithFuncException()
         {
-            var jsonData = File.ReadAllText("TestData/Class.json");
             var mockWebClient = new Mock<IWebClient>();
 
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<Exception>();
@@ -104,20 +105,19 @@ namespace NZBDash.Common.Tests.Helpers
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
             Assert.Throws(typeof(Exception), () =>
             {
-                var result = seralizer.SerializedJsonData<RootObject, int>(jsonData, "POST", () => 2);
+                var result = seralizer.SerializedJsonData<RootObject, int>(JsonData, "POST", () => 2);
             });
         }
 
         [Test]
         public void XmlSerializer()
         {
-            var xmlData = File.ReadAllText("TestData/Class.xml");
-            var mockWebClient = new Mock<IWebClient>();
+           var mockWebClient = new Mock<IWebClient>();
 
-            mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(xmlData);
+            mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(XmlData);
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializeXmlData<RootObject>(xmlData);
+            var result = seralizer.SerializeXmlData<RootObject>(XmlData);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
