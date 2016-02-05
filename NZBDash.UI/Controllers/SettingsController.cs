@@ -291,6 +291,11 @@ namespace NZBDash.UI.Controllers
             var settings = AlertSettingsService.GetSettings();
             var model = new AlertSettingsViewModel();
 
+            if (settings.AlertRules == null)
+            {
+                return View(model);
+            }
+
             foreach (var rDto in settings.AlertRules)
             {
                 var m = new AlertRules();
@@ -373,8 +378,7 @@ namespace NZBDash.UI.Controllers
             var dtoRule = new AlertRulesDto();
             dtoRule.InjectFrom(vm);
 
-            var dto = new AlertSettingsDto();
-            dto.AlertRules.Add(dtoRule);
+            var dto = new AlertSettingsDto { AlertRules = new List<AlertRulesDto> { dtoRule } };
 
             var result = AlertSettingsService.SaveSettings(dto);
             if (result)

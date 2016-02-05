@@ -26,7 +26,6 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 using Moq;
 
@@ -50,8 +49,10 @@ namespace NZBDash.Common.Tests.Helpers
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(JsonData);
 
-            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject>(JsonData);
+            var serializer = new ThirdPartySerializer(mockWebClient.Object);
+            var result = serializer.SerializedJsonData<RootObject>(JsonData);
+
+            mockWebClient.Verify(x => x.DownloadString(JsonData),Times.Once);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
@@ -68,12 +69,12 @@ namespace NZBDash.Common.Tests.Helpers
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Throws<Exception>();
 
-            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
+            var serializer = new ThirdPartySerializer(mockWebClient.Object);
             Assert.Throws(
                 typeof(Exception),
                 () =>
                 {
-                    var result = seralizer.SerializedJsonData<RootObject>(JsonData);
+                   serializer.SerializedJsonData<RootObject>(JsonData);
                 });
         }
 
@@ -85,9 +86,10 @@ namespace NZBDash.Common.Tests.Helpers
 
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(JsonData);
 
-            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject, string>(JsonData, "POST", () => "abc");
+            var serializer = new ThirdPartySerializer(mockWebClient.Object);
+            var result = serializer.SerializedJsonData<RootObject, string>(JsonData, "POST", () => "abc");
 
+            mockWebClient.Verify(x => x.UploadString(JsonData,"POST","abc"),Times.Once);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
             Assert.That(result.releaseDate, Is.EqualTo("2014-06-25T00:00:00.000Z"));
@@ -102,10 +104,10 @@ namespace NZBDash.Common.Tests.Helpers
 
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<Exception>();
 
-            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
+            var serializer = new ThirdPartySerializer(mockWebClient.Object);
             Assert.Throws(typeof(Exception), () =>
             {
-                var result = seralizer.SerializedJsonData<RootObject, int>(JsonData, "POST", () => 2);
+                serializer.SerializedJsonData<RootObject, int>(JsonData, "POST", () => 2);
             });
         }
 
@@ -116,9 +118,10 @@ namespace NZBDash.Common.Tests.Helpers
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(XmlData);
 
-            var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializeXmlData<RootObject>(XmlData);
+            var serializer = new ThirdPartySerializer(mockWebClient.Object);
+            var result = serializer.SerializeXmlData<RootObject>(XmlData);
 
+            mockWebClient.Verify(x => x.DownloadString(XmlData), Times.Once);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
             Assert.That(result.releaseDate, Is.EqualTo("2014-06-25T00:00:00.000Z"));

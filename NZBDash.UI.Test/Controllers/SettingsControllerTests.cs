@@ -551,6 +551,22 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model.AlertRules[0].Percentage, Is.EqualTo(expectedDto.AlertRules[0].Percentage));
         }
 
+        [Test]
+        public void GetNullAlertSettingsView()
+        {
+            var expectedDto = new Fixture().Create<AlertSettingsDto>();
+            var settingsMock = new Mock<ISettingsService<AlertSettingsDto>>();
+
+            settingsMock.Setup(x => x.GetSettings()).Returns(new AlertSettingsDto());
+            settingsMock.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            _controller = new SettingsController(null, null, null, null, null, null, null, null, null, Logger, settingsMock.Object);
+
+            var result = (ViewResult)_controller.AlertSettings();
+            var model = (AlertSettingsViewModel)result.Model;
+
+            Assert.That(model.AlertRules.Count, Is.EqualTo(0));
+        }
 
         [Test]
         public void SettingsReturnsDefaultIndex()

@@ -24,12 +24,13 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using NZBDash.Common.Models.Settings;
+
 namespace NZBDash.Core.Models.Settings
 {
-    public class AlertRulesDto : BaseSettingsDto
+    public class AlertRulesDto : Setting
     {
         public AlertTypeDto AlertType { get; set; }
-        public int Id { get; set; }
         public int ThresholdTime { get; set; }
         public int Percentage { get; set; }
         public bool Enabled { get; set; }
