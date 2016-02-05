@@ -34,7 +34,6 @@ namespace NZBDash.Common.Tests.Mapping
         }
 
         [Test]
-        [ExpectedException(typeof(InvalidCastException))]
         public void MappingHelperTestMissingType()
         {
             var source = new MockClassTwo()
@@ -46,8 +45,10 @@ namespace NZBDash.Common.Tests.Mapping
                 uintType = 200
             };
             var target = new MockClassTwo();
-
-            MappingHelper.MapMatchingProperties(target, source);
+            Assert.Throws(typeof(InvalidCastException), () =>
+            {
+                MappingHelper.MapMatchingProperties(target, source);
+            });
         }
     }
 

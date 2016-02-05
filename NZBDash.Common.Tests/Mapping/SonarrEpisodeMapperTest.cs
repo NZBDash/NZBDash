@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 using NZBDash.Common.Mapping;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;

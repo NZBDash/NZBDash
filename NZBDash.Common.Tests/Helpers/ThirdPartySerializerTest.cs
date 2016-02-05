@@ -59,7 +59,6 @@ namespace NZBDash.Common.Tests.Helpers
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
         public void JsonSerializerException()
         {
             var jsonData = File.ReadAllText("TestData/Class.json");
@@ -68,7 +67,12 @@ namespace NZBDash.Common.Tests.Helpers
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Throws<Exception>();
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject>(jsonData);
+            Assert.Throws(
+                typeof(Exception),
+                () =>
+                {
+                    var result = seralizer.SerializedJsonData<RootObject>(jsonData);
+                });
         }
 
         [Test]
@@ -80,7 +84,7 @@ namespace NZBDash.Common.Tests.Helpers
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(jsonData);
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject,string>(jsonData, "POST", () => "abc");
+            var result = seralizer.SerializedJsonData<RootObject, string>(jsonData, "POST", () => "abc");
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.version, Is.EqualTo(3.1));
@@ -90,7 +94,6 @@ namespace NZBDash.Common.Tests.Helpers
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
         public void JsonSerializerWithFuncException()
         {
             var jsonData = File.ReadAllText("TestData/Class.json");
@@ -99,7 +102,10 @@ namespace NZBDash.Common.Tests.Helpers
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<Exception>();
 
             var seralizer = new ThirdPartySerializer(mockWebClient.Object);
-            var result = seralizer.SerializedJsonData<RootObject,int>(jsonData, "POST", () => 2);
+            Assert.Throws(typeof(Exception), () =>
+            {
+                var result = seralizer.SerializedJsonData<RootObject, int>(jsonData, "POST", () => 2);
+            });
         }
 
         [Test]

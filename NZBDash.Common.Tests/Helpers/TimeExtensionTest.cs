@@ -42,7 +42,7 @@ namespace NZBDash.Common.Tests.Helpers
             Assert.That(result, Is.EqualTo(expected));
         }
 
-        public TestCaseData[] Data =
+        public static TestCaseData[] Data =
         {
             new TestCaseData(1448544679, new DateTime(2015,11,26,13,31,19)),
             new TestCaseData(1448546503, new DateTime(2015,11,26,14,1,43)),

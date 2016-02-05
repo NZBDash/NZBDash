@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.ViewModels.NzbGet;

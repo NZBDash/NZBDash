@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 using NZBDash.Common.Helpers;
 using NZBDash.Common.Mapping;
