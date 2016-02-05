@@ -40,7 +40,6 @@ namespace NZBDash.DependencyResolver.Test
     public class CustomDependencyResolverTest
     {
         [Test]
-        [Ignore("https://ci.appveyor.com/project/tidusjar/nzbdash/build/1.0.182")]
         public void ResolveServiceDependency()
         {
             var module = new ServiceModule();
@@ -83,14 +82,6 @@ namespace NZBDash.DependencyResolver.Test
     {
         private readonly ILogger m_Logger;
 
-        public TestClass(ILogger logger)
-        {
-            m_Logger = logger;
-        }
-
-        public ILogger Logger
-        {
-            get { return m_Logger; }
-        }
+        public TestClass(ILogger logger){}
     }
 }

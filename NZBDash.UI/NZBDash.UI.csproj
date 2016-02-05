@@ -241,7 +241,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
-    <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Application\NzbGetController.cs" />
@@ -261,7 +260,6 @@
     <Compile Include="Hubs\DasboardHub.cs" />
     <Compile Include="Hubs\HubActivator.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
-    <Compile Include="Hubs\LinksConfigurationHub.cs" />
     <Compile Include="App_Start\NinjectSignalRDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dashboard\DashboardLinksViewModel.cs" />

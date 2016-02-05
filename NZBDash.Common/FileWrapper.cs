@@ -24,12 +24,14 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 using NZBDash.Common.Interfaces;
 
 namespace NZBDash.Common
 {
+    [ExcludeFromCodeCoverage]
     public class FileWrapper : IFile
     {
         public string ReadAllText(string path)

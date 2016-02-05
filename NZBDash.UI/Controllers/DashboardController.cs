@@ -51,20 +51,17 @@ namespace NZBDash.UI.Controllers
     {
         public DashboardController(IHardwareService service,
                                    IThirdPartyService api,
-                                   ILinksConfiguration linksConfiguration,
                                    ILogger logger,
                                    ISettingsService<NzbGetSettingsDto> nzbGetSettingsService,
                                    ISettingsService<SabNzbdSettingsDto> sabSettingsService) : base(logger)
         {
             Api = api;
             Service = service;
-            LinksConfiguration = linksConfiguration;
             NzbGet = nzbGetSettingsService;
             Sab = sabSettingsService;
         }
 
         private IThirdPartyService Api { get; set; }
-        private ILinksConfiguration LinksConfiguration { get; set; }
         private ISettingsService<NzbGetSettingsDto> NzbGet { get; set; }
         private ISettingsService<SabNzbdSettingsDto> Sab { get; set; }
         private IHardwareService Service { get; set; }
@@ -115,15 +112,6 @@ namespace NZBDash.UI.Controllers
         {
             var drives = Service.GetDrives();
             return PartialView("Partial/_DriveInformation", drives);
-        }
-
-        public ActionResult GetLinks()
-        {
-            var allLinks = LinksConfiguration.GetLinks();
-
-            var model = allLinks.Select(link => (DashboardLinksViewModel)new DashboardLinksViewModel().InjectFrom(link)).ToList();
-
-            return PartialView("Partial/_Links", model);
         }
 
         public ActionResult GetRam()

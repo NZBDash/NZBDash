@@ -99,7 +99,6 @@
     <Compile Include="IAuthenticationService.cs" />
     <Compile Include="IEventService.cs" />
     <Compile Include="IHardwareService.cs" />
-    <Compile Include="ILinksConfiguration.cs" />
     <Compile Include="IMembershipProvider.cs" />
     <Compile Include="ISettingsService.cs" />
     <Compile Include="ISetup.cs" />

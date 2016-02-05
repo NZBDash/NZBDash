@@ -16,6 +16,8 @@ namespace NZBDash.Core.Test
         [Test]
         public void AssertLoggerIsFunctioningCorrectly()
         {
+            Logger.Trace("info");
+            Logger.Trace("info{1}", "a");
             Logger.Info("info");
             Logger.Info("info{0}",1);
             Logger.Warn("Warn");

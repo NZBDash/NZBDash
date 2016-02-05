@@ -24,6 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Mail;
 
@@ -31,6 +32,7 @@ using NZBDash.Core.Interfaces;
 
 namespace NZBDash.Core
 {
+    [ExcludeFromCodeCoverage]
     public class SmtpClientWrapper : ISmtpClient
     {
         public void Send(string host, int port, MailMessage mailMessage)

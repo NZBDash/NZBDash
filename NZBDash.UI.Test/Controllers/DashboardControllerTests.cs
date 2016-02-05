@@ -59,7 +59,6 @@ namespace NZBDash.UI.Test.Controllers
         private Fixture F { get; set; }
         private Mock<IThirdPartyService> ThirdPartyApi { get; set; }
         private Mock<IHardwareService> HardwareServiceMock { get; set; }
-        private Mock<ILinksConfiguration> LinksConfigurationServiceMock { get; set; }
         private Mock<ISettingsService<NzbGetSettingsDto>> NzbGetMock { get; set; }
 
         private List<LinksConfigurationDto> LinksDto { get; set; }
@@ -74,7 +73,6 @@ namespace NZBDash.UI.Test.Controllers
             var mockHardware = new Mock<IHardwareService>();
             var mockLog = new Mock<ILogger>();
             var mockApi = new Mock<IThirdPartyService>();
-            var mockLinks = new Mock<ILinksConfiguration>();
             var mocknzbGet = new Mock<ISettingsService<NzbGetSettingsDto>>();
 
             RamModel = F.Create<RamModel>();
@@ -84,16 +82,14 @@ namespace NZBDash.UI.Test.Controllers
             mockHardware.Setup(x => x.GetUpTime()).Returns(new TimeSpan(2, 12, 33, 59, 200));
             mockHardware.Setup(x => x.GetRam()).Returns(RamModel);
             mockHardware.Setup(x => x.GetDrives()).Returns(DriveModel);
-            mockLinks.Setup(x => x.GetLinks()).Returns(linksDto);
             
 
             HardwareServiceMock = mockHardware;
             ThirdPartyApi = mockApi;
             NzbGetMock = mocknzbGet;
             LinksDto = linksDto.ToList();
-            LinksConfigurationServiceMock = mockLinks;
 
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, mockLog.Object, null,null);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   mockLog.Object, null,null);
         }
 
 
@@ -168,20 +164,6 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
-        public void GetLinks()
-        {
-            var result = (PartialViewResult)_controller.GetLinks();
-            var model = (List<DashboardLinksViewModel>)result.Model;
-
-            LinksConfigurationServiceMock.Verify(x => x.GetLinks(), Times.Once);
-
-            _controller.WithCallTo(x => x.GetLinks()).ShouldRenderPartialView("Partial/_Links").WithModel<IEnumerable<DashboardLinksViewModel>>();
-
-            Assert.That(model[0].LinkEndpoint, Is.EqualTo(LinksDto[0].LinkEndpoint));
-            Assert.That(model[0].LinkName, Is.EqualTo(LinksDto[0].LinkName));
-        }
-
-        [Test]
         public void GetSabDownloadCount()
         {
             var mockNzbGet = new Mock<ISettingsService<NzbGetSettingsDto>>();
@@ -192,7 +174,7 @@ namespace NZBDash.UI.Test.Controllers
 
             mockSab.Setup(x => x.GetSettings()).Returns(sabSettings).Verifiable();
             ThirdPartyApi.Setup(x => x.GetSabNzbdQueue(It.IsAny<string>(),It.IsAny<string>())).Returns(sabQueue).Verifiable();
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
 
 
             var result = (PartialViewResult)_controller.GetDownloads();
@@ -218,7 +200,7 @@ namespace NZBDash.UI.Test.Controllers
 
             mockNzbGet.Setup(x => x.GetSettings()).Returns(nzbGetSettings).Verifiable();
             ThirdPartyApi.Setup(x => x.GetNzbGetList(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(nzbList).Verifiable();
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
             
             var result = (PartialViewResult)_controller.GetDownloads();
             var model = (DashboardDownloadViewModel)result.Model;
@@ -239,7 +221,7 @@ namespace NZBDash.UI.Test.Controllers
             var mockSab = new Mock<ISettingsService<SabNzbdSettingsDto>>();
             var logger = new Mock<ILogger>();
 
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, logger.Object, mockNzbGet.Object, mockSab.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   logger.Object, mockNzbGet.Object, mockSab.Object);
             
             var result = (PartialViewResult)_controller.GetDownloads();
             var model = (DashboardDownloadViewModel)result.Model;
@@ -263,7 +245,7 @@ namespace NZBDash.UI.Test.Controllers
             ThirdPartyApi.Setup(x => x.GetNzbGetList(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(nzbList).Verifiable();
            ThirdPartyApi.Setup(x => x.GetNzbGetStatus(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(status).Verifiable();
 
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, logger.Object, mockNzbGet.Object, mockSab.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   logger.Object, mockNzbGet.Object, mockSab.Object);
 
             var result = (PartialViewResult)_controller.GetTabDownloads();
             var model = (TabDownloadViewModel)result.Model;
@@ -289,7 +271,7 @@ namespace NZBDash.UI.Test.Controllers
             mockSab.Setup(x => x.GetSettings()).Returns(sabSettings).Verifiable();
             ThirdPartyApi.Setup(x => x.GetSabNzbdQueue(It.IsAny<string>(), It.IsAny<string>())).Returns(sabQueue).Verifiable();
 
-            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object, LinksConfigurationServiceMock.Object, new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
+            _controller = new DashboardController(HardwareServiceMock.Object, ThirdPartyApi.Object,   new Mock<ILogger>().Object, mockNzbGet.Object, mockSab.Object);
 
             var result = (PartialViewResult)_controller.GetTabDownloads();
             var model = (TabDownloadViewModel)result.Model;
