@@ -174,7 +174,7 @@ namespace NZBDash.UI.Controllers
                     }
                 }
             }
-            else if (nzb != null)
+            if (nzb != null)
             {
                 if (nzb.HasSettings)
                 {

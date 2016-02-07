@@ -3,7 +3,7 @@ using System.Net;
 
 namespace NZBDash.Common.Interfaces
 {
-    public interface IWebClient : IDisposable
+    public interface IHttpClient : IDisposable
     {
         string DownloadString(string address);
         WebHeaderCollection Headers { get; set; }

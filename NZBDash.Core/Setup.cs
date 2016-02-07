@@ -71,6 +71,7 @@ namespace NZBDash.Core
         {
             // ReSharper disable once ObjectCreationAsStatement
             new HardwareMapperInitialise();
+            new AlertMapperInitialise();
 
         }
 

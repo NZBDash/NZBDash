@@ -36,20 +36,20 @@ namespace NZBDash.Common.Helpers
 {
     public class ThirdPartySerializer : ISerializer
     {
-        private IWebClient WebClient { get; set; }
+        private IHttpClient HttpClient { get; set; }
 
-        public ThirdPartySerializer(IWebClient client)
+        public ThirdPartySerializer(IHttpClient client)
         {
-            WebClient = client;
+            HttpClient = client;
         }
         public T SerializedJsonData<T>(string url) where T : new()
         {
             var jsonData = string.Empty;
-            using (WebClient)
+            using (HttpClient)
             {
                 try
                 {
-                    jsonData = WebClient.DownloadString(url);
+                    jsonData = HttpClient.DownloadString(url);
                 }
                 catch (Exception e)
                 {
@@ -64,11 +64,11 @@ namespace NZBDash.Common.Helpers
         {
             var item = body();
 
-            using (WebClient)
+            using (HttpClient)
             {
                 try
                 {
-                    var result = WebClient.UploadString(url, method, item.ToString());
+                    var result = HttpClient.UploadString(url, method, item.ToString());
                     return !string.IsNullOrEmpty(result) ? JsonConvert.DeserializeObject<T>(result) : new T();
                 }
                 catch (Exception e)
@@ -80,9 +80,9 @@ namespace NZBDash.Common.Helpers
 
         public T SerializeXmlData<T>(string uri) where T : new()
         {
-            using (WebClient)
+            using (HttpClient)
             {
-                var data = WebClient.DownloadString(uri);
+                var data = HttpClient.DownloadString(uri);
 
                 var serializer = new XmlSerializer(typeof(T));
                 var rdr = new StringReader(data);

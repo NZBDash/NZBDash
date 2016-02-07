@@ -24,27 +24,74 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+
+using System.Collections.Generic;
+using System.Linq;
+using NZBDash.Core.Models.Settings;
+using NZBDash.DataAccessLayer.Models.Settings;
+using NZBDash.UI.Models.ViewModels.Settings;
+using Omu.ValueInjecter;
+using AlertRules = NZBDash.UI.Models.ViewModels.Settings.AlertRules;
+
 namespace NZBDash.Common.Mapping
 {
     public class AlertMapperInitialise
     {
         static AlertMapperInitialise()
         {
-            //Mapper.AddMap<HardwareSettings, HardwareSettingsDto>(x =>
-            //{
-            //    var settings = new HardwareSettingsDto();
-            //    settings.NetworkMonitoring.InjectFrom(x.NetworkMonitoring);
-            //    settings.CpuMonitoring.InjectFrom(x.CpuMonitoring);
-            //    settings.EmailAlertSettings.InjectFrom(x.EmailAlertSettings);
+            // View to DTO
+            Mapper.AddMap<AlertSettingsViewModel, AlertSettingsDto>(x =>
+            {
+                var settings = new AlertSettingsDto
+                {
+                    AlertRules = x.AlertRules
+                        .Select(c => new AlertRulesDto().InjectFrom(c)).Cast<AlertRulesDto>()
+                        .ToList()
+                };
 
-            //    settings.Drives = x.Drives
-            //        .Select(c => new DriveSettingsDto().InjectFrom(c)).Cast<DriveSettingsDto>()
-            //        .ToList();
+                return settings;
+            });
 
-            //    return settings;
-            //});
+            // DTO to Entity
+            Mapper.AddMap<AlertSettingsDto, AlertSettings>(x =>
+            {
+                var settings = new AlertSettings
+                {
+                    AlertRules = x.AlertRules
+                        .Select(c => new DataAccessLayer.Models.Settings.AlertRules().InjectFrom(c)).Cast<DataAccessLayer.Models.Settings.AlertRules> ()
+                        .ToList()
+                };
 
-            
+                return settings;
+            });
+
+            // Entity to DTO
+            Mapper.AddMap<AlertSettings, AlertSettingsDto>(x =>
+            {
+                var settings = new AlertSettingsDto {AlertRules = new List<AlertRulesDto>()};
+
+                foreach (var entityAr in x.AlertRules)
+                {
+                    settings.AlertRules.Add((AlertRulesDto)new AlertRulesDto().InjectFrom(entityAr));
+                }
+
+                return settings;
+            });
+
+
+            // DTO to View
+            Mapper.AddMap<AlertSettingsDto, AlertSettingsViewModel>(x =>
+            {
+                var settings = new AlertSettingsViewModel
+                {
+                    AlertRules = x.AlertRules
+                        .Select(c => new AlertRules().InjectFrom(c)).Cast<AlertRules>()
+                        .ToList()
+                };
+
+                return settings;
+            });
+
         }
     }
 }

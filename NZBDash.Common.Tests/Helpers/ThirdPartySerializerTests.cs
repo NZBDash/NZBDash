@@ -45,7 +45,7 @@ namespace NZBDash.Common.Tests.Helpers
         public void JsonSerializer()
         {
             
-            var mockWebClient = new Mock<IWebClient>();
+            var mockWebClient = new Mock<IHttpClient>();
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(JsonData);
 
@@ -65,7 +65,7 @@ namespace NZBDash.Common.Tests.Helpers
         public void JsonSerializerException()
         {
            
-            var mockWebClient = new Mock<IWebClient>();
+            var mockWebClient = new Mock<IHttpClient>();
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Throws<Exception>();
 
@@ -82,7 +82,7 @@ namespace NZBDash.Common.Tests.Helpers
         public void JsonSerializerWithFunc()
         {
            
-            var mockWebClient = new Mock<IWebClient>();
+            var mockWebClient = new Mock<IHttpClient>();
 
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(JsonData);
 
@@ -100,7 +100,7 @@ namespace NZBDash.Common.Tests.Helpers
         [Test]
         public void JsonSerializerWithFuncException()
         {
-            var mockWebClient = new Mock<IWebClient>();
+            var mockWebClient = new Mock<IHttpClient>();
 
             mockWebClient.Setup(x => x.UploadString(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Throws<Exception>();
 
@@ -114,7 +114,7 @@ namespace NZBDash.Common.Tests.Helpers
         [Test]
         public void XmlSerializer()
         {
-           var mockWebClient = new Mock<IWebClient>();
+           var mockWebClient = new Mock<IHttpClient>();
 
             mockWebClient.Setup(x => x.DownloadString(It.IsAny<string>())).Returns(XmlData);
 

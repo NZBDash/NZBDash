@@ -96,7 +96,7 @@
     <Compile Include="IFile.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISerializer.cs" />
-    <Compile Include="IWebClient.cs" />
+    <Compile Include="IHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

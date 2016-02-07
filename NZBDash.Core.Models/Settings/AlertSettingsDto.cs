@@ -30,6 +30,10 @@ namespace NZBDash.Core.Models.Settings
 {
     public class AlertSettingsDto : BaseSettingsDto
     {
+        public AlertSettingsDto()
+        {
+            AlertRules = new List<AlertRulesDto>();
+        }
         public List<AlertRulesDto> AlertRules { get; set; }
     }
 }

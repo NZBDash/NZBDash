@@ -340,8 +340,6 @@ namespace NZBDash.UI.Controllers
             return View("Error");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteAlert(int id)
         {
             var settings = AlertSettingsService.GetSettings();

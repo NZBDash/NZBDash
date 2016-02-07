@@ -7,10 +7,10 @@ using NZBDash.Common.Interfaces;
 namespace NZBDash.Common.Helpers
 {
     [ExcludeFromCodeCoverage]
-    public class CustomWebClient : IWebClient
+    public class CustomHttpClient : IHttpClient
     {
         private WebClient Client { get; set; }
-        public CustomWebClient()
+        public CustomHttpClient()
         {
             Client = new WebClient();
         }

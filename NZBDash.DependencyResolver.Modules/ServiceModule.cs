@@ -21,7 +21,7 @@ namespace NZBDash.DependencyResolver.Modules
 #endif
             Bind<IThirdPartyService>().To<ThirdPartyService>();
             //Bind<IThirdPartyService>().To<ThirdPartyMockService>();
-            Bind<IWebClient>().To<CustomWebClient>();
+            Bind<IHttpClient>().To<CustomHttpClient>();
         }
     }
 }
