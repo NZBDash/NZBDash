@@ -25,24 +25,15 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 
 using Moq;
 
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Settings;
-using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
-using NZBDash.DataAccessLayer.Models.Settings;
-
-using Ploeh.AutoFixture;
-
-using GlobalSettings = NZBDash.DataAccessLayer.Models.Settings.GlobalSettings;
 
 namespace NZBDash.Core.Test
 {
@@ -59,7 +50,6 @@ namespace NZBDash.Core.Test
         [SetUp]
         public void SetUp()
         {
-            //ISqliteConfiguration sql, ILogger logger, DbProviderFactory factory
             Sql = new Mock<ISqliteConfiguration>();
             Logger = new Mock<ILogger>();
             Db = new Mock<DbProviderFactory>();
@@ -80,12 +70,15 @@ namespace NZBDash.Core.Test
 
             var result = Setup.Start();
 
+            Logger.Verify(x => x.Fatal(It.IsAny<string>()), Times.Never, "We logged a fatal message! That shouldn't happen");
+
+            Assert.That(result, Is.True, "We could not setup the application correctly");
             Sql.Verify(x => x.CheckDb(),Times.Once);
             Sql.Verify(x => x.DbConnection(),Times.Once);
 
-            DbConnection.Verify(x => x.Open(),Times.AtLeastOnce);
+            DbConnection.Verify(x => x.Open(),Times.Exactly(2));
             DbConnection.Verify(x => x.Close(),Times.AtLeastOnce);
-            Assert.That(result, Is.True);
+
         }
 
         [Test]
