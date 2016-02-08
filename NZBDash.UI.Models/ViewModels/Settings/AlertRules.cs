@@ -40,6 +40,9 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public int Percentage { get; set; }
         public bool Enabled { get; set; }
 
+        public const string ThresholdErrorKey = "ThresholdTime";
+        public const string PercentageErrorKey = "Percentage";
+
         /// <summary>
         /// This is only valid for network monitoring, we need to know the Nic to monitor
         /// </summary>
@@ -55,10 +58,10 @@ namespace NZBDash.UI.Models.ViewModels.Settings
                 if (Enabled)
                 {
                     if (ThresholdTime == 0)
-                        Errors.Add("ThresholdTime", "Threshold is not valid"); //TODO Resource
+                        Errors.Add(ThresholdErrorKey, "Threshold is not valid"); //TODO Resource
 
                     if (Percentage == 0)
-                        Errors.Add("Percentage", "Percentage is not valid");
+                        Errors.Add(PercentageErrorKey, "Percentage is not valid");
 
                     return Errors.Count == 0;
                 }
