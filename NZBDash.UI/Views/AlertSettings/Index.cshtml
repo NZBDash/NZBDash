@@ -28,7 +28,7 @@
            c.Add(x => x.Percentage);
            c.Add(x => x.ThresholdTime);
            c.Add().RenderValueAs(r => @<a href="@Url.Action("AlertModal")?alertType=@r.AlertType" data-target="myModal">Edit</a>).Encoded(false).Sanitized(false);
-           c.Add().RenderValueAs(r => Html.ActionLink("Delete", "DeleteAlert", "Settings", new { id = r.Id }, null)).Encoded(false).Sanitized(false);
+           c.Add().RenderValueAs(r => Html.ActionLink("Delete", "DeleteAlert", "AlertSettings", new { id = r.Id }, null)).Encoded(false).Sanitized(false);
        })
 
             @*<div class="row">

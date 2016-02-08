@@ -48,8 +48,7 @@ namespace NZBDash.UI.Controllers
                                   IAuthenticationService auth,
                                   ISettingsService<HardwareSettingsDto> hardwareService,
                                   IHardwareService hardware,
-                                  ILogger logger,
-                                  ISettingsService<AlertSettingsDto> alertSettings)
+                                  ILogger logger)
             : base(logger)
         {
             NzbGetSettingsService = nzbGetSettingsService;
@@ -61,7 +60,6 @@ namespace NZBDash.UI.Controllers
             Auth = auth;
             HardwareSettingsService = hardwareService;
             HardwareService = hardware;
-            AlertSettingsService = alertSettings;
         }
 
         private ISettingsService<CouchPotatoSettingsDto> CpSettingsService { get; set; }
@@ -71,7 +69,6 @@ namespace NZBDash.UI.Controllers
         private ISettingsService<SabNzbdSettingsDto> SabNzbSettingsService { get; set; }
         private ISettingsService<SonarrSettingsDto> SonarrSettingsService { get; set; }
         private ISettingsService<HardwareSettingsDto> HardwareSettingsService { get; set; }
-        private ISettingsService<AlertSettingsDto> AlertSettingsService { get; set; }
         private IHardwareService HardwareService { get; set; }
         private IAuthenticationService Auth { get; set; }
 
@@ -280,108 +277,6 @@ namespace NZBDash.UI.Controllers
             if (result)
             {
                 return RedirectToAction("HardwareSettings");
-            }
-
-            return View("Error");
-        }
-
-        [HttpGet]
-        public ActionResult AlertSettings()
-        {
-            var settings = AlertSettingsService.GetSettings();
-            var model = new AlertSettingsViewModel();
-
-            if (settings.AlertRules == null)
-            {
-                return View(model);
-            }
-
-            foreach (var rDto in settings.AlertRules)
-            {
-                var m = new AlertRules();
-                m.InjectFrom(rDto);
-
-                model.AlertRules.Add(m);
-            }
-            model.InjectFrom(settings);
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult UpdateAlert(int id)
-        {
-            var settings = AlertSettingsService.GetSettings();
-            var selected = settings.AlertRules.Select(x => x.Id == id);
-            var vm = new AlertRules();
-            vm.InjectFrom(selected);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult UpdateAlert(AlertRules model)
-        {
-            if (!model.IsValid)
-            {
-                return Json(model.Errors);
-            }
-
-            var dtoRule = new AlertRulesDto();
-            dtoRule.InjectFrom(model);
-
-            var dto = new AlertSettingsDto();
-            dto.AlertRules.Add(dtoRule);
-
-            var result = AlertSettingsService.SaveSettings(dto);
-            if (result)
-            {
-                return RedirectToAction("AlertSettings");
-            }
-
-            return View("Error");
-        }
-
-        public ActionResult DeleteAlert(int id)
-        {
-            var settings = AlertSettingsService.GetSettings();
-            var settingToRemove = settings.AlertRules.FirstOrDefault(x => x.Id == id);
-
-            settings.AlertRules.Remove(settingToRemove);
-
-            var result = AlertSettingsService.SaveSettings(settings);
-            return View(result);
-        }
-
-        [HttpGet]
-        public ActionResult AlertModal(AlertType alertType)
-        {
-            var model = new AlertRules { AlertType = alertType };
-
-            if (model.AlertType == AlertType.Cpu)
-            {
-                return PartialView("Alert/CpuAlertModal", model);
-            }
-            return RedirectToAction("AlertSettings");
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AlertModal(AlertRules vm)
-        {
-            if (!vm.IsValid)
-            {
-                return Json(vm.Errors);
-            }
-
-            var dtoRule = new AlertRulesDto();
-            dtoRule.InjectFrom(vm);
-
-            var dto = new AlertSettingsDto { AlertRules = new List<AlertRulesDto> { dtoRule } };
-
-            var result = AlertSettingsService.SaveSettings(dto);
-            if (result)
-            {
-                return RedirectToAction("AlertSettings");
             }
 
             return View("Error");

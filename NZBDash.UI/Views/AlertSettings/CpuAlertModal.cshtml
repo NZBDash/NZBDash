@@ -5,7 +5,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="episodeModal">@Model.AlertType</h4>
 </div>
-@using (Html.BeginForm("AlertModal", "Settings", FormMethod.Post))
+@using (Html.BeginForm("UpdateAlert", "AlertSettings", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div class="modal-body">

@@ -233,6 +233,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlertSettingsController.cs" />
     <Compile Include="Controllers\Application\CouchPotatoController.cs" />
     <Compile Include="Controllers\Application\SabNzbdController.cs" />
     <Compile Include="Controllers\Application\SonarrController.cs" />
@@ -534,8 +535,8 @@
     <Content Include="Views\Shared\TopNavbar.cshtml" />
     <Content Include="Views\Dashboard\Partial\_CpuChart.cshtml" />
     <Content Include="Views\Shared\NavbarDownloads.cshtml" />
-    <Content Include="Views\Settings\AlertSettings.cshtml" />
-    <Content Include="Views\Settings\Alert\CpuAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\Index.cshtml" />
+    <Content Include="Views\AlertSettings\CpuAlertModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
