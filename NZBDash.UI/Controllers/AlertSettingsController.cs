@@ -137,7 +137,7 @@ namespace NZBDash.UI.Controllers
         }
 
         [HttpGet]
-        public ActionResult AlertModal(AlertType alertType)
+        public ActionResult OpenModal(AlertType alertType)
         {
             var model = new AlertRules { AlertType = alertType };
 

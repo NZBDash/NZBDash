@@ -2,6 +2,7 @@
 @using NZBDash.Resources
 @using NZBDash.UI.Helpers
 @using NZBDash.UI.Models.ViewModels.Settings
+@using RestSharp.Extensions
 @model NZBDash.UI.Models.ViewModels.Settings.AlertSettingsViewModel
 
 
@@ -12,7 +13,7 @@
 
             @Html.RenderHeader("Alert Settings")
 
-            <a href="@Url.Action("AlertModal")?alertType=@AlertType.Cpu" data-target="myModal">AddAlert</a>
+            <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal">AddAlert</a>
 
             <div>
                 Type @Html.EnumDropDownListFor(x => x.AlertType)
@@ -27,48 +28,9 @@
            c.Add(x => x.Enabled);
            c.Add(x => x.Percentage);
            c.Add(x => x.ThresholdTime);
-           c.Add().RenderValueAs(r => @<a href="@Url.Action("AlertModal")?alertType=@r.AlertType" data-target="myModal">Edit</a>).Encoded(false).Sanitized(false);
+           c.Add().RenderValueAs(r => @<a href="@Url.Action("UpdateAlert")?id=@r.Id" data-target="myModal">Modify</a>).Encoded(false).Sanitized(false);
            c.Add().RenderValueAs(r => Html.ActionLink("Delete", "DeleteAlert", "AlertSettings", new { id = r.Id }, null)).Encoded(false).Sanitized(false);
-       })
-
-            @*<div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Alert Rules
-                            </div>
-                            @if (Model.AlertRules.Count == 0)
-                            {
-                                <div class="panel-body">
-                                    <div class="form-group row">
-                                        Nothing to see here! Add a rule above!
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                foreach (var rule in Model.AlertRules)
-                                {
-                                    <div class="panel-body">
-                                        <div class="form-group row col-md-4">
-                                            Type: @rule.AlertType
-                                        </div>
-                                        <div class="col-md-2">
-                                            @Html.ActionLink("Edit", "EditAlert", null, new {@class = "form-control"})
-                                        </div>
-                                        <div class="col-md-2">
-                                            @using (Html.BeginForm("DeleteAlert", "Settings", FormMethod.Post))
-                                            {
-                                                @Html.AntiForgeryToken()
-                                                @Html.ActionLink("Delete", "DeleteAlert", null, new {@class = "form-control"})
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>*@
+       }).EmptyText("We currently have no alerts set up!")
 
         </div>
     </div>
