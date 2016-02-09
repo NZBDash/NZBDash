@@ -25,9 +25,9 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Diagnostics;
 using System.Linq;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.DataAccessLayer.Interfaces;
@@ -39,12 +39,14 @@ namespace NZBDash.Core.SettingsService
 {
     public class MonitoringEventsService : IEventService
     {
-        public MonitoringEventsService(ISqlRepository<MonitoringEvents> repo)
+        public MonitoringEventsService(ISqlRepository<MonitoringEvents> repo, ILogger logger)
         {
             Repo = repo;
+            Logger = logger;
         }
 
-        public ISqlRepository<MonitoringEvents> Repo { get; set; }
+        private ILogger Logger { get; set; }
+        private ISqlRepository<MonitoringEvents> Repo { get; set; }
 
         public long RecordEvent(MonitoringEventsDto dto)
         {
@@ -53,17 +55,21 @@ namespace NZBDash.Core.SettingsService
 
             if (entity.EventEnd != DateTime.MinValue)
             {
-                Debug.WriteLine("Removing existing Event record");
-                var startNotification = Repo.Find(
-                    () =>
-                    {
-                        var all = Repo.GetAll();
-                        return all.FirstOrDefault(x => x.EventStart == entity.EventStart);
-                    });
+                Logger.Trace("Removing existing Event record");
 
-                Repo.Delete(startNotification);
+                var all = Repo.GetAll();
+                Logger.Trace("We have all events count: {0}", all.Count());
+
+                var startNotification = all.FirstOrDefault(x => x.EventStart == entity.EventStart);
+                if (startNotification != null)
+                {
+                    Logger.Trace("We have found the old event to delete id: {0}", startNotification.Id);
+
+                   Repo.Delete(startNotification);
+                }
             }
 
+            Logger.Trace("Inserting new event: Name: {0} | Type: {1}", entity.EventName, entity.EventType);
             return Repo.Insert(entity);
         }
     }

@@ -62,7 +62,5 @@ namespace NZBDash.DataAccessLayer.Interfaces
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
         bool Update(T entity);
-
-        T Find(Func<T> func);
     }
 }

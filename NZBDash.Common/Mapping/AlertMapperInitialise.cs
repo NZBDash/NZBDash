@@ -32,6 +32,7 @@ using NZBDash.DataAccessLayer.Models.Settings;
 using NZBDash.UI.Models.ViewModels.Settings;
 using Omu.ValueInjecter;
 using AlertRules = NZBDash.UI.Models.ViewModels.Settings.AlertRules;
+using AlertType = NZBDash.UI.Models.ViewModels.Settings.AlertType;
 
 namespace NZBDash.Common.Mapping
 {
@@ -42,12 +43,21 @@ namespace NZBDash.Common.Mapping
             // View to DTO
             Mapper.AddMap<AlertSettingsViewModel, AlertSettingsDto>(x =>
             {
-                var settings = new AlertSettingsDto
+                //var settings = new AlertSettingsDto
+                //{
+                //    AlertRules = x.AlertRules
+                //        .Select(c => new AlertRulesDto().InjectFrom(c)).Cast<AlertRulesDto>()
+                //        .ToList()
+                //};
+
+                var settings = new AlertSettingsDto();
+                foreach (var a in x.AlertRules)
                 {
-                    AlertRules = x.AlertRules
-                        .Select(c => new AlertRulesDto().InjectFrom(c)).Cast<AlertRulesDto>()
-                        .ToList()
-                };
+                    var newA = new AlertRulesDto();
+                    newA.InjectFrom(a);
+                    newA.AlertType = (AlertTypeDto)(int)a.AlertType;
+                    settings.AlertRules.Add(newA);
+                }
 
                 return settings;
             });
@@ -55,12 +65,21 @@ namespace NZBDash.Common.Mapping
             // DTO to Entity
             Mapper.AddMap<AlertSettingsDto, AlertSettings>(x =>
             {
-                var settings = new AlertSettings
+                //var settings = new AlertSettings
+                //{
+                //    AlertRules = x.AlertRules
+                //        .Select(c => new DataAccessLayer.Models.Settings.AlertRules().InjectFrom(c)).Cast<DataAccessLayer.Models.Settings.AlertRules> ()
+                //        .ToList()
+                //};
+
+                var settings = new AlertSettings { AlertRules = new List<DataAccessLayer.Models.Settings.AlertRules>()};
+                foreach (var a in x.AlertRules)
                 {
-                    AlertRules = x.AlertRules
-                        .Select(c => new DataAccessLayer.Models.Settings.AlertRules().InjectFrom(c)).Cast<DataAccessLayer.Models.Settings.AlertRules> ()
-                        .ToList()
-                };
+                    var newA = new DataAccessLayer.Models.Settings.AlertRules();
+                    newA.InjectFrom(a);
+                    newA.AlertType = (DataAccessLayer.Models.Settings.AlertType)(int)a.AlertType;
+                    settings.AlertRules.Add(newA);
+                }
 
                 return settings;
             });
@@ -68,11 +87,18 @@ namespace NZBDash.Common.Mapping
             // Entity to DTO
             Mapper.AddMap<AlertSettings, AlertSettingsDto>(x =>
             {
-                var settings = new AlertSettingsDto {AlertRules = new List<AlertRulesDto>()};
+                var settings = new AlertSettingsDto { AlertRules = new List<AlertRulesDto>() };
 
+                //foreach (var entityAr in x.AlertRules)
+                //{
+                //    settings.AlertRules.Add((AlertRulesDto)new AlertRulesDto().InjectFrom(entityAr));
+                //}
                 foreach (var entityAr in x.AlertRules)
                 {
-                    settings.AlertRules.Add((AlertRulesDto)new AlertRulesDto().InjectFrom(entityAr));
+                    var newA = new AlertRulesDto();
+                    newA.InjectFrom(entityAr);
+                    newA.AlertType = (AlertTypeDto)(int)entityAr.AlertType;
+                    settings.AlertRules.Add(newA);
                 }
 
                 return settings;
@@ -82,16 +108,62 @@ namespace NZBDash.Common.Mapping
             // DTO to View
             Mapper.AddMap<AlertSettingsDto, AlertSettingsViewModel>(x =>
             {
-                var settings = new AlertSettingsViewModel
+                //var settings = new AlertSettingsViewModel
+                //{
+                //    AlertRules = x.AlertRules
+                //        .Select(c => new AlertRules().InjectFrom(c)).Cast<AlertRules>()
+                //        .ToList()
+                //};
+
+                var settings = new AlertSettingsViewModel();
+                foreach (var entityAr in x.AlertRules)
                 {
-                    AlertRules = x.AlertRules
-                        .Select(c => new AlertRules().InjectFrom(c)).Cast<AlertRules>()
-                        .ToList()
-                };
+                    var newA = new AlertRules();
+                    newA.InjectFrom(entityAr);
+                    newA.AlertType = (AlertType)(int)entityAr.AlertType;
+                    settings.AlertRules.Add(newA);
+                }
 
                 return settings;
             });
 
+
+            // View to DTO
+            Mapper.AddMap<AlertRules, AlertRulesDto>(x =>
+            {
+                var dto = new AlertRulesDto();
+                dto.InjectFrom(x);
+                dto.AlertType = (AlertTypeDto)(int)x.AlertType;
+                return dto;
+            });
+
+            // DTO to Entity
+            Mapper.AddMap<AlertRulesDto, DataAccessLayer.Models.Settings.AlertRules>(x =>
+            {
+                var dto = new DataAccessLayer.Models.Settings.AlertRules();
+                dto.InjectFrom(x);
+                dto.AlertType = (DataAccessLayer.Models.Settings.AlertType)(int)x.AlertType;
+                return dto;
+            });
+
+
+            // Entity to DTO
+            Mapper.AddMap<DataAccessLayer.Models.Settings.AlertRules, AlertRulesDto>(x =>
+            {
+                var dto = new AlertRulesDto();
+                dto.InjectFrom(x);
+                dto.AlertType = (AlertTypeDto)(int)x.AlertType;
+                return dto;
+            });
+
+            // DTO to View
+            Mapper.AddMap<AlertRulesDto, AlertRules>(x =>
+            {
+                var dto = new AlertRules();
+                dto.InjectFrom(x);
+                dto.AlertType = (AlertType)(int)x.AlertType;
+                return dto;
+            });
         }
     }
 }

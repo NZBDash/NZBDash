@@ -117,9 +117,6 @@
     <None Include="Grid.Mvc.Ajax.readme" />
     <None Include="packages.config" />
     <None Include="Scripts\gridmvc.min.js.map" />
-    <None Include="Views\Shared\_AjaxGridPager.cshtml" />
-    <None Include="Views\Shared\_Grid.cshtml" />
-    <None Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />

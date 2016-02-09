@@ -24,7 +24,6 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -48,6 +47,7 @@ namespace NZBDash.UI.Test.Controllers
     {
         private Mock<ILogger> Logger { get; set; }
         private AlertSettingsController _controller { get; set; }
+        private Mock<IHardwareService> HardwareService { get; set; } 
         private Mock<ISettingsService<AlertSettingsDto>> Settings { get; set; }
         private AlertSettingsDto ExpectedDto { get; set; }
 
@@ -60,10 +60,12 @@ namespace NZBDash.UI.Test.Controllers
             ExpectedDto = new Fixture().Create<AlertSettingsDto>();
             Settings = new Mock<ISettingsService<AlertSettingsDto>>();
 
+            HardwareService = new Mock<IHardwareService>();
+
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
         }
 
         [Test]
@@ -87,7 +89,7 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Setup(x => x.GetSettings()).Returns(new AlertSettingsDto());
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
 
             var result = (ViewResult)_controller.Index();
             var model = (AlertSettingsViewModel)result.Model;
@@ -102,7 +104,7 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
 
             var result = (PartialViewResult)_controller.UpdateAlert(ExpectedDto.AlertRules[0].Id);
             var model = (AlertRules)result.Model;
@@ -122,7 +124,7 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
 
             var model = new AlertRules { Id = ExpectedDto.AlertRules[0].Id, ThresholdTime = 90, Percentage = 99999, Enabled = true, AlertType = AlertType.Cpu, NicId = 22 };
 
@@ -140,7 +142,7 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
 
             var model = new AlertRules { Id = int.MaxValue, ThresholdTime = 90, Percentage = 92229, Enabled = true, AlertType = AlertType.Cpu, NicId = 22 };
 
@@ -158,7 +160,7 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
 
-            _controller = new AlertSettingsController(Logger.Object, Settings.Object);
+            CreateController();
 
             var model = new AlertRules { Id = int.MaxValue, Enabled = true, AlertType = AlertType.Cpu, };
 
@@ -171,6 +173,11 @@ namespace NZBDash.UI.Test.Controllers
             Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
             Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
             Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
+        }
+
+        private void CreateController()
+        {
+            _controller = new AlertSettingsController(Logger.Object, Settings.Object, HardwareService.Object);
         }
     }
 }

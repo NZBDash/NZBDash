@@ -24,7 +24,6 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
 using System.Collections.Generic;
 
 using Dapper.Contrib.Extensions;
@@ -49,12 +48,6 @@ namespace NZBDash.DataAccessLayer.Repository
             Logger.Trace(string.Format("Started GenericRepository<{0}>", typeof(T)));
             Cache = cacheProvider;
             TypeName = typeof(T).Name;
-        }
-
-        public T Find(Func<T> func)
-        {
-            var result = func();
-            return result;
         }
 
         public long Insert(T entity)

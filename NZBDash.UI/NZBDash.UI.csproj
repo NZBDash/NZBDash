@@ -537,6 +537,8 @@
     <Content Include="Views\Shared\NavbarDownloads.cshtml" />
     <Content Include="Views\AlertSettings\Index.cshtml" />
     <Content Include="Views\AlertSettings\CpuAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\NetworkAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\DriveAlertModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,6 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -39,27 +40,30 @@ namespace NZBDash.UI.Controllers
 {
     public class AlertSettingsController : BaseController
     {
-        public AlertSettingsController(ILogger logger, ISettingsService<AlertSettingsDto> alertSettings) : base(logger)
+        public AlertSettingsController(ILogger logger, ISettingsService<AlertSettingsDto> alertSettings, IHardwareService hardware) : base(logger)
         {
             AlertSettingsService = alertSettings;
+            HardwareService = hardware;
         }
         private ISettingsService<AlertSettingsDto> AlertSettingsService { get; set; }
-
+        private IHardwareService HardwareService { get; set; }
 
         [HttpGet]
         public ActionResult Index()
         {
             var settings = AlertSettingsService.GetSettings();
-            var model = new AlertSettingsViewModel();
+
+            var model = Mapper.Map<AlertSettingsViewModel>(settings);
 
             foreach (var rDto in settings.AlertRules)
             {
                 var m = new AlertRules();
                 m.InjectFrom(rDto);
+                m.NicId = rDto.NicId;
 
                 model.AlertRules.Add(m);
             }
-            model.InjectFrom(settings);
+
             return View(model);
         }
 
@@ -69,7 +73,11 @@ namespace NZBDash.UI.Controllers
             var settings = AlertSettingsService.GetSettings();
             var selected = settings.AlertRules.FirstOrDefault(x => x.Id == id);
             var vm = new AlertRules();
-            vm.InjectFrom(selected);
+
+            if (selected != null)
+            {
+                vm.InjectFrom(selected);
+            }
 
             if (vm.AlertType == AlertType.Cpu)
             {
@@ -88,16 +96,23 @@ namespace NZBDash.UI.Controllers
             }
             var currentSettings = AlertSettingsService.GetSettings();
 
+            var maxRecord = 1;
+
+            if (currentSettings.AlertRules.Count > 0)
+            {
+                maxRecord = currentSettings.AlertRules.Max(x => x.Id);
+            }
+
             var match = currentSettings.AlertRules.FirstOrDefault(x => x.Id == model.Id);
-            if (match == null)
+            if (match == null)  
             {
                 // We don't yet have any rules so create one
-                var dtoRule = new AlertRulesDto();
-                dtoRule.InjectFrom(model);
+                var dtoRule = Mapper.Map<AlertRules, AlertRulesDto>(model);
+                dtoRule.Id = ++maxRecord;
 
-                var dto = new AlertSettingsDto();
-                dto.AlertRules.Add(dtoRule);
-                var result = AlertSettingsService.SaveSettings(dto);
+                
+                currentSettings.AlertRules.Add(dtoRule);
+                var result = AlertSettingsService.SaveSettings(currentSettings);
                 if (result)
                 {
                     return RedirectToAction("Index");
@@ -116,7 +131,7 @@ namespace NZBDash.UI.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            
+
             return View("Error");
         }
 
@@ -141,11 +156,50 @@ namespace NZBDash.UI.Controllers
         {
             var model = new AlertRules { AlertType = alertType };
 
-            if (model.AlertType == AlertType.Cpu)
+            switch (model.AlertType)
             {
-                return PartialView("CpuAlertModal", model);
+                case AlertType.Cpu:
+                    return PartialView("CpuAlertModal", model);
+                case AlertType.Network:
+                    model = LoadNetwork(model);
+                    return PartialView("NetworkAlertModal", model);
+                case AlertType.Hdd:
+                    model = LoadHdd(model);
+                    return PartialView("DriveAlertModal", model);
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            return RedirectToAction("Index");
+        }
+
+        private AlertRules LoadNetwork(AlertRules rule)
+        {
+            var nics = HardwareService.GetAllNics();
+            rule.NicDict = new Dictionary<string, int>();
+            var ddlNics = new List<string>();
+            foreach (var nic in nics)
+            {
+                rule.NicDict.Add(nic.Key, nic.Value);
+                ddlNics.Add(nic.Key);
+            }
+            rule.Nics = new SelectList(rule.NicDict, "Value", "Key", 1);
+
+            return rule;
+        }
+
+        private AlertRules LoadHdd(AlertRules rule)
+        {
+            var drives = HardwareService.GetDrives();
+
+            rule.DrivesDict = new Dictionary<int, string>();
+            var ddlDrives = new List<string>();
+            foreach (var drive in drives.Where(drive => drive.IsReady))
+            {
+                rule.DrivesDict.Add(drive.DriveId, drive.VolumeLabel);
+                ddlDrives.Add(drive.VolumeLabel);
+            }
+            rule.Nics = new SelectList(rule.DrivesDict, "DriveId", "DriveVolumeLabel", 1);
+
+            return rule;
         }
     }
 }

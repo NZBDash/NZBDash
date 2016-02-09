@@ -13,11 +13,10 @@
 
             @Html.RenderHeader("Alert Settings")
 
-            <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal">AddAlert</a>
-
-            <div>
-                Type @Html.EnumDropDownListFor(x => x.AlertType)
-                <br />
+            <div class="btn-group-sm">
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal" class="btn btn-success">Cpu Alert</a>
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Network" data-target="myModal" class="btn btn-success">Network Alert</a>
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Hdd" data-target="myModal" class="btn btn-success">HDD Alert</a>
             </div>
 
             <hr />

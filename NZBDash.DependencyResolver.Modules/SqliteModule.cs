@@ -47,7 +47,6 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-            Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
             Bind<ISqlRepository<MonitoringEvents>>().To<GenericRepository<MonitoringEvents>>();
 		    Bind<ISettingsRepository>().To<JsonRepository>();
 

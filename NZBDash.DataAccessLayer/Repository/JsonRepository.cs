@@ -51,6 +51,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public long Insert(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Insert(entity);
@@ -59,25 +60,35 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public IEnumerable<GlobalSettings> GetAll()
         {
-            using (var con = Db.DbConnection())
+            var key = TypeName + "GetAll";
+            var item = Cache.GetOrSet(key, () =>
             {
-                var page = con.GetAll<GlobalSettings>();
-                return page;
-            }
-
+                using (var con = Db.DbConnection())
+                {
+                    var page = con.GetAll<GlobalSettings>();
+                    return page;
+                }
+            }, 5);
+            return item;
         }
 
         public GlobalSettings Get(string pageName)
         {
-            using (var con = Db.DbConnection())
+            var key = pageName + "Get";
+            var item = Cache.GetOrSet(key, () =>
             {
-                var page = con.GetAll<GlobalSettings>().SingleOrDefault(x => x.SettingsName == pageName);
-                return page;
-            }
+                using (var con = Db.DbConnection())
+                {
+                    var page = con.GetAll<GlobalSettings>().SingleOrDefault(x => x.SettingsName == pageName);
+                    return page;
+                }
+            }, 5);
+            return item;
         }
 
         public bool Delete(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Delete(entity);
@@ -86,6 +97,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Update(entity);
@@ -94,7 +106,7 @@ namespace NZBDash.DataAccessLayer.Repository
 
         private void ResetCache()
         {
-            Cache.Remove(TypeName + "Get");
+            Cache.Remove("Get");
             Cache.Remove(TypeName + "GetAll");
         }
     }
