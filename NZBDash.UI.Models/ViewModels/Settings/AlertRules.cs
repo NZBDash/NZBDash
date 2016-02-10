@@ -41,14 +41,9 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public int Percentage { get; set; }
         public bool Enabled { get; set; }
 
-        
-        /// <summary>
-        /// The HDD volume label. e.g. "C:\"
-        /// </summary>
-        public string DriveVolumeLabel { get; set; }
-
         public const string ThresholdErrorKey = "ThresholdTime";
         public const string PercentageErrorKey = "Percentage";
+        
 
 
         /// <summary>
@@ -56,10 +51,11 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         /// </summary>
         public int NicId { get; set; }
 
+        public int DriveId { get; set; }
+
         public Dictionary<string, int> NicDict { get; set; }
-        public Dictionary<int, string> DrivesDict { get; set; }
-        public SelectList CurrentDrives { get; set; }
         public SelectList Nics { get; set; }
+        public List<DriveAlertViewModel> Drives { get; set; }
 
         /// <summary>
         /// Custom check to see if the model is valid

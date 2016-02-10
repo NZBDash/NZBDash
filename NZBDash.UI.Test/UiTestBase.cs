@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: AuthenticationHelper.cs
+//   Copyright (c) 2016 NZBDash
+//   File: UiTestBase.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,24 +24,26 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
+using System.Data.Common;
 
-namespace NZBDash.UI.Helpers
+using Moq;
+
+using NZBDash.Common.Interfaces;
+using NZBDash.Core;
+using NZBDash.DataAccessLayer.Interfaces;
+
+namespace NZBDash.UI.Test
 {
-    public class AuthenticationHelper
+    public class UiTestBase
     {
-        public AuthenticationHelper(ISettingsService<NzbDashSettingsDto> service)
-        {
-            Service = service;
-        }
 
-        private ISettingsService<NzbDashSettingsDto> Service { get; set; }
-
-        public bool IsAuthenticated()
+        public void CreateMappings()
         {
-            var settings = Service.GetSettings();
-            return settings.Authenticate;
+            var sqlMock = new Mock<ISqliteConfiguration>();
+            var logger = new Mock<ILogger>();
+            var dbProvider = new Mock<DbProviderFactory>();
+            var s = new Setup(sqlMock.Object, logger.Object, dbProvider.Object);
+            s.SetupMappers();
         }
     }
 }

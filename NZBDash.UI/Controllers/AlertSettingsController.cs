@@ -52,17 +52,7 @@ namespace NZBDash.UI.Controllers
         public ActionResult Index()
         {
             var settings = AlertSettingsService.GetSettings();
-
             var model = Mapper.Map<AlertSettingsViewModel>(settings);
-
-            foreach (var rDto in settings.AlertRules)
-            {
-                var m = new AlertRules();
-                m.InjectFrom(rDto);
-                m.NicId = rDto.NicId;
-
-                model.AlertRules.Add(m);
-            }
 
             return View(model);
         }
@@ -76,14 +66,23 @@ namespace NZBDash.UI.Controllers
 
             if (selected != null)
             {
-                vm.InjectFrom(selected);
+                vm = Mapper.Map<AlertRules>(selected);
+                //vm.InjectFrom(selected);
             }
 
-            if (vm.AlertType == AlertType.Cpu)
+            switch (vm.AlertType)
             {
-                return PartialView("CpuAlertModal", vm);
+                case AlertType.Cpu:
+                    return PartialView("CpuAlertModal", vm);
+                case AlertType.Network:
+                    vm = LoadNetwork(vm);
+                    return PartialView("NetworkAlertModal", vm);
+                case AlertType.Hdd:
+                    vm = LoadHdd(vm);
+                    return PartialView("DriveAlertModal", vm);
+                default:
+                    return View("Error");
             }
-            return View("Error");
         }
 
         [ValidateAntiForgeryToken]
@@ -112,6 +111,7 @@ namespace NZBDash.UI.Controllers
 
                 
                 currentSettings.AlertRules.Add(dtoRule);
+                Logger.Trace("Saving new rule with id {0}", dtoRule.Id);
                 var result = AlertSettingsService.SaveSettings(currentSettings);
                 if (result)
                 {
@@ -122,7 +122,8 @@ namespace NZBDash.UI.Controllers
             {
                 // We have rules already so let's modify the existing rules, remove the existing and add the new
                 var dtoModel = new AlertRulesDto();
-                dtoModel.InjectFrom(model);
+                dtoModel = Mapper.Map<AlertRulesDto>(model);
+
                 currentSettings.AlertRules.Remove(match);
                 currentSettings.AlertRules.Add(dtoModel);
                 var result = AlertSettingsService.SaveSettings(currentSettings);
@@ -159,6 +160,11 @@ namespace NZBDash.UI.Controllers
             switch (model.AlertType)
             {
                 case AlertType.Cpu:
+                    var settings = AlertSettingsService.GetSettings();
+                    if (settings.AlertRules.Any(x => x.AlertType == AlertTypeDto.Cpu))
+                    {
+                        return PartialView("AlertExistsModal", model.AlertType);
+                    }
                     return PartialView("CpuAlertModal", model);
                 case AlertType.Network:
                     model = LoadNetwork(model);
@@ -167,19 +173,40 @@ namespace NZBDash.UI.Controllers
                     model = LoadHdd(model);
                     return PartialView("DriveAlertModal", model);
                 default:
+                    Logger.Fatal("ArgumentOutOfRangeException on AlertType: {0}", model.AlertType);
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        [HttpGet]
+        public ActionResult OpenEmailModal()
+        {
+            var settings = AlertSettingsService.GetSettings();
+            var model = Mapper.Map<AlertSettingsViewModel>(settings);
+            return PartialView("EmailSettingsModal", model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSettings(AlertSettingsViewModel model)
+        {
+            var dto = Mapper.Map<AlertSettingsDto>(model);
+            var result = AlertSettingsService.SaveSettings(dto);
+            if (result)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Logger.Error("There has been an error trying to update the AlertSettingsViewModel");
+            return View("Error");
         }
 
         private AlertRules LoadNetwork(AlertRules rule)
         {
             var nics = HardwareService.GetAllNics();
             rule.NicDict = new Dictionary<string, int>();
-            var ddlNics = new List<string>();
             foreach (var nic in nics)
             {
                 rule.NicDict.Add(nic.Key, nic.Value);
-                ddlNics.Add(nic.Key);
             }
             rule.Nics = new SelectList(rule.NicDict, "Value", "Key", 1);
 
@@ -189,15 +216,13 @@ namespace NZBDash.UI.Controllers
         private AlertRules LoadHdd(AlertRules rule)
         {
             var drives = HardwareService.GetDrives();
+            rule.Drives = new List<DriveAlertViewModel>();
 
-            rule.DrivesDict = new Dictionary<int, string>();
-            var ddlDrives = new List<string>();
             foreach (var drive in drives.Where(drive => drive.IsReady))
             {
-                rule.DrivesDict.Add(drive.DriveId, drive.VolumeLabel);
-                ddlDrives.Add(drive.VolumeLabel);
+                var d = new DriveAlertViewModel { DriveId = drive.DriveId, DriveVolumeLabel = drive.VolumeLabel };
+                rule.Drives.Add(d);
             }
-            rule.Nics = new SelectList(rule.DrivesDict, "DriveId", "DriveVolumeLabel", 1);
 
             return rule;
         }

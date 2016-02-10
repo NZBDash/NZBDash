@@ -32,7 +32,7 @@ using Ninject;
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.UI.App_Start;
 using NZBDash.UI.Helpers;
 

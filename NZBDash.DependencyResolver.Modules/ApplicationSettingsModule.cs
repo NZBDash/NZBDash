@@ -27,7 +27,6 @@
 using Ninject.Modules;
 
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Models.Settings;

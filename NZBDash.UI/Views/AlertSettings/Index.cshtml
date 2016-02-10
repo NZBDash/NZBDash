@@ -4,7 +4,7 @@
 @using NZBDash.UI.Models.ViewModels.Settings
 @using RestSharp.Extensions
 @model NZBDash.UI.Models.ViewModels.Settings.AlertSettingsViewModel
-
+@*TODO: Resource*@
 
 <div class="container-fluid">
 
@@ -14,9 +14,19 @@
             @Html.RenderHeader("Alert Settings")
 
             <div class="btn-group-sm">
+                
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal" class="btn btn-success">Cpu Alert</a>
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Network" data-target="myModal" class="btn btn-success">Network Alert</a>
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Hdd" data-target="myModal" class="btn btn-success">HDD Alert</a>
+                @if (!string.IsNullOrEmpty(Model.EmailHost))
+                {
+                    <a href="@Url.Action("OpenEmailModal")" data-target="myModal" class="btn btn-success"><i class="fa fa-envelope"></i> Email Settings</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("OpenEmailModal")" id="blah" data-content="You have not yet configured your email settings!" data-target="myModal" class="btn btn-danger"><i class="fa fa-envelope"></i> Email Settings</a>
+                }
+
             </div>
 
             <hr />
@@ -49,7 +59,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(function () {
-
+            $("#blah").popover({ 'placement': 'right' }).popover('show');
 
             $("a[data-target=myModal]").click(function (ev) {
                 ev.preventDefault();

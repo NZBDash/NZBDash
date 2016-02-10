@@ -127,6 +127,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -181,6 +182,7 @@
     </Compile>
     <Compile Include="AppStartConfigurationTests.cs" />
     <Compile Include="Helpers\EndpointTesterTest.cs" />
+    <Compile Include="UiTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\NzbGetControllerTests.cs" />
     <Compile Include="IconHelperTests.cs" />

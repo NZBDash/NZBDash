@@ -102,6 +102,7 @@
     <Compile Include="ViewModels\Settings\AlertType.cs" />
     <Compile Include="ViewModels\Settings\BaseSettingsViewmodel.cs" />
     <Compile Include="ViewModels\Settings\CouchPotatoSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\DriveAlertViewModel.cs" />
     <Compile Include="ViewModels\Settings\DriveSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\HardwareSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\NzbGetSettingsViewModel.cs" />

@@ -32,7 +32,7 @@ using Moq;
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;

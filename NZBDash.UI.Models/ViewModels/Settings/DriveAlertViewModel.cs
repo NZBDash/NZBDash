@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2016 Jamie Rees
-//   File: AuthenticationHelper.cs
+//   Copyright (c) 2016 NZBDash
+//   File: DriveAlertViewModel.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,24 +24,11 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
-
-namespace NZBDash.UI.Helpers
+namespace NZBDash.UI.Models.ViewModels.Settings
 {
-    public class AuthenticationHelper
+    public class DriveAlertViewModel
     {
-        public AuthenticationHelper(ISettingsService<NzbDashSettingsDto> service)
-        {
-            Service = service;
-        }
-
-        private ISettingsService<NzbDashSettingsDto> Service { get; set; }
-
-        public bool IsAuthenticated()
-        {
-            var settings = Service.GetSettings();
-            return settings.Authenticate;
-        }
+        public int DriveId { get; set; }
+        public string DriveVolumeLabel { get; set; }
     }
 }

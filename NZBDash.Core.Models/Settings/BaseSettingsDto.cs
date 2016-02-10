@@ -27,7 +27,6 @@
 using System;
 
 using NZBDash.Common.Helpers;
-using NZBDash.Common.Models.Settings;
 
 namespace NZBDash.Core.Models.Settings
 {

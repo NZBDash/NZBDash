@@ -34,7 +34,6 @@ using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.Core.Models.Settings;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Hardware;

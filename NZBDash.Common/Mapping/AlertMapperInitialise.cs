@@ -51,6 +51,7 @@ namespace NZBDash.Common.Mapping
                 //};
 
                 var settings = new AlertSettingsDto();
+                settings.InjectFrom(x);
                 foreach (var a in x.AlertRules)
                 {
                     var newA = new AlertRulesDto();
@@ -73,6 +74,7 @@ namespace NZBDash.Common.Mapping
                 //};
 
                 var settings = new AlertSettings { AlertRules = new List<DataAccessLayer.Models.Settings.AlertRules>()};
+                settings.InjectFrom(x);
                 foreach (var a in x.AlertRules)
                 {
                     var newA = new DataAccessLayer.Models.Settings.AlertRules();
@@ -88,7 +90,7 @@ namespace NZBDash.Common.Mapping
             Mapper.AddMap<AlertSettings, AlertSettingsDto>(x =>
             {
                 var settings = new AlertSettingsDto { AlertRules = new List<AlertRulesDto>() };
-
+                settings.InjectFrom(x);
                 //foreach (var entityAr in x.AlertRules)
                 //{
                 //    settings.AlertRules.Add((AlertRulesDto)new AlertRulesDto().InjectFrom(entityAr));
@@ -116,6 +118,7 @@ namespace NZBDash.Common.Mapping
                 //};
 
                 var settings = new AlertSettingsViewModel();
+                settings.InjectFrom(x);
                 foreach (var entityAr in x.AlertRules)
                 {
                     var newA = new AlertRules();

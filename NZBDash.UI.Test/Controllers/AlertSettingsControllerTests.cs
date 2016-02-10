@@ -36,6 +36,7 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.UI.Controllers;
+using NZBDash.UI.Models.Hardware;
 using NZBDash.UI.Models.ViewModels.Settings;
 
 using Ploeh.AutoFixture;
@@ -43,24 +44,29 @@ using Ploeh.AutoFixture;
 namespace NZBDash.UI.Test.Controllers
 {
     [TestFixture]
-    public class AlertSettingsControllerTests
+    public class AlertSettingsControllerTests : UiTestBase
     {
         private Mock<ILogger> Logger { get; set; }
         private AlertSettingsController _controller { get; set; }
-        private Mock<IHardwareService> HardwareService { get; set; } 
+        private Mock<IHardwareService> HardwareService { get; set; }
         private Mock<ISettingsService<AlertSettingsDto>> Settings { get; set; }
         private AlertSettingsDto ExpectedDto { get; set; }
 
         [SetUp]
         public void Setup()
         {
+            CreateMappings();
             Logger = new Mock<ILogger>();
             Settings = new Mock<ISettingsService<AlertSettingsDto>>();
 
-            ExpectedDto = new Fixture().Create<AlertSettingsDto>();
+            var alertRule = new Fixture().Create<AlertRulesDto>();
+            var aList = new List<AlertRulesDto> { alertRule };
+            ExpectedDto = new Fixture().Build<AlertSettingsDto>().With(x => x.AlertRules, aList).Create();
             Settings = new Mock<ISettingsService<AlertSettingsDto>>();
 
             HardwareService = new Mock<IHardwareService>();
+            HardwareService.Setup(x => x.GetAllNics()).Returns(new Fixture().Create<Dictionary<string, int>>());
+            HardwareService.Setup(x => x.GetDrives()).Returns(new Fixture().CreateMany<DriveModel>());
 
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
             Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
@@ -118,7 +124,47 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
-        public void UpdateExistingAlertPost()
+        public void UpdateNetworkAlertGet()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Network;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var result = (PartialViewResult)_controller.UpdateAlert(ExpectedDto.AlertRules[0].Id);
+            var model = (AlertRules)result.Model;
+
+            var exp = ExpectedDto.AlertRules[0];
+            Assert.That(model.Id, Is.EqualTo(exp.Id));
+            Assert.That(model.AlertType.ToString(), Is.EqualTo(exp.AlertType.ToString()));
+            Assert.That(model.Enabled, Is.EqualTo(exp.Enabled));
+            Assert.That(model.Percentage, Is.EqualTo(exp.Percentage));
+            Assert.That(model.ThresholdTime, Is.EqualTo(exp.ThresholdTime));
+        }
+
+        [Test]
+        public void UpdateHddAlertGet()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Hdd;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var result = (PartialViewResult)_controller.UpdateAlert(ExpectedDto.AlertRules[0].Id);
+            var model = (AlertRules)result.Model;
+
+            var exp = ExpectedDto.AlertRules[0];
+            Assert.That(model.Id, Is.EqualTo(exp.Id));
+            Assert.That(model.AlertType.ToString(), Is.EqualTo(exp.AlertType.ToString()));
+            Assert.That(model.Enabled, Is.EqualTo(exp.Enabled));
+            Assert.That(model.Percentage, Is.EqualTo(exp.Percentage));
+            Assert.That(model.ThresholdTime, Is.EqualTo(exp.ThresholdTime));
+        }
+
+        [Test]
+        public void UpdateExistingCpuAlertPost()
         {
             ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Cpu;
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
@@ -129,14 +175,54 @@ namespace NZBDash.UI.Test.Controllers
             var model = new AlertRules { Id = ExpectedDto.AlertRules[0].Id, ThresholdTime = 90, Percentage = 99999, Enabled = true, AlertType = AlertType.Cpu, NicId = 22 };
 
             _controller.UpdateAlert(model);
-            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 99999))),Times.Once);
-            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))),Times.Once);
-            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))),Times.Once);
-            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))),Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 99999))), Times.Once);
+
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Cpu))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))), Times.Once);
         }
 
         [Test]
-        public void UpdateNewAlertPost()
+        public void UpdateExistingNetworkAlertPost()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Network;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var model = new AlertRules { Id = ExpectedDto.AlertRules[0].Id, ThresholdTime = 90, Percentage = 99999, Enabled = true, AlertType = AlertType.Network, NicId = 22 };
+
+            _controller.UpdateAlert(model);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 99999))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Network))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))), Times.Once);
+        }
+
+        [Test]
+        public void UpdateExistingHddAlertPost()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Hdd;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var model = new AlertRules { Id = ExpectedDto.AlertRules[0].Id, ThresholdTime = 90, Percentage = 99999, Enabled = true, AlertType = AlertType.Hdd, NicId = 22 };
+
+            _controller.UpdateAlert(model);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 99999))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Hdd))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))), Times.Once);
+        }
+
+        [Test]
+        public void UpdateNewCpuAlertPost()
         {
             ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Cpu;
             Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
@@ -149,9 +235,52 @@ namespace NZBDash.UI.Test.Controllers
             _controller.UpdateAlert(model);
             Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 92229))), Times.Once);
             Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))), Times.Once);
+
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Cpu))), Times.Once);
             Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))), Times.Once);
             Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))), Times.Once);
         }
+
+        [Test]
+        public void UpdateNewNetworkAlertPost()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Network;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var model = new AlertRules { Id = int.MaxValue, ThresholdTime = 90, Percentage = 92229, Enabled = true, AlertType = AlertType.Network, NicId = 22 };
+
+            _controller.UpdateAlert(model);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == 92229))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == 90))), Times.Once);
+
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Network))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == 22))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled))), Times.Once);
+        }
+
+        [Test]
+        public void UpdateNewHddAlertPost()
+        {
+            ExpectedDto.AlertRules[0].AlertType = AlertTypeDto.Hdd;
+            Settings.Setup(x => x.GetSettings()).Returns(ExpectedDto);
+            Settings.Setup(x => x.SaveSettings(It.IsAny<AlertSettingsDto>())).Returns(true).Verifiable();
+
+            CreateController();
+
+            var model = new AlertRules { Id = int.MaxValue, ThresholdTime = 90, Percentage = 92229, Enabled = true, AlertType = AlertType.Hdd, NicId = 22 };
+
+            _controller.UpdateAlert(model);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Percentage == model.Percentage))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.ThresholdTime == model.ThresholdTime))), Times.Once);
+
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.AlertType == AlertTypeDto.Hdd))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.NicId == model.NicId))), Times.Once);
+            Settings.Verify(x => x.SaveSettings(It.Is<AlertSettingsDto>(c => c.AlertRules.Any(y => y.Enabled == model.Enabled))), Times.Once);
+        }
+
 
         [Test]
         public void UpdateAlertPostInvalidModel()
@@ -167,12 +296,11 @@ namespace NZBDash.UI.Test.Controllers
             var jsonResult = (JsonResult)_controller.UpdateAlert(model);
             var error = (Dictionary<string, string>)jsonResult.Data;
 
-            Assert.That(string.IsNullOrEmpty(error[AlertRules.PercentageErrorKey]), Is.False);            
-            Assert.That(string.IsNullOrEmpty(error[AlertRules.ThresholdErrorKey]), Is.False);            
+            Assert.That(string.IsNullOrEmpty(error[AlertRules.PercentageErrorKey]), Is.False);
+            Assert.That(string.IsNullOrEmpty(error[AlertRules.ThresholdErrorKey]), Is.False);
             Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
-            Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
-            Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
-            Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
+            Settings.Verify(x => x.GetSettings(), Times.Never);
+            Settings.Verify(x => x.Delete(It.IsAny<AlertSettingsDto>()), Times.Never);
         }
 
         private void CreateController()

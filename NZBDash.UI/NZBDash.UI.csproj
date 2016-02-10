@@ -539,6 +539,8 @@
     <Content Include="Views\AlertSettings\CpuAlertModal.cshtml" />
     <Content Include="Views\AlertSettings\NetworkAlertModal.cshtml" />
     <Content Include="Views\AlertSettings\DriveAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\AlertExistsModal.cshtml" />
+    <Content Include="Views\AlertSettings\EmailSettingsModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

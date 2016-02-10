@@ -28,12 +28,18 @@ using System.Collections.Generic;
 
 namespace NZBDash.Core.Models.Settings
 {
-    public class AlertSettingsDto : BaseSettingsDto
+    public class AlertSettingsDto : Setting
     {
         public AlertSettingsDto()
         {
             AlertRules = new List<AlertRulesDto>();
         }
         public List<AlertRulesDto> AlertRules { get; set; }
+
+        public bool AuthenticationEnabled { get; set; }
+        public string EmailHost { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int Port { get; set; }
     }
 }

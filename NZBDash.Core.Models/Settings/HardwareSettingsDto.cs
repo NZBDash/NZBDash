@@ -28,8 +28,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-using NZBDash.Common.Models.Settings;
-
 namespace NZBDash.Core.Models.Settings
 {
     public class HardwareSettingsDto : Setting

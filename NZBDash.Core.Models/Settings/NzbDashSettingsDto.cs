@@ -24,9 +24,9 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Core.Model.Settings
+namespace NZBDash.Core.Models.Settings
 {
-    public class NzbDashSettingsDto : Common.Models.Settings.Setting
+    public class NzbDashSettingsDto : Setting
     {
         public bool Authenticate { get; set; }
     }
