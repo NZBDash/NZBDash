@@ -25,6 +25,7 @@
 // ************************************************************************/
 #endregion
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace NZBDash.UI.Models.ViewModels.Settings
@@ -35,6 +36,7 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         {
             Errors = new Dictionary<string, string>();
         }
+        [Required]
         public AlertType AlertType { get; set; }
         public int Id { get; set; }
         public int ThresholdTime { get; set; }
@@ -43,7 +45,7 @@ namespace NZBDash.UI.Models.ViewModels.Settings
 
         public const string ThresholdErrorKey = "ThresholdTime";
         public const string PercentageErrorKey = "Percentage";
-        
+
 
 
         /// <summary>
@@ -58,22 +60,35 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public List<DriveAlertViewModel> Drives { get; set; }
 
         /// <summary>
-        /// Custom check to see if the model is valid
+        /// Custom check to see if the model is valid.
         /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is valid; otherwise, <c>false</c>.
+        /// </value>
+        /// <remarks>If the settings is disabled then it will always be valid since there is nothing to validate on.
+        /// If the setting is enabled then we will ensure that the user cannot set the value to <c>0</c></remarks>
         public bool IsValid
         {
             get
             {
                 if (Enabled)
                 {
-                    if (ThresholdTime == 0)
-                        Errors.Add(ThresholdErrorKey, "Threshold is not valid"); //TODO Resource
+                    if (Errors.Count > 0)
+                        Errors.Clear(); // Clear any previous values.
 
-                    if (Percentage == 0)
+                    if (ThresholdTime == 0 && !Errors.ContainsKey(ThresholdErrorKey))
+                    {
+                        Errors.Add(ThresholdErrorKey, "Threshold is not valid"); //TODO Resource
+                    }
+
+                    if (Percentage == 0 && !Errors.ContainsKey(PercentageErrorKey))
+                    {
                         Errors.Add(PercentageErrorKey, "Percentage is not valid");
+                    }
 
                     return Errors.Count == 0;
                 }
+                // It's not enabled so it will always pass validation.
                 return true;
             }
         }

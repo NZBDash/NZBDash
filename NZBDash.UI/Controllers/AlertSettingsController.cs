@@ -85,13 +85,26 @@ namespace NZBDash.UI.Controllers
             }
         }
 
-        [ValidateAntiForgeryToken]
+
         [HttpPost]
         public ActionResult UpdateAlert(AlertRules model)
         {
             if (!model.IsValid)
             {
-                return Json(model.Errors);
+                switch (model.AlertType)
+                {
+                    case AlertType.Cpu:
+                        return PartialView("CpuAlertModal", model);
+                    case AlertType.Network:
+                        model = LoadNetwork(model);
+                        return PartialView("NetworkAlertModal", model);
+                    case AlertType.Hdd:
+                        model = LoadHdd(model);
+                        return PartialView("DriveAlertModal", model);
+                    default:
+                        Logger.Fatal("ArgumentOutOfRangeException on AlertType: {0}", model.AlertType);
+                        throw new ArgumentOutOfRangeException();
+                }
             }
             var currentSettings = AlertSettingsService.GetSettings();
 
@@ -220,7 +233,7 @@ namespace NZBDash.UI.Controllers
 
             foreach (var drive in drives.Where(drive => drive.IsReady))
             {
-                var d = new DriveAlertViewModel { DriveId = drive.DriveId, DriveVolumeLabel = drive.VolumeLabel };
+                var d = new DriveAlertViewModel { DriveId = drive.DriveId, DriveVolumeLabel = drive.Name };
                 rule.Drives.Add(d);
             }
 

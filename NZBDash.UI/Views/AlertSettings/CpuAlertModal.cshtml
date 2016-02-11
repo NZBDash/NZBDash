@@ -5,8 +5,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="cpuModal">@Model.AlertType</h4>
 </div>
-@using (Html.BeginForm("UpdateAlert", "AlertSettings", FormMethod.Post))
-{
+<form action="@Url.Action("UpdateAlert", "AlertSettings" )" method="POST" id="CpuForm">
     @Html.AntiForgeryToken()
     <div class="modal-body">
         @Html.HiddenFor(x => x.Id)
@@ -30,7 +29,10 @@
                 @Html.TextBoxFor(x => x.ThresholdTime, new { @class = "form-control" })
             </div>
         </div>
-
+        @if (Model.Errors.Count > 0)
+        {
+            <div>error!</div>
+        }
     </div>
 
     <div class="modal-footer">
@@ -39,12 +41,38 @@
             <button id="CpuSaveBtn" type="submit" class="btn btn-success">Save</button>
         </div>
     </div>
-}
+</form>
 
 
 
-<script>
-    $(function () {
-        $('#Enabled').bootstrapSwitch();
-    });
-</script>
+    <script>
+        $(function () {
+            $('#Enabled').bootstrapSwitch();
+
+
+            // TODO sort out the validation for the modals
+            //$('#CpuSaveBtn').click(function (e) {
+            //    console.log("logged");
+            //    e.preventDefault();
+
+            //    var $form = $('#CpuForm');
+
+            //    $.ajax({
+            //        type: $form.prop('method'),
+            //        url: $form.prop('action'),
+            //        data: $form.serialize(),
+            //        dataType: "json",
+            //        success: function (response) {
+            //            console.log("success");
+            //            console.log(response);
+            //        },
+            //        error: function(e) {
+            //            alert(e);
+            //        }
+            //    });
+    
+
+            //});
+
+        });
+    </script>

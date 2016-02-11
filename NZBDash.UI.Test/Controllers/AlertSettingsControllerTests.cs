@@ -293,11 +293,12 @@ namespace NZBDash.UI.Test.Controllers
 
             var model = new AlertRules { Id = int.MaxValue, Enabled = true, AlertType = AlertType.Cpu, };
 
-            var jsonResult = (JsonResult)_controller.UpdateAlert(model);
-            var error = (Dictionary<string, string>)jsonResult.Data;
+            var result = (PartialViewResult)_controller.UpdateAlert(model);
+            var resultModel = (AlertRules)result.Model;
 
-            Assert.That(string.IsNullOrEmpty(error[AlertRules.PercentageErrorKey]), Is.False);
-            Assert.That(string.IsNullOrEmpty(error[AlertRules.ThresholdErrorKey]), Is.False);
+            Assert.That(resultModel.Errors.ContainsKey(AlertRules.PercentageErrorKey), Is.True);
+            Assert.That(resultModel.Errors.ContainsKey(AlertRules.ThresholdErrorKey), Is.True);
+
             Settings.Verify(x => x.SaveSettings(It.IsAny<AlertSettingsDto>()), Times.Never);
             Settings.Verify(x => x.GetSettings(), Times.Never);
             Settings.Verify(x => x.Delete(It.IsAny<AlertSettingsDto>()), Times.Never);
