@@ -1,15 +1,10 @@
-.jumbotron {
-    background: #fbfbfb url('swirl_pattern.png') left -250px repeat;
-    background-size: 15%;
-    border-bottom: 1px solid #e7e7e7;
-    font-size: 18px;
-}
+
 .navbar {
-    margin-bottom: 0 !important;
+    margin-bottom: 0;
 }
 
-.footer {
-    background-color: #f8f8f8 !important;
+footer {
+    background-color: #f8f8f8;
     border-top: 1px solid #e7e7e7;
     color: #555;
     margin-top: 20px;
@@ -17,6 +12,720 @@
     width: 100%;
 }
 
+pre {
+    background-color: #f8f8f8;
+}
+
+@media (min-width:767px) {
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+
+    body {
+        margin-bottom: 230px;
+    }
+
+    footer {
+        height: 175px;
+        padding-bottom: 10px;
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+.navbar-brand {
+    font-size: 20px;
+}
+
+.navbar-static-top .btn-default {
+    background-color: #f8f8f8;
+}
+
+.navbar-static-top .navbar-brand {
+    color: #444;
+}
+
+.navbar-static-top .navbar-nav > li {
+}
+
+    .navbar-static-top .navbar-nav > li > a {
+        color: #555;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 15px;
+        margin-right: 15px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+        .navbar-static-top .navbar-nav > li > a:hover,
+        .navbar-static-top .navbar-nav > li > a:focus {
+            color: #111;
+            background-color: transparent;
+        }
+
+.navbar-static-top .navbar-nav > .active > a,
+.navbar-static-top .navbar-nav > .active > a:hover,
+.navbar-static-top .navbar-nav > .active > a:focus {
+    color: #3b7bea;
+    background-color: transparent;
+    padding-bottom: 11px;
+    border-bottom: 4px solid #3b7bea;
+}
+
+/* Background pattern from subtlepatterns.com */
+.jumbotron {
+    background: #fbfbfb url('swirl_pattern.png') left -250px repeat;
+    background-size: 15%;
+    border-bottom: 1px solid #e7e7e7;
+    font-size: 18px;
+}
+
+.jumbotron-content {
+    text-align: center;
+}
+
+.jumbotron .code-sample, .jumbotron .carousel .item {
+    height: 275px;
+}
+
+.jumbotron h1 {
+    font-size: 63px;
+    margin-bottom: 10px;
+}
+
+.carousel-caption {
+    color: #000;
+    font-size: 18px;
+    text-shadow: none;
+}
+
+.carousel-indicators li {
+    border: 1px solid #000;
+}
+
+.carousel-indicators .active {
+    background-color: #000;
+}
+
+#code-carousel {
+    border: 1px solid #ccc;
+}
+
+    #code-carousel pre {
+        font-family: Consolas, Inconsolata, Monaco, "Courier New" !important;
+        font-size: 12px !important;
+        line-height: 15px !important;
+        border: 0;
+        border-radius: 0;
+    }
+
+@media screen and (min-width: 768px) {
+
+    .carousel-caption {
+        padding-bottom: 5px;
+    }
+
+    .carousel-indicators {
+        margin-bottom: 5px;
+        bottom: 0;
+    }
+}
+
+.jumbotron-content .summary {
+    margin-bottom: 25px;
+}
+
+.jumbotron-content .buttons {
+    margin-bottom: 40px;
+}
+
+    .jumbotron-content .buttons a {
+        margin: 2px 10px;
+    }
+
+.jumbotron-content .byline {
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+    .jumbotron-content .byline iframe {
+        vertical-align: middle;
+        margin-bottom: 2px;
+    }
+
+.sunlight-container {
+    margin: 0 !important;
+}
+
+    .sunlight-container pre {
+        border: 0;
+        border-radius: 0;
+    }
+
+#why, #customers {
+    margin-bottom: 25px;
+}
+
+
+.page-section {
+    border-bottom: 1px solid #e7e7e7 !important;
+}
+    .page-section h3 {
+        text-align: center;
+        margin: 45px 0 20px 0;
+        font-size: 22px;
+    }
+
+.image-page-section {
+    padding-top: 45px;
+}
+
+    .image-page-section h3 {
+        text-align: left;
+        margin-top: 0;
+    }
+
+
+#copyright {
+    margin-top: 10px;
+    text-align: center;
+}
+  #why h4, #help h4 {
+        font-size: 19px;
+        margin-bottom: 15px;
+    }
+
+    #why .col-md-4, #help .col-md-4 {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+
+    #why h4 [class^="fa-"]:before, #why h4 [class*=" fa-"]:before,
+    #help h4 [class^="fa-"]:before, #help h4 [class*=" fa-"]:before {
+        display: inline-block;
+        font-size: 28px;
+        margin-right: 5px;
+        text-align: center;
+        vertical-align: -10%;
+        width: 1.07143em;
+    }
+
+#help .commercial {
+    background-color: #fcf8e3;
+    border: 1px solid #F2EED9;
+}
+
+#donors h3 {
+    margin-top: 25px;
+}
+
+#donor-list div {
+    float: left;
+    width: 105px;
+    height: 105px;
+    background-color: #eee;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    line-height: 105px;
+    text-align: center;
+    overflow: hidden;
+}
+
+    #donor-list div span {
+        display: inline-block;
+        width: 105px;
+        height: 105px;
+    }
+
+#donor-list .donate a {
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    width: 105px;
+    height: 105px;
+    text-decoration: none;
+}
+
+#donor-list .btn-success {
+    padding: 0;
+    background-color: #5cb85c;
+}
+
+.feature-summary {
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+    .feature-summary span {
+        display: block;
+        font-size: 24px;
+        font-weight: bold;
+        padding-top: 15px;
+    }
+
+.feature-comparison th {
+    font-weight: bold;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #eee;
+}
+
+td.highlight, th.highlight {
+    background-color: #FFFBCC;
+    border-color: #F0ECBD !important;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td.highlight {
+    background-color: #F5F1C2;
+    border-color: #F0ECBD;
+}
+
+a, a:hover, a:focus {
+    color: #0066CC;
+}
+
+.nuget-badge {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background-color: #202020;
+    border: 4px solid silver;
+    border-radius: 5px;
+    box-shadow: 2px 2px 3px #6e6e6e;
+    color: #e2e2e2;
+    display: inline-block;
+    font: 14px 'andale mono','lucida console',monospace;
+    line-height: 1.5em;
+    overflow: auto;
+    padding: 15px;
+}
+
+.slim-dialog .page-header {
+    margin-top: 5px;
+}
+
+.install-version {
+    font-size: 16px;
+    text-align: center;
+}
+
+    .install-version .versions {
+        font-size: 18px;
+        padding-bottom: 5px;
+    }
+
+    .install-version strong {
+        font-size: 110%;
+    }
+
+    .install-version .latest {
+        color: #5cb85c;
+    }
+
+    .install-version .outdated {
+        color: red;
+    }
+
+    .install-version .vs-package-management {
+        font-size: 18px;
+    }
+
+.license-key {
+    max-width: 250px;
+}
+
+    .license-key input.form-control {
+        cursor: text;
+        padding-right: 0;
+    }
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+@media (min-width:1200px) {
+    #schema-prices .row {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    #support-prices .col-lg-offset-1-5 {
+        margin-left: 12.5%;
+    }
+}
+
+@media (max-width:767px) {
+    footer .row .col-xs-6:nth-child(odd) {
+        clear: both;
+    }
+}
+
+.plan {
+    text-align: center;
+    background-color: #fff;
+    padding-bottom: 30px;
+}
+
+    .plan .plan-title {
+        background-color: #999;
+        color: #fff;
+        padding: 12px 16px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    .plan .plan-body {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border: solid 1px #ccc;
+        border-top: none;
+        padding: 20px;
+    }
+
+    .plan .plan-title h2 {
+        margin: 0;
+        font-weight: lighter;
+    }
+
+    .plan .plan-items {
+        text-align: left;
+        padding-left: 30px;
+    }
+
+        .plan .plan-items > * {
+            margin-bottom: 10px;
+        }
+
+    .plan .plan-item-spacer {
+        visibility: hidden;
+    }
+
+    .plan .plan-price {
+        margin: 20px 0;
+        border-top: solid 1px #ddd;
+    }
+
+        .plan .plan-price h3 {
+            font-size: 40px;
+            vertical-align: top;
+            line-height: 1;
+            font-weight: lighter;
+            text-transform: uppercase;
+        }
+
+            .plan .plan-price h3 span {
+                font-size: 20px;
+                vertical-align: top;
+                position: relative;
+                margin: 6px 0 0 -7px;
+                display: inline-block;
+            }
+
+        .plan .plan-price h4 {
+            color: #666;
+            font-size: 14px;
+            font-weight: lighter;
+            text-transform: lowercase;
+        }
+
+    .plan .btn {
+        padding: 10px 40px;
+        text-transform: uppercase;
+        font-weight: lighter;
+    }
+
+#copyright {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#content-inner {
+    max-width: 730px;
+    margin-left: auto;
+    margin-right: auto;
+    background: inherit;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div.message {
+    padding: 15px;
+}
+
+textarea.code {
+    font: 16px/1 Consolas, 'Courier New', monospace;
+    width: 100%;
+    height: 450px;
+    -ms-word-break: keep-all;
+    word-break: keep-all;
+    border: 1px solid silver;
+    padding: 5px;
+    margin-bottom: 1.5em;
+}
+
+.CodeMirror {
+    font: 16px/1 Consolas, 'Courier New', monospace;
+    width: 100%;
+    height: 450px;
+    -ms-word-break: keep-all;
+    word-break: keep-all;
+    border: 1px solid silver;
+    margin-bottom: 1.5em;
+}
+
+    .CodeMirror pre > * {
+        text-indent: 0;
+    }
+
+.CodeMirror-gutters {
+    min-width: 40px;
+    text-align: right;
+}
+
+.section-header {
+    vertical-align: bottom;
+}
+
+#validation label {
+    font-weight: normal;
+    font-size: 20px;
+    margin-bottom: 5px;
+    vertical-align: bottom;
+}
+
+#validation #schemas {
+    width: 250px;
+    display: inline-block;
+    margin-bottom: 3px;
+}
+
+.error-container {
+    font-size: 18px;
+}
+
+    .error-container dt {
+        font-weight: normal;
+        color: black;
+        text-align: left;
+        width: 160px;
+    }
+
+    .error-container dd {
+        color: red;
+        margin-left: 160px;
+    }
+
+#validation .error-message {
+    font-weight: bold;
+}
+
+#validation .validation-message {
+    font-size: 18px;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+#validation .validation-result {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#validation .validation-failed {
+    color: red;
+}
+
+#validation .validation-success {
+    color: green;
+}
+
+#validation .code-valid {
+    margin-top: -1.4em;
+    display: block;
+    color: red;
+    text-align: right;
+}
+
+#validation #result {
+    margin-bottom: 35px;
+}
+
+.powered-by {
+    color: #555555;
+}
+
+#account-subscriptions td, #account-licenses td {
+    vertical-align: middle;
+    height: 55px;
+}
+
+textarea.form-control {
+    height: 150px;
+}
+
+#customers a {
+    margin: 20px;
+    display: inline-block;
+}
+
+#customers {
+    text-align: center;
+}
+
 .page-section {
     border-bottom: 1px solid #e7e7e7;
 }
+
+    .page-section h3 {
+        text-align: center;
+        margin: 45px 0 20px 0;
+        font-size: 22px;
+    }
+
+.image-page-section {
+    padding-top: 45px;
+}
+
+    .image-page-section h3 {
+        text-align: left;
+        margin-top: 0;
+    }
+
+/*.page-section-header {
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 25px;
+    background: #fbfbfb url('../images/badgepattern.png') left -250px repeat;
+    background-size: 50%;
+}*/
+
+@media (min-width: 992px) {
+    .vcenter > div {
+        display: inline-block;
+        vertical-align: middle;
+        float: none;
+    }
+}
+
+#order-items .media-left {
+    width: 90px;
+    text-align: center;
+}
+
+#order-items .media-body {
+    width: auto;
+}
+
+    #order-items .media-body p {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+
+#order-items {
+    margin-top: 20px;
+}
+
+    #order-items .row {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+        #order-items .row:hover {
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+#comparison td {
+    vertical-align: middle;
+}
+
+#comparison .comparison-description {
+    width: 40%;
+}
+
+#comparison .comparison-community {
+    width: 15%;
+}
+
+#comparison .comparison-bronze {
+    width: 15%;
+}
+
+#comparison .comparison-silver {
+    width: 15%;
+}
+
+#comparison .comparison-gold {
+    width: 15%;
+}
+
+@media (min-width: 992px) {
+    #support-contracts .row, #support-contracts .row > div {
+        display: flex;
+    }
+}
+
+#support-contracts {
+    padding-bottom: 20px;
+}
+    #support-contracts .contract {
+        padding: 5px 15px 5px 15px;
+        margin-bottom: 20px;
+    }
+
+    #support-contracts .bronze-support {
+        background-color: #f7ebd8;
+        border: 1px solid #f4e3c8;
+    }
+
+    #support-contracts .silver-support {
+        background-color: #eee;
+        border: 1px solid #ddd;
+    }
+
+    #support-contracts .gold-support {
+        background-color: #fcf8e3;
+        border: 1px solid #f2eed9;
+    }
