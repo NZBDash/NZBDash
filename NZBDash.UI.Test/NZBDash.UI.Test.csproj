@@ -225,6 +225,10 @@
       <Project>{A1BAFD2C-9DF1-4A1A-A6CA-0DF2C2E60DFC}</Project>
       <Name>NZBDash.DataAccessLayer.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
+      <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
+      <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.DataAccessLayer\NZBDash.DataAccessLayer.csproj">
       <Project>{5ECCA070-31F1-45A3-B352-D107183811DD}</Project>
       <Name>NZBDash.DataAccessLayer</Name>

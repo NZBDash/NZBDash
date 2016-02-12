@@ -74,7 +74,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult CouchPotatoSettings()
         {
-            return Get<CouchPotatoSettingsViewModel, CouchPotatoSettingsDto>(CpSettingsService);
+            var model = Get<CouchPotatoSettingsViewModel, CouchPotatoSettingsDto>(CpSettingsService);
+            return View(model);
         }
 
         [HttpPost]
@@ -97,15 +98,12 @@ namespace NZBDash.UI.Controllers
             return View("Error");
         }
 
-        // GET: Settings
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult NzbDashSettings()
         {
-            return Get<NzbDashSettingsViewModel, NzbDashSettingsDto>(NzbDashServiceSettings);
+            var model = Get<NzbDashSettingsViewModel, NzbDashSettingsDto>(NzbDashServiceSettings);
+            model.UserExist = Auth.GetAllUsers().Any();
+
+            return View(model);
         }
 
         [HttpPost]
@@ -131,7 +129,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult NzbGetSettings()
         {
-            return Get<NzbGetSettingsViewModel, NzbGetSettingsDto>(NzbGetSettingsService);
+            var model = Get<NzbGetSettingsViewModel, NzbGetSettingsDto>(NzbGetSettingsService);
+            return View(model);
         }
 
         [HttpPost]
@@ -157,7 +156,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult PlexSettings()
         {
-            return Get<PlexSettingsViewModel, PlexSettingsDto>(PlexSettingsService);
+            var model = Get<PlexSettingsViewModel, PlexSettingsDto>(PlexSettingsService);
+            return View(model);
         }
 
         [HttpPost]
@@ -183,7 +183,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SabNzbSettings()
         {
-            return Get<SabNzbSettingsViewModel, SabNzbdSettingsDto>(SabNzbSettingsService);
+            var model = Get<SabNzbSettingsViewModel, SabNzbdSettingsDto>(SabNzbSettingsService);
+            return View(model);
         }
 
         [HttpPost]
@@ -209,7 +210,8 @@ namespace NZBDash.UI.Controllers
         [HttpGet]
         public ActionResult SonarrSettings()
         {
-            return Get<SonarrSettingsViewModel, SonarrSettingsDto>(SonarrSettingsService);
+            var model = Get<SonarrSettingsViewModel, SonarrSettingsDto>(SonarrSettingsService);
+            return View(model);
         }
 
         [HttpPost]
@@ -288,13 +290,13 @@ namespace NZBDash.UI.Controllers
         /// <typeparam name="U">The DTO returned by the service</typeparam>
         /// <param name="service">The service.</param>
         /// <returns>Default view with the model</returns>
-        private ActionResult Get<T, U>(ISettingsService<U> service) where T : new()
+        private T Get<T, U>(ISettingsService<U> service) where T : new()
         {
             var dto = service.GetSettings();
             var model = new T();
             model.InjectFrom(dto);
 
-            return View(model);
+            return model;
         }
     }
 }

@@ -139,7 +139,7 @@
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-                        <a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <button type="submit" style="margin: auto;display: block;" class="btn btn-success"><i class="fa fa-sign-out fa-fw"></i> Logout </button>
                     }
                 </li>
             </ul>
@@ -154,7 +154,7 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
-                    <a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in fa-fw"></i> Login</a>
+                    <a href="@Url.Action("Login","Account")" ><i class="fa fa-sign-in fa-fw"></i> Login</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->

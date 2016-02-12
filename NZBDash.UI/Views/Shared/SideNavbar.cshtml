@@ -20,12 +20,12 @@
             @{ Html.RenderAction("ApplicationMenu", "Layout"); }
 
             <li>
-                <a href="#"><i class="fa fa-wrench fa-fw"></i> @Resources.Settings<span class="fa arrow"></span></a>
+                <a href="#"  data-step="2" data-intro="You are able to configure your NZBDash settings here! Click here now."><i class="fa fa-wrench fa-fw"></i> @Resources.Settings<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li>
+                    <li  data-step="3" data-intro="This is where you will configure authentication for NZBDash and any other NZBDash related settings.">
                         <a href="@Url.Action("NzbDashSettings","Settings")">@Resources.Settings_NzbDash_Title</a>
                     </li>
-                    <li>
+                    <li data-step="4" data-intro="This is where you will configure any monitoring alerts for your server!">
                         <a href="@Url.Action("Index","AlertSettings")">@Resources.Settings_Alert_Title</a>
                     </li>
                     <li>

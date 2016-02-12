@@ -312,4 +312,7 @@
   <data name="Settings_Alert_Title" xml:space="preserve">
     <value>Configuración de alertas</value>
   </data>
+  <data name="Settings_NzbDash_FinishedIntro" xml:space="preserve">
+    <value>Restablecer la introducción</value>
+  </data>
 </root>

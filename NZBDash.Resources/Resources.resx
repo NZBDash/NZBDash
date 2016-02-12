@@ -312,4 +312,7 @@
   <data name="Views_Shared_NavUser_Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="Settings_NzbDash_FinishedIntro" xml:space="preserve">
+    <value>Reset the introduction</value>
+  </data>
 </root>

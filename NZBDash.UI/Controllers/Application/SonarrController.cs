@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
@@ -47,8 +48,8 @@ namespace NZBDash.UI.Controllers.Application
         private ISettingsService<SonarrSettingsDto> SettingsService { get; set; }
         private SonarrSettingsDto Settings { get; set; }
 
-        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsDto> settingsService)
-            : base(typeof(SonarrController))
+        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsDto> settingsService, ILogger logger)
+            : base(logger)
         {
             ApiService = apiService;
             SettingsService = settingsService;

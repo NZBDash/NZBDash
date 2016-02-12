@@ -312,4 +312,7 @@
   <data name="Settings_Alert_Title" xml:space="preserve">
     <value>Job Alarm Einstellungen</value>
   </data>
+  <data name="Settings_NzbDash_FinishedIntro" xml:space="preserve">
+    <value>Setzen Sie die Einführung</value>
+  </data>
 </root>

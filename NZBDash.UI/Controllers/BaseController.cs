@@ -24,12 +24,10 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using System;
 using System.Web.Mvc;
 
 using Ninject;
 
-using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
@@ -40,19 +38,13 @@ namespace NZBDash.UI.Controllers
 {
     public class BaseController : Controller
     {
-        public ILogger Logger { get; set; }
+        protected ILogger Logger { get; set; }
 
         public BaseController() { }
 
-        [Obsolete("Should not use this ctor, we should be using the IoC container to pass in the ILogger interface")]
-        public BaseController(Type classType)
+        public BaseController(ILogger logger)
         {
-            Logger = new NLogLogger(classType);
-        }
-
-        public BaseController(ILogger classType)
-        {
-            Logger = classType;
+            Logger = logger;
         }
 
         protected override void OnException(ExceptionContext filterContext)
@@ -64,19 +56,22 @@ namespace NZBDash.UI.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            // TODO: Swap out the service locator with something else
-            var kernel = NinjectWebCommon.GetKernel();
-            var authHelper = new AuthenticationHelper(kernel.Get<ISettingsService<NzbDashSettingsDto>>());
-
-            var shouldBeAuth = authHelper.IsAuthenticated();
-
-            if (!User.Identity.IsAuthenticated && shouldBeAuth)
+            if (!User.Identity.IsAuthenticated && CheckAuthentication())
             {
                 filterContext.Result = RedirectToAction("Login", "Account");
                 return;
             }
 
             base.OnActionExecuting(filterContext);
+        }
+
+        private bool CheckAuthentication()
+        {
+            // TODO: Swap out the service locator with something else
+            var kernel = NinjectWebCommon.GetKernel();
+            var authHelper = new AuthenticationHelper(kernel.Get<ISettingsService<NzbDashSettingsDto>>());
+
+            return authHelper.IsAuthenticated();
         }
     }
 }

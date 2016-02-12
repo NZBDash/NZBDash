@@ -18,6 +18,15 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
+                        @Html.LabelFor(model => model.FinishedIntro, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.FinishedIntro)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Authenticate, new {@class = "control-label col-md-2"})
                         <div class="col-md-10">
                             <div class="checkbox">

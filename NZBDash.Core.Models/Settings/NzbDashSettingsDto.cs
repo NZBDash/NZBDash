@@ -28,6 +28,14 @@ namespace NZBDash.Core.Models.Settings
 {
     public class NzbDashSettingsDto : Setting
     {
+        /// <summary>
+        /// A value indicating whether this the user has enabled authentication.
+        /// </summary>
         public bool Authenticate { get; set; }
+
+        /// <summary>
+        /// A value indicating whether the user has finished the intro.
+        /// </summary>
+        public bool FinishedIntro { get; set; }
     }
 }

@@ -322,6 +322,15 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset the introduction.
+        /// </summary>
+        public static string Settings_NzbDash_FinishedIntro {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_FinishedIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NZBDash Settings.
         /// </summary>
         public static string Settings_NzbDash_Title {

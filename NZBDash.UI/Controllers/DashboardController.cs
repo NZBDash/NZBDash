@@ -24,7 +24,6 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -40,8 +39,6 @@ using NZBDash.UI.Models.Dashboard;
 using NZBDash.UI.Models.Hardware;
 using NZBDash.UI.Models.ViewModels.Dashboard;
 
-using Omu.ValueInjecter;
-
 using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Controllers
@@ -52,18 +49,21 @@ namespace NZBDash.UI.Controllers
                                    IThirdPartyService api,
                                    ILogger logger,
                                    ISettingsService<NzbGetSettingsDto> nzbGetSettingsService,
-                                   ISettingsService<SabNzbdSettingsDto> sabSettingsService) : base(logger)
+                                   ISettingsService<SabNzbdSettingsDto> sabSettingsService,
+                                   ISettingsService<NzbDashSettingsDto> nzbDashServiceSettings) : base(logger)
         {
             Api = api;
             Service = service;
             NzbGet = nzbGetSettingsService;
             Sab = sabSettingsService;
+            NzbDashServiceSettings = nzbDashServiceSettings;
         }
 
         private IThirdPartyService Api { get; set; }
         private ISettingsService<NzbGetSettingsDto> NzbGet { get; set; }
         private ISettingsService<SabNzbdSettingsDto> Sab { get; set; }
         private IHardwareService Service { get; set; }
+        private ISettingsService<NzbDashSettingsDto> NzbDashServiceSettings { get; set; }
 
         public ActionResult GetCpu()
         {
@@ -140,7 +140,7 @@ namespace NZBDash.UI.Controllers
             var nzb = NzbGet.GetSettings();
             if (sab != null)
             {
-                if (sab.HasSettings)
+                if (sab.HasSettings && sab.Enabled)
                 {
                     var formattedUri = UrlHelper.ReturnUri(sab.IpAddress, sab.Port).ToString();
                     var items = Api.GetSabNzbdQueue(formattedUri, sab.ApiKey);
@@ -175,7 +175,7 @@ namespace NZBDash.UI.Controllers
             }
             if (nzb != null)
             {
-                if (nzb.HasSettings)
+                if (nzb.HasSettings && nzb.Enabled)
                 {
                     var formattedUri = UrlHelper.ReturnUri(nzb.IpAddress, nzb.Port).ToString();
                     var statusInfo = Api.GetNzbGetStatus(formattedUri, nzb.Username, nzb.Password);
@@ -217,9 +217,17 @@ namespace NZBDash.UI.Controllers
             return PartialView("NavbarDownloads", model);
         }
 
+        public void IntroFinished()
+        {
+            var currentSettings = NzbDashServiceSettings.GetSettings();
+            currentSettings.FinishedIntro = true;
+            NzbDashServiceSettings.SaveSettings(currentSettings);
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var settings = NzbDashServiceSettings.GetSettings();
+            return View(settings.FinishedIntro);
         }
     }
 }
