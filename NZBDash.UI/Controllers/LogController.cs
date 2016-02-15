@@ -53,7 +53,7 @@ namespace NZBDash.UI.Controllers
 
         internal IEnumerable<string> LogFiles()
         {
-            var directory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/NZBDash/";
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "/NZBDash/";
 
             return Directory.GetFiles(directory).ToList();
         }

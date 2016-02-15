@@ -53,7 +53,7 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// <returns></returns>
         public override string ApplicationDataLocation()
         {
-            var data = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\";
+            var data = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\NZBDash\\";
             Logger.Trace("Application Data Location = {0}", data);
             return data;
         }
