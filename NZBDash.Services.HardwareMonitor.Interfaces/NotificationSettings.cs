@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: EmailModel.cs
+//   File: NotificationSettings.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,26 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class EmailModel
+    public class NotificationSettings
     {
-        public TimeSpan Duration
-        {
-            get { return BreachEnd - BreachStart; }
-        }
-        public DateTime BreachEnd { get; set; }
-        public DateTime BreachStart { get; set; }
-        public string BreachType { get; set; }
-        public int Percentage { get; set; }
-        public int TimeThresholdSec { get; set; }
-        public int Port { get; set; }
-        public string Host { get; set; }
-        public string Address { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool Alert { get; set; }
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int PercentageLimit { get; set; }
     }
 }

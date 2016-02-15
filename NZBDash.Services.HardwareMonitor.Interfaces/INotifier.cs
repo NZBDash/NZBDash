@@ -26,14 +26,12 @@
 #endregion
 using System;
 
-using NZBDash.Core.Models.Settings;
-
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
     public interface INotifier
     {
         void Notify(bool critical); // sends email
-        CpuMonitoringDto CpuSettings { get; set; }
+        NotificationSettings NotificationSettings { get; set; }
         EmailModel Email { get; set; }
         TimeSpan Interval { get; set; }
         bool StartEventSaved { get; set; }

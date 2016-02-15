@@ -48,6 +48,7 @@
     <Compile Include="IPerformanceCounter.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IThresholds.cs" />
+    <Compile Include="NotificationSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThresholdModel.cs" />
   </ItemGroup>

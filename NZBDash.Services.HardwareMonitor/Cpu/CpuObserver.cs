@@ -56,7 +56,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Password = settings.Password };
 
             var cpu = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Cpu);
-            Notifier.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
+            Notifier.NotificationSettings = new NotificationSettings { PercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
             Notifier.Interval = c.Intervals.CriticalNotification;
 
             Logger.Trace("Settings Refreshed");
