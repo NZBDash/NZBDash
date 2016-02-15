@@ -24,14 +24,15 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Storage
+namespace NZBDash.Services.HardwareMonitor.Cpu
 {
-    public class StorageThreshold : IThresholds
+    public class CpuThresholdOld : IThresholds
     {
-        public StorageThreshold(HardwareSettingsDto service)
+        public CpuThresholdOld(HardwareSettingsDto service)
         {
             CriticalLoad = service.CpuMonitoring.CpuPercentageLimit;
         }

@@ -30,7 +30,6 @@ using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Notification
@@ -51,7 +50,12 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         public bool StartEventSaved { get; set; }
         public bool EndEventSaved { get; set; }
         public CpuMonitoringDto CpuSettings { get; set; }
-        public EmailAlertSettingsDto EmailSettings { get; set; }
+        public EmailModel Email { get; set; }
+        public string EmailHost { get; set; }
+        public string EmailUsername { get; set; }
+        public string EmailPassword { get; set; }
+        public int EmailPort { get; set; }
+        public bool EmailAlert { get; set; }
         private ISmtpClient SmtpClient { get; set; }
         private ILogger Logger { get; set; }
         private IFile File { get; set; }
@@ -81,7 +85,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                     SaveEvent();
                     StartEventSaved = true;
 
-                    if (EmailSettings.AlertOnBreach && !SentStartNotification)
+                    if (EmailAlert && !SentStartNotification)
                     {
                         SendEmail();
                         Logger.Trace("Sending out alert start email");
@@ -101,7 +105,7 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                     SaveEvent();
                     EndEventSaved = true;
 
-                    if (EmailSettings.AlertOnBreachEnd)
+                    if (EmailAlert)
                     {
                         SendEmail();
                         Logger.Trace("Sent out Alert end email");
@@ -164,9 +168,9 @@ namespace NZBDash.Services.HardwareMonitor.Notification
                 BreachStart = StartEventTime,
                 Percentage = CpuSettings.CpuPercentageLimit,
                 TimeThresholdSec = CpuSettings.ThresholdTime,
-                BreachType = "CPU"
+                BreachType = "CPU",
             };
-            Sendy.SendEmail(model, EmailSettings);
+            Sendy.SendEmail(model);
         }
 
     }

@@ -41,5 +41,7 @@ namespace NZBDash.UI.Models.ViewModels.Settings
         public string Password { get; set; }
         public int Port { get; set; }
         public AlertType AlertType { get; set; }
+        public bool Alert { get; set; }
+        public string Address { get; set; }
     }
 }

@@ -31,7 +31,6 @@ using HtmlAgilityPack;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Email_Templates;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
@@ -51,20 +50,19 @@ namespace NZBDash.Services.HardwareMonitor.Notification
         private IFile File { get; set; }
         private ILogger Logger { get; set; }
         private ISmtpClient Client { get; set; }
-        public void SendEmail(EmailModel model, EmailAlertSettingsDto emailSettings)
+        public void SendEmail(EmailModel model)
         {
             var body = GenerateHtmlTemplate(model);
             var message = new MailMessage
             {
-                To = { emailSettings.RecipientAddress },
+                To = { model.Address },
                 From = new MailAddress("nzbdash@nzbdash.com", "NZBDash StartAlert"),
                 IsBodyHtml = true,
                 Body = body,
-                Subject = string.Format("NZBDash Monitor {0} Alert!", model.BreachType)
-            };
-            var creds = new NetworkCredential(emailSettings.EmailUsername, emailSettings.EmailPassword);
-            Client.Send(emailSettings.EmailHost, emailSettings.EmailPort, message, creds);
-            Logger.Info("Email: { To: {0}, Subject: {1}, Host: {2}, Port: {3} };", emailSettings.RecipientAddress, message.Subject, emailSettings.EmailHost, emailSettings.EmailPort);
+                Subject = $"NZBDash Monitor {model.BreachType} Alert!" };
+            var creds = new NetworkCredential(model.Username, model.Password);
+            Client.Send(model.Host, model.Port, message, creds);
+            Logger.Info("Email: { To: {0}, Subject: {1}, Host: {2}, Port: {3} };", model.Address, message.Subject, model.Host, model.Port);
         }
 
         private string GenerateHtmlTemplate(EmailModel model)

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuThresholdOld.cs
+//   File: INotifications.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,17 +24,15 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Interfaces;
-
-namespace NZBDash.Services.HardwareMonitor.Storage
+namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class StorageThreshold : IThresholds
+    public interface INotifications
     {
-        public StorageThreshold(HardwareSettingsDto service)
-        {
-            CriticalLoad = service.CpuMonitoring.CpuPercentageLimit;
-        }
-        public double CriticalLoad { get; set; }
+        string Address { get; }
+        string Host { get; }
+        string Username { get; }
+        string Password { get; }
+        int Port { get; }
+        bool Alert { get; }
     }
 }

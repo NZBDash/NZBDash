@@ -34,7 +34,7 @@ namespace NZBDash.Services.HardwareMonitor.Interfaces
     {
         void Notify(bool critical); // sends email
         CpuMonitoringDto CpuSettings { get; set; }
-        EmailAlertSettingsDto EmailSettings { get; set; }
+        EmailModel Email { get; set; }
         TimeSpan Interval { get; set; }
         bool StartEventSaved { get; set; }
         bool EndEventSaved { get; set; }

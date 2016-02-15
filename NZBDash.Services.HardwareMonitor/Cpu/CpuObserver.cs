@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuObserver.cs
+//   File: CpuOldObserver.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,6 +25,7 @@
 // ************************************************************************/
 #endregion
 using System;
+using System.Linq;
 using System.Reactive.Linq;
 
 using FluentScheduler;
@@ -35,27 +36,27 @@ using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.HardwareMonitor.Notification;
 
-using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
-
 namespace NZBDash.Services.HardwareMonitor.Cpu
 {
     public class CpuObserver : BaseObserver, ITask, IHardwareObserver
     {
-
-        public CpuObserver(ISettingsService<HardwareSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger) : base(logger)
+        private ISettingsService<AlertSettingsDto> SettingsService { get; set; }
+        public CpuObserver(ISettingsService<AlertSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger) : base(logger)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
             ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new CpuNotifier(ConfigurationReader.Read().Intervals.CriticalNotification,eventService,client, file, logger);
+            Notifier = new CpuNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger);
         }
 
         protected override void RefreshSettings(Configuration c)
         {
             var settings = SettingsService.GetSettings();
-            Notifier.EmailSettings = settings.EmailAlertSettings;
-            Notifier.CpuSettings = settings.CpuMonitoring;
+            Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Password = settings.Password };
+
+            var cpu = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Cpu);
+            Notifier.CpuSettings = new CpuMonitoringDto { CpuPercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
             Notifier.Interval = c.Intervals.CriticalNotification;
 
             Logger.Trace("Settings Refreshed");
@@ -73,7 +74,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             ConfigurationSync?.Dispose();
 
             RefreshSettings(c);
-            
+
             Logger.Trace("New threshold {0}", c.Thresholds.CriticalLoad);
             Logger.Trace("New interval {0}", c.Intervals.CriticalNotification);
 
@@ -84,7 +85,7 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
             .Subscribe(Start);
 
             Counter = new CpuPerformanceCounter();
-            
+
             var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
                                    .Select(i => Counter.Value) // convert event index to cpu load value
                                    .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean

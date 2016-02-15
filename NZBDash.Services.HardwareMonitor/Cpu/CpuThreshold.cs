@@ -24,7 +24,8 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
+using System.Linq;
+
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
@@ -32,9 +33,10 @@ namespace NZBDash.Services.HardwareMonitor.Cpu
 {
     public class CpuThreshold : IThresholds
     {
-        public CpuThreshold(HardwareSettingsDto service)
+        public CpuThreshold(AlertSettingsDto service)
         {
-            CriticalLoad = service.CpuMonitoring.CpuPercentageLimit;
+            var critical = service.AlertRules.Select(x => x.Percentage).FirstOrDefault();
+            CriticalLoad = critical;
         }
         public double CriticalLoad { get; set; }
     }

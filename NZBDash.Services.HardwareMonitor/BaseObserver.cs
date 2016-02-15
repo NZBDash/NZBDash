@@ -58,7 +58,6 @@ namespace NZBDash.Services.HardwareMonitor
         protected IDisposable ConfigurationSync { get; set; }
         protected IPerformanceCounter Counter { get; set; }
         protected INotifier Notifier { get; set; }
-        protected ISettingsService<HardwareSettingsDto> SettingsService { get; set; }
         protected IEventService EventService { get; set; }
         protected ISmtpClient SmtpClient { get; set; }
         protected IConfigurationReader ConfigurationReader { get; set; }

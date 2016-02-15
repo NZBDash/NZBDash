@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuConfigurationReader.cs
+//   File: CpuOldConfigurationReaderOld.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -30,19 +30,19 @@ using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Cpu
 {
-    public class CpuConfigurationReader : IConfigurationReader
+    public class CpuOldConfigurationReaderOld : IConfigurationReaderOld
     {
-        public CpuConfigurationReader(ISettingsService<HardwareSettingsDto> settings)
+        public CpuOldConfigurationReaderOld(ISettingsService<HardwareSettingsDto> settings)
         {
             Settings = settings;
         }
         private ISettingsService<HardwareSettingsDto> Settings { get; set; }
-        public Configuration Read()
+        public ConfigurationOld Read()
         {
             var config = Settings.GetSettings();
-            var intervals = new CpuIntervals(config);
-            var thresholds = new CpuThreshold(config);
-            var configuration = new Configuration(intervals, thresholds, config.EmailAlertSettings);
+            var intervals = new CpuIntervalsOld(config);
+            var thresholds = new CpuThresholdOld(config);
+            var configuration = new ConfigurationOld(intervals, thresholds, config.EmailAlertSettings);
             return configuration;
         }
     }

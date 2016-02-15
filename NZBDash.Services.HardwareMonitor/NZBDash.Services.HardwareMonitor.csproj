@@ -81,14 +81,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseObserver.cs" />
-    <Compile Include="Cpu\CpuConfigurationReader.cs" />
+    <Compile Include="Cpu\CpuConfigurationReaderOld.cs" />
+    <Compile Include="Cpu\CpuIntervalsOld.cs" />
+    <Compile Include="Cpu\CpuNotification.cs" />
+    <Compile Include="Cpu\Notifications.cs" />
+    <Compile Include="Cpu\CpuOldConfigurationReaderOld.cs" />
+    <Compile Include="Cpu\CpuObserver.cs" />
+    <Compile Include="Cpu\CpuThresholOld.cs" />
     <Compile Include="Email Templates\EmailResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EmailResource.resx</DependentUpon>
     </Compile>
     <Compile Include="EventName.cs" />
-    <Compile Include="Cpu\CpuObserver.cs" />
+    <Compile Include="Cpu\CpuOldObserver.cs" />
     <Compile Include="HardwareMonitor.cs" />
     <Compile Include="IoC\NinjectTaskFactory.cs" />
     <Compile Include="Notification\EmailSender.cs" />
@@ -102,7 +108,7 @@
     <Compile Include="HardwareTaskRegistry.cs" />
     <Compile Include="Storage\StorageIntervals.cs" />
     <Compile Include="Storage\StorageThreshold.cs" />
-    <Compile Include="Storage\StorageConfigurationReader.cs" />
+    <Compile Include="Storage\StorageConfigurationReaderOld.cs" />
     <Compile Include="Storage\StorageObserver.cs" />
     <Compile Include="Storage\StoragePerformanceCounter.cs" />
   </ItemGroup>

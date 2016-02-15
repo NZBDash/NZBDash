@@ -24,22 +24,19 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Models.Settings;
-
 namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
     public class Configuration
     {
-        public Configuration(IIntervals intervals, IThresholds thresholds, EmailAlertSettingsDto emailSettings)
+        public Configuration(IIntervals intervals, IThresholds thresholds, INotifications notifications)
         {
             Intervals = intervals;
             Thresholds = thresholds;
-            EmailSettings = emailSettings;
+            Notifications = notifications;
         }
 
         public IThresholds Thresholds { get; }
-        public EmailAlertSettingsDto EmailSettings { get; set; }
-
+        public INotifications Notifications { get; set; }
         public IIntervals Intervals { get; set; }
     }
 }

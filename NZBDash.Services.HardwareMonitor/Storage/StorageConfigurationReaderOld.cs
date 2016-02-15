@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuThresholdOld.cs
+//   File: CpuOldConfigurationReaderOld.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,17 +24,26 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.HardwareMonitor.Storage
 {
-    public class StorageThreshold : IThresholds
+    public class StorageConfigurationReaderOld : IConfigurationReaderOld
     {
-        public StorageThreshold(HardwareSettingsDto service)
+        public StorageConfigurationReaderOld(ISettingsService<HardwareSettingsDto> settings)
         {
-            CriticalLoad = service.CpuMonitoring.CpuPercentageLimit;
+            Settings = settings;
         }
-        public double CriticalLoad { get; set; }
+        private ISettingsService<HardwareSettingsDto> Settings { get; set; }
+        public ConfigurationOld Read()
+        {
+            var config = Settings.GetSettings();
+            var intervals = new StorageIntervals(config);
+            var thresholds = new StorageThreshold(config);
+            var configuration = new ConfigurationOld(intervals, thresholds, config.EmailAlertSettings);
+            return configuration;
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuConfigurationReader.cs
+//   File: ConfigurationOld.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,26 +24,22 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Storage
+namespace NZBDash.Services.HardwareMonitor.Interfaces
 {
-    public class StorageConfigurationReader : IConfigurationReader
+    public class ConfigurationOld
     {
-        public StorageConfigurationReader(ISettingsService<HardwareSettingsDto> settings)
+        public ConfigurationOld(IIntervals intervals, IThresholds thresholds, EmailAlertSettingsDto emailSettings)
         {
-            Settings = settings;
+            Intervals = intervals;
+            Thresholds = thresholds;
+            EmailSettings = emailSettings;
         }
-        private ISettingsService<HardwareSettingsDto> Settings { get; set; }
-        public Configuration Read()
-        {
-            var config = Settings.GetSettings();
-            var intervals = new StorageIntervals(config);
-            var thresholds = new StorageThreshold(config);
-            var configuration = new Configuration(intervals, thresholds, config.EmailAlertSettings);
-            return configuration;
-        }
+
+        public IThresholds Thresholds { get; }
+        public EmailAlertSettingsDto EmailSettings { get; set; }
+
+        public IIntervals Intervals { get; set; }
     }
 }

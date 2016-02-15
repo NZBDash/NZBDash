@@ -41,5 +41,7 @@ namespace NZBDash.Core.Models.Settings
         public string Username { get; set; }
         public string Password { get; set; }
         public int Port { get; set; }
+        public bool Alert { get; set; }
+        public string Address { get; set; }
     }
 }
