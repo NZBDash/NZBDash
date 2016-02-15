@@ -55,6 +55,7 @@ namespace NZBDash.DataAccessLayer.Configuration
         {
             var data = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\";
             Logger.Trace("Application Data Location = {0}", data);
+            return data;
         }
     }
 }
