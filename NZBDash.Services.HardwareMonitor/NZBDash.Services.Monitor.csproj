@@ -7,8 +7,8 @@
     <ProjectGuid>{50D733E2-11E0-4002-A7CD-E5B556A80032}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NZBDash.Services.HardwareMonitor</RootNamespace>
-    <AssemblyName>NZBDash.Services.HardwareMonitor</AssemblyName>
+    <RootNamespace>NZBDash.Services.Monitor</RootNamespace>
+    <AssemblyName>NZBDash.Services.Monitor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -83,7 +83,6 @@
     <Compile Include="BaseObserver.cs" />
     <Compile Include="Cpu\CpuConfigurationReaderOld.cs" />
     <Compile Include="Cpu\CpuIntervalsOld.cs" />
-    <Compile Include="Cpu\CpuNotification.cs" />
     <Compile Include="Cpu\Notifications.cs" />
     <Compile Include="Cpu\CpuOldConfigurationReaderOld.cs" />
     <Compile Include="Cpu\CpuObserver.cs" />
@@ -145,9 +144,9 @@
       <Project>{cd5ba3ea-1db7-4d2e-9cfe-4e29c2dc5ebd}</Project>
       <Name>NZBDash.DependencyResolver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj">
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj">
       <Project>{3D144CD4-00F4-4D64-924D-1D1580F2809F}</Project>
-      <Name>NZBDash.Services.HardwareMonitor.Interfaces</Name>
+      <Name>NZBDash.Services.Monitor.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

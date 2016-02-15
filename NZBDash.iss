@@ -31,8 +31,8 @@ Source: "NZBDash.Services.HardwareMonitor\bin\*"; DestDir: "{app}\Monitoring"; F
 Filename: C:\Windows\System32\inetsrv\appcmd.exe; Parameters: "add site /name:NZBDash /bindings:http/*:7500 /physicalPath:{pf}/NZBDash/UI/"; Flags: runascurrentuser
 
 ; Install the monitoring service
-Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameters: "install"; Flags: runascurrentuser
+Filename: {app}/Monitoring/Debug/NZBDash.Services.Monitor.exe; Parameters: "install"; Flags: runascurrentuser
 
 [UninstallRun]
 ; Uninstall the monitoring service
-Filename: {app}/Monitoring/Debug/NZBDash.Services.HardwareMonitor.exe; Parameters: "uninstall"; Flags: runascurrentuser
+Filename: {app}/Monitoring/Debug/NZBDash.Services.Monitor.exe; Parameters: "uninstall"; Flags: runascurrentuser

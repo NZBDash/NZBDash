@@ -3,7 +3,7 @@
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Storage
+namespace NZBDash.Services.Monitor.Storage
 {
     public class StorageIntervals : IIntervals
     {

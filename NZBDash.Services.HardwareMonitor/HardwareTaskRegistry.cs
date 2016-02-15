@@ -26,9 +26,9 @@
 #endregion
 using FluentScheduler;
 
-using NZBDash.Services.HardwareMonitor.Cpu;
+using NZBDash.Services.Monitor.Cpu;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.Monitor
 {
     public class HardwareTaskRegistry : Registry
     {

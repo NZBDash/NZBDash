@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NZBDash.Services.HardwareMonitor.Email_Templates {
+namespace NZBDash.Services.Monitor.Email_Templates {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NZBDash.Services.HardwareMonitor.Email_Templates {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NZBDash.Services.HardwareMonitor.Email_Templates.EmailResource", typeof(EmailResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NZBDash.Services.Monitor.Email_Templates.EmailResource", typeof(EmailResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

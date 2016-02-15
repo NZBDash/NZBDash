@@ -24,7 +24,7 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.Monitor
 {
     internal static class EventName
     {

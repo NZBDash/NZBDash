@@ -27,7 +27,7 @@
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Cpu
+namespace NZBDash.Services.Monitor.Cpu
 {
     public class Notifications : INotifications
     {

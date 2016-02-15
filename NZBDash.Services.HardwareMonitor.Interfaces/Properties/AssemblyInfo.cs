@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NZBDash.Services.HardwareMonitor.Interfaces")]
+[assembly: AssemblyTitle("NZBDash.Services.Monitor.Interfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NZBDash.Services.HardwareMonitor.Interfaces")]
+[assembly: AssemblyProduct("NZBDash.Services.Monitor.Interfaces")]
 [assembly: AssemblyCopyright("Copyright © 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

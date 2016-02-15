@@ -26,9 +26,10 @@
 #endregion
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Cpu
+namespace NZBDash.Services.Monitor.Cpu
 {
     public class CpuConfigurationReader : IConfigurationReader
     {

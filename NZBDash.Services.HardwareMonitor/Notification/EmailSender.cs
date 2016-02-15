@@ -31,13 +31,13 @@ using HtmlAgilityPack;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Services.HardwareMonitor.Email_Templates;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Email_Templates;
 
 using RazorEngine;
 using RazorEngine.Templating;
 
-namespace NZBDash.Services.HardwareMonitor.Notification
+namespace NZBDash.Services.Monitor.Notification
 {
     public class EmailSender
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{3D144CD4-00F4-4D64-924D-1D1580F2809F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NZBDash.Services.HardwareMonitor.Interfaces</RootNamespace>
-    <AssemblyName>NZBDash.Services.HardwareMonitor.Interfaces</AssemblyName>
+    <RootNamespace>NZBDash.Services.Monitor.Interfaces</RootNamespace>
+    <AssemblyName>NZBDash.Services.Monitor.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

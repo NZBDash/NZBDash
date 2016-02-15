@@ -28,7 +28,7 @@ using FluentScheduler;
 
 using Ninject;
 
-namespace NZBDash.Services.HardwareMonitor.IoC
+namespace NZBDash.Services.Monitor.IoC
 {
     public class NinjectTaskFactory : ITaskFactory
     {

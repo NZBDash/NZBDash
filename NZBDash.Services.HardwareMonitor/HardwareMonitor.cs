@@ -28,10 +28,12 @@ using System;
 
 using FluentScheduler;
 using FluentScheduler.Model;
-using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.IoC;
 
-namespace NZBDash.Services.HardwareMonitor
+using NZBDash.Services.HardwareMonitor;
+using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.IoC;
+
+namespace NZBDash.Services.Monitor
 {
     public class HardwareMonitor : IService
     {

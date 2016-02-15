@@ -89,13 +89,13 @@
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj">
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj">
       <Project>{3d144cd4-00f4-4d64-924d-1d1580f2809f}</Project>
-      <Name>NZBDash.Services.HardwareMonitor.Interfaces</Name>
+      <Name>NZBDash.Services.Monitor.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor\NZBDash.Services.HardwareMonitor.csproj">
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor\NZBDash.Services.Monitor.csproj">
       <Project>{50D733E2-11E0-4002-A7CD-E5B556A80032}</Project>
-      <Name>NZBDash.Services.HardwareMonitor</Name>
+      <Name>NZBDash.Services.Monitor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

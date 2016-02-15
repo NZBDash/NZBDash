@@ -27,6 +27,7 @@
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Storage;
 
 namespace NZBDash.Services.HardwareMonitor.Storage
 {

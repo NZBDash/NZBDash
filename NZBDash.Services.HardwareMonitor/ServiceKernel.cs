@@ -28,13 +28,15 @@ using Ninject;
 
 using NZBDash.DependencyResolver;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.Monitor
 {
     internal static class ServiceKernel
     {
         static ServiceKernel()
         {
             var r = new CustomDependencyResolver();
+
+            // ReSharper disable once CoVariantArrayConversion
             Kernel = new StandardKernel(r.GetModules());
         }
 

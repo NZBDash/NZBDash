@@ -37,7 +37,7 @@ using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.Notification;
+using NZBDash.Services.Monitor.Notification;
 
 namespace NZBDash.Services.HardwareMonitor.Tests
 {

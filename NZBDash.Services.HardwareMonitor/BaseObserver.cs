@@ -29,12 +29,11 @@ using System.Configuration;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
 using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.Monitor
 {
     public abstract class BaseObserver
     {

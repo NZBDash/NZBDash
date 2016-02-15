@@ -29,7 +29,7 @@ using System.Threading;
 
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Cpu
+namespace NZBDash.Services.Monitor.Cpu
 {
     class CpuPerformanceCounter : IPerformanceCounter
     {

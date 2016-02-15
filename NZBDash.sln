@@ -68,13 +68,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{209AB01B-A9E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{036CBD72-078D-4E64-A8DD-FC66BFAC028B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor", "NZBDash.Services.HardwareMonitor\NZBDash.Services.HardwareMonitor.csproj", "{50D733E2-11E0-4002-A7CD-E5B556A80032}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.Monitor", "NZBDash.Services.HardwareMonitor\NZBDash.Services.Monitor.csproj", "{50D733E2-11E0-4002-A7CD-E5B556A80032}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor.Tests", "NZBDash.Services.HardwareMonitor.Tests\NZBDash.Services.HardwareMonitor.Tests.csproj", "{C5343CA6-E481-49E4-98E3-174D26BE625E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Core.Models", "NZBDash.Core.Models\NZBDash.Core.Models.csproj", "{12FE449B-C0B1-4350-953C-D55320E59E54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.HardwareMonitor.Interfaces", "NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.HardwareMonitor.Interfaces.csproj", "{3D144CD4-00F4-4D64-924D-1D1580F2809F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.Monitor.Interfaces", "NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj", "{3D144CD4-00F4-4D64-924D-1D1580F2809F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.UpdateService", "NZBDash.Services.UpdateService\NZBDash.Services.UpdateService.csproj", "{7692071F-A306-4CB8-9399-89660930C3B0}"
 EndProject

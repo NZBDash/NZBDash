@@ -33,10 +33,12 @@ using FluentScheduler;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor;
+using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
-using NZBDash.Services.HardwareMonitor.Notification;
+using NZBDash.Services.Monitor.Notification;
 
-namespace NZBDash.Services.HardwareMonitor.Cpu
+namespace NZBDash.Services.Monitor.Cpu
 {
     public class CpuObserver : BaseObserver, ITask, IHardwareObserver
     {

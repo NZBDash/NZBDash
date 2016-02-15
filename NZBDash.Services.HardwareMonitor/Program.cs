@@ -29,12 +29,12 @@ using System;
 using Ninject;
 
 using NZBDash.Common.Interfaces;
-using NZBDash.Core;
 using NZBDash.Core.Interfaces;
+using NZBDash.Services.HardwareMonitor;
 
 using Topshelf;
 
-namespace NZBDash.Services.HardwareMonitor
+namespace NZBDash.Services.Monitor
 {
     internal class Program
     {
@@ -49,10 +49,10 @@ namespace NZBDash.Services.HardwareMonitor
                 x =>
                 {
                     x.StartAutomatically();
-                    x.Service<HardwareMonitor>(
+                    x.Service<Monitor.HardwareMonitor>(
                         s =>
                         {
-                            s.ConstructUsing(monitor => new HardwareMonitor());
+                            s.ConstructUsing(monitor => new Monitor.HardwareMonitor());
                             s.WhenStarted(tc => tc.Start());
                             s.WhenStopped(tc => tc.Stop());
                             s.AfterStartingService(() => { Logger.Info("Starting HardwareMonitor service"); });

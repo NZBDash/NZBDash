@@ -29,9 +29,10 @@ using System;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
+using NZBDash.Services.HardwareMonitor;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Notification
+namespace NZBDash.Services.Monitor.Notification
 {
     public class CpuNotifier : INotifier
     {
