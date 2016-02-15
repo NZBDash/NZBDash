@@ -44,17 +44,17 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// <returns></returns>
         public override string DbFile()
         {
-            return ApplicationDataLocation() + @"\\NZBDash.sqlite";
+            return ProgramDataLocation() + @"\\NZBDash.sqlite";
         }
 
         /// <summary>
         /// Returns the location of the application data.
         /// </summary>
         /// <returns></returns>
-        public override string ApplicationDataLocation()
+        public override string ProgramDataLocation()
         {
             var data = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\NZBDash\\";
-            Logger.Trace("Application Data Location = {0}", data);
+            Logger.Trace("Program Data Location = {0}", data);
             return data;
         }
     }

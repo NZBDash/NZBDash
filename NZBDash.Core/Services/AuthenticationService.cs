@@ -24,23 +24,18 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
 
-using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models;
-using NZBDash.DataAccessLayer.Store;
 
 namespace NZBDash.Core.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public AuthenticationService(ILogger logger, ISqliteConfiguration config)
-            : this(new UserManager<User>(new UserStore(logger, config)))
+        public AuthenticationService(IUserStore<User> userStore)
+            : this(new UserManager<User>(userStore))
         {
         }
 

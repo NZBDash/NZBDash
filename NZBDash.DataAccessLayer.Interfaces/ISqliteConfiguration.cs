@@ -30,9 +30,26 @@ namespace NZBDash.DataAccessLayer.Interfaces
 {
 	public interface ISqliteConfiguration
 	{
+		/// <summary>
+		/// Checks the database.
+		/// </summary>
 		void CheckDb();
+
+		/// <summary>
+		/// Returns the database file.
+		/// </summary>
+		/// <returns></returns>
 		string DbFile();
+
+		/// <summary>
+		/// Returns the database connection.
+		/// </summary>
+		/// <returns></returns>
 		IDbConnection DbConnection();
+
+		/// <summary>
+		/// Creates the database.
+		/// </summary>
 		void CreateDatabase();
 	}
 }
