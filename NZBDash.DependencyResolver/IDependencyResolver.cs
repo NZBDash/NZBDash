@@ -24,12 +24,10 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-using Ninject.Modules;
-
 namespace NZBDash.DependencyResolver
 {
-    public interface IDependencyResolver
+    public interface IDependencyResolver<T>
     {
-        NinjectModule[] GetModules();
+        T[] GetModules();
     }
 }

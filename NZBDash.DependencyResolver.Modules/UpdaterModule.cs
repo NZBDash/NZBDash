@@ -34,7 +34,7 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-		    Bind<IGitHubClient>().To<GitHubClient>().WithConstructorArgument("productInformation", "NZBDash-Updater");
+		    Bind<IGitHubClient>().To<GitHubClient>().WithConstructorArgument("productInformation", new ProductHeaderValue("NZBDash-Updater"));
 		}
 	}
 }

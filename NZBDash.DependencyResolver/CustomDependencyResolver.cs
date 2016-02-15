@@ -34,7 +34,7 @@ using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver
 {
-	public class CustomDependencyResolver : IDependencyResolver
+	public class CustomDependencyResolver : IDependencyResolver<NinjectModule>
 	{
 	    /// <summary>
 	    /// Gets the Ninject modules to pass into the Kernel.

@@ -115,26 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Grid.Mvc.Ajax.readme" />
     <None Include="packages.config" />
-    <None Include="Scripts\gridmvc.min.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\Gridmvc.css" />
-    <Content Include="Content\gridmvc.datepicker.css" />
-    <Content Include="Content\gridmvc.datepicker.min.css" />
-    <Content Include="Content\ladda-bootstrap\ladda-themeless.min.css" />
-    <Content Include="Scripts\gridmvc-ext.js" />
-    <Content Include="Scripts\gridmvc.customwidgets.js" />
-    <Content Include="Scripts\gridmvc.js" />
-    <Content Include="Scripts\gridmvc.lang.fr.js" />
-    <Content Include="Scripts\gridmvc.lang.ru.js" />
-    <Content Include="Scripts\gridmvc.min.js" />
-    <Content Include="Scripts\ladda-bootstrap\ladda.min.js" />
-    <Content Include="Scripts\ladda-bootstrap\spin.min.js" />
-    <Content Include="Scripts\URI.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.Common.Helpers\NZBDash.Common.Helpers.csproj">

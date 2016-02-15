@@ -27,12 +27,15 @@
 using System.Linq;
 
 using Ninject;
+using Ninject.Modules;
 
 using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.DependencyResolver.Modules;
+
+using Octokit;
 
 namespace NZBDash.DependencyResolver.Test
 {
@@ -70,12 +73,49 @@ namespace NZBDash.DependencyResolver.Test
         }
 
         [Test]
+        public void ResolveCacheDependency()
+        {
+            var module = new CacheModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<ICacheProvider>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        public void ResolveWrapperDependency()
+        {
+            var module = new WrapperModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<ISmtpClient>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        public void ResolveUpdaterDependency()
+        {
+            var module = new UpdaterModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<IGitHubClient>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
         public void GetCustomModules()
         {
-            var customResolver = new CustomDependencyResolver();
+            IDependencyResolver<NinjectModule> customResolver = new CustomDependencyResolver();
+
             var modules = customResolver.GetModules();
 
-            Assert.That(modules.Count(), Is.GreaterThan(0));
+            Assert.That(modules.Count, Is.GreaterThan(0));
+            Assert.That(modules, Is.TypeOf(typeof(NinjectModule[])));
+
+            foreach (var m in modules)
+            {
+                Assert.That(m.GetType().BaseType, Is.EqualTo(typeof(NinjectModule)));
+            }
         }
     }
     public class TestClass

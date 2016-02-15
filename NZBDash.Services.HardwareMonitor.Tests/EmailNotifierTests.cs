@@ -35,7 +35,6 @@ using NUnit.Framework;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
-using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.Monitor.Notification;
 
