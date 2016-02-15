@@ -67,18 +67,17 @@ namespace NZBDash.Services.Monitor.Notification
 
         private string GenerateHtmlTemplate(EmailModel model)
         {
-            var template = string.Empty;
-            template = File.ReadAllText(EmailResource.Email);
+            var template = EmailResource.Email;
             var document = new HtmlDocument();
             document.LoadHtml(template);
 
             template = document.DocumentNode.OuterHtml;
 
-            template = RemoveLineBreaks(template);
+            //template = RemoveLineBreaks(template);
 
-            template = Engine.Razor.RunCompile(template, model.BreachType, null, model);
+            var newTemplate = Engine.Razor.RunCompile(template, model.BreachType, null, model);
 
-            return template;
+            return newTemplate;
         }
 
         private static string RemoveLineBreaks(string text)

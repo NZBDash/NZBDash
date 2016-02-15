@@ -30,6 +30,7 @@ using System.Reactive.Linq;
 
 using FluentScheduler;
 
+using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
@@ -55,12 +56,13 @@ namespace NZBDash.Services.Monitor.Cpu
         protected override void RefreshSettings(Configuration c)
         {
             var settings = SettingsService.GetSettings();
-            Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Password = settings.Password };
+            Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Alert = settings.Alert, Password = settings.Password };
 
             var cpu = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Cpu);
             Notifier.NotificationSettings = new NotificationSettings { PercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
             Notifier.Interval = c.Intervals.CriticalNotification;
 
+            Logger.Trace(settings.DumpJson().ToString());
             Logger.Trace("Settings Refreshed");
 
         }

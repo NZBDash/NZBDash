@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: FileWrapper.cs
+//   File: LoggingHelper.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,20 +24,46 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Text;
+using System;
 
-using NZBDash.Common.Interfaces;
+using Newtonsoft.Json;
 
-namespace NZBDash.Common
+namespace NZBDash.Common.Helpers
 {
-    [ExcludeFromCodeCoverage]
-    public class FileWrapper : IFile
+    public static class LoggingHelper
     {
-        public string ReadAllText(string path)
+        public static object DumpJson(this object value)
         {
-            return File.ReadAllText(path, Encoding.UTF8);
+            return GetJsonDumpTarget(value);
+        }
+
+        public static object DumpJson(this object value, string propertyToRemoveFromDump)
+        {
+            return GetJsonDumpTarget(value, propertyToRemoveFromDump);
+        }
+
+        private static object GetJsonDumpTarget(object value, string propToRemove = default(string))
+        {
+            var dumpTarget = value;
+            //if this is a string that contains a JSON object, do a round-trip serialization to format it:
+            var stringValue = value as string;
+            if (stringValue != null)
+            {
+                if (stringValue.Trim().StartsWith("{", StringComparison.Ordinal))
+                {
+                    var obj = JsonConvert.DeserializeObject(stringValue);
+                    dumpTarget = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                }
+                else
+                {
+                    dumpTarget = stringValue;
+                }
+            }
+            else
+            {
+                dumpTarget = JsonConvert.SerializeObject(value, Formatting.Indented);
+            }
+            return dumpTarget;
         }
     }
 }

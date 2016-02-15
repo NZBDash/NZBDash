@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="AssemblyDirectoryHelper.cs" />
     <Compile Include="CustomHttpClient.cs" />
+    <Compile Include="LoggingHelper.cs" />
     <Compile Include="MemorySizeConverter.cs" />
     <Compile Include="ObjectCopier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

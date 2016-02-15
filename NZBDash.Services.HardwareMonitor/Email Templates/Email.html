@@ -13,11 +13,13 @@
     <br />
     @if(Model.BreachEnd != DateTime.MinValue)
     {
-        End: @Model.BreachEnd
+    <div>End: @Model.BreachEnd</div>
+    <div>
         Duration: @Model.Duration
+    </div>
     } else
     {
-        Still in progress, It has not yet ended.
+    <div>Still in progress, It has not yet ended.</div>
     }
 
     <div>
