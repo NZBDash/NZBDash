@@ -43,7 +43,7 @@ namespace NZBDash.DataAccessLayer.Configuration
         }
 
         private DbProviderFactory Factory { get; set; }
-        private ILogger Logger { get; set; }
+        protected ILogger Logger { get; set; }
 
         public virtual void CheckDb()
         {
