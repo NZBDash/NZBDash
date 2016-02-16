@@ -81,6 +81,7 @@
     <Compile Include="Api\Sonarr\SonarrSystemStatus.cs" />
     <Compile Include="Api\Sonarr\SonarrEpisode.cs" />
     <Compile Include="Api\XbmcModels.cs" />
+    <Compile Include="NzbLogType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,7 @@
 using System;
 using System.Threading.Tasks;
 
+using NZBDash.DataAccess;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 
@@ -46,18 +47,175 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <summary>
         /// Get the NZBGet List
         /// </summary>
-        /// <returns><see cref="NzbGetList"/></returns>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        ///   <see cref="NzbGetList" />
+        /// </returns>
         public async Task<NzbGetList> GetNzbGetList(string url, string username, string password)
         {
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/listgroups",
-                
+                Method = Method.GET
             };
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
             return await Api.ExecuteAsync<NzbGetList>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Gets the status.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public async Task<NzbGetStatus> GetStatus(string url, string username, string password)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/status",
+                Method = Method.GET
+            };
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+
+            return await Api.ExecuteAsync<NzbGetStatus>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Gets the history.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public async Task<NzbGetHistory> GetHistory(string url, string username, string password)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/history",
+                Method = Method.GET
+            };
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+
+            return await Api.ExecuteAsync<NzbGetHistory>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Gets the logs.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public async Task<NzbGetLogs> GetLogs(string url, string username, string password)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/log?IDFrom=0&NumberOfEntries=1000",
+                Method = Method.GET
+            };
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+
+            return await Api.ExecuteAsync<NzbGetLogs>(request, new Uri(url));
+        }
+        
+
+        /// <summary>
+        /// Sets the download status.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="pause">if set to <c>true</c> [pause].</param>
+        /// <returns></returns>
+        public async Task<bool> SetDownloadStatus(string url, string username, string password, bool pause)
+        {
+            var request = new RestRequest
+            {
+                Resource = pause ? "{username}:{password}/jsonrpc/pausedownload" : "{username}:{password}/jsonrpc/resumedownload",
+                Method = Method.GET
+            };
+
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+
+            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Sets the download limit.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="kbLimit">The kb limit.</param>
+        /// <returns></returns>
+        public async Task<bool> SetDownloadLimit(string url, string username, string password, int kbLimit)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/rate",
+                Method = Method.GET
+            };
+
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+            request.AddParameter("Limit", kbLimit);
+
+            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Restarts the specified URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        public async Task<bool> Restart(string url, string username, string password)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/reload",
+                Method = Method.GET
+            };
+
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+
+            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Writes the log.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="kind">The kind.</param>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        public async Task<bool> WriteLog(string url, string username, string password, NzbLogType kind, string message)
+        {
+            var request = new RestRequest
+            {
+                Resource = "{username}:{password}/jsonrpc/reload",
+                Method = Method.GET
+            };
+
+            request.AddUrlSegment("username", username);
+            request.AddUrlSegment("password", password);
+            request.AddParameter("Kind", kind.ToString());
+            request.AddParameter("Text", message);
+
+            return await Api.ExecuteAsync<bool>(request, new Uri(url));
         }
     }
 }

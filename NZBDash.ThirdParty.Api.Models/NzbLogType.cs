@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: SonarrRestRequest.cs
+//   File: NzbLogType.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,44 +24,18 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using NZBDash.ThirdParty.Api.Interfaces;
-using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
-
-using RestSharp;
-
-namespace NZBDash.ThirdParty.Api.Rest
+namespace NZBDash.DataAccess
 {
-    public class SonarrRestRequest
+    public enum NzbLogType
     {
-        public SonarrRestRequest(IApiRequest request)
-        {
-            Api = request;
-        }
-
-        private IApiRequest Api { get; set; }
-        private const string ApiKeyHeaderKey = " X-Api-Key";
+        INFO,
+        WARNING,
+        ERROR,
+        DETAIL,
 
         /// <summary>
-        /// Gets the Sonarr Episodes
+        /// Debug-messages are available, only if the program was compiled in debug-mode.
         /// </summary>
-        /// <returns><see cref="SonarrEpisode"/></returns>
-        public async Task<List<SonarrEpisode>> GetSonarrEpisodes(string url, string seriesId, string apiKey)
-        {
-            var request = new RestRequest
-            {
-                Resource = "api/episode",
-            };
-
-            request.AddHeader(ApiKeyHeaderKey, apiKey);
-
-            request.AddParameter("seriesId", seriesId);
-
-            return await Api.ExecuteAsync<List<SonarrEpisode>>(request, new Uri(url));
-        }
-
+        DEBUG
     }
 }
