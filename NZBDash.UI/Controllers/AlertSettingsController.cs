@@ -128,7 +128,7 @@ namespace NZBDash.UI.Controllers
                 var result = AlertSettingsService.SaveSettings(currentSettings);
                 if (result)
                 {
-                    return RedirectToAction("Index");
+                    return Json(new { Result = "True"}, JsonRequestBehavior.AllowGet);
                 }
             }
             else
@@ -142,7 +142,7 @@ namespace NZBDash.UI.Controllers
                 var result = AlertSettingsService.SaveSettings(currentSettings);
                 if (result)
                 {
-                    return RedirectToAction("Index");
+                    return Json(new { Result = "True" }, JsonRequestBehavior.AllowGet);
                 }
             }
 

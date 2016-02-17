@@ -1,58 +1,92 @@
-﻿@model NZBDash.UI.Models.ViewModels.Settings.AlertRules
+﻿@using NZBDash.UI.Models.ViewModels.Settings
+@model NZBDash.UI.Models.ViewModels.Settings.AlertRules
 @*TODO: Resource*@
+<div id="networkFullForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="networkModal">@Model.AlertType</h4>
+    </div>
+    <form action="@Url.Action("UpdateAlert", "AlertSettings")" method="POST" id="networkForm">
 
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="networkModal">@Model.AlertType</h4>
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.AlertType)
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Enabled, new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(x => x.Enabled, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Percentage, new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Percentage, new { @class = "form-control" })
+                    @if (Model.Errors.ContainsKey(AlertRules.PercentageErrorKey))
+                    {
+                        <div class="text-danger">Incorrect value for the Percentage!</div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.ThresholdTime, new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.ThresholdTime, new { @class = "form-control" })
+                    @if (Model.Errors.ContainsKey(AlertRules.ThresholdErrorKey))
+                    {
+                        <div class="text-danger">Incorrect value for the Threshold!</div> @*//TODO Resource*@
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NicId, new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(x => x.NicId, Model.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button id="NetworkSaveBtn" type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+       </form>
 </div>
-@using (Html.BeginForm("UpdateAlert", "AlertSettings", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div class="modal-body">
-        @Html.HiddenFor(x => x.Id)
-        @Html.HiddenFor(x => x.AlertType)
-        <div class="form-group row">
-            @Html.LabelFor(model => model.Enabled, new { @class = "control-label col-md-4" })
-            <div class="col-md-6">
-                @Html.CheckBoxFor(x => x.Enabled, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.Percentage, new { @class = "control-label col-md-4" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(x => x.Percentage, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group row">
-            @Html.LabelFor(model => model.ThresholdTime, new { @class = "control-label col-md-4" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(x => x.ThresholdTime, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NicId, new { @class = "control-label col-md-4" })
-            <div class="col-md-6">
-                @Html.DropDownListFor(x => x.NicId, Model.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
-            </div>
-        </div>
-
-    </div>
-
-    <div class="modal-footer">
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button id="NetworkSaveBtn" type="submit" class="btn btn-success">Save</button>
-        </div>
-    </div>
-}
-
 
 
 <script>
     $(function () {
         $('#Enabled').bootstrapSwitch();
+
+
+        $('#NetworkSaveBtn').click(function (e) {
+            e.preventDefault();
+
+            var $form = $('#networkForm');
+
+            $.ajax({
+                type: $form.prop('method'),
+                url: $form.prop('action'),
+                data: $form.serialize(),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    if (response.Result === "True") {
+                        location.reload();
+                    }
+                },
+                error: function (e) {
+                    $('#networkFullForm').html(e.responseText);
+                }
+            });
+
+
+        });
     });
 </script>

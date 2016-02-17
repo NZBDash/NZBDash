@@ -35,8 +35,6 @@ namespace NZBDash.Core.Models.Settings
             AlertRules = new List<AlertRulesDto>();
         }
         public List<AlertRulesDto> AlertRules { get; set; }
-
-        public bool AuthenticationEnabled { get; set; }
         public string EmailHost { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

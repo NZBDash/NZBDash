@@ -34,7 +34,6 @@ namespace NZBDash.DataAccessLayer.Models.Settings
     public class AlertSettings : Entity
     {
         public List<AlertRules> AlertRules { get; set; }
-        public bool AuthenticationEnabled { get; set; }
         public string EmailHost { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

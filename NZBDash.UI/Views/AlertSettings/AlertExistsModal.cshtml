@@ -1,15 +1,16 @@
 ﻿@model NZBDash.UI.Models.ViewModels.Settings.AlertType  
 
 @*TODO: Resource*@
+
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="cpuModal">@Model</h4>
+    <h4 class="modal-title" id="errorModal">@Model</h4>
 </div>
-    Alert @Model already exists. Please modify the existing alert.
-    <div class="modal-footer">
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button id="CpuSaveBtn" type="submit" class="btn btn-success">Save</button>
-        </div>
+    <div class="modal-body">
+        Alert for @Model already exists. Please modify the existing alert.
     </div>
-}
+
+    <div class="modal-footer">
+
+    </div>
