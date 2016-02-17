@@ -67,7 +67,6 @@ namespace NZBDash.UI.Controllers
             if (selected != null)
             {
                 vm = Mapper.Map<AlertRules>(selected);
-                //vm.InjectFrom(selected);
             }
 
             switch (vm.AlertType)
@@ -116,19 +115,19 @@ namespace NZBDash.UI.Controllers
             }
 
             var match = currentSettings.AlertRules.FirstOrDefault(x => x.Id == model.Id);
-            if (match == null)  
+            if (match == null)
             {
                 // We don't yet have any rules so create one
                 var dtoRule = Mapper.Map<AlertRules, AlertRulesDto>(model);
                 dtoRule.Id = ++maxRecord;
 
-                
+
                 currentSettings.AlertRules.Add(dtoRule);
                 Logger.Trace("Saving new rule with id {0}", dtoRule.Id);
                 var result = AlertSettingsService.SaveSettings(currentSettings);
                 if (result)
                 {
-                    return Json(new { Result = "True"}, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "True" }, JsonRequestBehavior.AllowGet);
                 }
             }
             else
@@ -169,22 +168,31 @@ namespace NZBDash.UI.Controllers
         public ActionResult OpenModal(AlertType alertType)
         {
             var model = new AlertRules { AlertType = alertType };
-
+            var settings = AlertSettingsService.GetSettings();
             switch (model.AlertType)
             {
                 case AlertType.Cpu:
-                    var settings = AlertSettingsService.GetSettings();
                     if (settings.AlertRules.Any(x => x.AlertType == AlertTypeDto.Cpu))
                     {
                         return PartialView("AlertExistsModal", model.AlertType);
                     }
                     return PartialView("CpuAlertModal", model);
+
+
                 case AlertType.Network:
                     model = LoadNetwork(model);
                     return PartialView("NetworkAlertModal", model);
+
+
                 case AlertType.Hdd:
+                    if (settings.AlertRules.Any(x => x.AlertType == AlertTypeDto.Hdd))
+                    {
+                        return PartialView("AlertExistsModal", model.AlertType);
+                    }
                     model = LoadHdd(model);
                     return PartialView("DriveAlertModal", model);
+
+
                 default:
                     Logger.Fatal("ArgumentOutOfRangeException on AlertType: {0}", model.AlertType);
                     throw new ArgumentOutOfRangeException();
@@ -221,7 +229,7 @@ namespace NZBDash.UI.Controllers
             {
                 rule.NicDict.Add(nic.Key, nic.Value);
             }
-            rule.Nics = new SelectList(rule.NicDict, "Value", "Key", 1);
+            rule.Nics = new SelectList(rule.NicDict, "Value", "Key", 0);
 
             return rule;
         }

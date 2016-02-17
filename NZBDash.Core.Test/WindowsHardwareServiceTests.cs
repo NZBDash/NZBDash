@@ -88,7 +88,7 @@ namespace NZBDash.Core.Test
         [Test]
         public void GetNetworkInformation()
         {
-            var process = Service.GetNetworkInformation();
+            var process = Service.GetNetworkInformation(0);
 
             Assert.That(process, Is.Not.Null);
             Assert.That(process.Recieved, Is.Not.Null);

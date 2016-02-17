@@ -146,7 +146,7 @@ namespace NZBDash.Services.Monitor.Notification
         {
             var dto = new MonitoringEventsDto
             {
-                EventName = EventName.CpuEvent,
+                EventName = ConvertEvent(AlertType),
                 EventEnd = EndEventTime,
                 EventStart = StartEventTime,
                 EventType = EndEventTime == DateTime.MinValue ? EventTypeDto.Start : EventTypeDto.End
@@ -168,5 +168,19 @@ namespace NZBDash.Services.Monitor.Notification
             Sendy.SendEmail(Email);
         }
 
+        private string ConvertEvent(AlertTypeDto type)
+        {
+            switch (type)
+            {
+                case AlertTypeDto.Cpu:
+                    return EventName.CpuEvent;
+                case AlertTypeDto.Network:
+                    return EventName.NetworkEvent;
+                case AlertTypeDto.Hdd:
+                    return EventName.HddSpaceEvent;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
     }
 }

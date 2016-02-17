@@ -34,6 +34,7 @@ using System.Threading;
 using Microsoft.VisualBasic.Devices;
 
 using NZBDash.Core.Interfaces;
+using NZBDash.DataAccess.Api;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.Hardware;
 
@@ -125,9 +126,9 @@ namespace NZBDash.Core.Services
         /// <summary>
         /// Gets the network information.
         /// </summary>
-        public NetworkInfo GetNetworkInformation()
+        public NetworkInfo GetNetworkInformation(int nicId)
         {
-            return GetNetworkingDetails();
+            return GetNetworkingDetails(nicId);
         }
 
         public Dictionary<string,int> GetAllNics()
@@ -158,12 +159,12 @@ namespace NZBDash.Core.Services
             return DriveInfo.GetDrives();
         }
 
-        private NetworkInfo GetNetworkingDetails()
+        private NetworkInfo GetNetworkingDetails(int nicId)
         {
             var info = new NetworkInfo();
             var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
             var cn = performanceCounterCategory.GetInstanceNames();
-            var firstNetworkCard = cn[0]; //TODO: Change this, the user needs to select the NIC to monitor in a settings page.
+            var firstNetworkCard = cn[nicId];
             var networkBytesSent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", firstNetworkCard);
             var networkBytesReceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", firstNetworkCard);
             var networkBytesTotal = new PerformanceCounter("Network Interface", "Bytes Total/sec", firstNetworkCard);

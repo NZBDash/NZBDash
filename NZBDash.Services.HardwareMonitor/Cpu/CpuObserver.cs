@@ -48,7 +48,7 @@ namespace NZBDash.Services.Monitor.Cpu
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
-            ConfigurationReader = new ConfigurationReader(SettingsService);
+            ConfigurationReader = new ConfigurationReader(SettingsService, AlertTypeDto.Cpu);
             Notifier = new Notifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger, AlertTypeDto.Cpu);
         }
 
@@ -58,7 +58,12 @@ namespace NZBDash.Services.Monitor.Cpu
             Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Alert = settings.Alert, Password = settings.Password };
 
             var cpu = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Cpu);
-            Notifier.NotificationSettings = new NotificationSettings { PercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
+            if (cpu != null)
+            {
+                Enabled = cpu.Enabled;
+                Notifier.NotificationSettings = new NotificationSettings { PercentageLimit = cpu.Percentage, Enabled = cpu.Enabled, ThresholdTime = cpu.ThresholdTime };
+            }
+            Logger.Trace("CPU enabled: {0}", Enabled);
             Notifier.Interval = c.Intervals.CriticalNotification;
 
             Logger.Trace(settings.DumpJson().ToString());
@@ -88,17 +93,19 @@ namespace NZBDash.Services.Monitor.Cpu
             .Subscribe(Start);
 
             Counter = new CpuPerformanceCounter();
+            if (Enabled)
+            {
+                var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
+                                       .Select(i => Counter.Value) // convert event index to cpu load value
+                                       .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean
 
-            var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
-                                   .Select(i => Counter.Value) // convert event index to cpu load value
-                                   .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean
-
-            Subscription = alarms // here we throttle critical alarms 
-                .Where(critical => critical).Sample(c.Intervals.Notification).Merge(
-                    // allow critical notification no more often then ...
-                    alarms // here we throttle non critical alarms
-                        .Where(critical => !critical).Sample(c.Intervals.Notification)) // allow non critical notification no more often then ...
-                .Subscribe(Notifier.Notify); // our action to send notifications
+                Subscription = alarms // here we throttle critical alarms 
+                    .Where(critical => critical).Sample(c.Intervals.Notification).Merge(
+                        // allow critical notification no more often then ...
+                        alarms // here we throttle non critical alarms
+                            .Where(critical => !critical).Sample(c.Intervals.Notification)) // allow non critical notification no more often then ...
+                    .Subscribe(Notifier.Notify); // our action to send notifications
+            }
         }
 
         public void Stop()

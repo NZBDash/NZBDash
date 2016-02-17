@@ -61,6 +61,7 @@ namespace NZBDash.Services.Monitor
         protected IEventService EventService { get; set; }
         protected ISmtpClient SmtpClient { get; set; }
         protected IConfigurationReader ConfigurationReader { get; set; }
+        protected bool Enabled { get; set; }
         protected abstract void RefreshSettings(Configuration c);
     }
 }

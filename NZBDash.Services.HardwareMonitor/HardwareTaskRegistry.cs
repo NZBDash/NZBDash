@@ -27,6 +27,7 @@
 using FluentScheduler;
 
 using NZBDash.Services.Monitor.Cpu;
+using NZBDash.Services.Monitor.Network;
 using NZBDash.Services.Monitor.Storage;
 
 namespace NZBDash.Services.Monitor
@@ -37,6 +38,7 @@ namespace NZBDash.Services.Monitor
         {
             Schedule<CpuObserver>().ToRunNow();
             Schedule<StorageObserver>().ToRunNow();
+            Schedule<NetworkObserver>().ToRunNow();
         }
     }
 

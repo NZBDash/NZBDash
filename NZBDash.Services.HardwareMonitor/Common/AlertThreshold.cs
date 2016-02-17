@@ -33,11 +33,16 @@ namespace NZBDash.Services.Monitor.Common
 {
     public class AlertThreshold : IThresholds
     {
-        public AlertThreshold(AlertSettingsDto service)
+        public AlertThreshold(AlertSettingsDto service, AlertTypeDto alertType)
         {
-            var critical = service.AlertRules.Select(x => x.Percentage).FirstOrDefault();
-            CriticalLoad = critical;
+            var item = service.AlertRules.FirstOrDefault(x => x.AlertType == alertType);
+            if (item != null)
+            {
+                var critical = item.Percentage;
+                CriticalLoad = critical;
+            }
         }
+
         public double CriticalLoad { get; set; }
     }
 }

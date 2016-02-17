@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 
 using NZBDash.Core.Interfaces;
+using NZBDash.DataAccess.Api;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.Hardware;
 
@@ -60,7 +61,7 @@ namespace NZBDash.Core.Services
             throw new NotImplementedException();
         }
 
-        public NetworkInfo GetNetworkInformation()
+        public NetworkInfo GetNetworkInformation(int nicId)
         {
             throw new NotImplementedException();
         }

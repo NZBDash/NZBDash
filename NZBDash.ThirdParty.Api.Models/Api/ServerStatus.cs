@@ -24,7 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-namespace NZBDash.ThirdParty.Api.Models.Api
+namespace NZBDash.DataAccess.Api
 {
     public class NetworkInfo
     {

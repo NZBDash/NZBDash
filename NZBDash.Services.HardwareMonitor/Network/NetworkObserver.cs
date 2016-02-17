@@ -37,21 +37,22 @@ using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.Monitor.Common;
 using NZBDash.Services.Monitor.Notification;
+using NZBDash.Services.Monitor.Storage;
 
-namespace NZBDash.Services.Monitor.Storage
+namespace NZBDash.Services.Monitor.Network
 {
-    public class StorageObserver : BaseObserver, ITask, IHardwareObserver
+    public class NetworkObserver : BaseObserver, ITask, IHardwareObserver
     {
         private ISettingsService<AlertSettingsDto> SettingsService { get; set; }
         private IHardwareService Hardware { get; set; }
-        private int HddId { get; set; }
-        public StorageObserver(ISettingsService<AlertSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger, IHardwareService hardwareService) : base(logger)
+        private int DriveId { get; set; }
+        public NetworkObserver(ISettingsService<AlertSettingsDto> settings, IEventService eventService, ISmtpClient client, IFile file, ILogger logger, IHardwareService hardwareService) : base(logger)
         {
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
-            ConfigurationReader = new ConfigurationReader(SettingsService, AlertTypeDto.Hdd);
-            Notifier = new Notifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger, AlertTypeDto.Hdd);
+            ConfigurationReader = new ConfigurationReader(SettingsService, AlertTypeDto.Network);
+            Notifier = new Notifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger, AlertTypeDto.Network);
             Hardware = hardwareService;
         }
 
@@ -60,15 +61,21 @@ namespace NZBDash.Services.Monitor.Storage
             var settings = SettingsService.GetSettings();
             Notifier.Email = new EmailModel { Address = settings.Address, Host = settings.EmailHost, Port = settings.Port, Username = settings.Username, Alert = settings.Alert, Password = settings.Password };
 
-            var hdd = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Hdd);
-            if (hdd != null)
+            var network = settings.AlertRules.FirstOrDefault(x => x.AlertType == AlertTypeDto.Network);
+            if (network != null)
             {
-                Enabled = hdd.Enabled;
-                HddId = hdd.DriveId;
-                Notifier.NotificationSettings = new NotificationSettings { PercentageLimit = hdd.Percentage, Enabled = hdd.Enabled, ThresholdTime = hdd.ThresholdTime };
-            }
 
-            Logger.Trace("Storage enabled: {0}", Enabled);
+                Enabled = network.Enabled;
+                DriveId = network.DriveId;
+                Notifier.NotificationSettings = new NotificationSettings
+                {
+                    PercentageLimit = network.Percentage,
+                    Enabled = network.Enabled,
+                    ThresholdTime = network.ThresholdTime
+                };
+            }
+            Logger.Trace("Network enabled: {0}", Enabled);
+
             Notifier.Interval = c.Intervals.CriticalNotification;
 
             Logger.Trace(settings.DumpJson().ToString());
@@ -97,9 +104,10 @@ namespace NZBDash.Services.Monitor.Storage
             .DistinctUntilChanged()
             .Subscribe(Start);
 
-            Counter = new StoragePerformanceCounter(Hardware, HddId);
+            Counter = new NetworkPerformanceCounter(Hardware, DriveId);
             if (Enabled)
             {
+                
                 var alarms = Observable.Interval(c.Intervals.Measurement) // generate endless sequence of events
                                        .Select(i => Counter.Value) // convert event index to cpu load value
                                        .Select(load => load > c.Thresholds.CriticalLoad); // is critical? convert load to boolean
@@ -121,7 +129,7 @@ namespace NZBDash.Services.Monitor.Storage
 
         public void Execute()
         {
-            Logger.Trace("Starting Storage Monitor");
+            Logger.Trace("Starting Network Monitor");
             Start(ConfigurationReader.Read());
         }
     }

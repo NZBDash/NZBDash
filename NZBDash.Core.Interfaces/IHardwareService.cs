@@ -27,6 +27,7 @@
 using System;
 using System.Collections.Generic;
 
+using NZBDash.DataAccess.Api;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.Hardware;
 
@@ -65,7 +66,7 @@ namespace NZBDash.Core.Interfaces
         /// <summary>
         /// Gets the network information.
         /// </summary>
-        NetworkInfo GetNetworkInformation();
+        NetworkInfo GetNetworkInformation(int nicId);
 
         /// <summary>
         /// Returns all of the found NIC's on the server. Key = NIC Name, Value = NIC number (Unique)

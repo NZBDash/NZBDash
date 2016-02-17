@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuOldConfigurationReaderOld.cs
+//   File: StoragePerformanceCounter.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -25,28 +25,30 @@
 // ************************************************************************/
 #endregion
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Interfaces;
 
-namespace NZBDash.Services.Monitor.Common
+using Humanizer;
+
+namespace NZBDash.Services.Monitor.Network
 {
-    public class ConfigurationReader : IConfigurationReader
+    public class NetworkPerformanceCounter : IPerformanceCounter
     {
-        public ConfigurationReader(ISettingsService<AlertSettingsDto> settings, AlertTypeDto alertType)
+        public NetworkPerformanceCounter(IHardwareService hardwareService, int nicId)
         {
-            Settings = settings;
-            AlertType = alertType;
+            Service = hardwareService;
+            NicId = nicId;
         }
-        private ISettingsService<AlertSettingsDto> Settings { get; set; }
-        private AlertTypeDto AlertType { get; set; }
-        public Configuration Read()
+        private IHardwareService Service { get; set; }
+        private int NicId { get; set; }
+        public double Value
         {
-            var config = Settings.GetSettings();
-            var intervals = new AlertIntervals(config, AlertType);
-            var thresholds = new AlertThreshold(config, AlertType);
-            var notifications = new Notifications(config);
-            var configuration = new Configuration(intervals, thresholds, notifications);
-            return configuration;
+            get
+            {
+                var network = Service.GetNetworkInformation(NicId);
+                var total = (double)network.Total;
+                // Total is in Bytes, let's show Kilobytes
+                return total.Bytes().Kilobytes;
+            }
         }
     }
 }

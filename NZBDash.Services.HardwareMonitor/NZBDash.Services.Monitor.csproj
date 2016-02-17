@@ -42,6 +42,10 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Humanizer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.0.0\lib\dotnet\Humanizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -92,6 +96,8 @@
     <Compile Include="EventName.cs" />
     <Compile Include="HardwareMonitor.cs" />
     <Compile Include="IoC\NinjectTaskFactory.cs" />
+    <Compile Include="Network\NetworkObserver.cs" />
+    <Compile Include="Network\NetworkPerformanceCounter.cs" />
     <Compile Include="Notification\EmailSender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +150,10 @@
     <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj">
       <Project>{3D144CD4-00F4-4D64-924D-1D1580F2809F}</Project>
       <Name>NZBDash.Services.Monitor.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
+      <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
+      <Name>NZBDash.ThirdParty.Api.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.UI.Models\NZBDash.UI.Models.csproj">
       <Project>{C61C3778-A4D2-4C61-891C-353248EEB25B}</Project>

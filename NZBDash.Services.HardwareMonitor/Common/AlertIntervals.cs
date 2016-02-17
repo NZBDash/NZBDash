@@ -34,11 +34,16 @@ namespace NZBDash.Services.Monitor.Common
 {
     public class AlertIntervals : IIntervals
     {
-        public AlertIntervals(AlertSettingsDto service)
+        public AlertIntervals(AlertSettingsDto service, AlertTypeDto alertType)
         {
-            var notificationTime = service.AlertRules.Select(x => x.ThresholdTime).FirstOrDefault();
-            CriticalNotification = TimeSpan.FromSeconds(notificationTime);
+            var item = service.AlertRules.FirstOrDefault(x => x.AlertType == alertType);
+            if (item != null)
+            {
+                var notificationTime = item.ThresholdTime;
+                CriticalNotification = TimeSpan.FromSeconds(notificationTime);
+            }
         }
+
         public TimeSpan Measurement => TimeSpan.FromSeconds(0.1);
         public TimeSpan CriticalNotification { get; }
         public TimeSpan Notification => TimeSpan.FromSeconds(1);

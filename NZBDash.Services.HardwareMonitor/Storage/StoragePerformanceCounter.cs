@@ -48,8 +48,7 @@ namespace NZBDash.Services.Monitor.Storage
                 var drive = drives.FirstOrDefault(x => x.DriveId == DriveId);
                 if (drive != null)
                 {
-                    var percentage = drive.PercentageFilled;
-                    return percentage;
+                    return drive.PercentageFilled;
                 }
                 return 0;
             }
