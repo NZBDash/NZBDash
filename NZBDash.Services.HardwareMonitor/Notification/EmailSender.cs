@@ -29,6 +29,7 @@ using System.Net.Mail;
 
 using HtmlAgilityPack;
 
+using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Services.HardwareMonitor.Interfaces;
@@ -62,7 +63,7 @@ namespace NZBDash.Services.Monitor.Notification
                 Subject = $"NZBDash Monitor {model.BreachType} Alert!" };
             var creds = new NetworkCredential(model.Username, model.Password);
             Client.Send(model.Host, model.Port, message, creds);
-            Logger.Info("Email: { To: {0}, Subject: {1}, Host: {2}, Port: {3} };", model.Address, message.Subject, model.Host, model.Port);
+            Logger.Info(model.DumpJson().ToString());
         }
 
         private string GenerateHtmlTemplate(EmailModel model)
@@ -73,18 +74,9 @@ namespace NZBDash.Services.Monitor.Notification
 
             template = document.DocumentNode.OuterHtml;
 
-            //template = RemoveLineBreaks(template);
-
             var newTemplate = Engine.Razor.RunCompile(template, model.BreachType, null, model);
 
             return newTemplate;
-        }
-
-        private static string RemoveLineBreaks(string text)
-        {
-            var newRegex = new System.Text.RegularExpressions.Regex("\\r\\n");
-            text = newRegex.Replace(text, string.Empty);
-            return text.Replace("\\", "\"");
         }
     }
 }

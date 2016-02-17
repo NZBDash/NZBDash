@@ -29,7 +29,6 @@ namespace NZBDash.DataAccessLayer.Models.Settings
     public class AlertRules : Entity
     {
         public AlertType AlertType { get; set; }
-        public int Id { get; set; }
         public int ThresholdTime { get; set; }
         public int Percentage { get; set; }
         public bool Enabled { get; set; }
@@ -38,5 +37,8 @@ namespace NZBDash.DataAccessLayer.Models.Settings
         /// This is only valid for network monitoring, we need to know the Nic to monitor
         /// </summary>
         public int NicId { get; set; }
+
+
+        public int DriveId { get; set; }
     }
 }

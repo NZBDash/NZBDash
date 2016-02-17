@@ -37,5 +37,8 @@ namespace NZBDash.Core.Models.Settings
         /// This is only valid for network monitoring, we need to know the Nic to monitor
         /// </summary>
         public int NicId { get; set; }
+
+
+        public int DriveId { get; set; }
     }
 }

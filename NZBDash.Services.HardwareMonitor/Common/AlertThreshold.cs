@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuOldConfigurationReaderOld.cs
+//   File: CpuThreshold.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,28 +24,20 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using NZBDash.Core.Interfaces;
+using System.Linq;
+
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.Monitor.Cpu
+namespace NZBDash.Services.Monitor.Common
 {
-    public class CpuConfigurationReader : IConfigurationReader
+    public class AlertThreshold : IThresholds
     {
-        public CpuConfigurationReader(ISettingsService<AlertSettingsDto> settings)
+        public AlertThreshold(AlertSettingsDto service)
         {
-            Settings = settings;
+            var critical = service.AlertRules.Select(x => x.Percentage).FirstOrDefault();
+            CriticalLoad = critical;
         }
-        private ISettingsService<AlertSettingsDto> Settings { get; set; }
-        public Configuration Read()
-        {
-            var config = Settings.GetSettings();
-            var intervals = new CpuIntervals(config);
-            var thresholds = new CpuThreshold(config);
-            var notifications = new Notifications(config);
-            var configuration = new Configuration(intervals, thresholds, notifications);
-            return configuration;
-        }
+        public double CriticalLoad { get; set; }
     }
 }

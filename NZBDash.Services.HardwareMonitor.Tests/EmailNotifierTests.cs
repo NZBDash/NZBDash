@@ -35,6 +35,7 @@ using NUnit.Framework;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 using NZBDash.Services.Monitor.Notification;
 
@@ -47,7 +48,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
 
         private Mock<ISmtpClient> Smtp { get; set; }
         private Mock<IEventService> EventService { get; set; }
-        private CpuNotifier N { get; set; }
+        private Notifier N { get; set; }
 
         [SetUp]
         public void Setup()
@@ -60,7 +61,7 @@ namespace NZBDash.Services.HardwareMonitor.Tests
             var fileMock = new Mock<IFile>();
             fileMock.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("<html>\\r\\n</html>");
 
-            N = new CpuNotifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object, logger.Object);
+            N = new Notifier(new TimeSpan(0, 0, 0, 1), EventService.Object, Smtp.Object, fileMock.Object, logger.Object, AlertTypeDto.Cpu);
         }
 
         [Test]

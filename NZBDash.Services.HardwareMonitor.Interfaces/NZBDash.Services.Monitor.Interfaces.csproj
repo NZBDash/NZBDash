@@ -34,11 +34,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationOld.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="EmailModel.cs" />
     <Compile Include="IConfigurationReader.cs" />
-    <Compile Include="IConfigurationReaderOld.cs" />
     <Compile Include="IHardwareObserver.cs" />
     <Compile Include="IIntervals.cs" />
     <Compile Include="IMonitorObservable.cs" />

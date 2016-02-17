@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: ConfigurationOld.cs
+//   File: CpuIntervals.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,22 +24,23 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System;
+using System.Linq;
+
 using NZBDash.Core.Models.Settings;
+using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.HardwareMonitor.Interfaces
+namespace NZBDash.Services.Monitor.Common
 {
-    public class ConfigurationOld
+    public class AlertIntervals : IIntervals
     {
-        public ConfigurationOld(IIntervals intervals, IThresholds thresholds, EmailAlertSettingsDto emailSettings)
+        public AlertIntervals(AlertSettingsDto service)
         {
-            Intervals = intervals;
-            Thresholds = thresholds;
-            EmailSettings = emailSettings;
+            var notificationTime = service.AlertRules.Select(x => x.ThresholdTime).FirstOrDefault();
+            CriticalNotification = TimeSpan.FromSeconds(notificationTime);
         }
-
-        public IThresholds Thresholds { get; }
-        public EmailAlertSettingsDto EmailSettings { get; set; }
-
-        public IIntervals Intervals { get; set; }
+        public TimeSpan Measurement => TimeSpan.FromSeconds(0.1);
+        public TimeSpan CriticalNotification { get; }
+        public TimeSpan Notification => TimeSpan.FromSeconds(1);
     }
 }

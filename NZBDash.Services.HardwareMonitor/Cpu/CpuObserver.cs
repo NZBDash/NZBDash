@@ -34,9 +34,8 @@ using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
-using NZBDash.Services.HardwareMonitor;
-using NZBDash.Services.HardwareMonitor.Cpu;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Common;
 using NZBDash.Services.Monitor.Notification;
 
 namespace NZBDash.Services.Monitor.Cpu
@@ -49,8 +48,8 @@ namespace NZBDash.Services.Monitor.Cpu
             SettingsService = settings;
             EventService = eventService;
             SmtpClient = client;
-            ConfigurationReader = new CpuConfigurationReader(SettingsService);
-            Notifier = new CpuNotifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger);
+            ConfigurationReader = new ConfigurationReader(SettingsService);
+            Notifier = new Notifier(ConfigurationReader.Read().Intervals.CriticalNotification, eventService, client, file, logger, AlertTypeDto.Cpu);
         }
 
         protected override void RefreshSettings(Configuration c)

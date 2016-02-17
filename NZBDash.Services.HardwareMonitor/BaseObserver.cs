@@ -30,6 +30,7 @@ using System.Configuration;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Interfaces;
 
 using Configuration = NZBDash.Services.HardwareMonitor.Interfaces.Configuration;
 

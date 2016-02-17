@@ -29,14 +29,14 @@ using System;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models;
-using NZBDash.Services.HardwareMonitor;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
 namespace NZBDash.Services.Monitor.Notification
 {
-    public class CpuNotifier : INotifier
+    public class Notifier : INotifier
     {
-        public CpuNotifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file, ILogger logger)
+        public Notifier(TimeSpan interval, IEventService eventService, ISmtpClient client, IFile file, ILogger logger, AlertTypeDto type)
         {
             Interval = interval;
             EventService = eventService;
@@ -44,9 +44,10 @@ namespace NZBDash.Services.Monitor.Notification
             File = file;
             Logger = logger;
             Sendy = new EmailSender(file, logger, client);
+            AlertType = type;
         }
 
-
+        private AlertTypeDto AlertType { get; set; }
         public bool StartEventSaved { get; set; }
         public bool EndEventSaved { get; set; }
         public NotificationSettings NotificationSettings { get; set; }
@@ -66,7 +67,7 @@ namespace NZBDash.Services.Monitor.Notification
 
         public void ResetCounter()
         {
-            Logger.Trace("Reset CPU Counter");
+            Logger.Trace("Reset {0} Counter", AlertType);
             AlertCount = 0;
         }
 
@@ -124,7 +125,7 @@ namespace NZBDash.Services.Monitor.Notification
         {
             if (!NotificationSettings.Enabled)
             {
-                Logger.Trace("CPU Monitoring is not enabled");
+                Logger.Trace("{0} Monitoring is not enabled", AlertType);
                 return;
             }
 
@@ -162,7 +163,7 @@ namespace NZBDash.Services.Monitor.Notification
             Email.BreachStart = StartEventTime;
             Email.Percentage = NotificationSettings.PercentageLimit;
             Email.TimeThresholdSec = NotificationSettings.ThresholdTime;
-            Email.BreachType = "CPU";
+            Email.BreachType = AlertType.ToString();
 
             Sendy.SendEmail(Email);
         }

@@ -27,7 +27,7 @@
 using System.Diagnostics;
 using System.Threading;
 
-using NZBDash.Services.HardwareMonitor.Interfaces;
+using NZBDash.Services.Monitor.Interfaces;
 
 namespace NZBDash.Services.Monitor.Cpu
 {

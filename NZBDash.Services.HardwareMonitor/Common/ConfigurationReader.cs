@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: CpuIntervals.cs
+//   File: CpuOldConfigurationReaderOld.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,23 +24,27 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
-using System.Linq;
-
+using NZBDash.Core.Interfaces;
 using NZBDash.Core.Models.Settings;
 using NZBDash.Services.HardwareMonitor.Interfaces;
 
-namespace NZBDash.Services.Monitor.Cpu
+namespace NZBDash.Services.Monitor.Common
 {
-    public class CpuIntervals : IIntervals
+    public class ConfigurationReader : IConfigurationReader
     {
-        public CpuIntervals(AlertSettingsDto service)
+        public ConfigurationReader(ISettingsService<AlertSettingsDto> settings)
         {
-            var notificationTime = service.AlertRules.Select(x => x.ThresholdTime).FirstOrDefault();
-            CriticalNotification = TimeSpan.FromSeconds(notificationTime);
+            Settings = settings;
         }
-        public TimeSpan Measurement => TimeSpan.FromSeconds(0.1);
-        public TimeSpan CriticalNotification { get; }
-        public TimeSpan Notification => TimeSpan.FromSeconds(1);
+        private ISettingsService<AlertSettingsDto> Settings { get; set; }
+        public Configuration Read()
+        {
+            var config = Settings.GetSettings();
+            var intervals = new AlertIntervals(config);
+            var thresholds = new AlertThreshold(config);
+            var notifications = new Notifications(config);
+            var configuration = new Configuration(intervals, thresholds, notifications);
+            return configuration;
+        }
     }
 }

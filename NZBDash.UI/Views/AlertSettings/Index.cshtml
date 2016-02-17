@@ -14,7 +14,7 @@
             @Html.RenderHeader("Alert Settings")
 
             <div class="btn-group-sm">
-                
+
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal" class="btn btn-success">Cpu Alert</a>
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Network" data-target="myModal" class="btn btn-success">Network Alert</a>
                 <a href="@Url.Action("OpenModal")?alertType=@AlertType.Hdd" data-target="myModal" class="btn btn-success">HDD Alert</a>
@@ -33,11 +33,11 @@
 
             @Html.Grid(Model.AlertRules).Columns(c =>
        {
-           c.Add(x => x.AlertType);
-           c.Add(x => x.Enabled);
-           c.Add(x => x.Percentage);
-           c.Add(x => x.ThresholdTime);
-           c.Add().RenderValueAs(r => @<a href="@Url.Action("UpdateAlert")?id=@r.Id" data-target="myModal">Modify</a>).Encoded(false).Sanitized(false);
+       c.Add(x => x.AlertType);
+       c.Add(x => x.Enabled);
+       c.Add(x => x.Percentage);
+       c.Add(x => x.ThresholdTime);
+       c.Add().RenderValueAs(r => @<a href="@Url.Action("UpdateAlert")?id=@r.Id" data-target="myModal">Modify</a>).Encoded(false).Sanitized(false);
            c.Add().RenderValueAs(r => Html.ActionLink("Delete", "DeleteAlert", "AlertSettings", new { id = r.Id }, null)).Encoded(false).Sanitized(false);
        }).EmptyText("We currently have no alerts set up!")
 
