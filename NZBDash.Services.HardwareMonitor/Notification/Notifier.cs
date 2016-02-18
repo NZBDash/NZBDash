@@ -73,7 +73,7 @@ namespace NZBDash.Services.Monitor.Notification
 
         private void CheckSend()
         {
-            if (AlertCount >= Interval.Seconds)
+            if (AlertCount >= Interval.TotalSeconds)
             {
                 if (!StartEventSaved)
                 {
