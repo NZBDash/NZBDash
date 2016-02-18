@@ -208,9 +208,12 @@ namespace NZBDash.UI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateSettings(AlertSettingsViewModel model)
+        public ActionResult UpdateEmailSettings(AlertSettingsViewModel model)
         {
+            var currentRules = AlertSettingsService.GetSettings();
             var dto = Mapper.Map<AlertSettingsDto>(model);
+            dto.AlertRules = currentRules.AlertRules;
+
             var result = AlertSettingsService.SaveSettings(dto);
             if (result)
             {
