@@ -24,6 +24,9 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System;
+using System.Diagnostics;
+
 using Microsoft.Web.Administration;
 
 namespace NZBDash.Install.Setup
@@ -32,10 +35,47 @@ namespace NZBDash.Install.Setup
     {
         static void Main(string[] args)
         {
-            // https://blogs.msdn.microsoft.com/carlosag/2006/04/17/microsoft-web-administration-in-iis-7/
-            ServerManager iisManager = new ServerManager();
-            iisManager.Sites.Add("NewSite", "http", "*:8080:", "d:\\MySite"); // TODO: Do all of this.
-            iisManager.CommitChanges();
+
+            // Args expected:
+            // 1. Install Location
+            // 2. Install or Uninstall
+            // 3. Port number
+
+            //if (args.Length != 3)
+            //{
+            //    Console.WriteLine("Number of arguments is incorrect, required 3:");
+            //    Console.WriteLine("1. Install Location");
+            //    Console.WriteLine("2. Install or Uninstall");
+            //    Console.WriteLine("3. Port number");
+            //    Console.ReadLine();
+            //    Environment.Exit(1);
+            //}
+
+            Trace.TraceInformation("test");
+            try
+            {
+                // https://blogs.msdn.microsoft.com/carlosag/2006/04/17/microsoft-web-administration-in-iis-7/
+                var iisManager = new ServerManager();
+                //iisManager.Sites.Add("AA", "http", "*:8080:", @"C:\Users\Jamie.Rees\Source\Repos\NZBDash\NZBDash.UI"); // TODO: Do all of this.
+                //iisManager.CommitChanges();
+
+                iisManager.ApplicationPools.Add("AATest");
+                
+                iisManager.Sites["AA"].Applications.Add("/AA", @"C:\Users\Jamie.Rees\Source\Repos\NZBDash\NZBDash.UI");
+                iisManager.Sites["AA"].ApplicationDefaults.ApplicationPoolName = "AATest";
+
+                iisManager.CommitChanges();
+                Console.ReadLine();
+                //Nothing seems to be working
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.Message);
+                throw;
+            }
+
+
         }
     }
 }
