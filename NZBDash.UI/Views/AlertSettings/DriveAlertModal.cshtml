@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group row">
                 @Html.LabelFor(model => model.Drives, new { @class = "control-label col-md-4" })
                 <div class="col-md-6">
                     @Html.DropDownListFor(x => x.DriveId, new SelectList(Model.Drives.AsEnumerable(), "DriveId", "DriveVolumeLabel"), "Please select a HDD to monitor", new { @class = "form-control" })

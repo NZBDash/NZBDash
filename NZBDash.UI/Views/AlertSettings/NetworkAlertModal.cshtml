@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group row">
                 @Html.LabelFor(model => model.NicId, new { @class = "control-label col-md-4" })
                 <div class="col-md-6">
                     @Html.DropDownListFor(x => x.NicId, Model.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
