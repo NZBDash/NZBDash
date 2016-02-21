@@ -44,20 +44,20 @@
               <tr>
                 <td width="10%">&nbsp;</td>
                 <td width="80%" align="left" valign="top"><font style="font-family: Georgia, 'Times New Roman', Times, serif; color:#010101; font-size:24px"><strong><em>Hi,</em></strong></font><br /><br />
-                  <font style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px">@Model.BreachType Breach<br />
-                    Start: @Model.BreachStart <br />
+                  <font style="font-family: Verdana, Geneva, sans-serif; color:#666766; font-size:13px; line-height:21px"><text>@Model.BreachType Breach</text><br />
+                    <text>Start: @Model.BreachStart </text><br />
                     @if(Model.BreachEnd != DateTime.MinValue)
                     {
-                    End: end <br />
-                    Duration: duration <br />
+                    <text>End: @Model.BreachEnd </text><br />
+                    <text>Duration: @Model.Duration </text><br />
                     } else
                     {
                     Still in progress, It has not yet ended. <br />
                     }
                     Current Settings: <br />
                     <ul>
-                        <li>Percentage: percentage</li>
-                        <li>Threshold Time: TimeThresholdSec</li>
+                        <li>Percentage: @Model.Percentage</li>
+                        <li>Threshold Time: @Model.TimeThresholdSec</li>
                     </ul>
                   </font></td>
                 <td width="10%">&nbsp;</td>
