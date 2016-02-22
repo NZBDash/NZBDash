@@ -1,7 +1,8 @@
 ![NZBDash Preview](http://i.imgur.com/0onuYbH.png)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/lsho0rk4etbvdwmd?svg=true)](https://ci.appveyor.com/project/tidusjar/nzbdash)
-[![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/NZBDash/NZBDash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/NZBDash/NZBDash.svg)](https://gitter.im/NZBDash/NZBDash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 
 # NZBDash
 
