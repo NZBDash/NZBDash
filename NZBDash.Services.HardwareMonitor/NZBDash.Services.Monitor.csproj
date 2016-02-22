@@ -164,6 +164,9 @@
     <Content Include="Email Templates\Email.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Email Templates\images\footerBar.jpg" />
+    <Content Include="Email Templates\images\headerBar.jpg" />
+    <Content Include="Email Templates\images\Logo.png" />
     <Content Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
