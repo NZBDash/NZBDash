@@ -82,6 +82,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Services.UpdateServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NZBDash.Install.Setup", "NZBDash.Install.Setup\NZBDash.Install.Setup.csproj", "{078FE752-82A7-4CA1-921F-21A445C9BB7B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{8A1EB082-182B-44ED-9EF1-9066E3D78CB9}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		NZBDash.iss = NZBDash.iss
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

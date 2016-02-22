@@ -7,14 +7,34 @@
 
 NZBDash is a all in one dashboard for your server! 
 The goal is to provide basic information about your news reader (SabNZB, NZBGet), your news automation programs (Sonarr, CouchPotato etc.) and also information about your system!
-So there will be functionality to alert you when disk space on a certain drive is low etc.
+
+The problem I had was I was having to manually go and check each of my usenet readers and automation programs, NZBDash put's all of their functionality together. You are able to control your usenet readers and automation programs from one place. 
+
+It's not all about Usenet though, there is also a server monitoring aspect to NZBDash, want to know when your media HDD is getting low on space? We can alert on that! Want to know when your CPU is > 80% for 2 minutes? Get an email notification to let you know!
 
 ### Current Features
-- Hardware monitoring alerts (CPU Usage %, Memory, HDD Space)
-- SabNzbd Integration (Current Downloads, Download History & Logs)
-- NZBGet Integration (Current Downloads, Download History & Logs)
-- Sonarr Integration (View your current series and search your indexers for episodes!)
-- CouchPotato Integration (Add new movies and view your existing movies)
+- Server Monitoring alerts:
+  - CPU Thresholds
+  - HDD Space
+  - Network activity
+
+- SabNzbd Integration
+  - Current Downloads
+  - Download History 
+  - Logs
+
+- NZBGet Integration
+  - Current Downloads
+  - Download History 
+  - Logs
+
+- Sonarr Integration
+  - View current series
+  - View episode statues e.g. Downloaded, Missing
+  - Search for episodes
+
+- CouchPotato Integration
+
 
 ### Possible Features
 - XBMC Integration
@@ -30,7 +50,8 @@ So there will be functionality to alert you when disk space on a certain drive i
 
 We are looking for any contributions to the project! Just pick up a task, if you have any questions ask and i'll get straight on it!
 
-Please feed free to submit a pull request!
+Please feel free to submit a pull request!
+
 
 ## Ideas
 
@@ -38,7 +59,10 @@ We are still very early in the project so if you have any ideas just post it!
 
 ## Installation
 
-Currently there is no installer, there is a task to sort this out. To 'install' the application you will need to build it (Using Visual Studio 2013+) and then set up IIS to look at the output folder. This is currently a WIP as this is not ideal.
+Currently there is a windows installer, The Installer will currently install the Monitoring service and put the Website on your server, the website will not be setup though.
+
+To setup the website you need to have IIS (Currently working on a Mono solution) and create a new website and it's path will be the NZBDash install web directory, something like "C:\Program Files(x86)\NZBDash\UI\".
+Then go to the Application Pool that the website is in and Right Click > Advanced Settings > Enabled 32-Bit Applications = `True`
 
 ## Sponsors
 - [JetBrains](http://www.jetbrains.com/) for providing us with free licenses to their great tools!!!
