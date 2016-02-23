@@ -352,3 +352,22 @@ table.dataTable thead .sorting:after {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+
+/* Small Tweaks */
+.vcenter {
+    display: flex;
+    align-items: center;
+}
+
+/**
+ * Progress bars with centered text
+ */
+
+.progress span {
+    position: absolute;
+    top: 5px;
+    z-index: 2;
+    color: black;
+    text-align: center;
+}

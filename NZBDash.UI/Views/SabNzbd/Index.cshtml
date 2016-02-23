@@ -4,14 +4,26 @@
 
 @Html.RenderHeader(Resources.Applications_SabNzbd_Title)
 
-<h3 id="status"></h3>
+<h5 class="row" id="status"></h5>
+<div class="col-md-2 row">
+
+    <button type="button" class="btn btn-info btn-circle ">
+        <i class="fa fa-pause"></i>
+    </button>
+
+    <button type="button" class="btn btn-success btn-circle">
+        <i class="fa fa-play"></i>
+    </button>
+</div>
+<br/>
+<br/>
+<br/>
 
 
 <ul class="nav nav-tabs">
     <li id="HomeTab" name="tab" role="presentation" class="active"><a id="Home" href="#">@Resources.Applications_SabNzbd_Tab_Home</a></li>
     <li id="HistoryTab" name="tab" role="presentation"><a id="History" href="#">@Resources.Applications_SabNzbd_Tab_History</a></li>
 </ul>
-
 
 <div id="DownloadArea" class="area">
     @Html.AjaxPanel()
@@ -26,55 +38,55 @@
 
 @section scripts
 {
-@Scripts.Render("~/bundles/gridmvc")
+    @Scripts.Render("~/bundles/gridmvc")
     <script>
-    function enableTab(elementToEnable, tabToEnable) {
-        $('.area').hide();
-        $("li[name=tab]").removeClass("active");
-        $(elementToEnable).show();
-        $(tabToEnable).addClass("active");
+        function enableTab(elementToEnable, tabToEnable) {
+            $('.area').hide();
+            $("li[name=tab]").removeClass("active");
+            $(elementToEnable).show();
+            $(tabToEnable).addClass("active");
 
-    }
-    $(function () {
+        }
+        $(function () {
 
-        $.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
-            $("#DownloadArea").html(view);
-        });
-
-
-        $.ajax("@Url.Action("GetSabNzbStatus")").success(function (data) {
-            $('#status').html(data.Status);
-        });
-
-
-        setInterval(function () {
-
-            @*$.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
-                    $("#DownloadArea").html(view);
-                });*@
+            $.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
+                $("#DownloadArea").html(view);
+            });
 
 
             $.ajax("@Url.Action("GetSabNzbStatus")").success(function (data) {
                 $('#status').html(data.Status);
             });
-        }, 2000);
 
-        //////// Ajax History Grid ////////
-        $('#History').click(function () {
-            $(".grid-mvc").gridmvc().ajaxify(
-            {
-                getPagedData: "@Url.Action("AjaxHistoryPaged")",
-                getData: "@Url.Action("AjaxHistory")"
-        });
 
-        $(".grid-mvc")
-            .gridmvc()
-            .refreshFullGrid();
-        $('#HomeTab').removeClass("active");
-        $('#HistoryTab').addClass("active");
-        enableTab($('#HistoryArea'), $('#HistoryTab'));
-    });
-    ///////////////////////////////////
+            setInterval(function () {
+
+                @*$.ajax("@Url.Action("GetSabNzbdDownloadInformation")").success(function (view) {
+                    $("#DownloadArea").html(view);
+                });*@
+
+
+                $.ajax("@Url.Action("GetSabNzbStatus")").success(function (data) {
+                    $('#status').html(data.Status);
+                });
+            }, 2000);
+
+            //////// Ajax History Grid ////////
+            $('#History').click(function () {
+                $(".grid-mvc").gridmvc().ajaxify(
+                {
+                    getPagedData: "@Url.Action("AjaxHistoryPaged")",
+                    getData: "@Url.Action("AjaxHistory")"
+                });
+
+                $(".grid-mvc")
+                    .gridmvc()
+                    .refreshFullGrid();
+                $('#HomeTab').removeClass("active");
+                $('#HistoryTab').addClass("active");
+                enableTab($('#HistoryArea'), $('#HistoryTab'));
+            });
+            ///////////////////////////////////
 
 
 
@@ -83,7 +95,7 @@
                 $('#HistoryTab').removeClass("active");
                 enableTab($('#DownloadArea'), $('#HomeTab'));
             });
-    });
+        });
     </script>
 
 }

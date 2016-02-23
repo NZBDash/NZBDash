@@ -511,7 +511,7 @@
     <Content Include="Views\Settings\CouchPotatoSettings.cshtml" />
     <Content Include="Views\Settings\SabNzbSettings.cshtml" />
     <Content Include="Views\Settings\PlexSettings.cshtml" />
-    <Content Include="Views\NzbGet\Partial\_Download.cshtml" />
+    <Content Include="Views\Shared\_Download.cshtml" />
     <Content Include="Views\NzbGet\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
@@ -521,7 +521,6 @@
     <Content Include="Views\NzbGet\Partial\Logs.cshtml" />
     <Content Include="Views\Sonarr\Episodes.cshtml" />
     <Content Include="Views\SabNzbd\Index.cshtml" />
-    <Content Include="Views\SabNzbd\Partial\_Download.cshtml" />
     <Content Include="Views\SabNzbd\Partial\History.cshtml" />
     <Content Include="Views\SabNzbd\Partial\Logs.cshtml" />
     <Content Include="Views\Shared\_AjaxGridPager.cshtml" />

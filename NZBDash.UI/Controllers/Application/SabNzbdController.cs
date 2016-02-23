@@ -162,7 +162,7 @@ namespace NZBDash.UI.Controllers.Application
                     });
                 }
 
-                return PartialView("Partial/_Download", model);
+                return PartialView("_Download", model);
             }
             catch (Exception e)
             {
