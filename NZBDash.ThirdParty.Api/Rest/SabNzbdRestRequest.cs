@@ -34,7 +34,7 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class SabNzbdRestRequest : BaseRequest
+    public class SabNzbdRestRequest : BaseRequest, ISabNzbdRequest
     {
         public SabNzbdRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {

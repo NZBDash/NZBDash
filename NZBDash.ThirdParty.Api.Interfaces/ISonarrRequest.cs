@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: PlexRestRequest.cs
+//   File: ISonarrRequest.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,37 +24,17 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using System.Collections.Generic;
 
-using NZBDash.Common.Interfaces;
-using NZBDash.ThirdParty.Api.Interfaces;
-using NZBDash.ThirdParty.Api.Models.Api;
+using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
-using RestSharp;
-
-namespace NZBDash.ThirdParty.Api.Rest
+namespace NZBDash.ThirdParty.Api.Interfaces
 {
-    public class PlexRestRequest : BaseRequest, IPlexRequest
+    public interface ISonarrRequest
     {
-        public PlexRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
-        {
-            Api = request;
-        }
-
-        /// <summary>
-        /// Gets the movies currently in CouchPotato.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns></returns>
-        public PlexServers GetServers(string url)
-        {
-            var request = new RestRequest
-            {
-                Resource = "servers",
-                Method = Method.GET
-            };
-            
-            return Api.Execute<PlexServers>(request, new Uri(url));
-        }
+        List<SonarrEpisode> GetEpisodes(string url, string seriesId, string apiKey);
+        List<SonarrSeries> GetSeries(string url, string apiKey);
+        bool AddEpisode(string url, string episodeId, string apiKey);
+        SonarrSystemStatus GetStatus(string url, string apiKey);
     }
 }

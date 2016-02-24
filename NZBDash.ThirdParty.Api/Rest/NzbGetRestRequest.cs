@@ -35,7 +35,7 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class NzbGetRestRequest : BaseRequest
+    public class NzbGetRestRequest : BaseRequest, INzbGetRequest
     {
         public NzbGetRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {
@@ -203,7 +203,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         {
             var request = new RestRequest
             {
-                Resource = "{username}:{password}/jsonrpc/reload",
+                Resource = "{username}:{password}/jsonrpc/writelog",
                 Method = Method.GET
             };
 

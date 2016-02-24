@@ -98,9 +98,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IApi.cs" />
-    <Compile Include="Interfaces\IApiRequest.cs" />
-    <Compile Include="Interfaces\IThirdPartyService.cs" />
+    <Compile Include="IThirdPartyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\BaseRequest.cs" />
     <Compile Include="Rest\PlexRestRequest.cs" />
@@ -129,6 +127,10 @@
     <ProjectReference Include="..\NZBDash.Resources\NZBDash.Resources.csproj">
       <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
       <Name>NZBDash.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Interfaces\NZBDash.ThirdParty.Api.Interfaces.csproj">
+      <Project>{87989A4D-96E9-45BF-BEB5-5D46BFBB9B8B}</Project>
+      <Name>NZBDash.ThirdParty.Api.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
       <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>

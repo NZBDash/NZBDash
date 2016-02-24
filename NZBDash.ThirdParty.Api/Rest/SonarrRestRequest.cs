@@ -36,7 +36,7 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class SonarrRestRequest : BaseRequest
+    public class SonarrRestRequest : BaseRequest, ISonarrRequest
     {
         public SonarrRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {

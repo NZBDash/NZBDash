@@ -35,7 +35,7 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class CouchPotatoRestRequest : BaseRequest
+    public class CouchPotatoRestRequest : BaseRequest, ICouchPotatoRequest
     {
         public CouchPotatoRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {

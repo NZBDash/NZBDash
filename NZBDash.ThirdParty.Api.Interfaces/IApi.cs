@@ -28,7 +28,7 @@ using System;
 
 namespace NZBDash.ThirdParty.Api.Interfaces
 {
-    internal interface IApi
+    public interface IApi
     {
         Uri ApiUrl { get; set; }
     }
