@@ -25,7 +25,6 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading.Tasks;
 
 using NZBDash.DataAccess;
 using NZBDash.ThirdParty.Api.Interfaces;
@@ -53,7 +52,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns>
         ///   <see cref="NzbGetList" />
         /// </returns>
-        public async Task<NzbGetList> GetNzbGetList(string url, string username, string password)
+        public NzbGetList GetNzbGetList(string url, string username, string password)
         {
             var request = new RestRequest
             {
@@ -63,7 +62,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<NzbGetList>(request, new Uri(url));
+            return Api.Execute<NzbGetList>(request, new Uri(url));
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public async Task<NzbGetStatus> GetStatus(string url, string username, string password)
+        public NzbGetStatus GetStatus(string url, string username, string password)
         {
             var request = new RestRequest
             {
@@ -83,7 +82,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<NzbGetStatus>(request, new Uri(url));
+            return Api.Execute<NzbGetStatus>(request, new Uri(url));
         }
 
         /// <summary>
@@ -93,7 +92,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public async Task<NzbGetHistory> GetHistory(string url, string username, string password)
+        public NzbGetHistory GetHistory(string url, string username, string password)
         {
             var request = new RestRequest
             {
@@ -103,7 +102,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<NzbGetHistory>(request, new Uri(url));
+            return Api.Execute<NzbGetHistory>(request, new Uri(url));
         }
 
         /// <summary>
@@ -113,7 +112,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public async Task<NzbGetLogs> GetLogs(string url, string username, string password)
+        public NzbGetLogs GetLogs(string url, string username, string password)
         {
             var request = new RestRequest
             {
@@ -123,7 +122,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<NzbGetLogs>(request, new Uri(url));
+            return Api.Execute<NzbGetLogs>(request, new Uri(url));
         }
         
 
@@ -135,7 +134,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="password">The password.</param>
         /// <param name="pause">if set to <c>true</c> [pause].</param>
         /// <returns></returns>
-        public async Task<bool> SetDownloadStatus(string url, string username, string password, bool pause)
+        public bool SetDownloadStatus(string url, string username, string password, bool pause)
         {
             var request = new RestRequest
             {
@@ -146,7 +145,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+            return Api.Execute<bool>(request, new Uri(url));
         }
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="password">The password.</param>
         /// <param name="kbLimit">The kb limit.</param>
         /// <returns></returns>
-        public async Task<bool> SetDownloadLimit(string url, string username, string password, int kbLimit)
+        public bool SetDownloadLimit(string url, string username, string password, int kbLimit)
         {
             var request = new RestRequest
             {
@@ -169,7 +168,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("password", password);
             request.AddParameter("Limit", kbLimit);
 
-            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+            return Api.Execute<bool>(request, new Uri(url));
         }
 
         /// <summary>
@@ -179,7 +178,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public async Task<bool> Restart(string url, string username, string password)
+        public bool Restart(string url, string username, string password)
         {
             var request = new RestRequest
             {
@@ -190,7 +189,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddUrlSegment("username", username);
             request.AddUrlSegment("password", password);
 
-            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+            return Api.Execute<bool>(request, new Uri(url));
         }
 
         /// <summary>
@@ -202,7 +201,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <param name="kind">The kind.</param>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        public async Task<bool> WriteLog(string url, string username, string password, NzbLogType kind, string message)
+        public bool WriteLog(string url, string username, string password, NzbLogType kind, string message)
         {
             var request = new RestRequest
             {
@@ -215,7 +214,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddParameter("Kind", kind.ToString());
             request.AddParameter("Text", message);
 
-            return await Api.ExecuteAsync<bool>(request, new Uri(url));
+            return Api.Execute<bool>(request, new Uri(url));
         }
     }
 }

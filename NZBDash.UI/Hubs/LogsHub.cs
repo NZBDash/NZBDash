@@ -26,7 +26,7 @@ namespace NZBDash.UI.Hubs
             Clients.All.addLog(LogLines);
         }
 
-        //TODO: Remove logs if they have been removed (not sure why this would happen, but we should anyway).
+  
         public void UpdateLogs()
         {
             var logFiles = Controller.LogFiles();

@@ -25,7 +25,6 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading.Tasks;
 
 using RestSharp;
 
@@ -33,6 +32,6 @@ namespace NZBDash.ThirdParty.Api.Interfaces
 {
     public interface IApiRequest
     {
-        Task<T> ExecuteAsync<T>(RestRequest request, Uri baseUri) where T : new();
+        T Execute<T>(IRestRequest request, Uri baseUri) where T : new();
     }
 }

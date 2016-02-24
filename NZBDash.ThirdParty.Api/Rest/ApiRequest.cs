@@ -25,8 +25,8 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Threading.Tasks;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.ThirdParty.Api.Interfaces;
 
 using RestSharp;
@@ -35,23 +35,35 @@ namespace NZBDash.ThirdParty.Api.Rest
 {
     public class ApiRequest : IApiRequest
     {
+        public ApiRequest(ILogger logger)
+        {
+            Logger = logger;
+        }
+        private ILogger Logger { get; set; }
+
         /// <summary>
-        /// An Async API request handler
+        /// An API request handler
         /// </summary>
         /// <typeparam name="T">The type of class you want to deserialize</typeparam>
-        /// <param name="request">The Api request</param>
-        /// <param name="baseUri">The base URI of the request</param>
+        /// <param name="request">The request.</param>
+        /// <param name="baseUri">The base URI.</param>
         /// <returns>The type of class you want to deserialize</returns>
-        public Task<T> ExecuteAsync<T>(RestRequest request, Uri baseUri) where T : new()
+        public T Execute<T>(IRestRequest request, Uri baseUri) where T : new()
         {
-            var client = new RestClient();
-            var taskCompletionSource = new TaskCompletionSource<T>();
+            var client = new RestClient { BaseUrl = baseUri };
 
-            client.BaseUrl = baseUri;
+            var response = client.Execute<T>(request);
 
-            client.ExecuteAsync<T>(request, (response) => taskCompletionSource.SetResult(response.Data));
+            if (response.ErrorException != null)
+            {
+                Logger.Fatal("Exception thrown while Executing a API request. BaseURI = {0}, Resource = {1}, Method Type = {2}", baseUri, request.Resource, request.Method);
+                Logger.Fatal(response.ErrorException);
 
-            return taskCompletionSource.Task;
+                var message = "Error retrieving response. Check inner details for more info.";
+                throw new ApplicationException(message, response.ErrorException);
+            }
+
+            return response.Data;
         }
     }
 }

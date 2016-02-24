@@ -26,7 +26,6 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
@@ -49,7 +48,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// Gets the Sonarr Episodes
         /// </summary>
         /// <returns><see cref="SonarrEpisode"/></returns>
-        public async Task<List<SonarrEpisode>> GetSonarrEpisodes(string url, string seriesId, string apiKey)
+        public List<SonarrEpisode> GetSonarrEpisodes(string url, string seriesId, string apiKey)
         {
             var request = new RestRequest
             {
@@ -60,7 +59,7 @@ namespace NZBDash.ThirdParty.Api.Rest
 
             request.AddParameter("seriesId", seriesId);
 
-            return await Api.ExecuteAsync<List<SonarrEpisode>>(request, new Uri(url));
+            return Api.Execute<List<SonarrEpisode>>(request, new Uri(url));
         }
 
     }
