@@ -133,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModule.cs" />
     <Compile Include="AuthenticationModule.cs" />
     <Compile Include="UpdaterModule.cs" />
     <Compile Include="WrapperModule.cs" />
@@ -182,6 +183,10 @@
     <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj">
       <Project>{3d144cd4-00f4-4d64-924d-1d1580f2809f}</Project>
       <Name>NZBDash.Services.Monitor.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Interfaces\NZBDash.ThirdParty.Api.Interfaces.csproj">
+      <Project>{87989A4D-96E9-45BF-BEB5-5D46BFBB9B8B}</Project>
+      <Name>NZBDash.ThirdParty.Api.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>

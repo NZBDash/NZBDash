@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: IApi.cs
+//   File: ApiModule.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,12 +24,23 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using Ninject.Modules;
 
-namespace NZBDash.ThirdParty.Api.Interfaces
+using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.ThirdParty.Api.Rest;
+
+namespace NZBDash.DependencyResolver.Modules
 {
-    public interface IApi
+    public class ApiModule : NinjectModule
     {
-        Uri ApiUrl { get; set; }
+        public override void Load()
+        {
+            Bind<IApiRequest>().To<ApiRequest>();
+            Bind<ICouchPotatoRequest>().To<CouchPotatoRestRequest>();
+            Bind<INzbGetRequest>().To<NzbGetRestRequest>();
+            Bind<ISonarrRequest>().To<SonarrRestRequest>();
+            Bind<IPlexRequest>().To<PlexRestRequest>();
+            Bind<ISabNzbdRequest>().To<SabNzbdRestRequest>();
+        }
     }
 }

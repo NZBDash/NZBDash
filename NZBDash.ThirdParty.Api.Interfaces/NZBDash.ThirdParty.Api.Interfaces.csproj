@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IApi.cs" />
     <Compile Include="IApiRequest.cs" />
     <Compile Include="INzbGetRequest.cs" />
     <Compile Include="ICouchPotatoRequest.cs" />
