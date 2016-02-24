@@ -52,6 +52,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// </returns>
         public NzbGetList GetNzbGetList(string url, string username, string password)
         {
+            Logger.Trace("Getting NZBGet Download list");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/listgroups",
@@ -72,6 +73,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public NzbGetStatus GetStatus(string url, string username, string password)
         {
+            Logger.Trace("Getting NZBGet status");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/status",
@@ -92,6 +94,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public NzbGetHistory GetHistory(string url, string username, string password)
         {
+            Logger.Trace("Getting NZBGet history");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/history",
@@ -112,6 +115,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public NzbGetLogs GetLogs(string url, string username, string password)
         {
+            Logger.Trace("Getting NZBGet logs");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/log?IDFrom=0&NumberOfEntries=1000",
@@ -134,6 +138,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool SetDownloadStatus(string url, string username, string password, bool pause)
         {
+            Logger.Info("Settings NZBGet download status, pause = {0}", pause);
             var request = new RestRequest
             {
                 Resource = pause ? "{username}:{password}/jsonrpc/pausedownload" : "{username}:{password}/jsonrpc/resumedownload",
@@ -156,6 +161,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool SetDownloadLimit(string url, string username, string password, int kbLimit)
         {
+            Logger.Info("Settings NZBGet download limit, limit = {0}", kbLimit);
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/rate",
@@ -178,6 +184,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool Restart(string url, string username, string password)
         {
+            Logger.Info("Restarting NZBGet ");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/reload",
@@ -201,6 +208,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool WriteLog(string url, string username, string password, NzbLogType kind, string message)
         {
+            Logger.Trace("Writing to NZBGet's Log");
             var request = new RestRequest
             {
                 Resource = "{username}:{password}/jsonrpc/writelog",

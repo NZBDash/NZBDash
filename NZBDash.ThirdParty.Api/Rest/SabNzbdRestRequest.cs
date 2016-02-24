@@ -58,6 +58,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// </returns>
         public SabNzbdHistory GetHistory(string url, string apiKey)
         {
+            Logger.Trace("Gettings Sab's history, ApiKey = {0}", apiKey);
             //api?mode=history&start=0&limit=10&output=json&apikey=
             Request.Method = Method.GET;
 
@@ -77,6 +78,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <see cref="SabNzbdQueue" /></returns>
         public SabNzbdQueue GetQueue(string url, string apiKey)
         {
+            Logger.Trace("Gettings Sab queue, ApiKey = {0}", apiKey);
             // api?mode=qstatus&output=json&apikey=
             Request.Method = Method.GET;
 

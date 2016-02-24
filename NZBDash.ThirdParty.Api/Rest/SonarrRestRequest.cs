@@ -51,6 +51,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns><see cref="SonarrEpisode"/></returns>
         public List<SonarrEpisode> GetEpisodes(string url, string seriesId, string apiKey)
         {
+            Logger.Trace("Getting Sonarr episodes, Apikey = {0}", apiKey);
             var request = new RestRequest
             {
                 Resource = "api/episode",
@@ -71,6 +72,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public List<SonarrSeries> GetSeries(string url, string apiKey)
         {
+            Logger.Trace("Getting Sonarr series, Apikey = {0}", apiKey);
             var request = new RestRequest
             {
                 Resource = "api/series",
@@ -91,6 +93,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns>bool</returns>
         public bool AddEpisode(string url, string episodeId, string apiKey)
         {
+            Logger.Trace("Adding Sonarr episode, Apikey = {0}; episodeId = {1}", apiKey, episodeId);
             var request = new RestRequest
             {
                 Resource = "api/command",
@@ -101,6 +104,7 @@ namespace NZBDash.ThirdParty.Api.Rest
             request.AddBody("{ name: 'EpisodeSearch', episodeIds: [" + episodeId + "]}");
 
             var result = Api.Execute<SonarrCommand>(request, new Uri(url));
+            Logger.Trace("Result fro AddEpisode = {0}", result.status);
             return !string.IsNullOrEmpty(result.status); // TODO need to actually check what the status is.
         }
 
@@ -112,6 +116,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns>SonarrSystemStatus</returns>
         public SonarrSystemStatus GetStatus(string url, string apiKey)
         {
+            Logger.Trace("Getting Sonarr status, Apikey = {0}", apiKey);
             var request = new RestRequest
             {
                 Resource = "api/system/status",

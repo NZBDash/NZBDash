@@ -49,6 +49,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public CouchPotatoMediaList GetMovies(string url, string apiKey)
         {
+            Logger.Trace("Getting movies from CP with ApiKey {0}", apiKey);
             var request = new RestRequest
             {
                 Resource = "api/{key}/media.list/",
@@ -68,6 +69,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public CouchPotatoStatus GetStatus(string url, string apiKey)
         {
+            Logger.Trace("Getting CP Status, ApiKey = {0}", apiKey);
             var request = new RestRequest
             {
                 Resource = "api/{key}/app.available/",

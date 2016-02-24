@@ -48,6 +48,7 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public PlexServers GetServers(string url)
         {
+            Logger.Trace("Getting Plex's servers");
             var request = new RestRequest
             {
                 Resource = "servers",
