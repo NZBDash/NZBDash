@@ -27,6 +27,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
+            <img src="~/Images/Logo.png" width="360" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">@Resources.Views_Account_Login_PleaseSignIn</h3>
@@ -34,31 +39,31 @@
                 <div class="panel-body">
                     @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
                     {<fieldset>
-                        @Html.AntiForgeryToken()
+                         @Html.AntiForgeryToken()
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = Resources.Views_Account_Login_UsernamePlaceholder, autofocus = "True" })
-                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group">
+                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                         <div class="form-group">
+                             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = Resources.Views_Account_Login_UsernamePlaceholder, autofocus = "True" })
+                             @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                         </div>
+                         <div class="form-group">
 
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Resources.Views_Account_Login_PasswordPlaceholder })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Resources.Views_Account_Login_PasswordPlaceholder })
+                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-                        </div>
-                        <div class="form-group">
+                         </div>
+                         <div class="form-group">
 
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
-                            </div>
+                             <div class="checkbox">
+                                 @Html.CheckBoxFor(m => m.RememberMe)
+                                 @Html.LabelFor(m => m.RememberMe)
+                             </div>
 
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="@Resources.Views_Shared_NavUser_Login" class="btn btn-lg btn-success btn-block" />
-                        </div>
-                    </fieldset>
+                         </div>
+                         <div class="form-group">
+                             <input type="submit" value="@Resources.Views_Shared_NavUser_Login" class="btn btn-lg btn-success btn-block"/>
+                         </div>
+                     </fieldset>
                     }
                 </div>
             </div>
