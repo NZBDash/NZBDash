@@ -110,7 +110,6 @@
     <Compile Include="Rest\SabNzbdRestRequest.cs" />
     <Compile Include="Rest\SonarrRestRequest.cs" />
     <Compile Include="Rest\NzbGetRestRequest.cs" />
-    <Compile Include="Service\RestService.cs" />
     <Compile Include="Service\ThirdPartyMockService.cs" />
     <Compile Include="Service\ThirdPartyService.cs" />
   </ItemGroup>
