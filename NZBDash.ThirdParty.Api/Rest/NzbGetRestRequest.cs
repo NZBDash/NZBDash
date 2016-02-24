@@ -24,14 +24,15 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using System.Net;
+
+using Newtonsoft.Json;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccess;
+using NZBDash.DataAccess.Api;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
-
-using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
@@ -53,15 +54,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         public NzbGetList GetNzbGetList(string url, string username, string password)
         {
             Logger.Trace("Getting NZBGet Download list");
-            var request = new RestRequest
-            {
-                Resource = "{username}:{password}/jsonrpc/listgroups",
-                Method = Method.GET
-            };
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
 
-            return Api.Execute<NzbGetList>(request, new Uri(url));
+            using (var webClient = new WebClient())
+            {
+                var jsonData = GenerateRpcBody("listgroups", null);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", jsonData);
+
+                return JsonConvert.DeserializeObject<NzbGetList>(response);
+            }
         }
 
         /// <summary>
@@ -74,15 +74,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         public NzbGetStatus GetStatus(string url, string username, string password)
         {
             Logger.Trace("Getting NZBGet status");
-            var request = new RestRequest
-            {
-                Resource = "{username}:{password}/jsonrpc/status",
-                Method = Method.GET
-            };
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
 
-            return Api.Execute<NzbGetStatus>(request, new Uri(url));
+            using (var webClient = new WebClient())
+            {
+                var jsonData = GenerateRpcBody("status", null);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", jsonData);
+
+                return JsonConvert.DeserializeObject<NzbGetStatus>(response);
+            }
         }
 
         /// <summary>
@@ -95,15 +94,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         public NzbGetHistory GetHistory(string url, string username, string password)
         {
             Logger.Trace("Getting NZBGet history");
-            var request = new RestRequest
-            {
-                Resource = "{username}:{password}/jsonrpc/history",
-                Method = Method.GET
-            };
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
 
-            return Api.Execute<NzbGetHistory>(request, new Uri(url));
+            using (var webClient = new WebClient())
+            {
+                var jsonData = GenerateRpcBody("history", null);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", jsonData);
+
+                return JsonConvert.DeserializeObject<NzbGetHistory>(response);
+            }
         }
 
         /// <summary>
@@ -116,15 +114,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         public NzbGetLogs GetLogs(string url, string username, string password)
         {
             Logger.Trace("Getting NZBGet logs");
-            var request = new RestRequest
-            {
-                Resource = "{username}:{password}/jsonrpc/log?IDFrom=0&NumberOfEntries=1000",
-                Method = Method.GET
-            };
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
 
-            return Api.Execute<NzbGetLogs>(request, new Uri(url));
+            using (var webClient = new WebClient())
+            {
+                var jsonData = GenerateRpcBody("log", 0, 1000);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", jsonData);
+
+                return JsonConvert.DeserializeObject<NzbGetLogs>(response);
+            }
         }
         
 
@@ -138,17 +135,16 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool SetDownloadStatus(string url, string username, string password, bool pause)
         {
-            Logger.Info("Settings NZBGet download status, pause = {0}", pause);
-            var request = new RestRequest
+
+            using (var webClient = new WebClient())
             {
-                Resource = pause ? "{username}:{password}/jsonrpc/pausedownload" : "{username}:{password}/jsonrpc/resumedownload",
-                Method = Method.GET
-            };
+                var jsonData = pause ? GenerateRpcBody("pausedownload", null) : GenerateRpcBody("resumedownload");
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", jsonData);
 
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
+                var result = JsonConvert.DeserializeObject<NzbGetJsonRpcResponse>(response);
+                return result.Result;
+            }
 
-            return Api.Execute<bool>(request, new Uri(url));
         }
 
         /// <summary>
@@ -161,18 +157,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         /// <returns></returns>
         public bool SetDownloadLimit(string url, string username, string password, int kbLimit)
         {
-            Logger.Info("Settings NZBGet download limit, limit = {0}", kbLimit);
-            var request = new RestRequest
+            using (var webClient = new WebClient())
             {
-                Resource = "{username}:{password}/jsonrpc/rate",
-                Method = Method.GET
-            };
+                var body = GenerateRpcBody("rate", kbLimit);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/","POST", body);
 
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
-            request.AddParameter("Limit", kbLimit);
-
-            return Api.Execute<bool>(request, new Uri(url));
+                var result = JsonConvert.DeserializeObject<NzbGetJsonRpcResponse>(response);
+                return result.Result;
+            }
         }
 
         /// <summary>
@@ -185,16 +177,14 @@ namespace NZBDash.ThirdParty.Api.Rest
         public bool Restart(string url, string username, string password)
         {
             Logger.Info("Restarting NZBGet ");
-            var request = new RestRequest
+            using (var webClient = new WebClient())
             {
-                Resource = "{username}:{password}/jsonrpc/reload",
-                Method = Method.GET
-            };
+                var body = GenerateRpcBody("reload", null);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", body);
 
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
-
-            return Api.Execute<bool>(request, new Uri(url));
+                var result = JsonConvert.DeserializeObject<NzbGetJsonRpcResponse>(response);
+                return result.Result;
+            }
         }
 
         /// <summary>
@@ -209,18 +199,32 @@ namespace NZBDash.ThirdParty.Api.Rest
         public bool WriteLog(string url, string username, string password, NzbLogType kind, string message)
         {
             Logger.Trace("Writing to NZBGet's Log");
-            var request = new RestRequest
+
+            using (var webClient = new WebClient())
             {
-                Resource = "{username}:{password}/jsonrpc/writelog",
-                Method = Method.GET
+                var body = GenerateRpcBody("writelog", kind.ToString(), message);
+                var response = webClient.UploadString($"{url}{username}:{password}/jsonrpc/", "POST", body);
+
+                var result = JsonConvert.DeserializeObject<NzbGetJsonRpcResponse>(response);
+                return result.Result;
+            }
+        }
+
+        /// <summary>
+        /// Generates the JSON RPC body.
+        /// </summary>
+        /// <param name="method">The method.</param>
+        /// <param name="param">The parameter.</param>
+        /// <returns></returns>
+        private string GenerateRpcBody(string method, params object[] param)
+        {
+            var model = new NzbGetJsonRpc
+            {
+                Method = method,
+                Params = param ?? new object[0]
             };
 
-            request.AddUrlSegment("username", username);
-            request.AddUrlSegment("password", password);
-            request.AddParameter("Kind", kind.ToString());
-            request.AddParameter("Text", message);
-
-            return Api.Execute<bool>(request, new Uri(url));
+            return JsonConvert.SerializeObject(model);
         }
     }
 }

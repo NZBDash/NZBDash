@@ -69,6 +69,8 @@
     <Compile Include="Api\CouchPotato\CouchPotatoMediaList.cs" />
     <Compile Include="Api\CouchPotato\CouchPotatoStatus.cs" />
     <Compile Include="Api\NzbGetHistory.cs" />
+    <Compile Include="Api\NZBGetJsonRpc.cs" />
+    <Compile Include="Api\NzbGetJsonRpcResponse.cs" />
     <Compile Include="Api\NzbGetList.cs" />
     <Compile Include="Api\NzbGetLogs.cs" />
     <Compile Include="Api\NzbGetStatus.cs" />
