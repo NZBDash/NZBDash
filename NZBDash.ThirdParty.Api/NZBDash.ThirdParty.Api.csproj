@@ -102,7 +102,12 @@
     <Compile Include="Interfaces\IApiRequest.cs" />
     <Compile Include="Interfaces\IThirdPartyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rest\BaseRequest.cs" />
+    <Compile Include="Rest\PlexRestRequest.cs" />
+    <Compile Include="Rest\CouchPotatoRestRequest.cs" />
+    <Compile Include="Rest\MockApiRequest.cs" />
     <Compile Include="Rest\ApiRequest.cs" />
+    <Compile Include="Rest\SabNzbdRestRequest.cs" />
     <Compile Include="Rest\SonarrRestRequest.cs" />
     <Compile Include="Rest\NzbGetRestRequest.cs" />
     <Compile Include="Service\RestService.cs" />

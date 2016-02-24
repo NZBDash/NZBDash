@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: SonarrCommand.cs
+//   File: PlexRestRequest.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -26,33 +26,35 @@
 #endregion
 using System;
 
-namespace NZBDash.DataAccess.Api.Sonarr
+using NZBDash.Common.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
+using NZBDash.ThirdParty.Api.Models.Api;
+
+using RestSharp;
+
+namespace NZBDash.ThirdParty.Api.Rest
 {
-
-    public class SonarrCommand
+    public class PlexRestRequest : BaseRequest
     {
-        public string name { get; set; }
-        public Body body { get; set; }
-        public string priority { get; set; }
-        public string status { get; set; }
-        public DateTime queued { get; set; }
-        public string trigger { get; set; }
-        public string state { get; set; }
-        public bool manual { get; set; }
-        public DateTime startedOn { get; set; }
-        public bool sendUpdatesToClient { get; set; }
-        public bool updateScheduledTask { get; set; }
-        public int id { get; set; }
-    }
+        public PlexRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
+        {
+            Api = request;
+        }
 
-    public class Body
-    {
-        public int[] episodeIds { get; set; }
-        public bool sendUpdatesToClient { get; set; }
-        public bool updateScheduledTask { get; set; }
-        public string completionMessage { get; set; }
-        public string name { get; set; }
-        public string trigger { get; set; }
+        /// <summary>
+        /// Gets the movies currently in CouchPotato.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns></returns>
+        public PlexServers GetServers(string url)
+        {
+            var request = new RestRequest
+            {
+                Resource = "servers",
+                Method = Method.GET
+            };
+            
+            return Api.Execute<PlexServers>(request, new Uri(url));
+        }
     }
-
 }

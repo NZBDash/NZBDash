@@ -1,7 +1,7 @@
 ﻿#region Copyright
 // /************************************************************************
 //   Copyright (c) 2016 NZBDash
-//   File: SonarrCommand.cs
+//   File: BaseRequest.cs
 //   Created By: Jamie Rees
 //  
 //   Permission is hereby granted, free of charge, to any person obtaining
@@ -24,35 +24,19 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-using System;
+using NZBDash.Common.Interfaces;
+using NZBDash.ThirdParty.Api.Interfaces;
 
-namespace NZBDash.DataAccess.Api.Sonarr
+namespace NZBDash.ThirdParty.Api.Rest
 {
-
-    public class SonarrCommand
+    public abstract class BaseRequest
     {
-        public string name { get; set; }
-        public Body body { get; set; }
-        public string priority { get; set; }
-        public string status { get; set; }
-        public DateTime queued { get; set; }
-        public string trigger { get; set; }
-        public string state { get; set; }
-        public bool manual { get; set; }
-        public DateTime startedOn { get; set; }
-        public bool sendUpdatesToClient { get; set; }
-        public bool updateScheduledTask { get; set; }
-        public int id { get; set; }
+        protected BaseRequest(IApiRequest request, ILogger logger)
+        {
+            Api = request;
+            Logger = logger;
+        }
+        protected ILogger Logger { get; set; }
+        protected IApiRequest Api { get; set; }
     }
-
-    public class Body
-    {
-        public int[] episodeIds { get; set; }
-        public bool sendUpdatesToClient { get; set; }
-        public bool updateScheduledTask { get; set; }
-        public string completionMessage { get; set; }
-        public string name { get; set; }
-        public string trigger { get; set; }
-    }
-
 }

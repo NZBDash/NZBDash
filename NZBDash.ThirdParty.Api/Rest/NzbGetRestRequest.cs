@@ -26,6 +26,7 @@
 #endregion
 using System;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.DataAccess;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
@@ -34,14 +35,11 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class NzbGetRestRequest
+    public class NzbGetRestRequest : BaseRequest
     {
-        public NzbGetRestRequest(IApiRequest request)
+        public NzbGetRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {
-            Api = request;
         }
-
-        private IApiRequest Api { get; set; }
 
         /// <summary>
         /// Get the NZBGet List

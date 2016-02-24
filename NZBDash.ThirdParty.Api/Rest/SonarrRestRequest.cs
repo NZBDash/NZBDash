@@ -27,6 +27,8 @@
 using System;
 using System.Collections.Generic;
 
+using NZBDash.Common.Interfaces;
+using NZBDash.DataAccess.Api.Sonarr;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 
@@ -34,33 +36,91 @@ using RestSharp;
 
 namespace NZBDash.ThirdParty.Api.Rest
 {
-    public class SonarrRestRequest
+    public class SonarrRestRequest : BaseRequest
     {
-        public SonarrRestRequest(IApiRequest request)
+        public SonarrRestRequest(IApiRequest request, ILogger logger) : base(request, logger)
         {
             Api = request;
         }
-
-        private IApiRequest Api { get; set; }
-        private const string ApiKeyHeaderKey = " X-Api-Key";
+        
+        private const string ApiKeyHeader = " X-Api-Key";
 
         /// <summary>
         /// Gets the Sonarr Episodes
         /// </summary>
         /// <returns><see cref="SonarrEpisode"/></returns>
-        public List<SonarrEpisode> GetSonarrEpisodes(string url, string seriesId, string apiKey)
+        public List<SonarrEpisode> GetEpisodes(string url, string seriesId, string apiKey)
         {
             var request = new RestRequest
             {
                 Resource = "api/episode",
+                Method = Method.GET
             };
 
-            request.AddHeader(ApiKeyHeaderKey, apiKey);
-
+            request.AddHeader(ApiKeyHeader, apiKey);
             request.AddParameter("seriesId", seriesId);
 
             return Api.Execute<List<SonarrEpisode>>(request, new Uri(url));
         }
 
+        /// <summary>
+        /// Gets all series in this Sonarr instance.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="apiKey">The API key.</param>
+        /// <returns></returns>
+        public List<SonarrSeries> GetSeries(string url, string apiKey)
+        {
+            var request = new RestRequest
+            {
+                Resource = "api/series",
+                Method = Method.GET
+            };
+
+            request.AddHeader(ApiKeyHeader, apiKey);
+
+            return Api.Execute<List<SonarrSeries>>(request, new Uri(url));
+        }
+
+        /// <summary>
+        /// Add's an Episode and downloads the episode on the local Sonarr instance
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="episodeId">The episode identifier.</param>
+        /// <param name="apiKey">The API key.</param>
+        /// <returns>bool</returns>
+        public bool AddEpisode(string url, string episodeId, string apiKey)
+        {
+            var request = new RestRequest
+            {
+                Resource = "api/command",
+                Method = Method.POST
+            };
+
+            request.AddHeader(ApiKeyHeader, apiKey);
+            request.AddBody("{ name: 'EpisodeSearch', episodeIds: [" + episodeId + "]}");
+
+            var result = Api.Execute<SonarrCommand>(request, new Uri(url));
+            return !string.IsNullOrEmpty(result.status); // TODO need to actually check what the status is.
+        }
+
+        /// <summary>
+        /// Gets the sonarr system status.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="apiKey">The API key.</param>
+        /// <returns>SonarrSystemStatus</returns>
+        public SonarrSystemStatus GetStatus(string url, string apiKey)
+        {
+            var request = new RestRequest
+            {
+                Resource = "api/system/status",
+                Method = Method.GET
+            };
+
+            request.AddHeader(ApiKeyHeader, apiKey);
+
+            return Api.Execute<SonarrSystemStatus>(request, new Uri(url));
+        }
     }
 }
