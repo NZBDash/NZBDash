@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: CustomDependencyResolverTest.cs
 //  Created By: Jamie Rees
 // 
@@ -33,8 +33,9 @@ using NUnit.Framework;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
 using NZBDash.DependencyResolver.Modules;
+
+using Octokit;
 
 namespace NZBDash.DependencyResolver.Test
 {
@@ -42,7 +43,6 @@ namespace NZBDash.DependencyResolver.Test
     public class CustomDependencyResolverTest
     {
         [Test]
-        [Ignore("https://ci.appveyor.com/project/tidusjar/nzbdash/build/1.0.182")]
         public void ResolveServiceDependency()
         {
             var module = new ServiceModule();
@@ -73,26 +73,55 @@ namespace NZBDash.DependencyResolver.Test
         }
 
         [Test]
+        public void ResolveCacheDependency()
+        {
+            var module = new CacheModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<ICacheProvider>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        public void ResolveWrapperDependency()
+        {
+            var module = new WrapperModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<ISmtpClient>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
+        public void ResolveUpdaterDependency()
+        {
+            var module = new UpdaterModule();
+            var kernal = new StandardKernel(module);
+
+            var service = kernal.Get<IGitHubClient>();
+            Assert.That(service, Is.Not.Null);
+        }
+
+        [Test]
         public void GetCustomModules()
         {
-            var customResolver = new CustomDependencyResolver();
+            IDependencyResolver<NinjectModule> customResolver = new CustomDependencyResolver();
+
             var modules = customResolver.GetModules();
 
-            Assert.That(modules.Count(), Is.GreaterThan(0));
+            Assert.That(modules.Count, Is.GreaterThan(0));
+            Assert.That(modules, Is.TypeOf(typeof(NinjectModule[])));
+
+            foreach (var m in modules)
+            {
+                Assert.That(m.GetType().BaseType, Is.EqualTo(typeof(NinjectModule)));
+            }
         }
     }
     public class TestClass
     {
         private readonly ILogger m_Logger;
 
-        public TestClass(ILogger logger)
-        {
-            m_Logger = logger;
-        }
-
-        public ILogger Logger
-        {
-            get { return m_Logger; }
-        }
+        public TestClass(ILogger logger){}
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SabNzbdHistoryViewModel.cs
 //  Created By: Jamie Rees
 // 
@@ -30,17 +30,16 @@ namespace NZBDash.UI.Models.ViewModels.SabNzbd
 {
     public class SabNzbdHistoryViewModel
     {
-        //TODO: Resource
         public int Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
-        [Display(Name = "Nzb Name")]
+        [Display(Name = "UI_ViewModels_SabNzbd_NzbName", ResourceType = typeof(Resources.Resources))]
         public string NzbName { get; set; }
         public string Category { get; set; }
-        [Display(Name = "File Size")]
+        [Display(Name = "UI_ViewModels_SabNzbd_FileSize", ResourceType = typeof(Resources.Resources))]
         public string FileSize { get; set; }
         public int Health { get; set; }
-        [Display(Name = "Time")]
+        [Display(Name = "UI_ViewModels_SabNzbd_HistoryTime", ResourceType = typeof(Resources.Resources))]
         public int HistoryTime { get; set; }
     }
 }

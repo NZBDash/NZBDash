@@ -61,7 +61,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Movies.
         /// </summary>
         public static string Applications_CouchPotato_Movies {
             get {
@@ -70,7 +70,7 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to CouchPotato.
         /// </summary>
         public static string Applications_CouchPotato_Title {
             get {
@@ -187,6 +187,42 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string Navbar_SearchPlaceholder {
+            get {
+                return ResourceManager.GetString("Navbar_SearchPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alert Settings.
+        /// </summary>
+        public static string Settings_Alert_Title {
+            get {
+                return ResourceManager.GetString("Settings_Alert_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api Key.
         /// </summary>
         public static string Settings_ApiKey {
@@ -286,6 +322,15 @@ namespace NZBDash.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset the introduction.
+        /// </summary>
+        public static string Settings_NzbDash_FinishedIntro {
+            get {
+                return ResourceManager.GetString("Settings_NzbDash_FinishedIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NZBDash Settings.
         /// </summary>
         public static string Settings_NzbDash_Title {
@@ -363,6 +408,249 @@ namespace NZBDash.Resources {
         public static string Settings_Username {
             get {
                 return ResourceManager.GetString("Settings_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Physical Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_AvailablePhysicalMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_AvailablePhysicalMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Virtual Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_AvailableVirtualMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_AvailableVirtualMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Name.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSName {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Platform.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSPlatform {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS Version.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_OSVersion {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_OSVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical Percentage Filled.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_PhysicalPercentageFilled {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_PhysicalPercentageFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Physical Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_TotalPhysicalMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_TotalPhysicalMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Virtual Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_TotalVirtualMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_TotalVirtualMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Percentage Filled.
+        /// </summary>
+        public static string UI_Models_Hardware_RamModel_VirtualPercentageFilled {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_RamModel_VirtualPercentageFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Memory.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_AvailableMemory {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_AvailableMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cpu %.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_CpuPercentage {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_CpuPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating System.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSFullName {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating Platform.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSPlatform {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operating Version.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_OSVersion {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_OSVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System Uptime.
+        /// </summary>
+        public static string UI_Models_Hardware_ServerInformationViewModel_Uptime {
+            get {
+                return ResourceManager.GetString("UI_Models_Hardware_ServerInformationViewModel_Uptime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_Password {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember me?.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_RememeberMe {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_RememeberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string UI_Models_LoginViewModel_Username {
+            get {
+                return ResourceManager.GetString("UI_Models_LoginViewModel_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Size.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_FileSize {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_FileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_HistoryTime {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_HistoryTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NZB Name.
+        /// </summary>
+        public static string UI_ViewModels_SabNzbd_NzbName {
+            get {
+                return ResourceManager.GetString("UI_ViewModels_SabNzbd_NzbName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Views_Account_Login_PasswordPlaceholder {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_PasswordPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Sign In.
+        /// </summary>
+        public static string Views_Account_Login_PleaseSignIn {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_PleaseSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Views_Account_Login_UsernamePlaceholder {
+            get {
+                return ResourceManager.GetString("Views_Account_Login_UsernamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Views_Shared_NavUser_Account {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Views_Shared_NavUser_Login {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Views_Shared_NavUser_Logout {
+            get {
+                return ResourceManager.GetString("Views_Shared_NavUser_Logout", resourceCulture);
             }
         }
     }

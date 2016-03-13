@@ -110,6 +110,10 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Octokit, Version=0.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.18.0\lib\net45\Octokit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -117,6 +121,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.98.1\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -128,8 +133,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModule.cs" />
     <Compile Include="AuthenticationModule.cs" />
+    <Compile Include="UpdaterModule.cs" />
+    <Compile Include="WrapperModule.cs" />
     <Compile Include="CacheModule.cs" />
+    <Compile Include="EventModule.cs" />
     <Compile Include="SerializerModule.cs" />
     <Compile Include="ApplicationSettingsModule.cs" />
     <Compile Include="LoggerModule.cs" />
@@ -159,6 +168,10 @@
       <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
       <Name>NZBDash.Core.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Models\NZBDash.Core.Models.csproj">
+      <Project>{12FE449B-C0B1-4350-953C-D55320E59E54}</Project>
+      <Name>NZBDash.Core.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6B7E480C-D8B3-4CFD-9C59-687F9AEF31E0}</Project>
       <Name>NZBDash.Core</Name>
@@ -166,6 +179,14 @@
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
       <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
       <Name>NZBDash.DataAccessLayer.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Services.HardwareMonitor.Interfaces\NZBDash.Services.Monitor.Interfaces.csproj">
+      <Project>{3d144cd4-00f4-4d64-924d-1d1580f2809f}</Project>
+      <Name>NZBDash.Services.Monitor.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Interfaces\NZBDash.ThirdParty.Api.Interfaces.csproj">
+      <Project>{87989A4D-96E9-45BF-BEB5-5D46BFBB9B8B}</Project>
+      <Name>NZBDash.ThirdParty.Api.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api\NZBDash.ThirdParty.Api.csproj">
       <Project>{6AA3BF06-BAE1-43DF-AACE-BB2E25D1A103}</Project>
@@ -182,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

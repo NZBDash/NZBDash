@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SabNzbdController.cs
 //  Created By: Jamie Rees
 //
@@ -37,7 +37,7 @@ using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Helpers;
 using NZBDash.UI.Models;
@@ -162,7 +162,7 @@ namespace NZBDash.UI.Controllers.Application
                     });
                 }
 
-                return PartialView("Partial/_Download", model);
+                return PartialView("_Download", model);
             }
             catch (Exception e)
             {

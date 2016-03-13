@@ -1,48 +1,34 @@
-﻿@using NZBDash.Common
-@using NZBDash.UI.Helpers
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    <script language="Javascript" type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.0.js"></script>
-    <script src="~/signalr/hubs"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>NZBDash</title>
+    @Styles.Render("~/Content/dashboard")
+    <link href="/Content/introjs.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @*<script language="Javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
-    <link media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="STYLESHEET" />
-
 </head>
+
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("NZBDash", "Index", "Dashboard", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<div id="wrapper">
+    @Html.Partial("Navbars")
 
-                    @{ Html.RenderAction("ApplicationMenu", "Layout"); }
-                    <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
-                </ul>
-                @Html.Partial("_NavUser")
-            </div>
-
-        </div>
-    </div>
-    <div class="container body-content">
+    <div id="page-wrapper">
         @RenderBody()
     </div>
+</div>
 
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/dashboard")
+<script src="~/signalr/hubs"></script>
+
+@RenderSection("scripts", false)
 </body>
+
 </html>
+

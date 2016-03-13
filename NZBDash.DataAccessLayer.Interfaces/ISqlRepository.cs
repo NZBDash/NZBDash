@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ISqlRepository.cs
 //  Created By: Jamie Rees
 //
@@ -24,6 +24,7 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
+using System;
 using System.Collections.Generic;
 
 namespace NZBDash.DataAccessLayer.Interfaces

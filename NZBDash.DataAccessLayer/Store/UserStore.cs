@@ -1,4 +1,30 @@
-﻿using System;
+﻿#region Copyright
+// /************************************************************************
+//   Copyright (c) 2016 NZBDash
+//   File: UserStore.cs
+//   Created By: Jamie Rees
+//  
+//   Permission is hereby granted, free of charge, to any person obtaining
+//   a copy of this software and associated documentation files (the
+//   "Software"), to deal in the Software without restriction, including
+//   without limitation the rights to use, copy, modify, merge, publish,
+//   distribute, sublicense, and/or sell copies of the Software, and to
+//   permit persons to whom the Software is furnished to do so, subject to
+//   the following conditions:
+//  
+//   The above copyright notice and this permission notice shall be
+//   included in all copies or substantial portions of the Software.
+//  
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+//   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+//   LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//   OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+//   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// ************************************************************************/
+#endregion
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,14 +51,14 @@ namespace NZBDash.DataAccessLayer.Store
 
         public void Dispose()
         {
-            // Nothing to Dispose
+            GC.SuppressFinalize(this);
         }
 
         public async Task CreateAsync(User user)
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
             using (var db = Db.DbConnection())
             {
@@ -44,7 +70,7 @@ namespace NZBDash.DataAccessLayer.Store
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
             using (var db = Db.DbConnection())
             {
@@ -56,7 +82,7 @@ namespace NZBDash.DataAccessLayer.Store
         {
             if (user == null)
             {
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
             }
             using (var db = Db.DbConnection())
             {
@@ -67,7 +93,7 @@ namespace NZBDash.DataAccessLayer.Store
         public async Task<User> FindByIdAsync(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
-                throw new ArgumentNullException("userId");
+                throw new ArgumentNullException(nameof(userId));
 
             using (var db = Db.DbConnection())
             {
@@ -78,7 +104,7 @@ namespace NZBDash.DataAccessLayer.Store
         public async Task<User> FindByNameAsync(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
-                throw new ArgumentNullException("userName");
+                throw new ArgumentNullException(nameof(userName));
 
             using (var db = Db.DbConnection())
             {
@@ -90,7 +116,7 @@ namespace NZBDash.DataAccessLayer.Store
         public Task SetPasswordHashAsync(User user, string passwordHash)
         {
             if (user == null)
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
 
             user.PasswordHash = passwordHash;
 
@@ -100,7 +126,7 @@ namespace NZBDash.DataAccessLayer.Store
         public async Task<string> GetPasswordHashAsync(User user)
         {
             if (user == null)
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
 
             return await Task.FromResult(user.PasswordHash);
         }
@@ -113,7 +139,7 @@ namespace NZBDash.DataAccessLayer.Store
         public Task SetSecurityStampAsync(User user, string stamp)
         {
             if (user == null)
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
 
             user.SecurityStamp = stamp;
 
@@ -123,7 +149,7 @@ namespace NZBDash.DataAccessLayer.Store
         public Task<string> GetSecurityStampAsync(User user)
         {
             if (user == null)
-                throw new ArgumentNullException("user");
+                throw new ArgumentNullException(nameof(user));
 
             return Task.FromResult(user.SecurityStamp);
         }

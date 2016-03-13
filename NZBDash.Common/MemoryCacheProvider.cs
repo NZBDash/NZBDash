@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // ************************************************************************
-//   Copyright (c) 2015 
+//   Copyright (c) 2016 
 //   File: MemoryCacheProvider.cs
 //   Created By: Jamie Rees
 //  
@@ -25,27 +25,31 @@
 // ************************************************************************
 #endregion
 using System;
+using System.Linq;
 using System.Runtime.Caching;
 
+using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
 
 namespace NZBDash.Common
 {
     public class MemoryCacheProvider : ICacheProvider
     {
-        private ObjectCache Cache { get { return MemoryCache.Default; } }
+        private ObjectCache Cache => MemoryCache.Default;
 
         /// <summary>
         /// Gets the item from the cache, if the item is not present 
         /// then we will get that item and store it in the cache.
         /// </summary>
-        /// <typeparam name="T">Type to store in the cache</typeparam>
-        /// <param name="key">The key</param>
+        /// <typeparam name="T">Type to store in the cache.</typeparam>
+        /// <param name="key">The key.</param>
         /// <param name="itemCallback">The item callback. This will be called if the item is not present in the cache.
-        /// NB: if the callback is null and the item is not in the cache it will throw a <see cref="NullReferenceException"/>
         /// </param>
-        /// <param name="cacheTime">The amount of time we want to cache the object</param>
-        /// <returns></returns>
+        /// <param name="cacheTime">The amount of time we want to cache the object.</param>
+        /// <returns>A copy of the cached object.</returns>
+        /// <remarks>If the <c><![CDATA[Func<T>]]> itemCallback</c> is null and the item is not in the cache it will throw a <see cref="NullReferenceException"/>.
+        /// <para>If you do not want to change the object in the cache (since it's a copy returned and not a reference) you will need to <see cref="Remove"/>
+        /// the cached item and then <see cref="Set"/> it, or just call this method.</para></remarks>
         public T GetOrSet<T>(string key, Func<T> itemCallback, int cacheTime = 20) where T : class
         {
             var item = Get<T>(key);
@@ -57,7 +61,11 @@ namespace NZBDash.Common
                     Set(key, item, cacheTime);
                 }
             }
-            return item;
+
+            // Return a copy, not the stored cache reference
+            // The cached object will not change
+            // If we 
+            return item.CloneJson();
         }
 
         /// <summary>
@@ -90,10 +98,10 @@ namespace NZBDash.Common
         /// <param name="key">The key.</param>
         public void Remove(string key)
         {
-            var item = Cache.Get(key);
-            if (item != null)
+            var keys = Cache.Where(x => x.Key.Contains(key));
+            foreach (var k in keys)
             {
-                Cache.Remove(key);
+                Cache.Remove(k.Key);
             }
         }
     }

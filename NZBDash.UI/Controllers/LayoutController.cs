@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: LayoutController.cs
 //  Created By: Jamie Rees
 // 
@@ -30,7 +30,7 @@ using System.Web.Mvc;
 
 using NZBDash.Common;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.UI.Models.ViewModels;
 
 namespace NZBDash.UI.Controllers
@@ -72,7 +72,7 @@ namespace NZBDash.UI.Controllers
                     case Applications.Sickbeard: break;
 
                     case Applications.CouchPotato:
-                        var cpService =CpService.GetSettings();
+                        var cpService = CpService.GetSettings();
                         if (cpService.Enabled)
                         {
                             model.Add(

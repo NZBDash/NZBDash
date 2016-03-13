@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // ************************************************************************
-//   Copyright (c) 2015 
+//   Copyright (c) 2016 
 //   File: CouchPotatoController.cs
 //   Created By: Jamie Rees
 //  
@@ -24,13 +24,12 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************
 #endregion
-
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.ViewModels.CouchPotato;
 

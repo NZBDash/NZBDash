@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: RamModel.cs
 //  Created By: Jamie Rees
 // 
@@ -30,38 +30,37 @@ namespace NZBDash.UI.Models.Hardware
 {
     public class RamModel
     {
-        // TODO: Resource
-        [Display(Name = "Virtual Percentage Filled")]
+        [Display(Name = "UI_Models_Hardware_RamModel_VirtualPercentageFilled", ResourceType = typeof(Resources.Resources))]
         public int VirtualPercentageFilled
         {
             get { return 100 - (int)(AvailableVirtualMemory * 100 / TotalVirtualMemory); }
         }
 
-        [Display(Name = "Physical Percentage Filled")]
+        [Display(Name = "UI_Models_Hardware_RamModel_VirtualPercentageFilled", ResourceType = typeof(Resources.Resources))]
         public int PhysicalPercentageFilled
         {
             get { return 100 - (int)(AvailablePhysicalMemory * 100 / TotalPhysicalMemory); }
         }
 
-        [Display(Name = "Available Physical Memory")]
+        [Display(Name = "UI_Models_Hardware_RamModel_AvailablePhysicalMemory", ResourceType = typeof(Resources.Resources))]
         public ulong AvailablePhysicalMemory { get; set; }
 
-        [Display(Name = "Available Virtual Memory")]
+        [Display(Name = "UI_Models_Hardware_RamModel_AvailableVirtualMemory", ResourceType = typeof(Resources.Resources))]
         public ulong AvailableVirtualMemory { get; set; }
 
-        [Display(Name = "OS Name")]
+        [Display(Name = "UI_Models_Hardware_RamModel_OSName", ResourceType = typeof(Resources.Resources))]
         public string OSFullName { get; set; }
 
-        [Display(Name = "OS Platform")]
+        [Display(Name = "UI_Models_Hardware_RamModel_OSPlatform", ResourceType = typeof(Resources.Resources))]
         public string OSPlatform { get; set; }
 
-        [Display(Name = "OS Version")]
+        [Display(Name = "UI_Models_Hardware_RamModel_OSVersion", ResourceType = typeof(Resources.Resources))]
         public string OSVersion { get; set; }
 
-        [Display(Name = "Total Physical Memory")]
+        [Display(Name = "UI_Models_Hardware_RamModel_TotalPhysicalMemory", ResourceType = typeof(Resources.Resources))]
         public ulong TotalPhysicalMemory { get; set; }
 
-        [Display(Name = "Total Virtual Memory")]
+        [Display(Name = "UI_Models_Hardware_RamModel_TotalVirtualMemory", ResourceType = typeof(Resources.Resources))]
         public ulong TotalVirtualMemory { get; set; }
     }
 }

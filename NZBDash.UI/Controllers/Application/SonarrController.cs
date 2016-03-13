@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SonarrController.cs
 //  Created By: Jamie Rees
 //
@@ -29,9 +29,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Common.Mapping;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
@@ -47,8 +48,8 @@ namespace NZBDash.UI.Controllers.Application
         private ISettingsService<SonarrSettingsDto> SettingsService { get; set; }
         private SonarrSettingsDto Settings { get; set; }
 
-        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsDto> settingsService)
-            : base(typeof(SonarrController))
+        public SonarrController(IThirdPartyService apiService, ISettingsService<SonarrSettingsDto> settingsService, ILogger logger)
+            : base(logger)
         {
             ApiService = apiService;
             SettingsService = settingsService;
@@ -129,6 +130,21 @@ namespace NZBDash.UI.Controllers.Application
             }
 
             return PartialView("Episodes", viewModel);
+        }
+
+        public ActionResult SearchForEpisode(int episodeId)
+        {
+            if (!Settings.HasSettings)
+            {
+                ViewBag.Error = Resources.Resources.Settings_Missing_Sonarr;
+                return PartialView("DashletError");
+            }
+
+            var formattedUri = UrlHelper.ReturnUri(Settings.IpAddress, Settings.Port).ToString();
+
+            var result = ApiService.SonarrEpisodeSearch(formattedUri, Settings.ApiKey, episodeId);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

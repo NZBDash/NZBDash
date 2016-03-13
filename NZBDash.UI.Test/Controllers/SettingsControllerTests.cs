@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: SettingsControllerTests.cs
 //   Created By: Jamie Rees
 //  
@@ -25,17 +25,17 @@
 // ************************************************************************/
 #endregion
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 
 using Moq;
 
 using NUnit.Framework;
-using NZBDash.Common;
+
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
+using NZBDash.DataAccessLayer.Models;
 using NZBDash.UI.Controllers;
 using NZBDash.UI.Models.Hardware;
 using NZBDash.UI.Models.ViewModels.Settings;
@@ -94,11 +94,12 @@ namespace NZBDash.UI.Test.Controllers
         }
 
         [Test]
-        public void GetNzbDashSettingsReturnsDefaultViewWithModel()
+        public void GetNzbDashSettingsWithUsers()
         {
-            var expectedDto = new NzbDashSettingsDto { Id = 2, Authenticate = false };
+            var expectedDto = new NzbDashSettingsDto { Id = 2, Authenticate = false,  FinishedIntro = true};
             var settingsMock = new Mock<ISettingsService<NzbDashSettingsDto>>();
             var authMock = new Mock<IAuthenticationService>();
+            authMock.Setup(x => x.GetAllUsers()).Returns(new Fixture().CreateMany<User>().AsQueryable());
             settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
 
             _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, authMock.Object, null, null, Logger);
@@ -108,6 +109,29 @@ namespace NZBDash.UI.Test.Controllers
             var model = (NzbDashSettingsViewModel)result.Model;
 
             Assert.That(model.Authenticate, Is.EqualTo(expectedDto.Authenticate));
+            Assert.That(model.FinishedIntro, Is.EqualTo(expectedDto.FinishedIntro));
+            Assert.That(model.UserExist, Is.EqualTo(true));
+            Assert.That(model.Id, Is.EqualTo(expectedDto.Id));
+        }
+
+        [Test]
+        public void GetNzbDashSettingsWithoutUsers()
+        {
+            var expectedDto = new NzbDashSettingsDto { Id = 2, Authenticate = false, FinishedIntro = true };
+            var settingsMock = new Mock<ISettingsService<NzbDashSettingsDto>>();
+            var authMock = new Mock<IAuthenticationService>();
+            authMock.Setup(x => x.GetAllUsers()).Returns(Enumerable.Empty<User>().AsQueryable());
+            settingsMock.Setup(x => x.GetSettings()).Returns(expectedDto).Verifiable();
+
+            _controller = new SettingsController(null, null, null, null, null, settingsMock.Object, authMock.Object, null, null, Logger);
+            _controller.WithCallTo(x => x.NzbDashSettings()).ShouldRenderDefaultView();
+
+            var result = (ViewResult)_controller.NzbDashSettings();
+            var model = (NzbDashSettingsViewModel)result.Model;
+
+            Assert.That(model.Authenticate, Is.EqualTo(expectedDto.Authenticate));
+            Assert.That(model.FinishedIntro, Is.EqualTo(expectedDto.FinishedIntro));
+            Assert.That(model.UserExist, Is.EqualTo(false));
             Assert.That(model.Id, Is.EqualTo(expectedDto.Id));
         }
 
@@ -231,12 +255,12 @@ namespace NZBDash.UI.Test.Controllers
             Assert.That(model.Drives[0].VolumeLabel, Is.EqualTo(expectedDrives.ToList()[0].VolumeLabel));
             Assert.That(model.Drives.Count, Is.EqualTo(expectedDrives.Count()));
 
-            Assert.That(model.NicDict.Count, Is.EqualTo(expectedNic.Count()));
+            Assert.That(model.NetworkMonitoring.NicDict.Count, Is.EqualTo(expectedNic.Count()));
 
             foreach (var nic in expectedNic)
             {
-                Assert.That(model.NicDict.ContainsKey(nic.Key),Is.True);
-                Assert.That(model.NicDict.ContainsValue(nic.Value),Is.True);
+                Assert.That(model.NetworkMonitoring.NicDict.ContainsKey(nic.Key),Is.True);
+                Assert.That(model.NetworkMonitoring.NicDict.ContainsValue(nic.Value),Is.True);
             }
         }
 
@@ -526,13 +550,6 @@ namespace NZBDash.UI.Test.Controllers
 
             var model = new SonarrSettingsViewModel();
             _controller.WithModelErrors().WithCallTo(x => x.SonarrSettings(model)).ShouldRenderDefaultView().WithModel(model);
-        }
-
-        [Test]
-        public void SettingsReturnsDefaultIndex()
-        {
-            _controller = new SettingsController(null, null, null, null, null, null, null, null, null, Logger);
-            _controller.WithModelErrors().WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
     }
 }

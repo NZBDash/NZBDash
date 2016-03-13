@@ -1,26 +1,21 @@
 ﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
 @model NZBDash.UI.Models.ViewModels.Settings.SonarrSettingsViewModel
 
-@{
-    ViewBag.Title = @Resources.Settings_Sonarr_Title;
-}
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
 
-        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 
-            @Html.Partial("_Sidebar")
-        </div>
         <div class="col-sm-9 col-md-10 main">
-            <h1 class="page-header">@ViewBag.Title</h1>
+            @Html.RenderHeader(Resources.Settings_Sonarr_Title)
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <hr />
+    
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 

@@ -1,37 +1,37 @@
-﻿@{
-    ViewBag.Title = "Dashboard";
-}
+﻿@using NZBDash.UI.Helpers
+@model bool
 
-<h2>@ViewBag.Title</h2>
-
+<div>
+    @Html.RenderHeader("Dashboard")
+</div>
 
 <br />
 <br />
 <br />
 
-<button id="save" hidden="hidden">Save</button>
-<button id="Edit">Edit Grid</button>
-<div class="gridster" id="griddy">
-    <ul style="list-style: none">
-        <li data-row="1" data-col="1" data-sizex="2" data-sizey="4">
-            <div id="Drives"></div>
-        </li>
+<div class="row">
+    <div id="currentDownloads" class="col-md-4" data-step="12" data-intro="Here you can see all of your currently downloading items.">
 
-        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
-            <div id="Links">
-            </div>
-        </li>
-
-        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2">
-            <div id="Ram">
-            </div>
-        </li>
-
-        <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
-            <div id="Server">
-            </div>
-        </li>
-    </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" data-step="13" data-intro="All of your physical drives and their used/free space.">
+        <div id="Drives"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6" data-step="14" data-intro="Your current CPU % for the last 60 seconds">
+            @Html.Partial("Partial/_CpuChart")
+        </div>
+        <div class="col-md-4" id="Ram" data-step="15" data-intro="Your servers RAM!"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @*<div class="col-md-3" id="Links"></div>*@
+        <div class="col-md-5" id="Server" data-step="16" data-intro="Just some useful information about your server"></div>
+    </div>
 </div>
 
 
@@ -39,30 +39,45 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/gridster")
-    @Styles.Render("~/Content/gridster")
-
-    <script src="~/Scripts/Highcharts.js"></script>
-    <script src="~/Scripts/Dashboard.js"></script>
-    <script src="http://code.highcharts.com/modules/data.js"></script>
-    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-
+    <script src="~/Scripts/intro.js"></script>
     <script>
 
-        $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
-            $('#Drives').html(view);
-        });
-
-        $.ajax("@Url.Action("GetLinks")").success(function (view) {
-            $('#Links').html(view);
-        });
+        function ajaxRequests() {
+            $.ajax("@Url.Action("GetDriveInformation")").success(function (view) {
+                $('#Drives').html(view);
+            });
 
             $.ajax("@Url.Action("GetRam")").success(function (view) {
                 $('#Ram').html(view);
             });
 
-        $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
-            $('#Server').html(view);
+            $.ajax("@Url.Action("GetServerInformation")").success(function (view) {
+                $('#Server').html(view);
+            });
+
+            $.ajax("@Url.Action("GetDownloads")").success(function (view) {
+                $('#currentDownloads').html(view);
+            });
+        }
+
+        $.when(ajaxRequests()).done(function () {
+            @if(Model)
+            {
+                <text>
+                    setTimeout(
+                        function () {
+                            introJs().start();
+
+                            introJs().onexit(function () {
+                                $.ajax("@Url.Action("IntroFinished")").success(function () {
+                                    console.log("Finished Intro");
+                                });
+                            });
+
+                        }, 2000);
+                </text>
+            }
         });
+
     </script>
 }

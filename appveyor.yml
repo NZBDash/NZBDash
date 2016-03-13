@@ -1,5 +1,26 @@
 version: 1.0.{build}
-before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
+
+install:
+# Setup Inno so we can compile the installer
+- choco install -y InnoSetup
+- set PATH="C:\Program Files\7-Zip";"C:\Program Files (x86)\Inno Setup 5";%PATH%
+
+build_script:
+  - echo "Starting Build script..."
+  - nuget restore
+  - msbuild /m /p:Configuraiton=Release NZBDash.sln
+  
+  # Compile installer
+  - iscc NZBDash.iss 
+  - dir 
+   - appveyor PushArtifact Installer\setup.exe
+artifacts:
+- path: Installer\setup.exe
+deploy:
+- provider: GitHub
+  release: NZBDash_$(appveyor_build_version)
+  auth_token:
+    secure: jDpp1/WUQl3uN41fNI3VeZoRZbDiDfs3GPQ1v+C5ZNE3cWdnUvuJfCCfUbYUV1Rp
+  draft: true
+  on:
+    branch: master

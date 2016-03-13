@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SetupModule.cs
 //  Created By: Jamie Rees
 // 
@@ -27,6 +27,7 @@
 using Ninject.Modules;
 
 using NZBDash.Core;
+using NZBDash.Core.Interfaces;
 
 namespace NZBDash.DependencyResolver.Modules
 {

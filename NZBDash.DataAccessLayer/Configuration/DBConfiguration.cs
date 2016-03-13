@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: DbConfiguration.cs
 //  Created By: Jamie Rees
 // 
@@ -43,7 +43,7 @@ namespace NZBDash.DataAccessLayer.Configuration
         }
 
         private DbProviderFactory Factory { get; set; }
-        private ILogger Logger { get; set; }
+        protected ILogger Logger { get; set; }
 
         public virtual void CheckDb()
         {
@@ -61,15 +61,16 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// </summary>
         private void CheckDirectory()
         {
-            if (!Directory.Exists(ApplicationDataLocation()))
+            if (!Directory.Exists(ProgramDataLocation()))
             {
-                Directory.CreateDirectory(ApplicationDataLocation());
+                Logger.Trace("Creating ProgramData Location '\\NZBDash\\'");
+                Directory.CreateDirectory(ProgramDataLocation());
             }
         }
 
         public abstract string DbFile();
 
-        public abstract string ApplicationDataLocation();
+        public abstract string ProgramDataLocation();
 
         /// <summary>
         /// Gets the database connection.
@@ -94,14 +95,16 @@ namespace NZBDash.DataAccessLayer.Configuration
         {
             try
             {
-                var fs = File.Create(DbFile());
-                fs.Close();
-                Logger.Trace("Created and Closed the FileStream");
+                using (File.Create(DbFile()))
+                {
+                    Logger.Trace("Created the DB");
+                }
+                Logger.Trace("Disposed of the DB handle");
             }
             catch (Exception e)
             {
                 Logger.Fatal(e);
-                throw;
+                Logger.Fatal("Could not recover from this failure.");
             }
         }
     }

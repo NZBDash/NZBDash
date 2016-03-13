@@ -1,0 +1,76 @@
+﻿@using GridMvc.Html
+@using NZBDash.Resources
+@using NZBDash.UI.Helpers
+@using NZBDash.UI.Models.ViewModels.Settings
+@using RestSharp.Extensions
+@model NZBDash.UI.Models.ViewModels.Settings.AlertSettingsViewModel
+@*TODO: Resource*@
+
+<div class="container-fluid">
+
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-sm-9 col-md-10 main">
+
+            @Html.RenderHeader("Alert Settings")
+
+            <div class="btn-group-sm">
+
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Cpu" data-target="myModal" class="btn btn-success">Cpu Alert</a>
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Network" data-target="myModal" class="btn btn-success">Network Alert</a>
+                <a href="@Url.Action("OpenModal")?alertType=@AlertType.Hdd" data-target="myModal" class="btn btn-success">HDD Alert</a>
+                @if (!string.IsNullOrEmpty(Model.EmailHost))
+                {
+                    <a href="@Url.Action("OpenEmailModal")" data-target="myModal" class="btn btn-success"><i class="fa fa-envelope"></i> Email Settings</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("OpenEmailModal")" id="blah" data-content="You have not yet configured your email settings!" data-target="myModal" class="btn btn-danger"><i class="fa fa-envelope"></i> Email Settings</a>
+                }
+
+            </div>
+
+            <hr />
+
+            @Html.Grid(Model.AlertRules).Columns(c =>
+       {
+       c.Add(x => x.AlertType);
+       c.Add(x => x.Enabled);
+       c.Add(x => x.Percentage);
+       c.Add(x => x.ThresholdTime);
+       c.Add().RenderValueAs(r => @<a href="@Url.Action("UpdateAlert")?id=@r.Id" data-target="myModal">Modify</a>).Encoded(false).Sanitized(false);
+           c.Add().RenderValueAs(r => Html.ActionLink("Delete", "DeleteAlert", "AlertSettings", new { id = r.Id }, null)).Encoded(false).Sanitized(false);
+       }).EmptyText("We currently have no alerts set up!")
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-middle modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body col-sm-push-5">
+                @Html.LoadingSpinner()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#blah").popover({ 'placement': 'right' }).popover('show');
+
+            $("a[data-target=myModal]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModal .modal-content").load(target, function () {
+                    $("#myModal").modal("show");
+                });
+            });
+
+        });
+    </script>
+}

@@ -10,7 +10,7 @@ namespace NZBDash.DependencyResolver.Modules
     {
         public override void Load()
         {
-            Bind<ILogger>().To<NLogLogger>().WithConstructorArgument(typeof(Type), x => x.Request.ParentContext.Plan.Type);
+            Bind<ILogger>().To<NLogLogger>().WithConstructorArgument(typeof(Type), x => x.Request.ParentContext == null ? typeof(object) : x.Request.ParentContext.Plan.Type);
         }
     }
 }

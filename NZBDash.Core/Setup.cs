@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: Setup.cs
 //  Created By: Jamie Rees
 // 
@@ -28,6 +28,8 @@ using System;
 using System.Data.Common;
 
 using NZBDash.Common.Interfaces;
+using NZBDash.Common.Mapping;
+using NZBDash.Core.Interfaces;
 using NZBDash.DataAccessLayer;
 using NZBDash.DataAccessLayer.Interfaces;
 
@@ -65,15 +67,18 @@ namespace NZBDash.Core
             }
         }
 
+        public void SetupMappers()
+        {
+            // ReSharper disable once ObjectCreationAsStatement
+            new HardwareMapperInitialise();
+            new AlertMapperInitialise();
+
+        }
+
         private void MigrateDatabase()
         {
             var connection = Configuration.DbConnection();
             TableCreation.CreateTables(connection);
         }
-    }
-
-    public interface ISetup
-    {
-        bool Start();
     }
 }

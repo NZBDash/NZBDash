@@ -1,27 +1,22 @@
 ﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
 @model NZBDash.UI.Models.ViewModels.Settings.SabNzbSettingsViewModel
 
-@{
-    ViewBag.Title = @Resources.Settings_SabNzb_Title;
-}
+
 <div class="container-fluid">
 
     <div class="row row-offcanvas row-offcanvas-left">
 
-        <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
 
-            @Html.Partial("_Sidebar")
-        </div>
         <div class="col-sm-9 col-md-10 main">
-            <h1 class="page-header">@ViewBag.Title</h1>
+            @Html.RenderHeader(Resources.Settings_SabNzb_Title)
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>@ViewBag.Title</h4>
-                    <hr />
+    
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
 

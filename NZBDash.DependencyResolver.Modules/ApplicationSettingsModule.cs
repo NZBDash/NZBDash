@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ApplicationSettingsModule.cs
 //  Created By: Jamie Rees
 // 
@@ -24,15 +24,11 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  ***********************************************************************
 #endregion
-using Ninject;
 using Ninject.Modules;
 
-using NZBDash.Common.Models.Data.Models;
-using NZBDash.Core.Configuration;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Core.SettingsService;
-using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
 
 namespace NZBDash.DependencyResolver.Modules
@@ -51,8 +47,7 @@ namespace NZBDash.DependencyResolver.Modules
             Bind<ISettingsService<PlexSettingsDto>>().To<SettingsService<PlexSettings, PlexSettingsDto>>();
             Bind<ISettingsService<NzbDashSettingsDto>>().To<SettingsService<NzbDashSettings, NzbDashSettingsDto>>();
             Bind<ISettingsService<HardwareSettingsDto>>().To<SettingsService<HardwareSettings, HardwareSettingsDto>>();
-
-            Bind<ILinksConfiguration>().To<LinksConfigurationService>().WithConstructorArgument("repo", x => x.Kernel.Get<ISqlRepository<LinksConfiguration>>());
+            Bind<ISettingsService<AlertSettingsDto>>().To<SettingsService<AlertSettings, AlertSettingsDto>>();
         }
 
     }

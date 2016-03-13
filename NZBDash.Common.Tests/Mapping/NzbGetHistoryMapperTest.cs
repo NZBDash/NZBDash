@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: NzbGetHistoryMapperTest.cs
 //  Created By: Jamie Rees
 // 
@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.ViewModels.NzbGet;

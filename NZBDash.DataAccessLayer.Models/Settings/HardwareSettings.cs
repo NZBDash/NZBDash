@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: HardwareSettings.cs
 //   Created By: Jamie Rees
 //  
@@ -30,20 +30,45 @@ namespace NZBDash.DataAccessLayer.Models.Settings
 {
     public class HardwareSettings : Entity
     {
-        public int ThresholdTime { get; set; }
+        public HardwareSettings()
+        {
+            EmailAlertSettings = new EmailAlertSettings();
+            CpuMonitoring = new CpuMonitoring();
+            NetworkMonitoring = new NetworkMonitoring();
+            Drives = new List<DriveSettings>();
+        }
 
-        public int CpuPercentageLimit { get; set; }
-        public int MemoryUseLimit { get; set; }
+        public CpuMonitoring CpuMonitoring { get; set; }
+        public NetworkMonitoring NetworkMonitoring { get; set; }
         public List<DriveSettings> Drives { get; set; }
-        public int NicToMonitor { get; set; }
+        public EmailAlertSettings EmailAlertSettings { get; set; }
+    }
 
-        public bool Alert { get; set; }
+    public class NetworkMonitoring : Entity
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int NicId { get; set; }
+        public int NetworkUsagePercentage { get; set; }
+    }
+
+    public class CpuMonitoring : Entity
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int CpuPercentageLimit { get; set; }
+    }
+
+    public class EmailAlertSettings : Entity
+    {
+        public bool AlertOnBreach { get; set; }
+        public bool AlertOnBreachEnd { get; set; }
         public string EmailUsername { get; set; }
         public string EmailPassword { get; set; }
         public string EmailHost { get; set; }
         public int EmailPort { get; set; }
+        public string RecipientAddress { get; set; }
     }
-
     public class DriveSettings
     {
         public long AvailableFreeSpace { get; set; }

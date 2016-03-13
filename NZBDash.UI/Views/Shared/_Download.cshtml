@@ -1,0 +1,38 @@
+﻿@using NZBDash.Resources
+@model NZBDash.UI.Models.Dashboard.DownloaderViewModel
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        &nbsp;<div id="DlSpeed" class="col-sm-1 col-sm-push-11">@Model.DownloadSpeed</div>
+    </div>
+    <div class="panel-body">
+        @if (Model.DownloadItem.Any())
+        {
+            foreach (var item in Model.DownloadItem)
+            {
+                <div class="row vcenter">
+                    <div class="col-md-2"><i id="@(item.NzbId)icon" class="fa @item.FontAwesomeIcon fa-4x"></i></div>
+                    <div class="col-md-4 ">
+                        @item.DownloadingName
+                    </div>
+                    <div class="col-md-6">
+                        <div class="progress h1">
+                            <div id="@(item.NzbId)progress" class="progress-bar progress-bar-striped @item.ProgressBarClass" role="progressbar" aria-valuenow="@(item.DownloadPercentage)%" aria-valuemin="0" aria-valuemax="100" style="width: @(item.DownloadPercentage)%;">
+                                <span>@item.DownloadPercentage%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-12">
+                <div class="col-md-2 h6 text-center">
+                    <i class="fa fa-smile-o fa-5x"></i>
+                </div>
+                @Resources.Applications_NzbGet_Download_NothingToSee
+            </div>
+        }
+    </div>
+</div>

@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: MonoSqliteConfiguration.cs
 //  Created By: Jamie Rees
 //
@@ -44,14 +44,14 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// </value>
         public override string DbFile()
         {
-            return ApplicationDataLocation() + @"\\NZBDash.sqlite";
+            return ProgramDataLocation() + @"\\NZBDash.sqlite";
         }
 
         /// <summary>
         /// Applications the data location.
         /// </summary>
         /// <returns></returns>
-        public override string ApplicationDataLocation()
+        public override string ProgramDataLocation()
         {
             return "App_Data";
         }

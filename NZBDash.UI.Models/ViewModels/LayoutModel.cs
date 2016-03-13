@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: LayoutModel.cs
 //  Created By: Jamie Rees
 // 
@@ -30,9 +30,10 @@ namespace NZBDash.UI.Models.ViewModels
     {
         public string Name { get; set; }
         public string Url { get; set; }
+        public string FaIcon { get; set; }
         public string Html
         {
-            get { return string.Format("<li><a href=\"{0}\">{1}</a></li>",Url,Name); }
+            get { return string.Format("<a href=\"{0}\"><i class=\"fa {2} fa-fw\"></i> {1}</a>",Url,Name,FaIcon); }
         }
     }
 }

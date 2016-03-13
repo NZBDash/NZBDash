@@ -97,16 +97,22 @@
   <ItemGroup>
     <Compile Include="IApplicationTester.cs" />
     <Compile Include="IAuthenticationService.cs" />
+    <Compile Include="IEventService.cs" />
     <Compile Include="IHardwareService.cs" />
-    <Compile Include="ILinksConfiguration.cs" />
     <Compile Include="IMembershipProvider.cs" />
     <Compile Include="ISettingsService.cs" />
+    <Compile Include="ISetup.cs" />
+    <Compile Include="ISmtpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NZBDash.Common.Models\NZBDash.Common.Models.csproj">
       <Project>{521CB3C7-F19C-4B92-8A39-4537BEC094B5}</Project>
       <Name>NZBDash.Common.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Models\NZBDash.Core.Models.csproj">
+      <Project>{12fe449b-c0b1-4350-953c-d55320e59e54}</Project>
+      <Name>NZBDash.Core.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.DataAccessLayer.Models\NZBDash.DataAccessLayer.Models.csproj">
       <Project>{67E1FFF8-EDEC-4D4E-8B49-E3B107D326B6}</Project>
@@ -120,6 +126,9 @@
       <Project>{C61C3778-A4D2-4C61-891C-353248EEB25B}</Project>
       <Name>NZBDash.UI.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

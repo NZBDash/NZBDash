@@ -114,9 +114,11 @@ namespace NZBDash.Resources {
         ///        &quot;filename&quot;:
         ///        &quot;Ubuntu 8.04 (Hardy Heron) - Desktop CD x64&quot;,
         ///        &quot;mbleft&quot;:854.697841,&quot;id&quot;:&quot;SABnzbd_nzo_zt2syz&quot;,
-        ///        &quot;mb&quot;:854.697841}
-        ///    ]
-        ///}.
+        ///        &quot;mb&quot;:854.697841},
+        /// {&quot;msgid&quot;:&quot;3066203&quot;,
+        ///        &quot;filename&quot;:
+        ///        &quot;The Walking Dead S07E02&quot;,
+        ///        &quot;mbleft&quot;:1200.697841,&quot;id&quot;:&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Sabnzbd_Queue {
             get {
@@ -141,6 +143,36 @@ namespace NZBDash.Resources {
         public static string Sonarr_Episode {
             get {
                 return ResourceManager.GetString("Sonarr_Episode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;name&quot;: &quot;EpisodeSearch&quot;,
+        ///  &quot;body&quot;: {
+        ///    &quot;episodeIds&quot;: [
+        ///      1
+        ///    ],
+        ///    &quot;sendUpdatesToClient&quot;: true,
+        ///    &quot;updateScheduledTask&quot;: true,
+        ///    &quot;completionMessage&quot;: &quot;Completed&quot;,
+        ///    &quot;name&quot;: &quot;EpisodeSearch&quot;,
+        ///    &quot;trigger&quot;: &quot;manual&quot;
+        ///  },
+        ///  &quot;priority&quot;: &quot;normal&quot;,
+        ///  &quot;status&quot;: &quot;queued&quot;,
+        ///  &quot;queued&quot;: &quot;0001-01-01T00:00:00Z&quot;,
+        ///  &quot;trigger&quot;: &quot;manual&quot;,
+        ///  &quot;state&quot;: &quot;queued&quot;,
+        ///  &quot;manual&quot;: true,
+        ///  &quot;startedOn&quot;: &quot;0001-01-01T00:00:00Z&quot;,
+        ///  &quot;sendUpdatesToClient&quot;: true,
+        ///  &quot;updateScheduledTask&quot;: true,
+        ///  &quot;id&quot;:  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Sonarr_EpisodeSearch {
+            get {
+                return ResourceManager.GetString("Sonarr_EpisodeSearch", resourceCulture);
             }
         }
         

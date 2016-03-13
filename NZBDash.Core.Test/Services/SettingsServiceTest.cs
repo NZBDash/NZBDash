@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: SettingsServiceTest.cs
 //   Created By: Jamie Rees
 //  
@@ -24,17 +24,21 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
-
 using System.Collections.Generic;
 using System.Linq;
+
 using Moq;
+
 using NUnit.Framework;
+
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.Core.SettingsService;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
+
 using Ploeh.AutoFixture;
+
 using GlobalSettings = NZBDash.DataAccessLayer.Models.Settings.GlobalSettings;
 
 namespace NZBDash.Core.Test.Services
@@ -57,8 +61,8 @@ namespace NZBDash.Core.Test.Services
             ExpectedLink = new GlobalSettings
             {
                 Id = 1,
-                Content = "{\"$type\":\"NZBDash.DataAccessLayer.Models.Settings.NzbDashSettings,NZBDash.DataAccessLayer.Models\",\"Authenticate\":true,\"Id\":6}",
-                SettingsName = "Test",
+                Content = "oDuq+yWcOzb7qgRvmyljVAS6dLdT1fydgeyMuObYkYJwzTNTXlwC4+V/Tp0O6FZuKfKbDuaonSXMzg8ndZhM118am2HiobAd37KrCFcb7X594TmzrHUFCuqflHPOl3FsZnKnZXqsvABt6QCnFZLb3eG6smE/uqQ5QVohtt2qzi8ZrGifb5pjXJIfSDwnXGj951zKfxQ7Wq84QmAUU5eqPdDBq2ODsLnRfVamrieVPIxzhhaFFKLJF9QvAE8SPm4i",
+                SettingsName = "PageName",
             };
 
             F = new Fixture();
@@ -72,6 +76,8 @@ namespace NZBDash.Core.Test.Services
             mockRepo.Setup(x => x.Update(It.IsAny<GlobalSettings>())).Returns(true).Verifiable();
 
             mockRepo.Setup(x => x.Insert(It.IsAny<GlobalSettings>())).Returns(1).Verifiable();
+
+            mockRepo.Setup(x => x.Delete(It.IsAny<GlobalSettings>())).Returns(true).Verifiable();
 
 
             MockRepo = mockRepo;
@@ -131,6 +137,39 @@ namespace NZBDash.Core.Test.Services
             MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
             MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
             MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Once);
+        }
+
+        [Test]
+        public void DeleteSetting()
+        {
+            var model = F.Create<Setting>();
+            var result = Service.Delete(model);
+
+            Assert.That(result, Is.True);
+            MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Delete(It.IsAny<GlobalSettings>()), Times.Once);
+        }
+
+        [Test]
+        public void DeleteSettingThatDoesntExist()
+        {
+            var model = F.Create<Setting>();
+            var mockRepo = new Mock<ISettingsRepository>();
+            mockRepo.Setup(x => x.Get("Test")).Returns((GlobalSettings)null).Verifiable();
+            MockRepo = mockRepo;
+
+            Service = new SettingsService<NzbDashSettings, Setting>(MockRepo.Object, logger.Object);
+
+            var result = Service.Delete(model);
+
+            Assert.That(result, Is.True);
+            logger.Verify(x => x.Trace(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Get(It.IsAny<string>()), Times.Once);
+            MockRepo.Verify(x => x.Update(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Insert(It.IsAny<GlobalSettings>()), Times.Never);
+            MockRepo.Verify(x => x.Delete(It.IsAny<GlobalSettings>()), Times.Never); // Null so nothing to delete 
         }
     }
 }

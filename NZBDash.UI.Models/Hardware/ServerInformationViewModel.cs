@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ServerInformationViewModel.cs
 //  Created By: Jamie Rees
 // 
@@ -27,22 +27,28 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
+using Humanizer;
+
 namespace NZBDash.UI.Models.Hardware
 {
     public class ServerInformationViewModel
     {
-        // TODO: Resource
-        [Display(Name = "Operating System")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_OSFullName", ResourceType = typeof(Resources.Resources))]
         public string OsFullName { get;set; }
-        [Display(Name = "Operating Platform")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_OSPlatform", ResourceType = typeof(Resources.Resources))]
         public string OsPlatform { get;set; }
-        [Display(Name = "Operating Version")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_OSVersion", ResourceType = typeof(Resources.Resources))]
         public string OsVersion { get; set; }
-        [Display(Name = "System Uptime")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_Uptime", ResourceType = typeof(Resources.Resources))]
         public TimeSpan Uptime { get; set; }
-        [Display(Name="Cpu %")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_CpuPercentage", ResourceType = typeof(Resources.Resources))]
         public float CpuPercentage { get; set; }
-        [Display(Name = "Available Memory")]
+        [Display(Name = "UI_Models_Hardware_ServerInformationViewModel_AvailableMemory", ResourceType = typeof(Resources.Resources))]
         public float AvailableMemory { get; set; }
+
+        public string UptimeString
+        {
+            get { return Uptime.Humanize(3); }
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: JsonRepository.cs
 //   Created By: Jamie Rees
 //  
@@ -29,6 +29,7 @@ using System.Linq;
 
 using Dapper.Contrib.Extensions;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
 
@@ -36,15 +37,21 @@ namespace NZBDash.DataAccessLayer.Repository
 {
     public class JsonRepository : ISettingsRepository
     {
-        public JsonRepository(ISqliteConfiguration config)
+        private ICacheProvider Cache { get; set; }
+
+        private string TypeName { get; set; }
+        public JsonRepository(ISqliteConfiguration config, ICacheProvider cacheProvider)
         {
             Db = config;
+            Cache = cacheProvider;
+            TypeName = typeof(JsonRepository).Name;
         }
 
         private ISqliteConfiguration Db { get; set; }
 
         public long Insert(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Insert(entity);
@@ -53,24 +60,35 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public IEnumerable<GlobalSettings> GetAll()
         {
-            using (var con = Db.DbConnection())
+            var key = TypeName + "GetAll";
+            var item = Cache.GetOrSet(key, () =>
             {
-                var page = con.GetAll<GlobalSettings>();
-                return page;
-            }
+                using (var con = Db.DbConnection())
+                {
+                    var page = con.GetAll<GlobalSettings>();
+                    return page;
+                }
+            }, 5);
+            return item;
         }
 
         public GlobalSettings Get(string pageName)
         {
-            using (var con = Db.DbConnection())
+            var key = pageName + "Get";
+            var item = Cache.GetOrSet(key, () =>
             {
-                var page = con.GetAll<GlobalSettings>().SingleOrDefault(x => x.SettingsName == pageName);
-                return page;
-            }
+                using (var con = Db.DbConnection())
+                {
+                    var page = con.GetAll<GlobalSettings>().SingleOrDefault(x => x.SettingsName == pageName);
+                    return page;
+                }
+            }, 5);
+            return item;
         }
 
         public bool Delete(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Delete(entity);
@@ -79,10 +97,17 @@ namespace NZBDash.DataAccessLayer.Repository
 
         public bool Update(GlobalSettings entity)
         {
+            ResetCache();
             using (var con = Db.DbConnection())
             {
                 return con.Update(entity);
             }
+        }
+
+        private void ResetCache()
+        {
+            Cache.Remove("Get");
+            Cache.Remove(TypeName + "GetAll");
         }
     }
 }

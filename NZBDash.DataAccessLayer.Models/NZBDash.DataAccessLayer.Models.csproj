@@ -55,8 +55,11 @@
   <ItemGroup>
     <Compile Include="Applications.cs" />
     <Compile Include="DashboardGrid.cs" />
+    <Compile Include="MonitoringEvents.cs" />
+    <Compile Include="Settings\AlertRules.cs" />
+    <Compile Include="Settings\AlertSettings.cs" />
+    <Compile Include="Settings\AlertType.cs" />
     <Compile Include="Settings\Entity.cs" />
-    <Compile Include="LinksConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\CouchPotatoSettings.cs" />
     <Compile Include="Settings\GlobalSettings.cs" />

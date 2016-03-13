@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ThirdPartyService.cs
 //  Created By: Jamie Rees
 // 
@@ -25,9 +25,11 @@
 //  ***********************************************************************
 #endregion
 
+using System;
 using System.Collections.Generic;
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccess.Api.CouchPotato;
+using NZBDash.DataAccess.Api.Sonarr;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.ThirdParty.Api.Models.Api.CouchPotato;
@@ -44,7 +46,7 @@ namespace NZBDash.ThirdParty.Api.Service
         private const string SabNzbdHistoryApiAddress = "api?mode=history&start=0&limit=10&output=json&apikey=";
         private const string SonarrApiAddress = "api/system/status?apikey=";
         private const string NzbGetApiAddress = "/jsonrpc/";
-        //86de085eeaaf4274bf7aa97bb0ddaea6
+
         public ThirdPartyService(ISerializer serializer)
         {
             Serializer = serializer;
@@ -58,6 +60,13 @@ namespace NZBDash.ThirdParty.Api.Service
         public PlexServers GetPlexServers(string uri)
         {
             return Serializer.SerializeXmlData<PlexServers>(uri + "servers");
+        }
+
+        public bool SonarrEpisodeSearch(string url, string apiKey, int episodeId)
+        {
+            var command = Serializer.SerializedJsonData<SonarrCommand,string>(string.Format("{0}api/command?apiKey={1}", url, apiKey), "POST", () => "{ name: 'EpisodeSearch', episodeIds: [" + episodeId + "]}");
+
+            return command != null;
         }
 
         public SonarrSystemStatus GetSonarrSystemStatus(string uri, string api)
@@ -102,16 +111,11 @@ namespace NZBDash.ThirdParty.Api.Service
 
         public SabNzbdHistory GetSabNzbdHistory(string url, string apiKey)
         {
-            //var jsonData = Resources.MockData.Sabnzbd_History;
-            //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdHistory>(jsonData) : new SabNzbdHistory();
             return Serializer.SerializedJsonData<SabNzbdHistory>(url + SabNzbdHistoryApiAddress + apiKey);
         }
 
         public SabNzbdQueue GetSabNzbdQueue(string url, string apiKey)
         {
-            //var jsonData = Resources.MockData.Sabnzbd_Queue;
-            //return !string.IsNullOrEmpty(jsonData) ? JsonConvert.DeserializeObject<SabNzbdQueue>(jsonData) : new SabNzbdQueue();
-
             return Serializer.SerializedJsonData<SabNzbdQueue>(url + SabNzbdQueueApiAddress + apiKey);
         }
     }

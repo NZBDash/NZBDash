@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: DriveModel.cs
 //  Created By: Jamie Rees
 // 
@@ -28,6 +28,7 @@ namespace NZBDash.UI.Models.Hardware
 {
     public class DriveModel
     {
+        public int DriveId { get; set; }
         public long AvailableFreeSpace { get; set; }
         public string DriveFormat { get; set; }
         public string DriveType { get; set; }

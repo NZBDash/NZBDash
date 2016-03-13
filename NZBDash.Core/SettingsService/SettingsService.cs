@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 NZBDash
 //   File: SettingsService.cs
 //   Created By: Jamie Rees
 //  
@@ -25,14 +25,14 @@
 // ************************************************************************/
 #endregion
 using System;
-using System.Runtime.Serialization.Formatters;
 
 using Newtonsoft.Json;
 
 using NZBDash.Common;
+using NZBDash.Common.Helpers;
 using NZBDash.Common.Interfaces;
-using NZBDash.Common.Models.Settings;
 using NZBDash.Core.Interfaces;
+using NZBDash.Core.Models.Settings;
 using NZBDash.DataAccessLayer.Interfaces;
 using NZBDash.DataAccessLayer.Models.Settings;
 
@@ -68,12 +68,12 @@ namespace NZBDash.Core.SettingsService
                     Logger.Trace(string.Format("There are no items returned from {0}. Returning new empty DTO",SettingsServiceName));
                     return new U();
                 }
-
+                result.Content = DecryptSettings(result);
                 var obj = string.IsNullOrEmpty(result.Content) ? null : JsonConvert.DeserializeObject<T>(result.Content, SerializerSettings.Settings);
-
+                
                 Logger.Trace("Creating dto from the results from Repo");
-                var model = new U();
-                model.InjectFrom(obj);
+
+                var model = Mapper.Map<U>(obj);
 
                 return model;
             }
@@ -92,28 +92,50 @@ namespace NZBDash.Core.SettingsService
             if (entity == null)
             {
                 Logger.Trace("Our entity is null so we are going to insert one");
-                var newEntity = new T();
-                newEntity.InjectFrom(model);
-
+                var newEntity = Mapper.Map<T>(model);
+                
                 Logger.Trace("Inserting now");
                 var settings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(newEntity, SerializerSettings.Settings) };
-
+                settings.Content = EncryptSettings(settings);
                 var insertResult = Repo.Insert(settings);
 
                 Logger.Trace(string.Format("Our insert was {0}", insertResult != long.MinValue));
                 return insertResult != long.MinValue;
             }
 
-            var modified = new T();
-            modified.InjectFrom(model);
+
+            var modified = Mapper.Map<T>(model);
             modified.Id = entity.Id;
 
             var globalSettings = new GlobalSettings { SettingsName = EntityName, Content = JsonConvert.SerializeObject(modified, SerializerSettings.Settings), Id = entity.Id };
-
+            globalSettings.Content = EncryptSettings(globalSettings);
             var result = Repo.Update(globalSettings);
 
             Logger.Trace(string.Format("Our modify was {0}", result));
             return result;
+        }
+
+        public bool Delete(U model)
+        {
+            Logger.Trace(string.Format("Looking for id {0} in the {1} to delete", model.Id, EntityName));
+            var entity = Repo.Get(EntityName);
+            if (entity != null)
+            {
+                return Repo.Delete(entity);
+            }
+
+            // Entity does not exist so nothing to delete
+            return true;
+        }
+
+        private string EncryptSettings(GlobalSettings settings)
+        {
+            return StringCipher.Encrypt(settings.Content, settings.SettingsName);
+        }
+
+        private string DecryptSettings(GlobalSettings settings)
+        {
+            return StringCipher.Decrypt(settings.Content, settings.SettingsName);
         }
     }
 }

@@ -1,0 +1,170 @@
+﻿@using NZBDash.Resources
+@using NZBDash.UI.Helpers
+@model NZBDash.UI.Models.ViewModels.Settings.HardwareSettingsViewModel
+
+
+<div class="container-fluid">
+
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-sm-9 col-md-10 main">
+
+            @Html.RenderHeader("Hardware")
+
+            @using (Html.BeginForm("HardwareSettings", "Settings", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    CPU
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.CpuMonitoring.Enabled, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.CheckBoxFor(x => x.CpuMonitoring.Enabled, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CpuMonitoring.CpuPercentageLimit, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.CpuMonitoring.CpuPercentageLimit, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.CpuMonitoring.ThresholdTime, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.CpuMonitoring.ThresholdTime, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Network
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.NetworkMonitoring.Enabled, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.CheckBoxFor(x => x.NetworkMonitoring.Enabled, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NetworkMonitoring.NicId, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.DropDownListFor(x => x.NetworkMonitoring.NicId, Model.NetworkMonitoring.Nics, "Please select a NIC to monitor", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NetworkMonitoring.NetworkUsagePercentage, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.NetworkMonitoring.NetworkUsagePercentage, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.NetworkMonitoring.ThresholdTime, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.NetworkMonitoring.ThresholdTime, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Alert Settings
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.AlertOnBreach, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.CheckBoxFor(x => x.EmailAlertSettings.AlertOnBreach, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.AlertOnBreachEnd, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.CheckBoxFor(x => x.EmailAlertSettings.AlertOnBreachEnd, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.EmailUsername, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.EmailAlertSettings.EmailUsername, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.EmailPassword, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.PasswordFor(x => x.EmailAlertSettings.EmailPassword, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.EmailHost, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.EmailAlertSettings.EmailHost, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.EmailPort, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.EmailAlertSettings.EmailPort, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.EmailAlertSettings.RecipientAddress, new { @class = "control-label col-md-4" })
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(x => x.EmailAlertSettings.RecipientAddress, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-1">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#CpuMonitoring_Enabled').bootstrapSwitch();
+            $('#NetworkMonitoring_Enabled').bootstrapSwitch();
+            $('#EmailAlertSettings_AlertOnBreachEnd').bootstrapSwitch();
+            $('#EmailAlertSettings_AlertOnBreach').bootstrapSwitch();
+        });
+    </script>
+}

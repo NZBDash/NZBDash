@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: AuthenticationHelper.cs
 //   Created By: Jamie Rees
 //  
@@ -25,7 +25,7 @@
 // ************************************************************************/
 #endregion
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 
 namespace NZBDash.UI.Helpers
 {

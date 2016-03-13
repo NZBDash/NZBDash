@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SonarrControllerTests.cs
 //  Created By: Jamie Rees
 // 
@@ -33,14 +33,16 @@ using Moq;
 
 using NUnit.Framework;
 
+using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;
 using NZBDash.UI.Controllers.Application;
 using NZBDash.UI.Models.ViewModels.Sonarr;
 
 using Ploeh.AutoFixture;
+
 using UrlHelper = NZBDash.Common.Helpers.UrlHelper;
 
 namespace NZBDash.UI.Test.Controllers
@@ -54,12 +56,14 @@ namespace NZBDash.UI.Test.Controllers
         private List<SonarrEpisode> SonarrEpisode { get; set; }
         private Mock<ISettingsService<SonarrSettingsDto>> SettingsMock { get; set; }
         private Mock<IThirdPartyService> ServiceMock { get; set; }
+        private Mock<ILogger> LoggerMock { get; set; }
 
         [SetUp]
         public void Setup()
         {
             SettingsMock = new Mock<ISettingsService<SonarrSettingsDto>>();
             ServiceMock = new Mock<IThirdPartyService>();
+            LoggerMock = new Mock<ILogger>();
             var f = new Fixture();
 
             ExpectedSettings = f.Create<SonarrSettingsDto>();
@@ -70,7 +74,7 @@ namespace NZBDash.UI.Test.Controllers
             SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
             ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
-            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
+            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object, LoggerMock.Object);
         }
 
         [Test]
@@ -125,7 +129,7 @@ namespace NZBDash.UI.Test.Controllers
             SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
             ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
-            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
+            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object, LoggerMock.Object);
 
             var series = (PartialViewResult)_controller.GetSeries();
             var model = series.ViewBag;
@@ -171,7 +175,7 @@ namespace NZBDash.UI.Test.Controllers
             SettingsMock.Setup(x => x.GetSettings()).Returns(ExpectedSettings);
             ServiceMock.Setup(x => x.GetSonarrSeries(It.IsAny<string>(), It.IsAny<string>())).Returns(SonarrSeries);
             ServiceMock.Setup(x => x.GetSonarrEpisodes(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).Returns(SonarrEpisode);
-            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object);
+            _controller = new SonarrController(ServiceMock.Object, SettingsMock.Object, LoggerMock.Object);
 
             var series = (PartialViewResult)_controller.GetEpisodes(1, "title");
             var model = series.ViewBag;

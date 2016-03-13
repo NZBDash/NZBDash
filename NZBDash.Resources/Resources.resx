@@ -214,9 +214,105 @@
     <value>NZBDash Settings</value>
   </data>
   <data name="Applications_CouchPotato_Title" xml:space="preserve">
-    <value></value>
+    <value>CouchPotato</value>
   </data>
   <data name="Applications_CouchPotato_Movies" xml:space="preserve">
-    <value></value>
+    <value>Movies</value>
+  </data>
+  <data name="Settings_Alert_Title" xml:space="preserve">
+    <value>Alert Settings</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Navbar_SearchPlaceholder" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_VirtualPercentageFilled" xml:space="preserve">
+    <value>Virtual Percentage Filled</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_PhysicalPercentageFilled" xml:space="preserve">
+    <value>Physical Percentage Filled</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_AvailablePhysicalMemory" xml:space="preserve">
+    <value>Available Physical Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_AvailableVirtualMemory" xml:space="preserve">
+    <value>Available Virtual Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSName" xml:space="preserve">
+    <value>OS Name</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSPlatform" xml:space="preserve">
+    <value>OS Platform</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_OSVersion" xml:space="preserve">
+    <value>OS Version</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_TotalPhysicalMemory" xml:space="preserve">
+    <value>Total Physical Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_RamModel_TotalVirtualMemory" xml:space="preserve">
+    <value>Total Virtual Memory</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_NzbName" xml:space="preserve">
+    <value>NZB Name</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_FileSize" xml:space="preserve">
+    <value>File Size</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_AvailableMemory" xml:space="preserve">
+    <value>Available Memory</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_CpuPercentage" xml:space="preserve">
+    <value>Cpu %</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSFullName" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSPlatform" xml:space="preserve">
+    <value>Operating Platform</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_OSVersion" xml:space="preserve">
+    <value>Operating Version</value>
+  </data>
+  <data name="UI_Models_Hardware_ServerInformationViewModel_Uptime" xml:space="preserve">
+    <value>System Uptime</value>
+  </data>
+  <data name="UI_ViewModels_SabNzbd_HistoryTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="UI_Models_LoginViewModel_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="UI_Models_LoginViewModel_RememeberMe" xml:space="preserve">
+    <value>Remember me?</value>
+  </data>
+  <data name="UI_Models_LoginViewModel_Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Views_Account_Login_PasswordPlaceholder" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Views_Account_Login_PleaseSignIn" xml:space="preserve">
+    <value>Please Sign In</value>
+  </data>
+  <data name="Views_Account_Login_UsernamePlaceholder" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Views_Shared_NavUser_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Views_Shared_NavUser_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Views_Shared_NavUser_Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Settings_NzbDash_FinishedIntro" xml:space="preserve">
+    <value>Reset the introduction</value>
   </data>
 </root>

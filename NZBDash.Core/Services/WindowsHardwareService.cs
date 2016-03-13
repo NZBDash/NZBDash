@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: WindowsHardwareService.cs
 //  Created By: Jamie Rees
 //
@@ -34,6 +34,7 @@ using System.Threading;
 using Microsoft.VisualBasic.Devices;
 
 using NZBDash.Core.Interfaces;
+using NZBDash.DataAccess.Api;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Models.Hardware;
 
@@ -48,6 +49,7 @@ namespace NZBDash.Core.Services
         /// </summary>
         public IEnumerable<DriveModel> GetDrives()
         {
+            var id = 0;
             var drives = GetDriveInfo();
             var model = new List<DriveModel>();
             foreach (var drive in drives)
@@ -56,10 +58,11 @@ namespace NZBDash.Core.Services
                 {
                     continue;
                 }
-
+                
                 var driveModel = new DriveModel();
-                var mapped = driveModel.InjectFrom(drive);
-                model.Add((DriveModel)mapped);
+                var mapped = (DriveModel)driveModel.InjectFrom(drive);
+                mapped.DriveId = id++;
+                model.Add(mapped);
             }
 
             return model;
@@ -93,13 +96,15 @@ namespace NZBDash.Core.Services
         /// </summary>
         public float GetCpuPercentage()
         {
+            //TODO: We should not really be using and disposing the PerfCounter on every call.
+            // We should just call NextValue(); 
             using (var process = new PerformanceCounter("Processor", "% Processor Time", "_Total"))
             {
                 // Call this an extra time before reading its value
                 process.NextValue();
 
-                // We require the PC tp update it self... We need to wait.
-                Thread.Sleep(500);
+                // We require the PC to update it self... We need to wait.
+                Thread.Sleep(1000);
                 return process.NextValue();
             }
         }
@@ -121,9 +126,9 @@ namespace NZBDash.Core.Services
         /// <summary>
         /// Gets the network information.
         /// </summary>
-        public NetworkInfo GetNetworkInformation()
+        public NetworkInfo GetNetworkInformation(int nicId)
         {
-            return GetNetworkingDetails();
+            return GetNetworkingDetails(nicId);
         }
 
         public Dictionary<string,int> GetAllNics()
@@ -154,12 +159,12 @@ namespace NZBDash.Core.Services
             return DriveInfo.GetDrives();
         }
 
-        private NetworkInfo GetNetworkingDetails()
+        private NetworkInfo GetNetworkingDetails(int nicId)
         {
             var info = new NetworkInfo();
             var performanceCounterCategory = new PerformanceCounterCategory("Network Interface");
             var cn = performanceCounterCategory.GetInstanceNames();
-            var firstNetworkCard = cn[0]; //TODO: Change this, the user needs to select the NIC to monitor in a settings page.
+            var firstNetworkCard = cn[nicId];
             var networkBytesSent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", firstNetworkCard);
             var networkBytesReceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", firstNetworkCard);
             var networkBytesTotal = new PerformanceCounter("Network Interface", "Bytes Total/sec", firstNetworkCard);

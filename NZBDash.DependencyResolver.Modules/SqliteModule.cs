@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SqliteModule.cs
 //  Created By: Jamie Rees
 // 
@@ -47,7 +47,7 @@ namespace NZBDash.DependencyResolver.Modules
 	{
 		public override void Load()
 		{
-            Bind<ISqlRepository<LinksConfiguration>>().To<GenericRepository<LinksConfiguration>>();
+            Bind<ISqlRepository<MonitoringEvents>>().To<GenericRepository<MonitoringEvents>>();
 		    Bind<ISettingsRepository>().To<JsonRepository>();
 
 

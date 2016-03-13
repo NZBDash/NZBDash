@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+
+using NZBDash.Common.Interfaces;
 using NZBDash.UI.Models;
 
 namespace NZBDash.UI.Controllers
@@ -15,13 +17,13 @@ namespace NZBDash.UI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
-            : base(typeof(ManageController))
+        public ManageController(ILogger logger)
+            : base(logger)
         {
         }
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-            : base(typeof(ManageController))
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ILogger logger)
+            : base(logger)
         {
             UserManager = userManager;
             SignInManager = signInManager;

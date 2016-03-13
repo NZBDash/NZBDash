@@ -85,6 +85,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -94,8 +98,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IThirdPartyService.cs" />
+    <Compile Include="IThirdPartyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rest\BaseRequest.cs" />
+    <Compile Include="Rest\PlexRestRequest.cs" />
+    <Compile Include="Rest\CouchPotatoRestRequest.cs" />
+    <Compile Include="Rest\MockApiRequest.cs" />
+    <Compile Include="Rest\ApiRequest.cs" />
+    <Compile Include="Rest\SabNzbdRestRequest.cs" />
+    <Compile Include="Rest\SonarrRestRequest.cs" />
+    <Compile Include="Rest\NzbGetRestRequest.cs" />
     <Compile Include="Service\ThirdPartyMockService.cs" />
     <Compile Include="Service\ThirdPartyService.cs" />
   </ItemGroup>
@@ -116,6 +128,10 @@
       <Project>{900A9447-BD0F-4D92-A92D-554FA8E7A00C}</Project>
       <Name>NZBDash.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NZBDash.ThirdParty.Api.Interfaces\NZBDash.ThirdParty.Api.Interfaces.csproj">
+      <Project>{87989A4D-96E9-45BF-BEB5-5D46BFBB9B8B}</Project>
+      <Name>NZBDash.ThirdParty.Api.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NZBDash.ThirdParty.Api.Models\NZBDash.ThirdParty.Api.Models.csproj">
       <Project>{E51F0F88-A6DA-4A7E-B647-C5621B60F79D}</Project>
       <Name>NZBDash.ThirdParty.Api.Models</Name>
@@ -123,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

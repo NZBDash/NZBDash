@@ -1,36 +1,28 @@
 ﻿@model NZBDash.UI.Models.Hardware.ServerInformationViewModel
-<div class="panel panel-default">
-    <div class="panel-heading">Server Information</div>
-    <div class="panel-body">
-        <span>
-            <span>
-                @Html.DisplayNameFor(x => x.OsFullName)
-                @Model.OsFullName;
-            </span>
-            <span>
-                @Html.DisplayNameFor(x => x.OsPlatform)
-                @Model.OsPlatform;
-            </span>
-            <span>
-                @Html.DisplayNameFor(x => x.OsVersion)
-                @Model.OsVersion;
-            </span>
-            @Html.DisplayNameFor(x => x.Uptime)
-            <span id="UpTimeSpan">
-
-                @Model.Uptime;
-            </span>
-        </span>
-        <span>
-@Html.DisplayNameFor(x => x.CpuPercentage)
-@Html.DisplayFor(x => x.CpuPercentage)%
-</span>
-        <span>
-@Html.DisplayNameFor(x => x.AvailableMemory)
-@Html.DisplayFor(x => x.AvailableMemory) MB
-</span>
-
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-info-circle fa-fw"></i> Server Information
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-upload fa-fw"></i> Up Time
+                    <span class="pull-right text-muted small">
+                        <em>@Model.UptimeString</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-server fa-fw"></i> OS
+                    <span class="pull-right text-muted small">
+                        <em>@Model.OsFullName</em>
+                    </span>
+                </a>
+            </div>
+            <!-- /.list-group -->
+        </div>
+        <!-- /.panel-body -->
     </div>
 </div>
-
 

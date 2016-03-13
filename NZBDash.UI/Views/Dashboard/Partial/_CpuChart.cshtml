@@ -1,0 +1,149 @@
+﻿
+<div class="panel panel-default" id="ppuDiv">
+    <div class="panel-heading">CPU Usage</div>
+    <div class="panel-body">
+        <div id="cpuChart" style="width:600px;height:300px"></div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/Dashboard/flot/jquery.flot.js"></script>
+<script src="~/Scripts/Dashboard/flot/jquery.flot.time.js"></script>
+<script src="~/Scripts/Dashboard/flot/jquery.flot.resize.js"></script>
+<script>
+    $(function () {
+
+        var container = $("#cpuChart");
+        function getPlot(a, b) {
+            var plot = $.plot(a, b, {
+                grid: {
+                    borderWidth: 1,
+                    minBorderMargin: 20,
+                    labelMargin: 10,
+                    backgroundColor: {
+                        colors: ["#fff", "#e4f4f4"]
+                    },
+                    margin: {
+                        top: 8,
+                        bottom: 20,
+                        left: 20
+                    },
+                    markings: function (axes) {
+                        var markings = [];
+                        var xaxis = axes.xaxis;
+                        for (var x = Math.floor(xaxis.min) ; x < xaxis.max; x += xaxis.tickSize * 2) {
+                            markings.push({
+                                xaxis: {
+                                    from: x,
+                                    to: x + xaxis.tickSize
+                                },
+                                color: "rgba(232, 232, 255, 0.2)"
+                            });
+                        }
+                        return markings;
+                    }
+                },
+                xaxis: {
+                    mode: "time",
+                    tickSize: [1, "second"],
+                    tickFormatter: function (v, axis) {
+                        var date = new Date(v);
+
+                        if (date.getSeconds() % 20 == 0) {
+                            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                            return hours + ":" + minutes + ":" + seconds;
+                        } else {
+                            return "";
+                        }
+                    },
+                    axisLabel: "Time",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Verdana, Arial',
+                    axisLabelPadding: 10
+                },
+                yaxis: {
+                    min: 0,
+                    max: 100,
+                    tickFormatter: function (v, axis) {
+                        if (v % 10 == 0) {
+                            return v + "%";
+                        } else {
+                            return "";
+                        }
+                    },
+                    axisLabel: "CPU",
+                    axisLabelUseCanvas: true,
+                    axisLabelFontSizePixels: 12,
+                    axisLabelFontFamily: 'Verdana, Arial',
+                    axisLabelPadding: 6
+                },
+                legend: {
+                    show: true,
+                    tickColor: "#008040"
+                }
+            });
+
+            return plot;
+        }
+        series = [{
+            data: [],
+            lines: {
+                show: true,
+                lineWidth: 1.2,
+                fill: true
+            }
+        }];
+
+
+        // Determine how many data points to keep based on the placeholder's initial size;
+        // this gives us a nice high-res plot while avoiding more than one point per pixel.
+
+        var maximum = 60;
+
+        //
+        var data = [];
+
+
+        function getRandomData() {
+            $.ajax({
+                url: '@Url.Action("GetCpu")',
+                type: 'GET',
+                success: function (cpu) {
+                    if (series[0].data.length >= maximum) {
+                        series[0].data.shift();
+                    }
+                    var obj = JSON.parse(cpu);
+                    var temp = [obj.TimeMs += 60, obj.CpuVal]; //data format [x, y]
+
+                    series[0].data.push(temp);
+                    return data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                }
+            });
+        }
+
+       
+
+
+
+        // Update the random dataset at 25FPS for a smoothly-animating chart
+
+        setInterval(function updateRandom() {
+            getRandomData();
+            getPlot(container, series);
+            
+        }, 1000);
+
+
+
+    });
+
+</script>

@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: NzbDashSettings.cs
 //   Created By: Jamie Rees
 //  
@@ -31,6 +31,14 @@ namespace NZBDash.DataAccessLayer.Models.Settings
     [Table("NzbDashSettings")]
     public class NzbDashSettings : Entity
     {
+        /// <summary>
+        /// A value indicating whether this the user has enabled authentication.
+        /// </summary>
         public bool Authenticate { get; set; }
+
+        /// <summary>
+        /// A value indicating whether the user has finished the intro.
+        /// </summary>
+        public bool FinishedIntro { get; set; }
     }
 }

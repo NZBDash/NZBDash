@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: SonarrEpisodeMapperTest.cs
 //  Created By: Jamie Rees
 // 
@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 using NZBDash.Common.Mapping;
 using NZBDash.ThirdParty.Api.Models.Api.Sonarr;

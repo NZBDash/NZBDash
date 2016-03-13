@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: CustomDependencyResolver.cs
 //  Created By: Jamie Rees
 //
@@ -34,7 +34,7 @@ using NZBDash.DependencyResolver.Modules;
 
 namespace NZBDash.DependencyResolver
 {
-	public class CustomDependencyResolver : IDependencyResolver
+	public class CustomDependencyResolver : IDependencyResolver<NinjectModule>
 	{
 	    /// <summary>
 	    /// Gets the Ninject modules to pass into the Kernel.

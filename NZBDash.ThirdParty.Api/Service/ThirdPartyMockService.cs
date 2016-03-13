@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: ThirdPartyMockService.cs
 //  Created By: Jamie Rees
 // 
@@ -26,11 +26,12 @@
 #endregion
 using System;
 using System.Collections.Generic;
-
+using System.Runtime.Remoting.Messaging;
 using Newtonsoft.Json;
 
 using NZBDash.Common.Interfaces;
 using NZBDash.DataAccess.Api.CouchPotato;
+using NZBDash.DataAccess.Api.Sonarr;
 using NZBDash.Resources;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
@@ -60,6 +61,13 @@ namespace NZBDash.ThirdParty.Api.Service
         public PlexServers GetPlexServers(string uri)
         {
             throw new NotImplementedException();
+        }
+
+        public bool SonarrEpisodeSearch(string url, string apiKey, int episodeId)
+        {
+            var j = MockData.Sonarr_EpisodeSearch;
+            var obj = !string.IsNullOrEmpty(j) ? JsonConvert.DeserializeObject<SonarrCommand>(j) : new SonarrCommand();
+            return obj != null;
         }
 
         public SonarrSystemStatus GetSonarrSystemStatus(string uri, string api)

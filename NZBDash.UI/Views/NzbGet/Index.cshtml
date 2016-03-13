@@ -1,11 +1,8 @@
 ﻿@using NZBDash.Resources
 @using NZBDash.UI.Helpers
 @model NZBDash.UI.Models.ViewModels.NzbGetHistoryGrid
-@{
-    ViewBag.Title = @Resources.Applications_NzbGet_Title;
-}
 
-<h2>@ViewBag.Title</h2>
+@Html.RenderHeader(Resources.Applications_NzbGet_Title)
 <h3 id="status"></h3>
 
 

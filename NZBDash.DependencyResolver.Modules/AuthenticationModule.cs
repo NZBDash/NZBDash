@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 Jamie Rees
 //   File: AuthenticationModule.cs
 //   Created By: Jamie Rees
 //  
@@ -24,10 +24,16 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+using System.Runtime.Serialization.Formatters.Binary;
+
+using Microsoft.AspNet.Identity;
+
 using Ninject.Modules;
 
 using NZBDash.Core.Interfaces;
 using NZBDash.Core.Services;
+using NZBDash.DataAccessLayer.Models;
+using NZBDash.DataAccessLayer.Store;
 
 namespace NZBDash.DependencyResolver.Modules
 {
@@ -36,6 +42,10 @@ namespace NZBDash.DependencyResolver.Modules
         public override void Load()
         {
             Bind<IAuthenticationService>().To<AuthenticationService>();
+            Bind<IUserStore<User>>().To<UserStore>();
+            Bind<IUserPasswordStore<User>>().To<UserStore>();
+            Bind<IUserSecurityStampStore<User>>().To<UserStore>();
+            Bind<IQueryableUserStore<User>>().To<UserStore>();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: WindowsSqliteConfiguration.cs
 //  Created By: Jamie Rees
 //
@@ -44,16 +44,18 @@ namespace NZBDash.DataAccessLayer.Configuration
         /// <returns></returns>
         public override string DbFile()
         {
-            return ApplicationDataLocation() + @"\\NZBDash.sqlite";
+            return ProgramDataLocation() + @"\\NZBDash.sqlite";
         }
 
         /// <summary>
         /// Returns the location of the application data.
         /// </summary>
         /// <returns></returns>
-        public override string ApplicationDataLocation()
+        public override string ProgramDataLocation()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\NZBDash\\";
+            var data = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\NZBDash\\";
+            Logger.Trace("Program Data Location = {0}", data);
+            return data;
         }
     }
 }

@@ -56,6 +56,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentScheduler, Version=3.1.46.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.3.1.46\lib\net40\FluentScheduler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Grid.Mvc.Ajax, Version=1.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Grid.Mvc.Ajax.1.0.31\lib\Grid.Mvc.Ajax.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +71,10 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Humanizer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.0.0\lib\dotnet\Humanizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -74,8 +82,8 @@
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
@@ -90,15 +98,13 @@
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.4.1.2\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.2\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Omu.ValueInjecter, Version=3.1.1.0, Culture=neutral, PublicKeyToken=c7694541b0ac80e4, processorArchitecture=MSIL">
       <HintPath>..\packages\valueinjecter.3.1.1\lib\net40\Omu.ValueInjecter.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Ploeh.AutoFixture">
-      <HintPath>..\packages\AutoFixture.3.36.11\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -227,13 +233,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlertSettingsController.cs" />
     <Compile Include="Controllers\Application\CouchPotatoController.cs" />
     <Compile Include="Controllers\Application\SabNzbdController.cs" />
     <Compile Include="Controllers\Application\SonarrController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
-    <Compile Include="Controllers\LinksConfigurationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Application\NzbGetController.cs" />
@@ -247,12 +253,12 @@
     <Compile Include="Helpers\EndpointTester.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\IconHelper.cs" />
+    <Compile Include="Helpers\StyleComponentHelper.cs" />
     <Compile Include="Hubs\ApplicationConfigurationHub.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\DasboardHub.cs" />
     <Compile Include="Hubs\HubActivator.cs" />
     <Compile Include="Hubs\LogsHub.cs" />
-    <Compile Include="Hubs\LinksConfigurationHub.cs" />
     <Compile Include="App_Start\NinjectSignalRDependencyResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dashboard\DashboardLinksViewModel.cs" />
@@ -274,11 +280,17 @@
     <Content Include="Content\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
+    <Content Include="Content\Dashboard\bootstrap-social.css" />
+    <Content Include="Content\Dashboard\metisMenu.css" />
+    <Content Include="Content\Dashboard\metisMenu.min.css" />
+    <Content Include="Content\Dashboard\morris.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\gridmvc.datepicker.css" />
     <Content Include="Content\gridmvc.datepicker.min.css" />
+    <Content Include="Content\introjs.css" />
     <Content Include="Content\jquery.gridster.css" />
     <Content Include="Content\jquery.gridster.min.css" />
     <Content Include="Content\ladda-bootstrap\ladda-themeless.min.css" />
@@ -287,6 +299,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Logo.png" />
     <Content Include="Scripts\ApplicationConfigurationSignalR.js" />
     <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap-notify.min.js" />
@@ -300,19 +313,134 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="NLog.config" />
+    <Content Include="Scripts\Dashboard\dashboard.js" />
+    <Content Include="Scripts\Dashboard\flot-data.js" />
+    <Content Include="Scripts\Dashboard\flot\excanvas.js" />
+    <Content Include="Scripts\Dashboard\flot\excanvas.min.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.colorhelpers.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.canvas.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.categories.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.crosshair.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.errorbars.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.fillbetween.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.image.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.navigate.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.selection.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.stack.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.symbol.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.threshold.js" />
+    <Content Include="Scripts\Dashboard\flot\jquery.flot.time.js" />
+    <Content Include="Scripts\Dashboard\metisMenu.js" />
+    <Content Include="Scripts\Dashboard\metisMenu.min.js" />
+    <Content Include="Scripts\Dashboard\metisMenu\Gruntfile.js" />
+    <Content Include="Scripts\Dashboard\mocha.js" />
+    <Content Include="Scripts\Dashboard\mocha\media\logo.svg" />
+    <Content Include="Scripts\Dashboard\mocha\mocha.css" />
+    <Content Include="Scripts\Dashboard\morris-data.js" />
+    <Content Include="Scripts\Dashboard\morris.js" />
+    <Content Include="Scripts\Dashboard\morris.min.js" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\area-as-line.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\area.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\bar-colors.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\bar-no-axes.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\bar.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\days.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\decimal-custom-hover.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\diagonal-xlabels-bar.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\diagonal-xlabels.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\donut-colors.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\donut-formatter.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\donut.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\dst.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\events.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\goals.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\lib\example.css" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\lib\example.js" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\months-no-smooth.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\negative.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\no-grid.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\non-continuous.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\non-date.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\quarters.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\resize.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\stacked_bars.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\timestamps.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\updating.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\weeks.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\years.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\examples\_template.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\Gruntfile.js" />
+    <Content Include="Scripts\Dashboard\morrisjs\morris.css" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\specs.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\examples.js" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\exemplary\area0.png" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\exemplary\bar0.png" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\exemplary\line0.png" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\exemplary\stacked_bar0.png" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\test.html" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\visual_specs.js" />
+    <Content Include="Scripts\Dashboard\raphael-min.js" />
+    <Content Include="Scripts\Dashboard\raphael.js" />
     <Content Include="Scripts\gridmvc-ext.js" />
     <Content Include="Scripts\gridmvc.customwidgets.js" />
     <Content Include="Scripts\gridmvc.lang.fr.js" />
     <Content Include="Scripts\gridmvc.lang.ru.js" />
     <Content Include="Scripts\gridmvc.min.js.map" />
+    <Content Include="Content\Dashboard\bootstrap-social.less" />
+    <Content Include="Content\Dashboard\bootstrap-social.scss" />
     <None Include="Properties\PublishProfiles\File.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Dashboard\metisMenu\.bower.json" />
+    <Content Include="Scripts\Dashboard\metisMenu\bower.json" />
+    <Content Include="Scripts\Dashboard\metisMenu\LICENSE" />
+    <Content Include="Scripts\Dashboard\metisMenu\package.json" />
+    <Content Include="Scripts\Dashboard\metisMenu\README.md" />
+    <Content Include="Scripts\Dashboard\mocha\.bower.json" />
+    <Content Include="Scripts\Dashboard\mocha\bower.json" />
+    <Content Include="Scripts\Dashboard\mocha\History.md" />
+    <Content Include="Scripts\Dashboard\mocha\LICENSE" />
+    <Content Include="Scripts\Dashboard\mocha\Readme.md" />
+    <Content Include="Scripts\Dashboard\morrisjs\.bower.json" />
+    <Content Include="Scripts\Dashboard\morrisjs\.gitignore" />
+    <Content Include="Scripts\Dashboard\morrisjs\.travis.yml" />
+    <Content Include="Scripts\Dashboard\morrisjs\bower.json" />
+    <Content Include="Scripts\Dashboard\morrisjs\bower.travis.json" />
+    <Content Include="Scripts\Dashboard\morrisjs\less\morris.core.less" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.area.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.bar.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.donut.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.grid.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.hover.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\lib\morris.line.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\package.json" />
+    <Content Include="Scripts\Dashboard\morrisjs\README.md" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\area\area_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\bar\bar_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\bar\colours.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\commas_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\donut\donut_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\grid\auto_grid_lines_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\grid\set_data_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\grid\y_label_format_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\hover_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\label_series_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\line\line_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\pad_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\lib\parse_time_spec.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\support\placeholder.coffee" />
+    <Content Include="Scripts\Dashboard\morrisjs\spec\viz\run.sh" />
     <Content Include="Scripts\Dashboard.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.min.js" />
     <Content Include="Scripts\Highcharts.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\intro.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.gridster.js" />
     <Content Include="Scripts\jquery.gridster.min.js" />
@@ -349,7 +477,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -380,14 +507,12 @@
     <Content Include="Views\LinksConfiguration\Index.cshtml" />
     <Content Include="Views\LinksConfiguration\_AddLink.cshtml" />
     <Content Include="Views\LinksConfiguration\_Link.cshtml" />
-    <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\NzbGetSettings.cshtml" />
     <Content Include="Views\Settings\SonarrSettings.cshtml" />
-    <Content Include="Views\Settings\_Sidebar.cshtml" />
     <Content Include="Views\Settings\CouchPotatoSettings.cshtml" />
     <Content Include="Views\Settings\SabNzbSettings.cshtml" />
     <Content Include="Views\Settings\PlexSettings.cshtml" />
-    <Content Include="Views\NzbGet\Partial\_Download.cshtml" />
+    <Content Include="Views\Shared\_Download.cshtml" />
     <Content Include="Views\NzbGet\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
@@ -397,7 +522,6 @@
     <Content Include="Views\NzbGet\Partial\Logs.cshtml" />
     <Content Include="Views\Sonarr\Episodes.cshtml" />
     <Content Include="Views\SabNzbd\Index.cshtml" />
-    <Content Include="Views\SabNzbd\Partial\_Download.cshtml" />
     <Content Include="Views\SabNzbd\Partial\History.cshtml" />
     <Content Include="Views\SabNzbd\Partial\Logs.cshtml" />
     <Content Include="Views\Shared\_AjaxGridPager.cshtml" />
@@ -407,6 +531,18 @@
     <Content Include="Views\Settings\NzbDashSettings.cshtml" />
     <Content Include="Views\CouchPotato\Index.cshtml" />
     <Content Include="Views\CouchPotato\Movies.cshtml" />
+    <Content Include="Views\Settings\HardwareSettings.cshtml" />
+    <Content Include="Views\Shared\Navbars.cshtml" />
+    <Content Include="Views\Shared\SideNavbar.cshtml" />
+    <Content Include="Views\Shared\TopNavbar.cshtml" />
+    <Content Include="Views\Dashboard\Partial\_CpuChart.cshtml" />
+    <Content Include="Views\Shared\NavbarDownloads.cshtml" />
+    <Content Include="Views\AlertSettings\Index.cshtml" />
+    <Content Include="Views\AlertSettings\CpuAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\NetworkAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\DriveAlertModal.cshtml" />
+    <Content Include="Views\AlertSettings\AlertExistsModal.cshtml" />
+    <Content Include="Views\AlertSettings\EmailSettingsModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -441,6 +577,10 @@
     <ProjectReference Include="..\NZBDash.Core.Interfaces\NZBDash.Core.Interfaces.csproj">
       <Project>{43F97539-F59B-44CB-948F-B1AD41FC8E5E}</Project>
       <Name>NZBDash.Core.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NZBDash.Core.Models\NZBDash.Core.Models.csproj">
+      <Project>{12FE449B-C0B1-4350-953C-D55320E59E54}</Project>
+      <Name>NZBDash.Core.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NZBDash.Core\NZBDash.Core.csproj">
       <Project>{6b7e480c-d8b3-4cfd-9c59-687f9aef31e0}</Project>

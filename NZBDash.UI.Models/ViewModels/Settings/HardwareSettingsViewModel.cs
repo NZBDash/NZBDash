@@ -1,6 +1,6 @@
 ﻿#region Copyright
 // /************************************************************************
-//   Copyright (c) 2015 Jamie Rees
+//   Copyright (c) 2016 NZBDash
 //   File: HardwareSettingsViewModel.cs
 //   Created By: Jamie Rees
 //  
@@ -24,26 +24,54 @@
 //   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // ************************************************************************/
 #endregion
+
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace NZBDash.UI.Models.ViewModels.Settings
 {
     public class HardwareSettingsViewModel
     {
-        public int ThresholdTime { get; set; }
-
-        public int CpuPercentageLimit { get; set; }
-        public int MemoryUseLimit { get; set; }
+        public HardwareSettingsViewModel()
+        {
+            CpuMonitoring = new CpuMonitoringViewModel();
+            NetworkMonitoring = new NetworkMonitoringViewModel();
+            EmailAlertSettings = new EmailAlertSettingsViewModel();
+            Drives = new List<DriveSettingsViewModel>();
+        }
+        public CpuMonitoringViewModel CpuMonitoring { get; set; }
+        public NetworkMonitoringViewModel NetworkMonitoring { get; set; }
         public List<DriveSettingsViewModel> Drives { get; set; }
-        public int NicToMonitor { get; set; }
+        public EmailAlertSettingsViewModel EmailAlertSettings { get; set; }
+    }
 
-        // Best name ever! :D
-        public Dictionary<string,int> NicDict { get; set; }
+    public class CpuMonitoringViewModel
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int CpuPercentageLimit { get; set; }
+    }
 
-        public bool Alert { get; set; }
+    public class NetworkMonitoringViewModel
+    {
+        public bool Enabled { get; set; }
+        public int ThresholdTime { get; set; }
+        public int NicId { get; set; }
+        public int NetworkUsagePercentage { get; set; }
+        public Dictionary<string, int> NicDict { get; set; }
+        public SelectList Nics { get; set; }
+    }
+
+
+    public class EmailAlertSettingsViewModel
+    {
+        public bool AlertOnBreach { get; set; }
+        public bool AlertOnBreachEnd { get; set; }
         public string EmailUsername { get; set; }
         public string EmailPassword { get; set; }
         public string EmailHost { get; set; }
         public int EmailPort { get; set; }
+        public string RecipientAddress { get; set; }
     }
+
 }

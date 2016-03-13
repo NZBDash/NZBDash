@@ -1,6 +1,6 @@
 ﻿#region Copyright
 //  ***********************************************************************
-//  Copyright (c) 2015 Jamie Rees
+//  Copyright (c) 2016 Jamie Rees
 //  File: NzbGetControllerTests.cs
 //  Created By: Jamie Rees
 // 
@@ -27,10 +27,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Web.Mvc;
-
-using Grid.Mvc.Ajax.GridExtensions;
 
 using Moq;
 
@@ -39,7 +36,7 @@ using NUnit.Framework;
 using NZBDash.Common;
 using NZBDash.Common.Interfaces;
 using NZBDash.Core.Interfaces;
-using NZBDash.Core.Model.Settings;
+using NZBDash.Core.Models.Settings;
 using NZBDash.ThirdParty.Api.Interfaces;
 using NZBDash.ThirdParty.Api.Models.Api;
 using NZBDash.UI.Controllers.Application;
